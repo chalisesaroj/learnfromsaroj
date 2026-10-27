@@ -16,6 +16,13 @@
   </head>
   <body class="bg-slate-900 text-slate-100 antialiased font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
     <div id="root"></div>
+    <script>
+      window.global = window;
+      window.PACKAGE_VERSION = '3.2.2';
+      if (typeof window.require === 'undefined') {
+        window.require = function() { return {}; };
+      }
+    </script>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
