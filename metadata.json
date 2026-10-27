@@ -1,0 +1,6 @@
+{
+  "name": "QuartoReveal Studio - Fundamentals of Measurement Systems",
+  "description": "Classroom-ready Quarto Reveal.js presentation suite and interactive lecture deck for Fundamentals of Measurement Systems (Unit I), featuring Python-first vector SVG visualizations, interactive laboratory simulations, and one-click code export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
