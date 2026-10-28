@@ -150,13 +150,14 @@ export async function latexToPngDataUrl(
 
       img.onload = () => {
         try {
-          // Calculate realistic mm height in PDF based on equation complexity
-          let heightMm = Math.max(8, Math.min(28, (viewBoxHeight / 1150) * (display ? 10 : 7)));
+          // Calculate realistic mm height in PDF proportional to standard 9pt textbook typography (7mm - 13mm)
+          let heightMm = Math.max(7, Math.min(13, (viewBoxHeight / 1150) * (display ? 7.2 : 5.2)));
           let widthMm = heightMm * aspect;
 
-          if (widthMm > maxWidthMm) {
-            const scale = maxWidthMm / widthMm;
-            widthMm = maxWidthMm;
+          const effectiveMaxW = Math.min(maxWidthMm, 140);
+          if (widthMm > effectiveMaxW) {
+            const scale = effectiveMaxW / widthMm;
+            widthMm = effectiveMaxW;
             heightMm = heightMm * scale;
           }
 

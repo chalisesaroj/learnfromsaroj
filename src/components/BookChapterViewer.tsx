@@ -199,33 +199,39 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
       case 'warm':
         return {
           wrapper: 'bg-[#faf6ee] text-[#2c2416]',
-          headerBg: 'bg-[#f4ece0]/90 border-[#e5d8c3]',
-          paperBg: 'bg-[#fffcf7] border-[#e7dac7] shadow-sm',
-          sidebarBg: 'bg-[#f5ede2]/80 border-[#e3d5bf]',
+          headerBg: 'bg-[#f4ece0]/95 border-[#e5d8c3]',
+          paperBg: 'bg-[#fffcf7] border-[#e7dac7] shadow-xs',
+          sidebarBg: 'bg-[#f5ede2]/90 border-[#e3d5bf]',
           calloutBg: 'bg-[#f3eadb] border-[#decbb2]',
           borderLine: 'border-[#e4d6c1]',
-          subtleText: 'text-[#7d6b52]'
+          subtleText: 'text-[#7d6b52]',
+          headingText: 'text-[#1e170c]',
+          bodyText: 'text-[#2e261a]'
         };
       case 'dark':
         return {
           wrapper: 'bg-slate-950 text-slate-100',
-          headerBg: 'bg-slate-900/90 border-slate-800',
-          paperBg: 'bg-slate-900/90 border-slate-800 shadow-md',
+          headerBg: 'bg-slate-900/95 border-slate-800',
+          paperBg: 'bg-slate-900/90 border-slate-800 shadow-xs',
           sidebarBg: 'bg-slate-900/80 border-slate-800',
           calloutBg: 'bg-slate-800/60 border-slate-700',
           borderLine: 'border-slate-800',
-          subtleText: 'text-slate-400'
+          subtleText: 'text-slate-400',
+          headingText: 'text-slate-100',
+          bodyText: 'text-slate-300'
         };
       case 'clean':
       default:
         return {
           wrapper: 'bg-slate-50 text-slate-900',
-          headerBg: 'bg-white/90 border-slate-200',
-          paperBg: 'bg-white border-slate-200/90 shadow-sm',
+          headerBg: 'bg-white/95 border-slate-200',
+          paperBg: 'bg-white border-slate-200/90 shadow-xs',
           sidebarBg: 'bg-slate-100/70 border-slate-200',
           calloutBg: 'bg-slate-50 border-slate-200',
           borderLine: 'border-slate-200',
-          subtleText: 'text-slate-500'
+          subtleText: 'text-slate-500',
+          headingText: 'text-slate-900 dark:text-slate-100',
+          bodyText: 'text-slate-700 dark:text-slate-300'
         };
     }
   }, [theme]);
@@ -575,15 +581,16 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
                           <span>{sec.hours}</span>
                         </span>
                       </div>
-                      <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                      <h2 className={`text-xl sm:text-2xl font-bold tracking-tight ${themeStyles.headingText}`}>
                         {sec.title}
                       </h2>
                     </div>
 
                     {/* Section Abstract Callout */}
                     {sec.abstract && (
-                      <div className="p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/50 text-xs sm:text-sm text-slate-700 dark:text-slate-300 italic">
-                        <strong>Curriculum Scope:</strong> <FormattedMathText text={sec.abstract} />
+                      <div className="p-4 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/50 text-xs sm:text-sm text-slate-700 dark:text-slate-300 italic leading-relaxed">
+                        <strong className="text-indigo-700 dark:text-indigo-300 font-semibold">Curriculum Scope:</strong>{' '}
+                        <FormattedMathText text={sec.abstract} />
                       </div>
                     )}
 
@@ -593,7 +600,7 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
                         {sec.paragraphs.map((p, pIdx) => (
                           <p
                             key={pIdx}
-                            className={`${fontClasses} leading-relaxed text-slate-800 dark:text-slate-200 text-justify`}
+                            className={`${fontClasses} text-left leading-relaxed ${themeStyles.bodyText}`}
                           >
                             <FormattedMathText text={p} />
                           </p>
@@ -609,7 +616,7 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
                           className="space-y-4 pb-8 border-b border-slate-100 dark:border-slate-800/60 last:border-0 last:pb-0"
                         >
                           {/* Subsection Heading */}
-                          <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                          <h3 className={`text-base sm:text-lg font-bold flex items-center gap-2 ${themeStyles.headingText}`}>
                             <span className="w-1.5 h-4 rounded-full bg-indigo-600 shrink-0" />
                             <span>{sub.number} {sub.title}</span>
                           </h3>
@@ -619,7 +626,7 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
                             {sub.paragraphs.map((p, pIdx) => (
                               <p
                                 key={pIdx}
-                                className={`${fontClasses} leading-relaxed text-slate-800 dark:text-slate-200 text-justify`}
+                                className={`${fontClasses} text-left leading-relaxed ${themeStyles.bodyText}`}
                               >
                                 <FormattedMathText text={p} />
                               </p>
@@ -628,7 +635,7 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
 
                           {/* Mathematical Formula Display (Open, free, clean whitespace, NO boxes) */}
                           {sub.equation && (
-                            <div className="py-3 space-y-2">
+                            <div className="py-2 space-y-2">
                               <MathRenderer
                                 math={sub.equation.tex}
                                 display={true}
@@ -645,7 +652,7 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
                               {sub.postEquationParagraphs.map((p, pIdx) => (
                                 <p
                                   key={pIdx}
-                                  className={`${fontClasses} leading-relaxed text-slate-800 dark:text-slate-200 text-justify`}
+                                  className={`${fontClasses} text-left leading-relaxed ${themeStyles.bodyText}`}
                                 >
                                   <FormattedMathText text={p} />
                                 </p>
@@ -655,7 +662,7 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
 
                           {/* Second Equation if present */}
                           {sub.secondEquation && (
-                            <div className="py-3 space-y-2">
+                            <div className="py-2 space-y-2">
                               <MathRenderer
                                 math={sub.secondEquation.tex}
                                 display={true}
@@ -672,7 +679,7 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
                               {sub.concludingParagraphs.map((p, pIdx) => (
                                 <p
                                   key={pIdx}
-                                  className={`${fontClasses} leading-relaxed text-slate-800 dark:text-slate-200 text-justify`}
+                                  className={`${fontClasses} text-left leading-relaxed ${themeStyles.bodyText}`}
                                 >
                                   <FormattedMathText text={p} />
                                 </p>
@@ -931,9 +938,9 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
                                     return (
                                       <p
                                         key={bIdx}
-                                        className={`${fontClasses} leading-relaxed text-slate-800 dark:text-slate-200 text-justify`}
+                                        className={`${fontClasses} text-left leading-relaxed ${themeStyles.bodyText}`}
                                       >
-                                        <strong className="text-slate-900 dark:text-white font-bold mr-1.5">
+                                        <strong className={`font-bold mr-1.5 ${themeStyles.headingText}`}>
                                           <FormattedMathText text={leadInMatch[1]} />
                                         </strong>
                                         <FormattedMathText text={leadInMatch[2].trim()} />
@@ -943,7 +950,7 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
                                   return (
                                     <p
                                       key={bIdx}
-                                      className={`${fontClasses} leading-relaxed text-slate-800 dark:text-slate-200 text-justify`}
+                                      className={`${fontClasses} text-left leading-relaxed ${themeStyles.bodyText}`}
                                     >
                                       <FormattedMathText text={bullet} />
                                     </p>

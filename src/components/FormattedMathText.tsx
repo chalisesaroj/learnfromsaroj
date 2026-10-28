@@ -92,7 +92,7 @@ export const FormattedMathText: React.FC<FormattedMathTextProps> = ({
               return (
                 <span
                   key={idx}
-                  className="block my-3 text-center text-xl md:text-2xl font-serif"
+                  className="block my-3 text-center text-lg sm:text-xl font-normal"
                   dangerouslySetInnerHTML={{ __html: html }}
                 />
               );
@@ -100,7 +100,7 @@ export const FormattedMathText: React.FC<FormattedMathTextProps> = ({
             return (
               <span
                 key={idx}
-                className="katex-inline inline-flex items-baseline mx-0.5 text-[1.1em] align-baseline font-serif"
+                className="katex-inline inline-flex items-baseline mx-0.5 align-baseline text-inherit font-normal"
                 dangerouslySetInnerHTML={{ __html: html }}
               />
             );
