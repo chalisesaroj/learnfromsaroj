@@ -132,14 +132,14 @@ export const TEXTBOOK_UNIT1_CHAPTER: {
           ],
           equation: {
             label: 'Eq. 1.2',
-            tex: 'V_{unknown} = V_{standard} \\cdot \\frac{L_1}{L_{total}} \\quad \\text{at null current } I_{detector} = 0',
+            tex: 'V_x = V_s \\cdot \\frac{L_1}{L} \\quad \\text{at null current } I = 0',
             description:
               'DC Potentiometer Null-Balance Equation: The unknown electromotive force equals the opposing slide-wire voltage when the detector current reaches zero.',
             symbols: [
-              { symbol: 'V_{unknown}', name: 'Unknown Measurand EMF', unit: '\\text{V}', description: 'True open-circuit electromotive force under test' },
-              { symbol: 'V_{standard}', name: 'Calibrated Working Voltage', unit: '\\text{V}', description: 'Stable reference potential supplied across the uniform slide-wire' },
-              { symbol: 'L_1', name: 'Balancing Slide-Wire Length', unit: '\\text{m or cm}', description: 'Tapped length along the uniform resistance wire corresponding to null deflection' },
-              { symbol: 'L_{total}', name: 'Total Slide-Wire Length', unit: '\\text{m or cm}', description: 'Complete end-to-end active length of the calibrated slide-wire' }
+              { symbol: 'V_x', name: 'Unknown Measurand EMF', unit: 'V', description: 'True open-circuit electromotive force under test' },
+              { symbol: 'V_s', name: 'Calibrated Working Voltage', unit: 'V', description: 'Stable reference potential supplied across the uniform slide-wire' },
+              { symbol: 'L_1', name: 'Balancing Slide-Wire Length', unit: 'm', description: 'Tapped length along the uniform resistance wire corresponding to null deflection' },
+              { symbol: 'L', name: 'Total Slide-Wire Length', unit: 'm', description: 'Complete end-to-end active length of the calibrated slide-wire' }
             ]
           },
           postEquationParagraphs: [
@@ -195,9 +195,9 @@ export const TEXTBOOK_UNIT1_CHAPTER: {
             description:
               'ADC Voltage Step Resolution: The smallest analog voltage increment that produces a single binary step change at the digital output.',
             symbols: [
-              { symbol: '\\Delta V', name: 'Quantization Step Size', unit: '\\text{V or mV}', description: 'Smallest detectable voltage change between adjacent binary codes' },
-              { symbol: 'V_{FS}', name: 'Full-Scale Voltage Range', unit: '\\text{V}', description: 'Span between minimum and maximum allowable input potentials (e.g. 0 to 10.0V)' },
-              { symbol: 'N', name: 'ADC Bit Depth', unit: '\\text{bits}', description: 'Number of binary conversion bits (e.g. 8-bit, 12-bit, 16-bit, 24-bit)' }
+              { symbol: '\\Delta V', name: 'Quantization Step Size', unit: 'V', description: 'Smallest detectable voltage change between adjacent binary codes' },
+              { symbol: 'V_{FS}', name: 'Full-Scale Voltage Range', unit: 'V', description: 'Span between minimum and maximum allowable input potentials (e.g. 0 to 10.0V)' },
+              { symbol: 'N', name: 'ADC Bit Depth', unit: 'bits', description: 'Number of binary conversion bits (e.g. 8-bit, 12-bit, 16-bit, 24-bit)' }
             ]
           },
           postEquationParagraphs: [
@@ -206,12 +206,12 @@ export const TEXTBOOK_UNIT1_CHAPTER: {
           ],
           secondEquation: {
             label: 'Eq. 1.4',
-            tex: 'V_{q,RMS} = \\sqrt{ \\frac{1}{\\Delta V} \\int_{-\\Delta V/2}^{+\\Delta V/2} \\varepsilon^2 \\, d\\varepsilon } = \\frac{\\Delta V}{\\sqrt{12}} = \\frac{\\Delta V}{2\\sqrt{3}}',
+            tex: 'V_{q,RMS} = \\frac{\\Delta V}{\\sqrt{12}} = \\frac{\\Delta V}{2\\sqrt{3}}',
             description:
               'Root-Mean-Square Quantization Noise Voltage: The fundamental theoretical noise floor introduced by digitizing a continuous analog voltage.',
             symbols: [
-              { symbol: 'V_{q,RMS}', name: 'RMS Quantization Noise', unit: '\\text{V}', description: 'Effective noise voltage present at the output of an ideal N-bit ADC' },
-              { symbol: '\\Delta V', name: 'Quantization Step Size', unit: '\\text{V}', description: 'Least Significant Bit voltage width: V_FS / 2^N' }
+              { symbol: 'V_{q,RMS}', name: 'RMS Quantization Noise', unit: 'V', description: 'Effective noise voltage present at the output of an ideal N-bit ADC' },
+              { symbol: '\\Delta V', name: 'Quantization Step Size', unit: 'V', description: 'Least Significant Bit voltage width: V_FS / 2^N' }
             ]
           },
           concludingParagraphs: [
@@ -332,13 +332,13 @@ export const TEXTBOOK_UNIT1_CHAPTER: {
           ],
           equation: {
             label: 'Eq. 1.5',
-            tex: 'S = \\frac{dy}{dx} = \\lim_{\\Delta x \\to 0} \\frac{\\Delta y}{\\Delta x}',
+            tex: 'S = \\frac{dy}{dx}',
             description:
               'Static Sensitivity Definition: The local slope of the calibration curve relating output change to input measurand change.',
             symbols: [
-              { symbol: 'S', name: 'Static Sensitivity', unit: '\\text{output units / input units}', description: 'Dimensional sensitivity coefficient (e.g. mV/°C, mm/kPa, V/bar)' },
-              { symbol: 'dy', name: 'Differential Output Change', unit: '\\text{output units}', description: 'Observed displacement, voltage, or indicator response change' },
-              { symbol: 'dx', name: 'Differential Input Measurand Change', unit: '\\text{input units}', description: 'Applied physical variation in temperature, pressure, or displacement' }
+              { symbol: 'S', name: 'Static Sensitivity', unit: 'output/input units', description: 'Dimensional sensitivity coefficient (e.g. mV/°C, mm/kPa, V/bar)' },
+              { symbol: 'dy', name: 'Output Response Increment', unit: 'output units', description: 'Observed displacement, voltage, or indicator response change' },
+              { symbol: 'dx', name: 'Input Measurand Increment', unit: 'input units', description: 'Applied physical variation in temperature, pressure, or displacement' }
             ]
           },
           postEquationParagraphs: [
@@ -367,13 +367,13 @@ export const TEXTBOOK_UNIT1_CHAPTER: {
           ],
           equation: {
             label: 'Eq. 1.6',
-            tex: '\\% \\text{ Hysteresis Error} = \\frac{\\max |y_{descending} - y_{ascending}|}{y_{FSO}} \\times 100\\%',
+            tex: 'e_h = \\frac{\\max |y_{desc} - y_{asc}|}{y_{FSO}} \\times 100\\%',
             description:
               'Maximum Hysteresis Percentage: The peak output divergence between ascending and descending load cycles relative to full-scale span.',
             symbols: [
-              { symbol: 'y_{descending}', name: 'Descending Output', unit: '\\text{output units}', description: 'Reading obtained when input is approached from above' },
-              { symbol: 'y_{ascending}', name: 'Ascending Output', unit: '\\text{output units}', description: 'Reading obtained when input is approached from below' },
-              { symbol: 'y_{FSO}', name: 'Full-Scale Output Span', unit: '\\text{output units}', description: 'Maximum output minus minimum output span (y_max - y_min)' }
+              { symbol: 'y_{desc}', name: 'Descending Output', unit: 'output units', description: 'Reading obtained when input is approached from above' },
+              { symbol: 'y_{asc}', name: 'Ascending Output', unit: 'output units', description: 'Reading obtained when input is approached from below' },
+              { symbol: 'y_{FSO}', name: 'Full-Scale Output Span', unit: 'output units', description: 'Maximum output minus minimum output span (y_max - y_min)' }
             ]
           },
           keyTakeaway:
@@ -424,10 +424,10 @@ export const TEXTBOOK_UNIT1_CHAPTER: {
             description:
               'Sample Mean and Sample Standard Deviation: The statistical best estimate and dispersion of a finite set of experimental readings.',
             symbols: [
-              { symbol: '\\bar{x}', name: 'Sample Arithmetic Mean', unit: '\\text{measurand units}', description: 'Best statistical estimate of the true central physical value' },
-              { symbol: 's', name: 'Sample Standard Deviation', unit: '\\text{measurand units}', description: 'Measure of the statistical spread or precision of individual readings' },
-              { symbol: 'n', name: 'Number of Observations', unit: '\\text{integer}', description: 'Total count of independent repeated experimental measurements' },
-              { symbol: 'n - 1', name: 'Degrees of Freedom', unit: '\\text{integer}', description: 'Bessel correction factor compensating for finite sample size bias' }
+              { symbol: '\\bar{x}', name: 'Sample Arithmetic Mean', unit: 'measurand units', description: 'Best statistical estimate of the true central physical value' },
+              { symbol: 's', name: 'Sample Standard Deviation', unit: 'measurand units', description: 'Measure of the statistical spread or precision of individual readings' },
+              { symbol: 'n', name: 'Number of Observations', unit: 'samples', description: 'Total count of independent repeated experimental measurements' },
+              { symbol: 'n - 1', name: 'Degrees of Freedom', unit: 'samples', description: 'Bessel correction factor compensating for finite sample size bias' }
             ]
           },
           postEquationParagraphs: [
@@ -450,9 +450,9 @@ export const TEXTBOOK_UNIT1_CHAPTER: {
             description:
               'ISO GUM Combined Standard Uncertainty: Propagation of independent uncertainties through the first-order Taylor series sensitivity coefficients.',
             symbols: [
-              { symbol: 'u_c(y)', name: 'Combined Standard Uncertainty', unit: '\\text{units of y}', description: 'Total estimated standard uncertainty of the derived measurement result' },
-              { symbol: '\\frac{\\partial f}{\\partial x_i}', name: 'Partial Sensitivity Derivative', unit: '\\text{units of y / units of x}_i', description: 'Sensitivity coefficient indicating how derived result responds to input variable x_i' },
-              { symbol: 'u(x_i)', name: 'Standard Uncertainty of Variable x_i', unit: '\\text{units of x}_i', description: 'Standard uncertainty (Type A or B) associated with input quantity x_i' }
+              { symbol: 'u_c(y)', name: 'Combined Standard Uncertainty', unit: 'units of y', description: 'Total estimated standard uncertainty of the derived measurement result' },
+              { symbol: '\\frac{\\partial f}{\\partial x_i}', name: 'Partial Sensitivity Derivative', unit: 'sensitivity ratio', description: 'Sensitivity coefficient indicating how derived result responds to input variable x_i' },
+              { symbol: 'u(x_i)', name: 'Standard Uncertainty of Variable x_i', unit: 'units of x_i', description: 'Standard uncertainty (Type A or B) associated with input quantity x_i' }
             ]
           },
           postEquationParagraphs: [
@@ -491,14 +491,14 @@ export const TEXTBOOK_UNIT1_CHAPTER: {
           ],
           equation: {
             label: 'Eq. 1.9',
-            tex: 'V_m = V_{th} \\cdot \\left( \\frac{R_m}{R_s + R_m} \\right) \\implies \\% \\text{ Loading Error} = -\\left( \\frac{R_s}{R_s + R_m} \\right) \\times 100\\%',
+            tex: 'V_m = V_{th} \\left( \\frac{R_m}{R_s + R_m} \\right)',
             description:
               'Voltmeter Circuit Loading Equation: The measured voltage is attenuated by the voltage divider formed between source resistance and voltmeter internal resistance.',
             symbols: [
-              { symbol: 'V_m', name: 'Measured Voltage Across Meter', unit: '\\text{V}', description: 'Attenuated potential recorded on the voltmeter scale' },
-              { symbol: 'V_{th}', name: 'True Thevenin Open-Circuit Voltage', unit: '\\text{V}', description: 'True undisturbed potential existing prior to meter connection' },
-              { symbol: 'R_s', name: 'Thevenin Internal Source Resistance', unit: '\\Omega', description: 'Internal impedance of the circuit or sensor under test' },
-              { symbol: 'R_m', name: 'Voltmeter Internal Resistance', unit: '\\Omega', description: 'Input impedance of the measuring instrument (typically 10 MΩ for DMMs)' }
+              { symbol: 'V_m', name: 'Measured Voltage Across Meter', unit: 'V', description: 'Attenuated potential recorded on the voltmeter scale' },
+              { symbol: 'V_{th}', name: 'True Thevenin Open-Circuit Voltage', unit: 'V', description: 'True undisturbed potential existing prior to meter connection' },
+              { symbol: 'R_s', name: 'Thevenin Internal Source Resistance', unit: 'Ohms', description: 'Internal impedance of the circuit or sensor under test' },
+              { symbol: 'R_m', name: 'Voltmeter Internal Resistance', unit: 'Ohms', description: 'Input impedance of the measuring instrument (typically 10 MΩ for DMMs)' }
             ]
           },
           postEquationParagraphs: [
@@ -547,14 +547,14 @@ export const TEXTBOOK_UNIT1_CHAPTER: {
           ],
           equation: {
             label: 'Eq. 1.10',
-            tex: 'V_{signal,measured} = V_{sensor} + \\Delta V_G = V_{sensor} + (I_G \\cdot R_{ground\\_path})',
+            tex: 'V_{meas} = V_{sensor} + \\Delta V_G = V_{sensor} + I_G R_g',
             description:
-              'Ground Loop Noise Superposition: The measured signal is contaminated by circulating ground currents flowing across finite conductor resistance.',
+              'Ground Loop Noise Superposition: The measured signal is contaminated by circulating ground currents flowing across finite ground path resistance.',
             symbols: [
-              { symbol: 'V_{signal,measured}', name: 'Corrupted Measurement Signal', unit: '\\text{V or mV}', description: 'Composite potential received at the data acquisition input' },
-              { symbol: 'V_{sensor}', name: 'True Sensor Measurand Potential', unit: '\\text{V or mV}', description: 'Undisturbed thermoelectric or bridge voltage under test' },
-              { symbol: '\\Delta V_G', name: 'Ground Potential Difference', unit: '\\text{V}', description: 'Potential disparity existing between separate physical earth rods' },
-              { symbol: 'I_G', name: 'Circulating Ground Current', unit: '\\text{A}', description: 'Stray industrial current driven through the signal return path' }
+              { symbol: 'V_{meas}', name: 'Corrupted Measurement Signal', unit: 'V', description: 'Composite potential received at the data acquisition input' },
+              { symbol: 'V_{sensor}', name: 'True Sensor Measurand Potential', unit: 'V', description: 'Undisturbed thermoelectric or bridge voltage under test' },
+              { symbol: '\\Delta V_G', name: 'Ground Potential Difference', unit: 'V', description: 'Potential disparity existing between separate physical earth rods' },
+              { symbol: 'I_G', name: 'Circulating Ground Current', unit: 'A', description: 'Stray industrial current driven through the signal return path' }
             ]
           },
           postEquationParagraphs: [

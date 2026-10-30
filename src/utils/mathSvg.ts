@@ -150,11 +150,11 @@ export async function latexToPngDataUrl(
 
       img.onload = () => {
         try {
-          // Calculate realistic mm height in PDF proportional to standard 9pt textbook typography (7mm - 13mm)
-          let heightMm = Math.max(7, Math.min(13, (viewBoxHeight / 1150) * (display ? 7.2 : 5.2)));
+          // Proportional mm height in PDF calibrated to standard 8.8pt textbook typography (4.5mm - 7.8mm)
+          let heightMm = Math.max(4.5, Math.min(7.8, (viewBoxHeight * 3.6) / 700));
           let widthMm = heightMm * aspect;
 
-          const effectiveMaxW = Math.min(maxWidthMm, 140);
+          const effectiveMaxW = Math.min(maxWidthMm, 115);
           if (widthMm > effectiveMaxW) {
             const scale = effectiveMaxW / widthMm;
             widthMm = effectiveMaxW;

@@ -1,854 +1,819 @@
 /**
- * Unit II: Digital Signal Processing (10 hrs)
+ * Unit II: Digital Signal Processing & Data Acquisition (10 hrs)
  * Complete Quarto Reveal.js presentation package and curriculum
  * Author: Er. Saroj Chalise
  * Reference: https://chalisesaroj.github.io/slide/
  *
- * Upgraded with Modern Data Acquisition (DAQ) System Architecture based on Dewesoft engineering:
- * - 4-Pillar DAQ Architecture: Sensors -> Signal Conditioning -> ADC -> DAQ Software / DSP
- * - Universal Sensor Conditioning Matrix (IEPE, Strain Bridge, Thermocouple CJC, High-Voltage CAT IV)
- * - ADC Bit Depth & Quantization Comparison (8-bit, 12-bit, 16-bit, 24-bit DualCoreADC)
- * - Complete End-to-End Solved Industrial Case Study: Gas Turbine Vibration & Bearing DAQ Pipeline
+ * Upgraded with:
+ * - Engaging Storytelling Arc: What is a signal? Nature vs. Computers
+ * - 5-Dimensional Signal Taxonomy (Time, Value, Predictability, Periodicity, Energy)
+ * - The Fourier Story: Fruit Smoothie & Musical Chord Analogy, CTFT, the Computer's Dilemma, DFT, FFT, IDFT
+ * - Simpler End-to-End Case Study: Workshop Electric Motor Health Monitor (LM35 Temp + Accelerometer Vibration -> Conditioning -> 12-bit ADC -> RAM Buffer -> FFT Diagnostic)
+ * - Comprehensive worked problems, misconceptions, and master formula sheet
  */
 
 import { SlideData } from '../types/chapterDeck';
 
 export const UNIT2_SLIDES_DATA: SlideData[] = [
+  // ===========================================================================
+  // ACT 1: THE STORY OF SIGNALS & SIGNAL TAXONOMY
+  // ===========================================================================
   {
     id: 1,
-    title: "Unit II: Digital Signal Processing & Data Acquisition (DAQ)",
-    subtitle: "Classification of Signals, Modern DAQ Architecture, Sensor Conditioning, ADC Quantization, Convolution, FFT & Spectral Analysis",
+    title: "Unit II: Digital Signal Processing & Data Acquisition",
+    subtitle: "From Physical Phenomena to Digital Intelligence: Signal Taxonomy, Modern DAQ Architecture, The Fourier Transform Story, and Solved Sensor-to-Display Case Study",
     sectionTag: "Unit II · 10 Hours",
     type: "title",
-    speakerNotes: "Welcome students to Unit II: Digital Signal Processing & Data Acquisition. In this 10-hour module, we build the mathematical and engineering foundation required to bridge physical phenomena (vibration, strain, temperature, pressure) with digital computation using modern DAQ architectures, precision signal conditioning, and spectral DSP algorithms."
+    speakerNotes: "Welcome students to Unit II: Digital Signal Processing & Data Acquisition. In this module, authored by Er. Saroj Chalise, we explore how raw physical reality—the rhythmic beat of a heart, the heat of an engine, or the hum of an electric motor—is captured, conditioned, converted into binary numbers, and analyzed using the profound mathematics of the Fourier Transform."
   },
   {
     id: 2,
     title: "Course Learning Objectives",
-    subtitle: "Specific competencies to be mastered in Unit II",
+    subtitle: "Core competencies to be mastered in Unit II",
     sectionTag: "Syllabus Objectives",
     type: "objectives",
     bullets: [
-      "**Familiarize with common types of signals**: Continuous vs discrete, periodic vs aperiodic, deterministic vs random, and energy vs power signals.",
-      "**Master Modern DAQ Architecture**: Understand the 4 core pillars—Sensors, Advanced Signal Conditioning, High-Resolution ADC, and DAQ Processing Software.",
-      "**Acquire and characterize digital signals**: Master the Nyquist-Shannon sampling theorem, aliasing prevention, ADC quantization, aperture jitter, and dynamic range.",
-      "**Apply sensor signal conditioning methods**: Implement pre-amplification, galvanic isolation (>1000V), bridge completion, IEPE excitation, CJC, and analog anti-aliasing low-pass filtering.",
-      "**Utilize signal processing techniques**: Execute time-domain discrete convolution, correlation, FIR/IIR digital filtering, and windowing.",
-      "**Execute Fourier and inverse transforms**: Derive and deploy the CTFT, DFT, Cooley-Tukey Radix-2 FFT, and IDFT synthesis.",
-      "**Solve an End-to-End Industrial Case Study**: Trace a real-world gas turbine vibration signal from sensor to conditioned analog filter, 16-bit ADC, Hanning window, and 4096-pt FFT."
+      "**Understand What a Signal Truly Is**: Grasp how physical phenomena convey information across time and space.",
+      "**Master the 5 Taxonomic Dimensions of Signals**: Classify waveforms by time domain, amplitude values, predictability, periodicity, and energy.",
+      "**Bridge Nature to Computers (DAQ & Sampling)**: Apply the Nyquist-Shannon theorem, prevent irreversible aliasing, and calculate ADC quantization resolution.",
+      "**Unravel the Fourier Story**: Understand intuitive analogies (Fruit Smoothie, Musical Chords) for CTFT, why computers need the DFT, how the Cooley-Tukey FFT slashes computation, and how IFT reconstructs waveforms.",
+      "**Trace a Complete End-to-End Case Study**: Follow raw analog data from an LM35 temperature sensor and piezoelectric accelerometer into conditioning filters, 12-bit ADC sampling, computer RAM storage, and real-time FFT presentation on a monitor."
     ],
-    speakerNotes: "Highlight to students that every engineering measurement system—from aerospace test cells to industrial predictive maintenance—relies directly on these foundational pillars."
+    speakerNotes: "Highlight to students that every modern instrument—from your smartphone to an aerospace vibration monitoring rack—depends directly on these exact principles."
   },
   {
     id: 3,
     title: "Unit II Curriculum Roadmap",
-    subtitle: "Complete 10-hour lecture roadmap across 9 core sections + comprehensive case study",
+    subtitle: "10-Hour structured pedagogical journey across 5 narrative acts",
     sectionTag: "Curriculum Overview",
     type: "roadmap",
     columns: {
       left: [
-        "**2.1 Types of Signals**: Continuous vs discrete, deterministic vs stochastic, periodic vs aperiodic, energy vs power.",
-        "**2.2 Acquisition & Digital Signal Properties**: Sampling rate $f_s$, Nyquist theorem, aliasing folding, ADC bit-depth (8/12/16/24-bit), and SQNR.",
-        "**2.3 Signal Conditioning & DAQ Architecture**: Dewesoft 4-pillar DAQ model, galvanic isolation, sensor topologies (IEPE, Bridge, TC), and anti-aliasing filtering.",
-        "**2.4 Signal Processing Techniques**: Discrete convolution $y = x * h$, correlation, FIR vs IIR filters, and windowing."
+        "**Act 1: The Story of Signals**: Physical origins, the engineering dilemma, and the 5 taxonomic classification dimensions (2.1).",
+        "**Act 2: The Acquisition Bridge**: Sampling speed limit, the aliasing ghost, anti-aliasing filters, and ADC quantization depth (2.2).",
+        "**Act 3: Modern DAQ Architecture**: Dewesoft 4-pillar model, sensor conditioning matrix, galvanic isolation, and noise rejection (2.3)."
       ],
       right: [
-        "**2.5 Fourier Transform**: CTFT continuous frequency spectrum, magnitude and phase response.",
-        "**2.6 Discrete Fourier Transform (DFT)**: Bin spacing $\\Delta f = f_s / N$, spectral leakage, and Hanning windowing.",
-        "**2.7 Fast Fourier Transform (FFT)**: Cooley-Tukey Radix-2 DIT algorithm, butterfly structures, $O(N \\log_2 N)$ speedup.",
-        "**2.8 Inverse Fourier Transform (IDFT)**: Exact synthesis and Parseval's energy conservation theorem.",
-        "**2.9 Data Presentation**: Bode plots, STFT spectrograms, and decibel scaling.",
-        "**Comprehensive Solved Case Study**: Full pipeline from 12,000 RPM rotor vibration to 4096-pt FFT fault diagnostics."
+        "**Act 4: The Fourier Transform Story**: Smoothie analogy, CTFT prism, computer's dilemma, DFT bins, Cooley-Tukey FFT, and IDFT synthesis (2.5–2.8).",
+        "**Act 5: Simpler Solved Case Study**: Workshop Electric Motor (75°C heat + 50 Hz vibration) from sensor transduction to 12-bit ADC, RAM buffer, and FFT screen display.",
+        "**Review & Mastery**: Comprehensive worked numerical problem, top 5 misconceptions, and master formula sheet."
       ]
     },
-    speakerNotes: "Walk students through the syllabus flow: we move from physical classification (2.1), to hardware acquisition and conditioning (2.2-2.3), to algorithmic processing (2.4-2.8), and finally complete a full-scale industrial engineering case study."
+    speakerNotes: "Walk students through the roadmap: we begin with physical intuition, build the hardware and algorithmic bridge, and culminate in a full practical engineering implementation."
   },
   {
     id: 4,
-    title: "Why Digital Signal Processing & DAQ Matter",
-    subtitle: "The bridge between analog physics and computational intelligence",
-    sectionTag: "Pedagogical Motivation",
-    type: "why-matters",
+    title: "The Story of Signals: Nature Doesn't Speak in 1s and 0s",
+    subtitle: "How physical reality communicates information to engineers",
+    sectionTag: "2.1 Story of Signals",
+    type: "concept",
     bullets: [
-      "Physical phenomena (temperature, strain, pressure, sound, vibration) exist exclusively as **continuous analog waveforms**.",
-      "Microprocessors, DSPs, GPUs, and machine learning models operate exclusively on **discrete quantized binary words**.",
-      "If sampling violates the Nyquist rate ($f_s < 2 f_{\\max}$), irreversible distortion occurs that **no software algorithm can ever repair**.",
-      "Analog signal conditioning (isolation, amplification, anti-aliasing) protects the ADC and preserves sensor fidelity.",
-      "Fourier transformation reveals the hidden harmonic signatures of vibration, resonance, fault degradation, and communication carrier frequencies."
+      "**Signals Are Everywhere in Nature**: The electrical voltage pulsing across a human heart (ECG), the pressure waves vibrating your eardrum when a friend speaks, the mechanical shudder of a bridge in the wind, and the thermal expansion of mercury in a boiler.",
+      "**The Definition of a Signal**: A signal is any physical quantity or disturbance that varies over time, space, or another independent variable and carries measurable information about the state of a system.",
+      "**The Fundamental Reality**: In the physical universe, energy and matter vary smoothly and continuously. Time has no gaps, and voltage can take any value along an infinite mathematical continuum.",
+      "**The Engineer's Mission**: To analyze, optimize, automate, or protect machines, engineers must capture these fleeting physical fluctuations and translate them into a language that digital computers can understand."
     ],
-    equation: "X[k] = \\sum_{n=0}^{N-1} x[n] \\cdot e^{-j \\frac{2\\pi}{N} k n} \\quad \\Longleftrightarrow \\quad x[n] = \\frac{1}{N} \\sum_{k=0}^{N-1} X[k] \\cdot e^{j \\frac{2\\pi}{N} k n}",
-    speakerNotes: "Emphasize to the classroom that DSP is not just theoretical math—it is the operational firmware inside every modern measurement device."
+    takeaway: "A signal is a physical disturbance carrying information; nature expresses itself as an unbroken continuum of continuous time and infinite amplitudes.",
+    speakerNotes: "Begin the lecture by asking students: What is a signal? Mention that before humans invented electronics, sound waves and heartbeats were already signals. Our job as instrumentation engineers is to listen, record, and interpret them."
   },
-
-  // ---------------------------------------------------------------------------
-  // SECTION 2.1: TYPES OF SIGNALS
-  // ---------------------------------------------------------------------------
   {
     id: 5,
-    title: "2.1 Types of Signals",
-    sectionTag: "Topic 2.1",
-    type: "section-divider",
-    takeaway: "Signals are physical carriers of information modeled mathematically across time, value, periodicity, and energy domains.",
-    speakerNotes: "Introduce Section 2.1: Types of Signals. Guide students through continuous vs discrete, deterministic vs random, and energy vs power classifications."
+    title: "The Great Engineering Dilemma: Nature vs. Computers",
+    subtitle: "Two fundamentally incompatible worlds that must communicate perfectly",
+    sectionTag: "2.1 Engineering Dilemma",
+    type: "analogy",
+    analogy: {
+      everydayConcept: "Storing an Eagle's Flight Path in a Finite Notebook",
+      technicalMapping: "Smooth continuous eagle flight is continuous-time x(t); snapshot photos at 30 fps is sampling fs; rounding altitude to nearest whole meter is 12-bit ADC quantization; notebook photo pages is RAM buffer array.",
+      whyItWorks: "Both computers and notebooks have finite capacity; infinite real-world continuity must be discretized in time and quantized in amplitude to be preserved digitally.",
+      limitsOfAnalogy: "An eagle's flight is 3-dimensional, whereas electrical sensor voltages are scalar 1-dimensional quantities mapped to positive and negative voltage rails."
+    },
+    speakerNotes: "This analogy cements the fundamental reason DSP exists: computers cannot store infinity. We must sample time and quantize amplitude, but do so without losing any critical physical information."
   },
   {
     id: 6,
-    title: "Signal Classification Fundamentals",
-    subtitle: "Time, value, predictability, and energy classifications",
-    sectionTag: "2.1 Signal Types",
-    type: "content",
-    bullets: [
-      "**Continuous-Time $x(t)$ vs Discrete-Time $x[n]$**: Continuous signals are defined for all real $t \\in \\mathbb{R}$; discrete signals exist only at integer sample instants $n \\in \\mathbb{Z}$ where $x[n] = x(n \\cdot T_s)$.",
-      "**Analog vs Quantized Digital**: Analog signals assume infinite continuum amplitudes; digital signals are rounded into $2^N$ discrete binary levels.",
-      "**Deterministic vs Random (Stochastic)**: Deterministic signals are uniquely modeled by analytical equations; random signals are characterized by probability distributions, mean $\\mu$, variance $\\sigma^2$, and power spectral density.",
-      "**Periodic vs Aperiodic**: Periodic signals repeat identically such that $x(t) = x(t + T_0)$; aperiodic signals have no repeating cycle and exhibit continuous frequency spectra.",
-      "**Energy vs Power Signals**: Transients are energy signals ($E < \\infty, P_{\\text{avg}} = 0$); persistent periodic signals are power signals ($E = \\infty, 0 < P_{\\text{avg}} < \\infty$)."
+    title: "Signal Classification Fundamentals: The 5 Taxonomic Dimensions",
+    subtitle: "The formal framework for categorizing any engineering signal",
+    sectionTag: "2.1 Signal Taxonomy",
+    type: "types",
+    typesGrid: [
+      {
+        typeName: "1. Time Continuity",
+        description: "Whether the signal exists for all real time moments or only at discrete clock ticks.",
+        keyFeature: "Continuous-Time x(t) vs. Discrete-Time x[n]",
+        example: "Analog sensor voltage vs. sampled array in computer RAM",
+        badge: "Time Domain"
+      },
+      {
+        typeName: "2. Amplitude Values",
+        description: "Whether the amplitude can take infinite continuous values or is rounded to binary levels.",
+        keyFeature: "Analog Continuum vs. Quantized Digital Levels",
+        example: "Potentiometer wiper voltage vs. 12-bit ADC integer code (0 to 4095)",
+        badge: "Value Domain"
+      },
+      {
+        typeName: "3. Predictability",
+        description: "Whether the future value of the signal can be predicted with an exact mathematical formula.",
+        keyFeature: "Deterministic vs. Random (Stochastic)",
+        example: "50 Hz mains sine wave vs. thermal Johnson noise",
+        badge: "Certainty"
+      },
+      {
+        typeName: "4. Repetition",
+        description: "Whether the waveform repeats an identical pattern after a fixed fundamental period T0.",
+        keyFeature: "Periodic (x(t+T0) = x(t)) vs. Aperiodic / Transient",
+        example: "Rotating motor vibration vs. hammer impact shock pulse",
+        badge: "Periodicity"
+      },
+      {
+        typeName: "5. Energy Persistence",
+        description: "Whether the signal has finite total energy or persistent non-zero average power.",
+        keyFeature: "Energy Signals (E < ∞, P = 0) vs. Power Signals (E = ∞, 0 < P < ∞)",
+        example: "Lightning strike transient vs. continuous electrical power grid",
+        badge: "Energy Domain"
+      }
     ],
-    speakerNotes: "Clarify the common misconception between 'discrete' (time domain sampling) and 'digital' (amplitude quantization). A signal can be discrete in time yet continuous in amplitude (like an analog sample-and-hold circuit)."
+    speakerNotes: "Walk students through each of the 5 classification axes. Emphasize that every signal encountered in instrumentation can be classified along all 5 dimensions simultaneously."
   },
   {
     id: 7,
-    title: "Definition: Signal (Continuous vs. Discrete)",
-    sectionTag: "2.1 Formal Definition",
-    type: "definition",
-    definition: {
-      term: "Signal (Continuous vs. Discrete)",
-      formalDefinition: "A function of one or more independent variables that conveys information about the state or behavior of a physical system. Continuous signals x(t) map real time t ∈ ℝ to a continuum of amplitudes, whereas discrete-time signals x[n] map integer indices n ∈ ℤ to values sampled at intervals Ts.",
-      symbol: "x(t) \\in \\mathbb{R} \\quad \\Longleftrightarrow \\quad x[n] = x(n \\cdot T_s)",
-      units: "Dimensionless or SI unit of measurand (V, Pa, m/s², °C)",
-      standardReference: "IEEE Std 100 / IEC 60050",
-      keyImplication: "Continuous signals contain infinite information density per unit time; digital representation requires both time sampling (discretization) and amplitude quantization (finite word length)."
-    },
-    speakerNotes: "Ensure students distinguish between continuous-time, discrete-time, and fully digitized signals."
+    title: "Taxonomy Deep-Dive: Continuous vs. Discrete & Analog vs. Digital",
+    subtitle: "Clarifying the most common point of student confusion",
+    sectionTag: "2.1 Taxonomy Detail",
+    type: "concept",
+    bullets: [
+      "**Discrete-Time ≠ Digital**: A common trap is assuming that 'discrete' and 'digital' are synonyms. They describe two completely different axes!",
+      "**Continuous-Time $x(t)$**: Defined for every instantaneous real moment $t \\in \\mathbb{R}$. Example: The voltage produced by a thermocouple welded to a turbine casing.",
+      "**Discrete-Time $x[n]$**: Defined only at integer indices $n \\in \\mathbb{Z}$, representing periodic snapshots taken every $T_s$ seconds: $x[n] = x(n \\cdot T_s)$.",
+      "**Analog vs. Digital (Amplitude Axis)**: An analog signal has unquantized, infinite amplitude precision. A digital signal has both discrete time *and* quantized amplitude rounded to $2^N$ binary levels.",
+      "**Can a signal be discrete in time but analog in amplitude?** YES! An analog Sample-and-Hold (S/H) capacitor holds frozen voltages at discrete clock ticks, but the voltage stored on the capacitor is still an unquantized analog value."
+    ],
+    takeaway: "Sampling discretizes the time axis; quantization discretizes the amplitude axis. Only when both operations are performed is a signal truly digital.",
+    speakerNotes: "Emphasize this distinction! Draw an analog S/H circuit on the board to illustrate how discrete-time analog signals exist in hardware right before the ADC comparator ladder."
   },
   {
     id: 8,
-    title: "Figure 2.1: Signal Taxonomy & Energy Formulations",
+    title: "Taxonomy Deep-Dive: Deterministic vs. Random & Energy vs. Power",
+    subtitle: "Mathematical modeling of predictability and physical energy",
+    sectionTag: "2.1 Energy & Predictability",
+    type: "formula",
+    formulaBlock: {
+      equation: "E = \\int_{-\\infty}^{\\infty} |x(t)|^2 dt < \\infty \\quad \\text{vs.} \\quad P_{\\text{avg}} = \\lim_{T \\to \\infty} \\frac{1}{T} \\int_{-T/2}^{T/2} |x(t)|^2 dt < \\infty",
+      label: "Energy and Power Signal Formulations",
+      description: "Mathematical criteria separating transient energy signals from persistent power signals.",
+      symbols: [
+        { symbol: "E", name: "Total Energy", unit: "J or V^2 s", description: "Integral of squared signal magnitude across all infinite time" },
+        { symbol: "P_avg", name: "Average Power", unit: "W or V^2", description: "Time-averaged power over an infinite observation interval" },
+        { symbol: "x(t)", name: "Signal Waveform", unit: "V", description: "Time-domain voltage or physical measurand waveform" }
+      ]
+    },
+    bullets: [
+      "**Deterministic Signals**: Completely describable by an exact closed-form equation, such as $x(t) = A \\sin(2\\pi f_0 t + \\phi)$. Its future value at any instant $t_1$ is known with 100% certainty.",
+      "**Random (Stochastic) Signals**: Governed by chance and physical chaos (thermal electron agitation, atmospheric turbulence). Modeled using probability density functions (PDF), mean $\\mu$, variance $\\sigma^2$, and power spectral density (PSD).",
+      "**Energy Signals**: Transient events that start and decay to zero (e.g., an acoustic sonic boom, a seismic earthquake shock). Total energy $E$ is finite, but average power over all infinite time is $P_{\\text{avg}} = 0$.",
+      "**Power Signals**: Persistent, ongoing waveforms that continue indefinitely (e.g., a 50 Hz AC line voltage, continuous motor vibration). Total energy $E = \\infty$, but time-averaged power $P_{\\text{avg}}$ is finite and non-zero."
+    ],
+    speakerNotes: "Remind students: A signal can NEVER be both an energy signal and a power signal simultaneously! If energy is finite, average power is zero. If average power is finite, total energy is infinite."
+  },
+  {
+    id: 9,
+    title: "Figure 2.1: Signal Taxonomy & Classification Vector Architecture",
+    subtitle: "Complete visual map of time, value, predictability, and energy domains",
     sectionTag: "2.1 Vector Diagram",
     type: "figure",
     figureKey: "u2_fig1",
     speakerNotes: "Point out the 4 visual quadrants in Figure 2.1: continuous vs discrete stem plot, periodic vs transient impulse, deterministic wave with random noise overlay, and the formal integrals for Energy signals vs Power signals."
   },
   {
-    id: 9,
-    title: "Check Understanding: Periodic vs. Energy Signals",
+    id: 10,
+    title: "Check Understanding: Classifying Real-World Signals",
+    subtitle: "Formative evaluation of signal taxonomy concepts",
     sectionTag: "2.1 Formative Quiz",
     type: "check-understanding",
     quiz: {
-      question: "Which of the following statements is mathematically TRUE regarding a pure cosine waveform x(t) = 5 \\cos(200\\pi t)?",
+      question: "An engineer records an acoustic shockwave from an explosive valve test: the sound pressure spikes to 140 dB within 2 milliseconds and dies out completely after 50 milliseconds. How is this signal classified?",
       options: [
-        "It is an energy signal because its amplitude is bounded between -5 and +5.",
-        "It is a power signal with infinite total energy E = ∞ and finite average power P = 12.5 W (across 1 Ω).",
-        "It is a deterministic transient signal with zero average power.",
-        "It has a continuous frequency spectrum spanning all frequencies."
+        "Periodic power signal with continuous frequency harmonics",
+        "Deterministic power signal with infinite total energy",
+        "Aperiodic energy signal with finite total energy and zero average power over infinite time",
+        "Random discrete-time signal with non-zero average power"
       ],
-      correctIndex: 1,
-      explanation: "A periodic signal persists indefinitely over all time t ∈ (-∞, ∞). Integrating |x(t)|² from -∞ to +∞ yields infinite total energy (E = ∞). However, its time-averaged power over one period T0 = 10 ms is finite: P_avg = (5 / √2)² = 25 / 2 = 12.5 W. Therefore, it is strictly a power signal."
+      correctIndex: 2,
+      explanation: "Because the explosion is a transient shock that starts, spikes, and completely decays to zero after 50 ms, the time integral of |x(t)|² from -∞ to +∞ converges to a finite number (E < ∞). Dividing finite energy by infinite time t ∈ (-∞, ∞) yields exactly zero average power (P_avg = 0). It does not repeat, making it strictly an aperiodic energy signal."
     },
-    speakerNotes: "Remind students that all sustained periodic waveforms are power signals, whereas transient pulses are energy signals."
+    speakerNotes: "Walk students through the explanation. Transient physical phenomena are always energy signals."
   },
 
-  // ---------------------------------------------------------------------------
-  // SECTION 2.2: ACQUISITION, SAMPLING & QUANTIZATION
-  // ---------------------------------------------------------------------------
-  {
-    id: 10,
-    title: "2.2 Acquisition and Properties of Digital Signals",
-    sectionTag: "Topic 2.2",
-    type: "section-divider",
-    takeaway: "The interface between continuous reality and digital computation is governed by the Nyquist-Shannon sampling theorem and finite ADC quantization.",
-    speakerNotes: "Transition to Section 2.2: Digital Acquisition and Properties. Cover sampling, aliasing, ADC quantization, and aperture jitter."
-  },
+  // ===========================================================================
+  // ACT 2: BRIDGING NATURE TO COMPUTERS (SAMPLING & QUANTIZATION)
+  // ===========================================================================
   {
     id: 11,
-    title: "Sampling Theorem, Aliasing & Aperture Jitter",
-    subtitle: "Theoretical limits and hardware imperfections in signal acquisition",
-    sectionTag: "2.2 Digital Acquisition",
-    type: "content",
-    bullets: [
-      "**Nyquist-Shannon Sampling Theorem**: A continuous signal $x(t)$ bandlimited to $f_{\\max}$ can be uniquely and completely reconstructed from its samples if and only if $f_s \\ge 2 \\cdot f_{\\max}$.",
-      "**Aliasing & Spectral Folding**: If $f_s < 2 f_{\\max}$, frequencies above the Nyquist boundary ($f_s/2$) fold back into the baseband at $f_{\\text{apparent}} = |f_{\\text{in}} - k \\cdot f_s|$, appearing as false ghost tones.",
-      "**ADC Quantization Error**: For an $N$-bit ADC with Full-Scale Range $V_{\\text{FSR}}$, step size is $\\Delta V = V_{\\text{FSR}} / (2^N - 1)$. Maximum quantization error is bounded by $\\pm \\frac{\\Delta V}{2} = \\pm 0.5\\text{ LSB}$.",
-      "**Signal-to-Quantization-Noise Ratio**: Theoretical ideal dynamic range is $\\mathrm{SQNR}_{\\text{dB}} = 6.02 \\cdot N + 1.76\\text{ dB}$. Every added bit yields $+6.02\\text{ dB}$ of dynamic range.",
-      "**Aperture Jitter**: Clock timing uncertainty $\\Delta t_a$ induces voltage amplitude errors $\\Delta V_e = 2\\pi f_{\\text{in}} V_0 \\cdot \\Delta t_a$. High-speed signals require jitter $< 10\\text{ ps}$."
-    ],
-    speakerNotes: "Stress that aliasing cannot be filtered out digitally after sampling. If an undersampled 90 Hz signal appears as 10 Hz in a 100 Hz sampled system, the computer has zero mathematical way to know it wasn't originally 10 Hz."
+    title: "2.2 The Acquisition Bridge: Sampling & Quantization",
+    sectionTag: "Topic 2.2",
+    type: "section-divider",
+    takeaway: "To bring continuous reality into a microprocessor, we must slice continuous time into samples and partition infinite voltage into discrete binary numbers.",
+    speakerNotes: "Transition into Section 2.2: How hardware converts analog reality into digital numbers. Cover the Nyquist theorem, aliasing, and ADC bit depth."
   },
   {
     id: 12,
-    title: "Definition: Nyquist-Shannon Sampling Theorem",
-    sectionTag: "2.2 Formal Definition",
-    type: "definition",
-    definition: {
-      term: "Nyquist-Shannon Sampling Theorem",
-      formalDefinition: "A continuous-time signal x(t) that contains no frequency components higher than f_max is completely determined and can be exactly reconstructed from its instantaneous samples x[n] = x(n · Ts) taken at a uniform rate fs if and only if fs ≥ 2 · f_max.",
-      symbol: "f_s \\ge 2 \\cdot f_{\\max} \\quad \\Longleftrightarrow \\quad f_{\\text{Nyquist}} = \\frac{f_s}{2}",
-      units: "Hertz (Hz) or Samples per second (S/s)",
-      standardReference: "Shannon (1949) / Whittaker-Kotelnikov-Nyquist",
-      keyImplication: "Exact Whittaker-Shannon sinc interpolation reconstruction is guaranteed mathematically without information loss when the strict inequality is satisfied."
-    },
-    speakerNotes: "Explain that the Nyquist rate is a mathematical minimum; practical engineering requires fs to be 2.5x to 10x higher to accommodate non-ideal filter roll-off."
+    title: "The Nyquist-Shannon Speed Limit: How Fast Must We Sample?",
+    subtitle: "The mathematical threshold that prevents information loss",
+    sectionTag: "2.2 Sampling Theorem",
+    type: "concept",
+    bullets: [
+      "**The Fundamental Question**: How many snapshots per second must a computer take to capture a continuous analog wave without losing a single drop of information?",
+      "**Harry Nyquist and Claude Shannon's Discovery**: To capture a sine wave, you need at least two samples per cycle—one to catch the positive crest, and one to catch the negative trough.",
+      "**The Nyquist-Shannon Sampling Theorem**: A continuous signal $x(t)$ bandlimited to a maximum frequency $f_{\\max}$ can be *perfectly and uniquely reconstructed* from its samples if and only if the sampling frequency $f_s$ satisfies:",
+      "$$f_s \\ge 2 \\cdot f_{\\max}$$",
+      "**The Nyquist Frequency ($f_N$)**: The maximum signal frequency that can be safely recorded without distortion is exactly half the sampling rate: $f_N = f_s / 2$.",
+      "**Engineering Practice**: In real instrumentation, engineers never sample at bare minimum $2 \\times f_{\\max}$. We use an oversampling guard band ($f_s \\ge 2.56 \\times f_{\\max}$ to $5 \\times f_{\\max}$) to allow analog anti-aliasing filters to roll off cleanly."
+    ],
+    takeaway: "The sampling rate must be strictly greater than twice the highest frequency component present in the analog signal to guarantee perfect mathematical reconstruction.",
+    speakerNotes: "Emphasize that Nyquist's theorem guarantees 100% information preservation—not an approximation—provided the signal is bandlimited and sampled at fs >= 2*fmax."
   },
   {
     id: 13,
-    title: "Figure 2.2: Nyquist Theorem & Aliasing Spectrum",
-    sectionTag: "2.2 Vector Diagram",
-    type: "figure",
-    figureKey: "u2_fig2",
-    speakerNotes: "Direct students to Case A on the left (guard band separating spectral replicas) vs Case B on the right (overlapping triangles causing irreversible aliased distortion)."
+    title: "The Ghost in the Machine: Aliasing & The Wagon-Wheel Illusion",
+    subtitle: "What catastrophic failure occurs when you sample too slowly?",
+    sectionTag: "2.2 Aliasing Phenomenon",
+    type: "analogy",
+    analogy: {
+      everydayConcept: "The Wagon-Wheel Illusion in Old Movies",
+      technicalMapping: "High-speed wheel rotation (f > 12 rev/s) represents high-frequency analog signal; 24 fps camera shutter represents ADC sampling rate fs; illusion of wheel spinning backwards at 3 rev/s represents aliased ghost tone.",
+      whyItWorks: "When sampling frequency is less than twice the rotation frequency (fs < 2*f_in), the discrete camera snapshots catch spokes at deceptive angles, creating a false low frequency in the digital data.",
+      limitsOfAnalogy: "The human brain perceives visual rotation, whereas an ADC captures scalar electrical voltage; however, the mathematics of stroboscopic undersampling are identical."
+    },
+    speakerNotes: "The wagon-wheel illusion is the most intuitive way for students to visualize aliasing. Undersampling creates a real, physical illusion in the digital data that looks exactly like a low frequency."
   },
   {
     id: 14,
-    title: "Figure 2.2B: ADC Bit Depth & Quantization Step Size",
+    title: "Figure 2.2: Nyquist Sampling & Spectral Aliasing Folding",
+    subtitle: "Visualizing proper sampling vs. destructive spectral folding",
     sectionTag: "2.2 Vector Diagram",
     type: "figure",
-    figureKey: "u2_fig_quantization_bits",
-    speakerNotes: "Examine Figure 2.2B comparing 8-bit (256 steps, 78.1 mV), 12-bit (4096 steps, 4.88 mV), 16-bit (65536 steps, 305 uV), and 24-bit Dewesoft DualCore (16.7M steps, 1.19 uV, >160 dB dynamic range)."
+    figureKey: "u2_fig2",
+    speakerNotes: "Guide students through Figure 2.2: point out how proper sampling separates spectral copies with clean guard bands, whereas undersampling causes the copies to overlap and fold back into the baseband."
   },
   {
     id: 15,
-    title: "ADC Architecture Comparison (Flash, SAR, Sigma-Delta)",
-    sectionTag: "2.2 Technology Taxonomy",
-    type: "types",
-    typesGrid: [
-      {
-        typeName: "Flash (Parallel) ADC",
-        description: "Uses 2^N - 1 analog comparators in parallel against a precision resistor divider ladder.",
-        keyFeature: "Ultra-high speed (1 to 10 GS/s); 1 clock cycle latency.",
-        example: "Oscilloscopes, radar, optical communications (6 to 8 bits).",
-        badge: "Ultra-Fast (GS/s)"
-      },
-      {
-        typeName: "Successive Approximation (SAR)",
-        description: "Uses a binary search algorithm with an internal DAC and single comparator to converge bit-by-bit.",
-        keyFeature: "Zero pipeline delay, low power, moderate to high resolution (12 to 18 bits, up to 10 MS/s).",
-        example: "Industrial multi-channel DAQ, motor control, multiplexed systems.",
-        badge: "Zero-Latency"
-      },
-      {
-        typeName: "Sigma-Delta (ΣΔ) ADC",
-        description: "Oversamples by Kx (e.g. 64x to 256x) with 1-bit or multi-bit modulator and digital decimation filter.",
-        keyFeature: "Pushes quantization noise into high frequencies; ultra-high resolution (24 bits, up to 200 kS/s).",
-        example: "Audio analyzers, seismic geophones, precision vibration DAQ.",
-        badge: "High Resolution"
-      },
-      {
-        typeName: "Dewesoft DualCoreADC®",
-        description: "Utilizes dual 24-bit sigma-delta ADCs per channel operating with different gains in parallel.",
-        keyFeature: "Automatic seamless blending yielding >160 dB dynamic range and anti-aliasing per channel.",
-        example: "Automotive crash testing, aerospace rocket engine test cells.",
-        badge: "160 dB Dynamic Range"
-      }
+    title: "The Airport Security Principle: Why Software Cannot Fix Aliasing",
+    subtitle: "Why an analog anti-aliasing low-pass filter is mandatory before the ADC",
+    sectionTag: "2.2 Anti-Aliasing Filter",
+    type: "concept",
+    bullets: [
+      "**The Fatal Misconception**: Students often believe: 'If high-frequency noise enters my computer, I will simply write a Python or MATLAB digital filter to remove it!'",
+      "**The Fatal Reality**: Once aliasing occurs, it is mathematically irreversible. If an undersampled 90 Hz vibration tone folds across a 100 Hz sampling rate, it registers in memory as a pure 10 Hz tone.",
+      "**Zero Software Clues**: The microprocessor has zero mathematical way to know whether that 10 Hz number came from a genuine 10 Hz shaft oscillation or an aliased 90 Hz noise spike. The data is permanently poisoned.",
+      "**The Airport Security Rule**: Just as airport security must inspect passengers *before* they board the airplane, unwanted high frequencies must be eliminated by a physical analog low-pass filter *before* the ADC takes a single sample!",
+      "**The Anti-Aliasing Filter (AAF)**: An active analog low-pass filter (Butterworth, Chebyshev, or Bessel) placed strictly before the Sample-and-Hold circuit with cutoff $f_c \\le f_s / 2$."
     ],
-    speakerNotes: "Walk students through the ADC trade-off space: Flash for gigasample speed but low resolution; SAR for zero-latency control loops; Sigma-Delta for ultra-high dynamic range sound and vibration measurement."
+    takeaway: "Aliasing cannot be filtered out digitally in software. An analog anti-aliasing low-pass filter is mandatory before the Analog-to-Digital Converter.",
+    speakerNotes: "Reiterate this strongly: No algorithm on earth can separate an aliased tone from a genuine low-frequency signal once it enters computer memory. Prevention must happen in hardware."
   },
   {
     id: 16,
-    title: "Trade-off: SAR vs. Sigma-Delta ADCs",
-    sectionTag: "2.2 Engineering Trade-offs",
-    type: "pros-cons",
-    prosCons: {
-      title: "SAR vs. Sigma-Delta Converters in Modern Instrumentation",
-      advantages: [
-        "**SAR Advantage**: Instantaneous zero-latency conversion (ideal for closed-loop real-time PID controllers).",
-        "**SAR Advantage**: Multiplexes easily across 16 to 64 channels with a single ADC chip.",
-        "**ΣΔ Advantage**: Ultra-deep dynamic range (24 bits, SQNR > 140 dB), eliminating manual input range gain switching.",
-        "**ΣΔ Advantage**: Built-in digital anti-aliasing filter provides sharp brickwall roll-off with linear phase."
-      ],
-      disadvantages: [
-        "**SAR Disadvantage**: Requires steep, expensive external analog anti-aliasing filters on every channel.",
-        "**SAR Disadvantage**: Resolution generally limited to 16-18 bits; high quantization noise floor compared to ΣΔ.",
-        "**ΣΔ Disadvantage**: Digital decimation filter introduces group delay latency (unsuitable for fast microsecond control loops).",
-        "**ΣΔ Disadvantage**: Cannot be easily multiplexed due to digital filter settling times (requires 1 ADC per channel)."
-      ],
-      engineeringVerdict: "Use SAR ADCs for transient control, trigger systems, and multiplexed general logging. Use 24-bit Sigma-Delta (or DualCoreADC) for sound, vibration, structural modal analysis, and dynamic sensor telemetry."
+    title: "Quantization: Turning Continuous Voltages into Binary Integers",
+    subtitle: "Partitioning full-scale voltage into 2^N discrete numerical bins",
+    sectionTag: "2.2 Quantization Depth",
+    type: "formula",
+    formulaBlock: {
+      equation: "\\Delta V = V_{\\text{LSB}} = \\frac{V_{\\text{FS}}}{2^N} \\quad \\text{and} \\quad \\mathrm{SNR}_{\\text{ideal}} = 6.02 \\cdot N + 1.76\\text{ dB}",
+      label: "ADC Quantization Resolution and Dynamic Range",
+      description: "Least Significant Bit (LSB) step voltage width and theoretical Signal-to-Quantization-Noise Ratio.",
+      symbols: [
+        { symbol: "\\Delta V", name: "Quantization Step Size (V_LSB)", unit: "V", description: "Smallest voltage change capable of altering the least significant binary bit" },
+        { symbol: "V_FS", name: "Full-Scale Voltage Range", unit: "V", description: "Total active analog voltage span of the converter (e.g., 0 to 5.0 V)" },
+        { symbol: "N", name: "ADC Bit Depth", unit: "bits", description: "Number of binary output bits (8, 12, 16, or 24 bits)" },
+        { symbol: "SNR", name: "Signal-to-Noise Ratio", unit: "dB", description: "Ratio of full-scale sinusoidal signal power to theoretical quantization noise power" }
+      ]
     },
-    speakerNotes: "Explain why modern DAQ vendors like Dewesoft use one 24-bit Sigma-Delta ADC per channel: silicon is cheap, but ruined tests due to improper gain ranges or aliased frequencies cost millions."
+    bullets: [
+      "**Finite Staircase Approximation**: An $N$-bit converter has exactly $2^N$ discrete states. Any continuous voltage falling between steps is rounded to the nearest level.",
+      "**Quantization Error ($e_q$)**: Bounded within half a step size: $-\\frac{\\Delta V}{2} \\le e_q \\le +\\frac{\\Delta V}{2}$.",
+      "**The 6.02 dB Rule of Thumb**: Every single bit added to an ADC cuts the voltage step size in half and adds $+6.02\\text{ dB}$ of clean dynamic range!",
+      "**8-bit Microcontroller**: $2^8 = 256$ bins, $\\Delta V = 19.5\\text{ mV}$ (for $5\\text{ V}$), $\\mathrm{SNR} = 49.9\\text{ dB}$.",
+      "**12-bit DAQ System**: $2^{12} = 4096$ bins, $\\Delta V = 1.22\\text{ mV}$ (for $5\\text{ V}$), $\\mathrm{SNR} = 74.0\\text{ dB}$.",
+      "**16-bit Professional DAQ**: $2^{16} = 65,536$ bins, $\\Delta V = 76.3\\,\\mu\\text{V}$ (for $5\\text{ V}$), $\\mathrm{SNR} = 98.1\\text{ dB}$."
+    ],
+    speakerNotes: "Highlight how bit depth translates directly to measurement sensitivity. A 12-bit ADC can resolve a 1.22 mV change, whereas an 8-bit ADC is blind to anything below 19.5 mV."
   },
   {
     id: 17,
-    title: "Check Understanding: Aliasing Ghost Frequency",
-    sectionTag: "2.2 Formative Quiz",
-    type: "check-understanding",
-    quiz: {
-      question: "A high-frequency noise spike at f_in = 18 kHz enters a DAQ system sampled at fs = 20 kS/s without an anti-aliasing filter. What apparent frequency will appear in the FFT display?",
-      options: [
-        "18 kHz (the true original frequency)",
-        "10 kHz (clamped at the Nyquist frequency)",
-        "2 kHz (folded alias: |18 - 20| kHz)",
-        "8 kHz (Nyquist difference: 10 - 2 kHz)"
-      ],
-      correctIndex: 2,
-      explanation: "Applying the aliasing folding formula: f_apparent = |f_in - k · fs| where k = 1. Here, f_apparent = |18 kHz - 20 kHz| = 2 kHz. Because 2 kHz is below the 10 kHz Nyquist frequency, it appears as a completely legitimate, false low-frequency 'ghost' vibration spike that no DSP software can distinguish from real 2 kHz machinery vibration!"
-    },
-    speakerNotes: "Emphasize this core failure mode: an unshielded 18 kHz inverter noise spike looks like a broken 2 kHz rotor bearing to the computer."
+    title: "Figure 2.3: ADC Bit-Depth & Quantization Resolution Comparison",
+    subtitle: "Visual comparison of 8-bit, 12-bit, 16-bit, and 24-bit DualCore conversion",
+    sectionTag: "2.2 Vector Diagram",
+    type: "figure",
+    figureKey: "u2_fig11",
+    speakerNotes: "Show students Figure 2.3: notice how 8-bit shows visible staircase steps, 12-bit refines the curve, 16-bit looks near-analog, and 24-bit provides over 160 dB dynamic range for high-end instruments."
   },
-
-  // ---------------------------------------------------------------------------
-  // SECTION 2.3: MODERN DAQ ARCHITECTURE & SIGNAL CONDITIONING
-  // ---------------------------------------------------------------------------
   {
     id: 18,
-    title: "2.3 Signal Conditioning & Modern DAQ Architecture",
-    sectionTag: "Topic 2.3",
-    type: "section-divider",
-    takeaway: "Signal conditioning protects the ADC, powers sensors, eliminates common-mode interference, and prevents aliasing before digitization.",
-    speakerNotes: "Transition to Section 2.3: Hardware Signal Conditioning & Modern DAQ Architecture based on Dewesoft engineering."
+    title: "Modern 4-Pillar DAQ System Architecture",
+    subtitle: "The Dewesoft instrumentation model from sensor to computer display",
+    sectionTag: "2.3 DAQ Architecture",
+    type: "figure",
+    figureKey: "u2_fig9",
+    speakerNotes: "Walk through the 4 core pillars in Figure 2.3: (1) Sensors interfacing physical reality, (2) Analog Signal Conditioning, (3) High-Resolution ADC, and (4) DAQ Processing Software."
   },
   {
     id: 19,
-    title: "Definition: Data Acquisition System (DAQ / DAS)",
-    sectionTag: "2.3 Formal Definition",
-    type: "definition",
-    definition: {
-      term: "Data Acquisition System (DAQ / DAS)",
-      formalDefinition: "The automated process and integrated hardware/software system that measures real-world physical phenomena (temperature, strain, pressure, sound, vibration, voltage, current) through sensors, conditions the electrical signals, converts them into digital numbers via an ADC, and records, analyzes, and presents the data using dedicated software.",
-      symbol: "\\text{Physical Phenomenon} \\longrightarrow \\text{Sensor} \\longrightarrow \\text{Conditioning} \\longrightarrow \\text{ADC} \\longrightarrow \\text{DSP/PC}",
-      units: "Integrated System Standard (IEC 61010-1 / IEEE 1451)",
-      standardReference: "Dewesoft DAQ Standard / ISO 10012",
-      keyImplication: "Unlike simple meters or legacy chart recorders, modern DAQ systems synchronously capture multiple physical domains, isolate high voltages, and execute real-time mathematical DSP algorithms."
-    },
-    speakerNotes: "Highlight Dewesoft's definition: a DAQ system is not just an ADC board—it is an end-to-end synchronized measurement pipeline."
+    title: "Universal Sensor Conditioning Matrix",
+    subtitle: "Circuit topologies required to match diverse industrial sensors to the ADC",
+    sectionTag: "2.3 Signal Conditioning",
+    type: "figure",
+    figureKey: "u2_fig10",
+    speakerNotes: "Review the conditioning topologies in Figure 2.4: Wheatstone bridge for strain gauges, constant current IEPE for vibration accelerometers, cold junction compensation for thermocouples, and high-voltage dividers."
   },
+
+  // ===========================================================================
+  // ACT 3: THE FOURIER TRANSFORM STORY (UNMIXING WAVES INTO FREQUENCIES)
+  // ===========================================================================
   {
     id: 20,
-    title: "Figure 2.3A: Modern DAQ System Architecture (Dewesoft Model)",
-    sectionTag: "2.3 Vector Diagram",
-    type: "figure",
-    figureKey: "u2_fig_dewesoft_daq",
-    speakerNotes: "Walk students through the 4 core pillars in Figure 2.3A: 1. Physical Sensors, 2. Signal Conditioning with galvanic isolation, 3. ADC Engine with 24-bit DualCore, 4. DAQ Software with real-time FFT."
+    title: "2.5–2.8 The Fourier Transform Story",
+    subtitle: "Unmixing the Hidden Symphony of Waves into Pure Musical Notes",
+    sectionTag: "Topic 2.5–2.8",
+    type: "section-divider",
+    takeaway: "The Fourier Transform is the mathematical prism of engineering: it unmixes tangled time waveforms into their fundamental harmonic frequency components.",
+    speakerNotes: "Introduce Act 3: The Fourier Story. Jean-Baptiste Joseph Fourier's astonishing insight that ANY waveform can be constructed from pure sine and cosine waves."
   },
   {
     id: 21,
-    title: "Figure 2.3B: Universal Sensor Signal Conditioning Matrix",
-    sectionTag: "2.3 Vector Diagram",
-    type: "figure",
-    figureKey: "u2_fig_conditioning_matrix",
-    speakerNotes: "Examine Figure 2.3B showing the 4 major sensor conditioning circuits: Wheatstone bridge with shunt calibration, IEPE constant current supply, Thermocouple CJC, and CAT IV high-voltage divider."
+    title: "The Fruit Smoothie & Musical Chord Analogy",
+    subtitle: "An intuitive plain-English way to grasp the Fourier Transform",
+    sectionTag: "2.5 Fourier Intuition",
+    type: "analogy",
+    analogy: {
+      everydayConcept: "The Fruit Smoothie Centrifuge & The Musical Ear",
+      technicalMapping: "A blended smoothie is the composite time-domain wave x(t); Fourier is the centrifuge separating 2 bananas, 5 strawberries, 12 blueberries; pure musical notes (C, E, G) are spectral frequency peaks |X(f)|.",
+      whyItWorks: "Complex physical signals are linear superpositions of pure sinusoidal harmonics; the Fourier integral projects the mixture onto orthogonal sines to isolate each ingredient.",
+      limitsOfAnalogy: "Fruit smoothie ingredients are positive scalars, whereas Fourier harmonics have both amplitude and phase angles (complex numbers with real and imaginary parts)."
+    },
+    speakerNotes: "Tell these two stories warmly to the class. Students who struggle with complex exponentials immediately understand the Fourier Transform once they picture un-blending a fruit smoothie or recognizing notes in a musical chord."
   },
   {
     id: 22,
-    title: "Universal Sensor Conditioning Topologies",
-    sectionTag: "2.3 Hardware Topologies",
-    type: "types",
-    typesGrid: [
-      {
-        typeName: "Strain & Bridge Sensors",
-        description: "Quarter (120Ω/350Ω), Half, and Full Wheatstone bridge circuits for strain gauges, load cells, and torque meters.",
-        keyFeature: "Regulated excitation (2.5V, 5V, 10V), remote sense leads, and precision shunt calibration (59.88 kΩ).",
-        example: "Airframe stress testing, crane scales, engine dynamometers.",
-        badge: "mV/V Output"
-      },
-      {
-        typeName: "IEPE / ICP Accelerometers",
-        description: "Piezoelectric crystals with built-in charge-to-voltage FET preamplifiers for vibration and acoustics.",
-        keyFeature: "Constant current excitation (2 to 20 mA at 24 VDC), AC-coupling capacitor (fc ≈ 0.5 Hz), and TEDS chip.",
-        example: "Turbine vibration, automotive crash tests, modal shaker analysis.",
-        badge: "Constant Current"
-      },
-      {
-        typeName: "Thermocouples & RTDs",
-        description: "Seebeck thermoelectric effect sensors (J, K, T, E, R, S) generating microvolt potentials proportional to ΔT.",
-        keyFeature: "Cold Junction Compensation (CJC) thermistor at terminal block, >1000V isolation, and open-wire burnout detection.",
-        example: "Furnace temperature profiles, engine exhaust gas monitoring.",
-        badge: "Cold Junction Comp"
-      },
-      {
-        typeName: "High Voltage & Current",
-        description: "Precision 1000:1 attenuator dividers and Hall-effect / Rogowski coils for power grid and inverter analysis.",
-        keyFeature: "Galvano-magnetic isolation barriers meeting CAT III / CAT IV safety ratings up to 1000 VRMS.",
-        example: "Electric vehicle powertrain testing, solar inverters, grid power quality.",
-        badge: "CAT IV Isolation"
-      }
+    title: "What is the Continuous Fourier Transform (CTFT)?",
+    subtitle: "The theoretical mathematical prism that unweaves continuous time",
+    sectionTag: "2.5 Continuous FT",
+    type: "formula",
+    formulaBlock: {
+      equation: "X(f) = \\int_{-\\infty}^{\\infty} x(t) \\cdot e^{-j 2\\pi f t} dt \\quad \\text{where } e^{-j 2\\pi f t} = \\cos(2\\pi f t) - j \\sin(2\\pi f t)",
+      label: "Continuous-Time Fourier Transform (CTFT)",
+      description: "Projecting a continuous time signal onto complex sinusoidal basis functions across all frequencies.",
+      symbols: [
+        { symbol: "X(f)", name: "Frequency Spectrum", unit: "V/Hz", description: "Complex spectral density representing amplitude and phase at frequency f" },
+        { symbol: "x(t)", name: "Time-Domain Signal", unit: "V", description: "Continuous physical voltage or measurand waveform defined for all t" },
+        { symbol: "f", name: "Continuous Frequency", unit: "Hz", description: "Test frequency variable sweeping from -infinity to +infinity" },
+        { symbol: "e^{-j 2\\pi f t}", name: "Complex Phasor", unit: "rad", description: "Euler's spinning orthogonal sine and cosine test probe" }
+      ]
+    },
+    bullets: [
+      "**How It Works**: The formula multiplies the signal $x(t)$ by a spinning complex phasor at test frequency $f$. If $x(t)$ contains that exact frequency, the product aligns and integrates to a massive value! If not, positive and negative lobes cancel out to zero.",
+      "**The Theoretical Prism**: Just as a glass prism breaks white sunlight into red, green, and violet beams, the CTFT breaks a complicated electrical signal into pure sinusoids.",
+      "**Continuous Input, Continuous Output**: Both time $t$ and frequency $f$ are continuous variables stretching from $-\\infty$ to $+\\infty$."
     ],
-    speakerNotes: "Every sensor needs specialized conditioning: you cannot plug an IEPE sensor into a thermocouple port. Signal conditioning matches the sensor physics to the ADC."
+    speakerNotes: "Explain Euler's formula e^(-j*2*pi*f*t) = cos - j*sin. Point out that the Fourier Transform is essentially computing the correlation between the signal and pure sine waves of every conceivable frequency."
   },
   {
     id: 23,
-    title: "Analogy: The Anti-Aliasing Filter as an Airport Security Checkpoint",
-    sectionTag: "2.3 Conceptual Analogy",
-    type: "analogy",
-    analogy: {
-      everydayConcept: "Airport Security Checkpoint Bouncer",
-      technicalMapping: "Analog Anti-Aliasing Low-Pass Filter (AA-LPF) preceding the ADC",
-      whyItWorks: "At an airport, unauthorized imposters must be stopped at the physical security gate BEFORE boarding the plane. Once the airplane takes off into the sky (the digital domain), all passengers are mixed together in seats, and flight attendants have zero way to determine who had a fake ticket.",
-      limitsOfAnalogy: "Airport security checks identity cards discretely, whereas an analog filter applies continuous frequency-dependent attenuation (-20n dB/decade roll-off) based on component reactances (inductors, capacitors, op-amps)."
-    },
-    speakerNotes: "Use this memorable analogy: Once aliased noise enters the ADC and gets digitized into numbers, no DSP software can ever identify or remove it."
-  },
-  {
-    id: 24,
-    title: "Check Understanding: Placement of Anti-Aliasing Filter",
-    sectionTag: "2.3 Formative Quiz",
-    type: "check-understanding",
-    quiz: {
-      question: "A junior test engineer suggests saving hardware BOM cost by removing the analog anti-aliasing filter and instead programming a 100th-order digital FIR low-pass filter inside the DSP software after the ADC. Is this engineering approach valid?",
-      options: [
-        "Yes, because modern DSPs have fast MAC units that can easily execute 100th-order filters.",
-        "Yes, digital filters have sharper roll-off than analog filters and zero phase distortion.",
-        "FATALLY FLAWED: High-frequency noise above fs/2 folds into the baseband during sampling and cannot be separated by software.",
-        "Yes, as long as the digital filter cutoff frequency is set to exactly fs / 4."
-      ],
-      correctIndex: 2,
-      explanation: "The proposal is fundamentally flawed. When an analog signal enters an ADC without analog anti-aliasing filtering, any noise frequencies above fs/2 fold back into the baseband instantaneously and irrevocably during the sampling process. Inside the digital domain, the aliased noise frequencies are mathematically indistinguishable from legitimate measurands. Software cannot un-bake the cake! The anti-aliasing filter MUST be an analog circuit placed BEFORE the ADC."
-    },
-    speakerNotes: "Reiterate: Software algorithms cannot fix broken hardware acquisition physics."
-  },
-
-  // ---------------------------------------------------------------------------
-  // SECTION 2.4: SIGNAL PROCESSING TECHNIQUES (CONVOLUTION, FILTERS)
-  // ---------------------------------------------------------------------------
-  {
-    id: 25,
-    title: "2.4 Signal Processing Techniques",
-    sectionTag: "Topic 2.4",
-    type: "section-divider",
-    takeaway: "Discrete convolution, digital filtering, and correlation form the core operational toolkit of DSP algorithms.",
-    speakerNotes: "Transition to Section 2.4: Signal Processing Techniques. Discuss discrete convolution, correlation, and FIR vs IIR filter architectures."
-  },
-  {
-    id: 26,
-    title: "Discrete Convolution, Correlation & Digital Filtering",
-    subtitle: "Time-domain processing and FIR vs. IIR filter design",
-    sectionTag: "2.4 Processing Techniques",
-    type: "content",
-    bullets: [
-      "**Discrete Convolution**: Fundamental linear time-invariant (LTI) input-output relation: $y[n] = x[n] * h[n] = \\sum_{k=-\\infty}^{\\infty} x[k] \\cdot h[n - k]$. Convolution in time equals multiplication in frequency.",
-      "**Cross-Correlation & Autocorrelation**: Measures statistical similarity between two signals as a function of time lag $\\tau$. Widely used for pulse transit-time delay estimation (ultrasonic flowmeters, radar, sonar).",
-      "**FIR Digital Filters (All-Zero)**: $y[n] = \\sum_{k=0}^{M} b_k \\cdot x[n - k]$. Unconditionally stable (all poles at origin $z=0$) and exhibits perfect linear phase (constant group delay; zero shape distortion).",
-      "**IIR Digital Filters (Poles & Zeros)**: $y[n] = \\sum b_k x[n-k] - \\sum a_k y[n-k]$. Highly efficient with steep roll-off for low orders, but feedback can induce instability if poles migrate outside $|z| = 1$.",
-      "**Windowing**: Tapers finite data records to zero at boundaries (Hanning, Hamming, Blackman) to suppress boundary discontinuities and reduce spectral leakage."
-    ],
-    speakerNotes: "Compare FIR vs IIR: In medical instrumentation (like ECG), FIR is almost always preferred because its linear phase preserves the exact peak morphology of the heart rhythm without phase distortion."
-  },
-  {
-    id: 27,
-    title: "Figure 2.4: FIR vs. IIR Filter Architectures",
-    sectionTag: "2.4 Vector Diagram",
-    type: "figure",
-    figureKey: "u2_fig4",
-    speakerNotes: "Highlight the tapped delay line structure of FIR on the left with zero feedback, contrasting with the recursive feedback loop of IIR on the right."
-  },
-  {
-    id: 28,
-    title: "Trade-off: FIR vs. IIR Digital Filters",
-    sectionTag: "2.4 Architecture Trade-offs",
-    type: "pros-cons",
-    prosCons: {
-      title: "FIR vs. IIR Digital Filter Selection in Measurement Systems",
-      advantages: [
-        "**FIR Advantage**: Strictly Unconditionally Stable (all poles reside safely at z = 0).",
-        "**FIR Advantage**: Exact linear phase response (constant group delay; preserves pulse shapes).",
-        "**IIR Advantage**: Extremely computationally efficient (achieves steep transitions with low order N = 4 to 8).",
-        "**IIR Advantage**: Directly mapped from proven analog prototypes (Butterworth, Chebyshev, Elliptic)."
-      ],
-      disadvantages: [
-        "**FIR Disadvantage**: Requires high filter orders (M = 50 to 500) for sharp cutoffs, demanding heavy MAC processing.",
-        "**FIR Disadvantage**: Greater memory buffer requirements and execution latency.",
-        "**IIR Disadvantage**: Feedback loop can lead to instability if coefficients are quantized and poles cross |z| = 1.",
-        "**IIR Disadvantage**: Non-linear phase response distorts transient waveform morphology (dispersion)."
-      ],
-      engineeringVerdict: "Choose FIR filters for medical ECG, audio mastering, and pulse telemetry where waveform shape must not be distorted. Choose IIR filters for resource-constrained microcontrollers requiring sharp attenuation."
-    },
-    speakerNotes: "Walk students through the trade-offs: FIR gives linear phase and stability; IIR gives efficiency at the expense of phase linearity."
-  },
-
-  // ---------------------------------------------------------------------------
-  // SECTION 2.5: FOURIER TRANSFORM (CTFT)
-  // ---------------------------------------------------------------------------
-  {
-    id: 29,
-    title: "2.5 Continuous Fourier Transform (CTFT)",
-    sectionTag: "Topic 2.5",
-    type: "section-divider",
-    takeaway: "The Fourier transform translates complicated time-domain waveforms into simple orthogonal sinusoidal frequency components.",
-    speakerNotes: "Transition to Section 2.5: Continuous-Time Fourier Transform (CTFT). Explain how time-domain signals decompose into orthogonal complex exponentials."
-  },
-  {
-    id: 30,
-    title: "Continuous Fourier Transform (CTFT)",
-    subtitle: "Spectral representation, magnitude, and phase response",
-    sectionTag: "2.5 Fourier Transform",
-    type: "content",
-    bullets: [
-      "**Continuous Fourier Transform (Analysis)**: Maps an aperiodic continuous time signal $x(t)$ into a continuous frequency spectrum $X(f) = \\int_{-\\infty}^{\\infty} x(t) \\cdot e^{-j 2\\pi f t} dt$.",
-      "**Inverse CTFT (Synthesis)**: Exactly reconstructs the time signal from its frequency components: $x(t) = \\int_{-\\infty}^{\\infty} X(f) \\cdot e^{j 2\\pi f t} df$.",
-      "**Magnitude and Phase Decomposition**: $X(f) = |X(f)| \\cdot e^{j \\angle X(f)}$ where $|X(f)|$ is the amplitude spectrum and $\\angle X(f) = \\arctan(\\mathrm{Im} / \\mathrm{Re})$ is the phase spectrum.",
-      "**Symmetry for Real Signals**: If $x(t)$ is real, $X(-f) = X^*(f)$ (Hermitian symmetry). Magnitude $|X(f)|$ is even; phase $\\angle X(f)$ is odd.",
-      "**Convolution Theorem**: $x(t) * h(t) \\Longleftrightarrow X(f) \\cdot H(f)$. Filtering in time is equivalent to point-by-point multiplication in the frequency domain."
-    ],
-    speakerNotes: "Remind students that complex exponentials $e^{-j 2\\pi f t} = \\cos(2\\pi f t) - j \\sin(2\\pi f t)$ are simply orthogonal cosine and sine projections via Euler's formula."
-  },
-  {
-    id: 31,
-    title: "Figure 2.5: Time Domain to Frequency Spectrum",
+    title: "Figure 2.4: Fourier Time-to-Frequency Decomposition",
+    subtitle: "Visualizing a composite square/complex wave unmixing into harmonic sine waves",
     sectionTag: "2.5 Vector Diagram",
     type: "figure",
     figureKey: "u2_fig5",
-    speakerNotes: "Show students how the complex sum wave in time unbundles into three distinct, sharp vertical lines on the frequency spectrum at 50 Hz, 150 Hz, and 250 Hz."
-  },
-
-  // ---------------------------------------------------------------------------
-  // SECTION 2.6: DISCRETE FOURIER TRANSFORM (DFT) & WINDOWING
-  // ---------------------------------------------------------------------------
-  {
-    id: 32,
-    title: "2.6 Discrete Fourier Transform (DFT)",
-    sectionTag: "Topic 2.6",
-    type: "section-divider",
-    takeaway: "The DFT is the exact computational algorithm used by digital computers to evaluate spectra over finite sample blocks.",
-    speakerNotes: "Transition to Section 2.6: Discrete Fourier Transform (DFT). Explain frequency bins, spectral leakage, and windowing."
+    speakerNotes: "Walk students through Figure 2.5: point out the composite time wave on the left, the individual orthogonal sinusoidal harmonics in the middle, and the resulting razor-sharp frequency spectrum delta spikes on the right."
   },
   {
-    id: 33,
-    title: "DFT Formulation, Bins & Windowing",
-    subtitle: "Finite-length discretization, spectral leakage, and picket-fence effect",
-    sectionTag: "2.6 Discrete Fourier Transform",
-    type: "content",
+    id: 24,
+    title: "The Computer's Dilemma: Why Machines Cannot Compute the CTFT",
+    subtitle: "Why the theoretical integral fails inside real digital computers",
+    sectionTag: "2.6 Computer's Dilemma",
+    type: "concept",
     bullets: [
-      "**DFT Definition**: For an $N$-point discrete sequence $x[n]$, the DFT produces $N$ complex frequency coefficients: $X[k] = \\sum_{n=0}^{N-1} x[n] \\cdot e^{-j \\frac{2\\pi}{N} k n}$ for $k = 0, 1, \\dots, N-1$.",
-      "**Frequency Bin Resolution**: The physical spacing between adjacent spectral lines is $\\Delta f = \\frac{f_s}{N} = \\frac{1}{T_{\\text{record}}}$. Resolution depends **solely on total acquisition time** $T_{\\text{record}}$.",
-      "**Spectral Leakage**: If the input signal contains a frequency that does not fall exactly on an integer multiple of $\\Delta f$, its energy spills into neighboring bins, creating a smeared sinc envelope with high sidelobes.",
-      "**Windowing Functions**: Multiplying $x[n]$ by a tapered window $w[n]$ (Hanning, Hamming, Blackman) suppresses boundary discontinuities, reducing sidelobes from $-13\\text{ dB}$ (rectangular) down to $-32\\text{ dB}$ (Hanning) or $-58\\text{ dB}$ (Blackman).",
-      "**Zero-Padding**: Appending zeros to $x[n]$ interpolates the DFT spectrum (smoothing the display curve), but **does NOT increase true physical frequency resolution**."
+      "**The Impasse**: The CTFT is mathematically gorgeous, but no computer on Earth can calculate it directly!",
+      "**Reason 1: Infinite Time Integral**: The CTFT integrates from $t = -\\infty$ to $t = +\\infty$. A computer would have to wait until the end of time itself before finishing the calculation!",
+      "**Reason 2: Continuous Data Density**: Between 0 and 1 second, there are an uncountably infinite number of real time instants. Computer RAM can only hold a finite list of $N$ stored numbers.",
+      "**Reason 3: Continuous Frequency Spectrum**: The output $X(f)$ is also continuous, requiring infinite memory to store every decimal frequency.",
+      "**The Digital Solution**: We need an algorithm that takes **$N$ sampled numbers in time** and produces **$N$ discrete frequency numbers**—a transform made specifically for computers. That algorithm is the **Discrete Fourier Transform (DFT)**!"
     ],
-    speakerNotes: "Emphasize this core principle: Zero-padding is purely graphical interpolation; to genuinely distinguish two closely spaced frequencies, you must record data for a longer duration of time ($T_{\\text{record}} = 1 / \\Delta f$)."
+    takeaway: "Computers have finite memory and finite time; they cannot calculate continuous integrals to infinity. The Discrete Fourier Transform (DFT) was invented to evaluate discrete samples in finite time.",
+    speakerNotes: "This slide bridges theory to engineering reality: students understand why the textbook introduces DFT immediately after CTFT."
   },
   {
-    id: 34,
-    title: "Figure 2.6: DFT Resolution, Leakage & Windowing",
+    id: 25,
+    title: "What is the Discrete Fourier Transform (DFT)?",
+    subtitle: "The discrete digital algorithm that runs inside microprocessors",
+    sectionTag: "2.6 Discrete FT",
+    type: "formula",
+    formulaBlock: {
+      equation: "X[k] = \\sum_{n=0}^{N-1} x[n] \\cdot e^{-j \\frac{2\\pi}{N} k n} \\quad \\text{for } k = 0, 1, 2, \\dots, N-1",
+      label: "Discrete Fourier Transform (DFT)",
+      description: "Evaluating N time-domain samples into N discrete frequency bins.",
+      symbols: [
+        { symbol: "X[k]", name: "k-th Frequency Bin", unit: "Complex Number", description: "Spectral amplitude and phase at discrete frequency f_k = k * (fs / N)" },
+        { symbol: "x[n]", name: "n-th Time Sample", unit: "V", description: "Digital integer or float sample stored in computer RAM array" },
+        { symbol: "N", name: "Transform Length", unit: "samples", description: "Total number of samples collected in the time record buffer" },
+        { symbol: "k", name: "Frequency Bin Index", unit: "integer", description: "Harmonic index ranging from DC (k=0) to Nyquist (k=N/2)" }
+      ]
+    },
+    bullets: [
+      "**Finite In, Finite Out**: Takes $N$ numbers stored in a computer memory array `x[n]` and produces $N$ complex frequency numbers `X[k]`.",
+      "**Frequency Bin Spacing**: The spacing between adjacent frequency bins is governed strictly by the record length $T_{\\text{record}}$:",
+      "$$\\Delta f = \\frac{f_s}{N} = \\frac{1}{N \\cdot T_s} = \\frac{1}{T_{\\text{record}}}$$",
+      "**To get finer frequency resolution**, you do NOT increase the sampling rate $f_s$; you must **record for a longer time duration** $T_{\\text{record}}$!"
+    ],
+    speakerNotes: "Highlight the bin spacing formula Delta f = fs / N = 1 / T_record. This is a favorite exam question and a critical design parameter in vibration analysis."
+  },
+  {
+    id: 26,
+    title: "The Truncation Penalty: Spectral Leakage & Windowing",
+    subtitle: "What happens when you chop infinite reality into a finite computer buffer?",
+    sectionTag: "2.6 Windowing & Leakage",
+    type: "concept",
+    bullets: [
+      "**The Slicing Effect**: When a computer collects $N$ samples, it abruptly chops the continuous signal with a rectangular observation window. The math assumes this block repeats forever.",
+      "**Spectral Leakage**: If the recorded signal does not contain an exact integer number of cycles within the window, the sudden discontinuity at the edges splatters energy across adjacent frequency bins. A pure single sine tone leaks into surrounding bins, looking like a wide circus tent instead of a sharp needle spike!",
+      "**The Antidote: Window Functions**: To eliminate edge discontinuities, we multiply the raw samples by a smooth bell-shaped curve that tapers smoothly to zero at the boundaries:",
+      "$$x_{\\text{windowed}}[n] = x[n] \\cdot w[n]$$",
+      "**Hanning / Hann Window**: $w[n] = 0.5 - 0.5 \\cos\\left(\\frac{2\\pi n}{N-1}\\right)$. The industry workhorse for vibration, acoustics, and general measurement (suppresses side lobes by $-31.5\\text{ dB}$).",
+      "**Hamming & Flat-Top**: Hamming for close-frequency separation; Flat-Top for exact peak amplitude calibration."
+    ],
+    takeaway: "Abruptly cutting off a signal creates spectral leakage. Multiplying by a Hanning window tapers the boundaries to zero, restoring clean, sharp spectral peaks.",
+    speakerNotes: "Explain that windowing is standard operating procedure in every DAQ software (LabVIEW, Dewesoft, MATLAB). We never compute an FFT on raw unwindowed data unless the signal is periodic and phase-locked."
+  },
+  {
+    id: 27,
+    title: "Figure 2.5: DFT Spectral Leakage & Hanning Windowing",
+    subtitle: "Visual comparison of rectangular window splatter vs. clean Hanning peak suppression",
     sectionTag: "2.6 Vector Diagram",
     type: "figure",
     figureKey: "u2_fig6",
-    speakerNotes: "Compare side-by-side: Panel A shows rectangular window with massive -13 dB sidelobes polluting the spectrum, while Panel B shows Hanning window suppressing sidelobes down to -32 dB."
+    speakerNotes: "Show Figure 2.5: point out the sharp edge discontinuities of the rectangular window causing severe sidelobe splatter, contrasted with the smooth Hanning taper that concentrates energy into the true harmonic peak."
   },
   {
-    id: 35,
-    title: "Check Understanding: Zero-Padding vs. True Resolution",
-    sectionTag: "2.6 Formative Quiz",
-    type: "check-understanding",
-    quiz: {
-      question: "An engineer records a vibration signal for T = 0.1 s at fs = 10 kS/s (N = 1000 samples, Δf = 10 Hz). Two nearby resonance modes exist at 120 Hz and 124 Hz (Δf_sep = 4 Hz). To separate them, the engineer pads 9000 zeros (N = 10,000, Δf_display = 1 Hz). Will the two peaks be resolved?",
-      options: [
-        "Yes, because the new bin spacing is 1 Hz, which is smaller than 4 Hz.",
-        "Yes, zero-padding quadruples the physical information content of the signal.",
-        "NO: Zero-padding merely interpolates the display; physical Rayleigh resolution is 1/T = 10 Hz, so both modes stay merged in a single peak.",
-        "Yes, provided an IIR filter is applied before zero padding."
-      ],
-      correctIndex: 2,
-      explanation: "Zero-padding appends zeros containing zero new physical information. It only interpolates the sinc display curve between existing samples. The true physical Rayleigh resolution is strictly Δf_true = 1 / T_record = 1 / 0.1 s = 10 Hz. Because 4 Hz < 10 Hz, the two modes remain blurred into a single hump. To resolve them, the engineer MUST record data for at least T ≥ 1 / 4 Hz = 0.25 seconds!"
-    },
-    speakerNotes: "This is one of the most widespread misconceptions in professional engineering: zero-padding is curve smoothing, NOT resolution enhancement."
-  },
-
-  // ---------------------------------------------------------------------------
-  // SECTION 2.7: FAST FOURIER TRANSFORM (FFT)
-  // ---------------------------------------------------------------------------
-  {
-    id: 36,
-    title: "2.7 Fast Fourier Transform (FFT)",
-    sectionTag: "Topic 2.7",
-    type: "section-divider",
-    takeaway: "The Cooley-Tukey Radix-2 FFT revolutionizes computational speed, transforming $O(N^2)$ direct evaluations into $O(N \\log_2 N)$ butterflies.",
-    speakerNotes: "Transition to Section 2.7: Fast Fourier Transform (FFT). Highlight the Cooley-Tukey Radix-2 algorithm and butterfly structures."
-  },
-  {
-    id: 37,
-    title: "Cooley-Tukey Radix-2 Decimation-In-Time Algorithm",
-    subtitle: "Divide-and-conquer strategy, twiddle factor symmetry, and computational benchmarks",
+    id: 28,
+    title: "The Computational Crisis & The Cooley-Tukey FFT Miracle",
+    subtitle: "How two mathematicians turned an impossible calculation into real-time reality",
     sectionTag: "2.7 Fast Fourier Transform",
-    type: "content",
-    bullets: [
-      "**Computational Bottleneck of Direct DFT**: Evaluating an $N$-point DFT directly requires $N^2$ complex multiplications and $N(N-1)$ complex additions. For $N=1024$, this is $\\approx 10^6$ operations.",
-      "**Cooley-Tukey Divide-and-Conquer**: Decomposes an $N$-point sequence into two $(N/2)$-point subsequences of even and odd indexed samples: $X[k] = E[k] + W_N^k \\cdot O[k]$.",
-      "**Twiddle Factor Symmetry**: $W_N = e^{-j 2\\pi / N}$. Symmetry ($W_N^{k + N/2} = -W_N^k$) and periodicity ($W_N^{k+N} = W_N^k$) eliminate redundant trigonometric calculations.",
-      "**Butterfly Flow Unit**: In-place computation takes two inputs $A$ and $B$, producing $X = A + B W_N^k$ and $Y = A - B W_N^k$ while overwriting memory registers.",
-      "**Computational Benchmark**: FFT requires $\\frac{N}{2} \\log_2 N$ complex multiplications. For $N=4096$, operations drop from $16.78\\text{ million}$ down to $24,576$—a **$682.7\\times$ speedup**!"
-    ],
-    speakerNotes: "The FFT is considered one of the top 10 most impactful computational algorithms of the 20th century. Without it, modern telecommunications (WiFi, 5G, LTE, OFDM), medical MRI imaging, and digital audio would not exist."
+    type: "pros-cons",
+    prosCons: {
+      title: "Direct DFT vs. Cooley-Tukey Fast Fourier Transform (FFT)",
+      advantages: [
+        "**Direct DFT Complexity**: Direct evaluation requires $N^2$ complex multiplications. For $N = 4096$, that requires $4096^2 = 16,777,216$ complex operations!",
+        "**The 1965 Breakthrough**: James Cooley and John Tukey realized that sine and cosine waves are symmetric and periodic. By recursively breaking an $N$-point sequence into even and odd halves (Divide and Conquer Radix-2), redundant math vanishes!",
+        "**Radix-2 FFT Complexity**: Drops from $N^2$ to $\\frac{N}{2} \\log_2 N$. For $N = 4096$, it requires only $2048 \\times 12 = 24,576$ operations!",
+        "**Speedup Factor**: Over $682\\times$ faster for $N = 4096$, and over $20,000\\times$ faster for audio/video arrays ($N = 10^6$)."
+      ],
+      disadvantages: [
+        "**Crucial Constraint**: Radix-2 FFT requires the buffer length $N$ to be an exact power of 2: $N = 2^m$ (e.g., 256, 512, 1024, 2048, 4096). If your data is 1000 samples, software pads with 24 zeros ('zero-padding') to reach 1024.",
+        "**Identical Math**: The FFT is NOT an approximation of the DFT. It produces the exact same numerical answers down to the last decimal digit—just infinitely faster."
+      ],
+      engineeringVerdict: "The FFT is ranked among the top 10 most impactful algorithms in human history. Without it, real-time medical MRI, 5G cellular communication, radar, and digital audio streaming would be computationally impossible."
+    },
+    speakerNotes: "Highlight to students: FFT is not a different transform from DFT; it is an ingenious mathematical shortcut to compute the EXACT same DFT in a fraction of the time."
   },
   {
-    id: 38,
-    title: "Figure 2.7: Radix-2 FFT Butterfly Computational Graph",
+    id: 29,
+    title: "Figure 2.6: Radix-2 FFT Butterfly Flow Graph & Speedup Benchmark",
+    subtitle: "The divide-and-conquer butterfly structure that powers real-time DSP",
     sectionTag: "2.7 Vector Diagram",
     type: "figure",
     figureKey: "u2_fig7",
-    speakerNotes: "Trace the butterfly signal flow on Figure 2.7. Note the bit-reversal sorting on the input and natural ordering on the output, along with the operation benchmark table."
+    speakerNotes: "Examine Figure 2.6: trace the 2-point butterfly operations with twiddle factors W_N^k and review the benchmark table showing how execution time drops from minutes to microseconds."
+  },
+  {
+    id: 30,
+    title: "What is the Inverse Fourier Transform (IFT / IDFT)?",
+    subtitle: "The reverse baking recipe: Synthesizing time waveforms back from frequencies",
+    sectionTag: "2.8 Inverse Transform",
+    type: "formula",
+    formulaBlock: {
+      equation: "x[n] = \\frac{1}{N} \\sum_{k=0}^{N-1} X[k] \\cdot e^{+j \\frac{2\\pi}{N} k n} \\quad \\text{for } n = 0, 1, 2, \\dots, N-1",
+      label: "Inverse Discrete Fourier Transform (IDFT)",
+      description: "Synthesizing the original discrete-time waveform from its discrete frequency spectrum.",
+      symbols: [
+        { symbol: "x[n]", name: "Synthesized Time Sample", unit: "V", description: "Reconstructed physical time waveform sample at instant n" },
+        { symbol: "X[k]", name: "Frequency Bin Coefficient", unit: "Complex Number", description: "Amplitude and phase recipe for the k-th frequency harmonic" },
+        { symbol: "e^{+j \\frac{2\\pi}{N} k n}", name: "Forward Synthesizing Phasor", unit: "rad", description: "Note the positive sign: adding up spinning sine waves together" },
+        { symbol: "1 / N", name: "Energy Normalization Scale", unit: "scalar", description: "Averaging scale factor ensuring perfect energy conservation" }
+      ]
+    },
+    bullets: [
+      "**The Reverse Baking Recipe**: If the forward FFT takes a cake and tells you: '4 eggs, 2 cups flour, 1 cup sugar', the Inverse FFT takes that ingredient list, bakes it, and hands you back the exact original cake!",
+      "**Notice the Sign Difference**: Forward transform has $e^{-j \\dots}$ (analyzing/unmixing); Inverse transform has $e^{+j \\dots}$ (synthesizing/mixing back together).",
+      "**Lossless Reconstruction**: If you run FFT on a signal and immediately run IFFT on the result, you get back the exact original signal with zero distortion."
+    ],
+    speakerNotes: "Make sure students notice the sign flip: forward has minus sign in exponent, inverse has positive sign and 1/N scaling. That's all that changes mathematically!"
+  },
+  {
+    id: 31,
+    title: "The Practical Superpower of IFT: Surgical Noise Removal & Compression",
+    subtitle: "How engineers use the forward and inverse transforms together to perform miracles",
+    sectionTag: "2.8 IFT Applications",
+    type: "concept",
+    bullets: [
+      "**Superpower 1: Surgical Noise Removal**: Imagine recording a faint patient ECG heartbeat, but a nasty 50 Hz power-line hum from the hospital wall socket has corrupted the waveform. In the time domain, the hum is tangled all over the ECG.",
+      "1. Run forward **FFT**: You see the ECG spectrum PLUS a giant sharp spike at exactly $50\\text{ Hz}$.",
+      "2. Perform **Surgical Zeroing**: Set the $50\\text{ Hz}$ frequency bin to zero: $X[k_{50\\text{Hz}}] = 0$! Leave all other bins untouched.",
+      "3. Run **Inverse IFFT**: Synthesize back to time. The result? A pristine, hum-free, perfectly diagnostic ECG waveform!",
+      "**Superpower 2: Audio & Image Compression (MP3, JPEG)**: In human hearing, quiet high frequencies are masked by loud low frequencies. The audio algorithm runs a Fourier transform, deletes all inaudible frequency bins, and stores only the remaining 10% of bins. When you hit play, the player runs the **Inverse IFFT** to rebuild the audio. File size shrinks by $90\\%$ with zero perceptible quality loss!",
+      "**Parseval's Theorem**: Total signal energy in the time domain equals total energy in the frequency domain: $\\sum |x[n]|^2 = \\frac{1}{N} \\sum |X[k]|^2$."
+    ],
+    takeaway: "The forward FFT lets us see and edit frequencies; the inverse IFFT lets us rebuild the modified, cleaned, or compressed waveform back into reality.",
+    speakerNotes: "Students love this slide because it shows them where MP3, streaming audio, and biomedical noise filters actually come from. Fourier is not an exam exercise—it runs our digital world."
+  },
+  {
+    id: 32,
+    title: "Figure 2.7: Time-Frequency Spectrograms & STFT Presentation",
+    subtitle: "Tracking how frequency content changes dynamically over time",
+    sectionTag: "2.9 Spectrograms",
+    type: "figure",
+    figureKey: "u2_fig8",
+    speakerNotes: "Explain Figure 2.7: standard FFT shows what frequencies exist over the entire record, but the Short-Time Fourier Transform (STFT) spectrogram shows WHEN those frequencies occurred (critical for bird songs, speech, and rotating machinery speed run-ups)."
+  },
+
+  // ===========================================================================
+  // ACT 4: THE SIMPLER CASE STUDY (END-TO-END WALKTHROUGH)
+  // ===========================================================================
+  {
+    id: 33,
+    title: "Simpler Case Study: Workshop Electric Motor Health Monitor",
+    subtitle: "Step-by-step end-to-end journey of analog sensor data into computer memory and display",
+    sectionTag: "Case Study Overview",
+    type: "section-divider",
+    takeaway: "Let us trace a real-world physical signal through all 6 engineering stages: from physical heat and vibration, through analog sensors, filtering, 12-bit ADC conversion, RAM storage, and real-time FFT screen presentation.",
+    speakerNotes: "Introduce the practical case study requested by students: a simple, intuitive workshop electric motor monitor. We trace every single number and equation through all 6 stages."
+  },
+  {
+    id: 34,
+    title: "Case Study Step 1: The Physical Measurands",
+    subtitle: "What is physically happening at the machine under test?",
+    sectionTag: "Case Study: Step 1",
+    type: "concept",
+    bullets: [
+      "**The Machine**: A 3-phase industrial induction motor operating in a factory workshop at 3000 RPM driving a water pump.",
+      "**Physical Measurand 1 (Temperature)**: The bearing casing temperature has reached **$75.0^\\circ\\text{C}$** due to mechanical friction under full load. This is a slow, steady DC thermal quantity.",
+      "**Physical Measurand 2 (Vibration)**: Due to a slight mechanical shaft unbalance, the motor vibrates once per revolution. At $3000\\text{ RPM}$, the shaft rotation frequency is:",
+      "$$f_{\\text{shaft}} = \\frac{3000\\text{ rev}}{60\\text{ sec}} = 50.0\\text{ Hz}$$",
+      "The motor housing vibrates back and forth sinusoidally with a peak acceleration amplitude of $A_{\\text{peak}} = 1.50\\text{ m/s}^2$ at exactly $50\\text{ Hz}$."
+    ],
+    takeaway: "The physical reality consists of two measurands: a steady 75°C thermal state and a 50 Hz sinusoidal mechanical oscillation.",
+    speakerNotes: "Start with the tangible scenario: students can visualize an induction motor vibrating at 50 Hz on a workshop bench and warming up to 75°C."
+  },
+  {
+    id: 35,
+    title: "Case Study Step 2: Analog Sensor Transduction",
+    subtitle: "Converting mechanical movement and thermal energy into raw electrical voltages",
+    sectionTag: "Case Study: Step 2",
+    type: "formula",
+    formulaBlock: {
+      equation: "V_{\\text{temp}} = 10.0\\text{ mV}/^\\circ\\text{C} \\cdot 75.0^\\circ\\text{C} = 0.750\\text{ V DC} \\quad \\text{and} \\quad v_{\\text{vib}}(t) = 0.150 \\sin(2\\pi \\cdot 50 t)\\text{ V AC}",
+      label: "Sensor Transduction Transfer Equations",
+      description: "Translating physical units (°C and m/s²) into analog electrical potentials.",
+      symbols: [
+        { symbol: "V_temp", name: "Temperature Sensor Voltage", unit: "V DC", description: "Analog DC output from LM35 precision temperature sensor" },
+        { symbol: "v_vib(t)", name: "Vibration Sensor Voltage", unit: "V AC", description: "Analog AC sinusoidal voltage from piezoelectric accelerometer" },
+        { symbol: "Sensitivity", name: "Accelerometer Sensitivity", unit: "100 mV / (m/s^2)", description: "Calibration gain converting acceleration into millivolts" }
+      ]
+    },
+    bullets: [
+      "**Channel 1 (Temperature)**: An analog LM35 semiconductor sensor mounted on the bearing casing outputs exactly $10.0\\text{ mV}$ per degree Celsius. At $75.0^\\circ\\text{C}$, it generates a steady analog potential of $V_{\\text{temp}} = 0.750\\text{ V DC}$.",
+      "**Channel 2 (Vibration)**: A piezoelectric accelerometer stud-mounted on the motor flange has a sensitivity of $100.0\\text{ mV}/(\\text{m/s}^2)$. Multiplying by $1.50\\text{ m/s}^2$ peak acceleration produces an analog sinusoidal voltage swing of $v_{\\text{vib}}(t) = 0.150 \\sin(2\\pi \\cdot 50 t)\\text{ V}$."
+    ],
+    speakerNotes: "Point out the clean numbers: 75°C becomes 0.750V DC; 1.5 m/s^2 at 50 Hz becomes a +/- 150 mV AC sine wave."
+  },
+  {
+    id: 36,
+    title: "Step 2 Graph: Raw Analog Sensor Waveforms",
+    subtitle: "LM35 DC Thermal Output (0.750V) & Accelerometer 50 Hz Vibration with 10 kHz Welder Noise",
+    sectionTag: "Case Study: Step 2 Graph",
+    type: "figure",
+    figureKey: "u2_case_step2_graph",
+    takeaway: "The physical sensors generate an analog DC voltage of 0.750V for temperature and a 50 Hz AC wave of ±150 mV for vibration, with severe 10 kHz industrial noise pickup.",
+    speakerNotes: "Walk students through the Step 2 graph: Left shows steady 0.750V DC temperature; Right shows the 50 Hz vibration wave (20 ms period) with sharp 10 kHz welder noise spikes riding on it."
+  },
+  {
+    id: 37,
+    title: "Case Study Step 3: Analog Signal Conditioning & Anti-Aliasing",
+    subtitle: "Cleaning, protecting, and level-shifting the analog signal before the ADC",
+    sectionTag: "Case Study: Step 3",
+    type: "concept",
+    bullets: [
+      "**The Industrial Problem**: In the factory workshop, adjacent high-frequency arc welders and variable frequency drives (VFDs) radiate nasty **$10\\text{ kHz}$ electromagnetic switching noise** into the sensor cables.",
+      "**The Conditioning Stage Performs 3 Crucial Roles**:",
+      "1. **Instrumentation Amplification**: Provides $>10^9\\,\\Omega$ high input impedance so the sensors are not loaded or drained of current.",
+      "2. **Analog Anti-Aliasing Low-Pass Filter**: A 4th-order active Butterworth low-pass filter with cutoff frequency $f_c = 200\\text{ Hz}$ is inserted. The $50\\text{ Hz}$ motor vibration passes through completely unattenuated ($0\\text{ dB}$), while the unwanted $10\\text{ kHz}$ welder noise is completely crushed and eliminated (attenuated by $>70\\text{ dB}$)!",
+      "3. **DC Level Shifting**: The ADC operates on unipolar $0.0\\text{ to }5.0\\text{ V}$. An op-amp summing circuit adds a $+2.500\\text{ V}$ bias to the vibration AC signal, centering the $\\pm 0.150\\text{ V}$ sine wave safely between $+2.350\\text{ V}$ and $+2.650\\text{ V}$."
+    ],
+    takeaway: "Signal conditioning amplifies the signal, eliminates 10 kHz noise before it can alias, and centers the voltage within the ADC input range.",
+    speakerNotes: "Highlight why level shifting is needed: most low-cost microcontroller ADCs can only measure 0 to 5V (they cannot read negative voltages without frying the pin). Adding a 2.5V DC offset solves this cleanly."
+  },
+  {
+    id: 38,
+    title: "Step 3 Graph: Anti-Aliasing Filter Response & DC Level Shifting",
+    subtitle: "Butterworth 4th-Order Bode Plot (fc = 200 Hz) and Op-Amp Summing DC Level Shift (+2.500V)",
+    sectionTag: "Case Study: Step 3 Graph",
+    type: "figure",
+    figureKey: "u2_case_step3_graph",
+    takeaway: "The 4th-order Butterworth filter attenuates 10 kHz noise by >72 dB while passing 50 Hz at 0 dB, and DC biasing centers the wave between 2.350V and 2.650V.",
+    speakerNotes: "Point out the two panels in Step 3 graph: Left shows the Butterworth filter crushing 10 kHz noise by >72 dB; Right shows the clean, noise-free 50 Hz sine wave centered safely at +2.500 V."
   },
   {
     id: 39,
-    title: "Check Understanding: FFT Computational Speedup",
-    sectionTag: "2.7 Formative Quiz",
-    type: "check-understanding",
-    quiz: {
-      question: "For an FFT block size of N = 4096 points, approximately how many times faster is the Cooley-Tukey Radix-2 FFT compared to evaluating the direct DFT equation?",
-      options: [
-        "About 4 times faster",
-        "About 12 times faster",
-        "About 680 times faster (16,777,216 vs. 24,576 operations)",
-        "Over 100,000 times faster"
-      ],
-      correctIndex: 2,
-      explanation: "Direct DFT requires N² = 4096² = 16,777,216 complex multiplications. Radix-2 FFT requires (N / 2) · log2(N) = 2048 · 12 = 24,576 complex multiplications. The speedup factor is 16,777,216 / 24,576 ≈ 682.7x faster! This massive efficiency makes real-time 4k-point spectral analysis feasible on embedded microcontrollers."
+    title: "Case Study Step 4: 12-Bit ADC Sampling & Quantization",
+    subtitle: "Converting continuous analog voltages into precise digital integer numbers",
+    sectionTag: "Case Study: Step 4",
+    type: "formula",
+    formulaBlock: {
+      equation: "\\Delta V = \\frac{5.000\\text{ V}}{2^{12}} = \\frac{5.000\\text{ V}}{4096} = 1.2207\\text{ mV} \\quad \\implies \\quad D = \\mathrm{round}\\left(\\frac{V_{\\text{in}}}{\\Delta V}\\right)",
+      label: "12-Bit ADC Binary Quantization Equation",
+      description: "Formula converting any analog voltage between 0 and 5V into an integer code between 0 and 4095.",
+      symbols: [
+        { symbol: "D", name: "Digital Integer Code", unit: "0 to 4095", description: "12-bit binary number output by the ADC successive approximation register" },
+        { symbol: "V_in", name: "Conditioned Input Voltage", unit: "V", description: "Clean analog potential arriving at the ADC sample-and-hold pin" },
+        { symbol: "\\Delta V", name: "LSB Step Voltage", unit: "1.2207 mV", description: "Quantization resolution of the 12-bit converter across a 5V span" }
+      ]
     },
-    speakerNotes: "Help students appreciate this mathematical breakthrough: 682x speedup means 1.5 milliseconds instead of 1 second."
+    bullets: [
+      "**Sampling Clock**: The ADC samples at $f_s = 1000\\text{ Samples/second}$ ($T_s = 1.0\\text{ ms}$). This easily satisfies Nyquist ($1000 > 2 \\times 50\\text{ Hz}$).",
+      "**Temperature Digitization**: Input $V_{\\text{in}} = 0.750\\text{ V}$. Dividing by $1.2207\\text{ mV}$ gives integer code:",
+      "$$D_{\\text{temp}} = \\mathrm{round}\\left(\\frac{0.750}{0.0012207}\\right) = \\mathbf{614}$$",
+      "**Vibration Digitization**: At baseline midpoint ($2.500\\text{ V}$), code is $D_{\\text{mid}} = \\mathbf{2048}$. At the positive vibration crest ($2.500 + 0.150 = 2.650\\text{ V}$), code is:",
+      "$$D_{\\text{peak}} = \\mathrm{round}\\left(\\frac{2.650}{0.0012207}\\right) = \\mathbf{2171}$$"
+    ],
+    speakerNotes: "Walk students through the math: 0.750V becomes code 614. Vibration swings from code 1925 to 2171 around midpoint 2048. Digital integers are born!"
   },
-
-  // ---------------------------------------------------------------------------
-  // SECTION 2.8: INVERSE FOURIER TRANSFORM & PARSEVAL
-  // ---------------------------------------------------------------------------
   {
     id: 40,
-    title: "2.8 Inverse Fourier Transform (IDFT) & Parseval's Law",
-    sectionTag: "Topic 2.8",
-    type: "section-divider",
-    takeaway: "The inverse transform enables exact time-domain signal reconstruction and spectral filtering synthesis.",
-    speakerNotes: "Transition to Section 2.8: Inverse Discrete Fourier Transform (IDFT). Review signal synthesis and Parseval's energy conservation theorem."
+    title: "Step 4 Graph: 12-Bit ADC Sampling Grid & Staircase Quantization",
+    subtitle: "20 Samples per 50 Hz Cycle (Ts = 1.0 ms) and Exact Integer Code Assignments (614, 1925, 2048, 2171)",
+    sectionTag: "Case Study: Step 4 Graph",
+    type: "figure",
+    figureKey: "u2_case_step4_graph",
+    takeaway: "The 12-bit ADC captures 20 discrete samples per 50 Hz vibration cycle and quantizes voltages into integer codes: 614 for temperature, and 1925 to 2171 for vibration.",
+    speakerNotes: "Show the Step 4 graph: Left shows the 20 green sample dots along the 20 ms vibration cycle; Right shows the zoomed-in staircase steps with step size Delta V = 1.221 mV."
   },
   {
     id: 41,
-    title: "IDFT Formulation & Energy Conservation",
-    subtitle: "Exact time-domain reconstruction and Parseval's theorem",
-    sectionTag: "2.8 Inverse Fourier Transform",
-    type: "content",
+    title: "Case Study Step 5: Digital Storage in Computer Memory & Disk",
+    subtitle: "How the microprocessor stores samples in RAM arrays and logs them to files",
+    sectionTag: "Case Study: Step 5",
+    type: "concept",
     bullets: [
-      "**Inverse DFT Mathematical Formulation**: $x[n] = \\frac{1}{N} \\sum_{k=0}^{N-1} X[k] \\cdot e^{j \\frac{2\\pi}{N} k n}$ for $n = 0, 1, \\dots, N-1$. Identical to forward DFT except for positive exponent and $1/N$ normalization.",
-      "**Exact Mathematical Reversibility**: The DFT-IDFT transform pair is strictly lossless. Applying forward DFT followed immediately by IDFT recovers the original discrete sequence $x[n]$ with zero error.",
-      "**Parseval's Energy Conservation Theorem**: $\\sum_{n=0}^{N-1} |x[n]|^2 = \\frac{1}{N} \\sum_{k=0}^{N-1} |X[k]|^2$. Total energy calculated in the time domain exactly equals total energy calculated in the frequency domain.",
-      "**Frequency-Domain Filtering Workflow**: $x[n] \\xrightarrow{\\text{FFT}} X[k] \\xrightarrow{\\times H[k]} Y[k] \\xrightarrow{\\text{IFFT}} y[n]$. Fast convolution via FFT/IFFT is vastly faster than time-domain FIR convolution for large filter kernels ($M > 64$)."
+      "**In Microcontroller RAM (DMA Circular Ring Buffer)**: The ADC hardware automatically streams digitized 16-bit unsigned integers directly into microcontroller memory via Direct Memory Access (DMA) with zero CPU overhead:",
+      "`uint16_t temp_buffer[1000];  // Holds 1 second of temperature samples`",
+      "`uint16_t vib_buffer[1000];   // Holds 1 second of vibration samples`",
+      "**Engineering Unit Conversion in Software**: The software converts integer codes back to physical units on the fly:",
+      "$$T(^\\circ\\text{C}) = \\frac{D_{\\text{temp}} \\times 1.2207\\text{ mV}}{10.0\\text{ mV}/^\\circ\\text{C}} = \\frac{614 \\times 0.0012207}{0.010} = \\mathbf{74.95^\\circ\\text{C}}$$",
+      "**On-Disk Logging (CSV or Binary Log File)**: Every second, the processor flushes the buffer to an SD card or computer hard drive in a structured time-stamped log file:",
+      "`Timestamp, Casing_Temp_C, Vibration_Acc_mps2`",
+      "`2026-10-28 14:00:00.001, 74.95, +0.02`",
+      "`2026-10-28 14:00:00.002, 74.95, +0.48`",
+      "`2026-10-28 14:00:00.005, 74.95, +1.50`"
     ],
-    speakerNotes: "Highlight Parseval's theorem: it confirms that transforming into the frequency domain does not create or destroy signal energy—it simply redistributes it across orthogonal sinusoidal basis functions."
+    takeaway: "The raw integers are stored in RAM circular buffers, converted to engineering units, and logged to persistent disk files with millisecond timestamps.",
+    speakerNotes: "Show students the C/C++ array declarations and the CSV format. This connects theoretical DSP with embedded firmware and software engineering."
   },
-
-  // ---------------------------------------------------------------------------
-  // SECTION 2.9: DATA PRESENTATION & TIME-FREQUENCY SPECTROGRAMS
-  // ---------------------------------------------------------------------------
   {
     id: 42,
-    title: "2.9 Processing & Presentation of Data",
-    sectionTag: "Topic 2.9",
-    type: "section-divider",
-    takeaway: "Professional engineering data presentation turns raw spectral numbers into clear, intuitive diagnostic plots.",
-    speakerNotes: "Transition to Section 2.9: Data Presentation. Cover dB scaling, Welch PSD, and Short-Time Fourier Transform (STFT) spectrograms."
+    title: "Step 5 Graph: Computer Memory Storage & On-Disk File Logging",
+    subtitle: "Microcontroller Circular DMA Buffer Architecture and Real-Time Time-Stamped CSV File Logging",
+    sectionTag: "Case Study: Step 5 Graph",
+    type: "figure",
+    figureKey: "u2_case_step5_graph",
+    takeaway: "ADC DMA hardware writes samples into a 1000-word circular RAM buffer with zero CPU overhead, logging 4.0 KB/sec to disk with millisecond timestamps.",
+    speakerNotes: "Explain Step 5 graph: Left shows the circular DMA ring buffer with write and read pointers; Right shows the actual on-disk CSV log terminal with timestamped floating-point values."
   },
   {
     id: 43,
-    title: "Data Presentation, Spectrograms & STFT",
-    subtitle: "Bode plots, Short-Time Fourier Transform, and decibel normalization",
-    sectionTag: "2.9 Data Presentation",
-    type: "content",
+    title: "Case Study Step 6: Computer Presentation & Intelligence",
+    subtitle: "Real-time dashboard visualization, FFT spectral analysis, and automated alarms",
+    sectionTag: "Case Study: Step 6",
+    type: "concept",
     bullets: [
-      "**Logarithmic Decibel (dB) Scaling**: Human perception of sound and vibration is logarithmic. Plotting magnitude in $\\text{dB} = 20 \\log_{10}(|X| / V_{\\text{ref}})$ reveals weak harmonics $80\\text{ dB}$ below the fundamental that would be invisible on a linear scale.",
-      "**Power Spectral Density (PSD)**: Computed via Welch's method (averaging overlapping windowed periodograms). Units: $\\text{V}^2 / \\text{Hz}$ or $g^2 / \\text{Hz}$. Characterizes stationary random vibration and thermal noise floors.",
-      "**Short-Time Fourier Transform (STFT)**: For non-stationary signals (speech, seismic waves, machine chirps), standard FFT fails because frequency content changes over time. STFT slides a window $w(t - \\tau)$ to produce a 2D time-frequency function $\\mathrm{STFT}(\\tau, f)$.",
-      "**Spectrogram 2D/3D Heatmaps**: Plots time on X-axis, frequency on Y-axis, and color-coded intensity on Z-axis. Immediately reveals sweeping chirps, intermittent faults, and harmonic modulation.",
-      "**Heisenberg-Gabor Uncertainty Principle**: $\\Delta t \\cdot \\Delta f \\ge \\frac{1}{4\\pi}$. Narrow time windows give sharp time localization but broad blurry frequency bins; wide time windows give sharp frequency bins but blurred time transients."
+      "**Visualization 1 (Time-Domain Waveform)**: The operator screen displays a live oscilloscope strip-chart showing the $50\\text{ Hz}$ sine wave oscillating smoothly between $-1.5\\text{ m/s}^2$ and $+1.5\\text{ m/s}^2$, and a digital gauge showing $75.0^\\circ\\text{C}$.",
+      "**Visualization 2 (1024-Point FFT Real-Time Spectrum)**: The software takes a block of $N = 1024$ vibration samples ($T_{\\text{record}} = 1.024\\text{ s}$), multiplies by a Hanning window, and runs the Radix-2 FFT:",
+      "$$\\Delta f = \\frac{f_s}{N} = \\frac{1000\\text{ Hz}}{1024} = 0.9766\\text{ Hz/bin}$$",
+      "On the FFT spectrum graph, a **razor-sharp spectral spike** appears at bin $k = 51$ ($51 \\times 0.9766 = 49.8\\text{ Hz} \\approx \\mathbf{50.0\\text{ Hz}}$) with magnitude $1.50\\text{ m/s}^2$!",
+      "**Automated Diagnostic Intelligence**: If the motor bearing begins failing, high-frequency harmonic spikes (e.g. at 100 Hz, 250 Hz, or 1200 Hz) will appear on the spectrum. If any harmonic exceeds $2.0\\text{ m/s}^2$ or temperature exceeds $80^\\circ\\text{C}$, the software immediately sounds a maintenance alarm!"
     ],
-    speakerNotes: "Demonstrate why a waterfall plot or 2D spectrogram is essential for predictive maintenance: when a bearing begins to fail, its vibration frequency sweeps upward over time—a standard static FFT misses this dynamic progression."
+    takeaway: "Real-time FFT turns a confusing time wave into an unambiguous 50 Hz diagnostic spike, enabling automated fault detection before catastrophic motor failure.",
+    speakerNotes: "Conclude the case study by emphasizing how powerful the FFT is: in time, noise and vibration look like a blur. In frequency, a failing bearing stands out like a beacon."
   },
   {
     id: 44,
-    title: "Figure 2.8: STFT Spectrogram & Uncertainty Limit",
-    sectionTag: "2.9 Vector Diagram",
+    title: "Step 6 Graph: Live Dashboard & 1024-Point Real-Time FFT Diagnostics",
+    subtitle: "Oscilloscope Strip-Chart, 74.95°C Temperature Gauge, and Sharp 50 Hz Vibration Spike with ISO Alarms",
+    sectionTag: "Case Study: Step 6 Graph",
     type: "figure",
-    figureKey: "u2_fig8",
-    speakerNotes: "Point out the spectrogram heatmap on Figure 2.8 showing the sweeping chirp tone from 100 Hz to 2 kHz, and explain the Heisenberg-Gabor uncertainty equation on the right panel."
+    figureKey: "u2_case_step6_graph",
+    takeaway: "The GUI presents a live 50 Hz oscilloscope waveform, a 74.95°C digital gauge, and a 1024-point FFT spectrum showing a prominent 50 Hz spike well below the 2.0 m/s² alarm threshold.",
+    speakerNotes: "Highlight Step 6 graph: Top shows the operator oscilloscope and 74.95°C gauge; Bottom shows the 1024-point FFT spectrum with a clean, sharp 50 Hz peak at bin k = 51 and the red ISO alarm line."
   },
-
-  // ---------------------------------------------------------------------------
-  // COMPREHENSIVE SOLVED CASE STUDY: END-TO-END GAS TURBINE DAQ PIPELINE
-  // ---------------------------------------------------------------------------
   {
     id: 45,
-    title: "Comprehensive Case Study: Gas Turbine Vibration DAQ",
-    sectionTag: "Industrial Case Study",
-    type: "section-divider",
-    takeaway: "Connecting every single concept in Unit II—from physical rotor dynamics to sensor conditioning, analog anti-aliasing, sampling, ADC quantization, Hanning windowing, and 4096-pt FFT diagnostics.",
-    speakerNotes: "Introduce the comprehensive case study. This is the master capstone of Unit II where students see how every single formula works together in a real power plant gas turbine monitoring system."
+    title: "Figure 2.8: Solved End-to-End Data Acquisition & Spectral Pipeline",
+    subtitle: "Complete visual diagram of the sensor-to-conditioning-to-ADC-to-FFT pipeline",
+    sectionTag: "Case Study: Vector Diagram",
+    type: "figure",
+    figureKey: "u2_fig12",
+    speakerNotes: "Review Figure 2.8 with students: show the complete unbroken pipeline from the physical motor rotating at 50 Hz, through the sensor, Butterworth filter, 12-bit ADC, RAM buffer, and output FFT diagnostic display."
   },
+
+  // ===========================================================================
+  // ACT 5: REVIEW, WORKED PROBLEM & MASTERY
+  // ===========================================================================
   {
     id: 46,
-    title: "Case Study Overview: Machine Dynamics & Problem Context",
-    subtitle: "Complete specification of an industrial gas turbine monitoring installation",
-    sectionTag: "Case Study · Problem Spec",
-    type: "content",
-    bullets: [
-      "**Physical Rotating Machinery**: An industrial aeroderivative gas turbine operating at a nominal shaft speed of **$12,000\\text{ RPM}$**.",
-      "**Rotational Fundamental (1X Unbalance)**: $f_{\\text{rot}} = \\frac{12,000}{60} = \\mathbf{200\\text{ Hz}}$.",
-      "**Shaft Misalignment Harmonic (2X)**: $f_{\\text{misalign}} = 2 \\times 200\\text{ Hz} = \\mathbf{400\\text{ Hz}}$.",
-      "**Blade-Pass Excitation**: 5-blade compressor impeller generates blade-pass frequency $f_{\\text{blade}} = 5 \\times 200\\text{ Hz} = \\mathbf{1,000\\text{ Hz}}$.",
-      "**High-Frequency Bearing Defect**: Outer race ball-pass fault pulses ringing structural resonances at $f_{\\text{bearing}} = \\mathbf{2,400\\text{ Hz}}$.",
-      "**Industrial EMI Contamination**: An adjacent $480\\text{ V}$ variable frequency drive (VFD) radiates severe PWM switching noise spikes at **$25\\text{ kHz}$** with $\\pm 2\\text{ V}$ amplitude.",
-      "**Engineering Mission**: Design the complete DAQ pipeline from sensor to FFT to resolve all mechanical modes while preventing the $25\\text{ kHz}$ VFD noise from aliasing into the vibration spectrum!"
-    ],
-    speakerNotes: "Set up the real-world scenario: The turbine runs at 12,000 RPM (200 Hz). The engineer must detect unbalance, misalignment, blade-pass, and bearing defect tones without allowing the 25 kHz inverter switching noise to alias into the spectrum."
-  },
-  {
-    id: 47,
-    title: "Figure 2.10: End-to-End Solved Case Study Pipeline",
-    sectionTag: "Case Study · Architecture",
-    type: "figure",
-    figureKey: "u2_fig_case_study",
-    speakerNotes: "Walk students through Figure 2.10: Stage 1 (Sensor physics), Stage 2 (Conditioning & AA-LPF), Stage 3 (Sampling S/H), Stage 4 (16-bit ADC), Stage 5 (Windowing buffer), and Stage 6 (FFT output spectrum showing solved peaks)."
-  },
-  {
-    id: 48,
-    title: "Stage-by-Stage Mathematical Solution (Stages 1 to 3)",
-    subtitle: "Sensor sensitivity, anti-aliasing filter order, and sampling rate selection",
-    sectionTag: "Case Study · Solution Part 1",
-    type: "content",
-    bullets: [
-      "**Stage 1 — Sensor Selection & Voltage Span**:",
-      "• Transducer: IEPE Piezoelectric Accelerometer with sensitivity $S_a = 100\\text{ mV/g}$ and dynamic range $\\pm 50\\text{ g}$.",
-      "• Output voltage span: $V_{\\text{out}} = \\pm 50\\text{ g} \\times 0.100\\text{ V/g} = \\mathbf{\\pm 5.0\\text{ V}}$ ($10.0\\text{ V}$ peak-to-peak).",
-      "**Stage 2 — Signal Conditioning & Analog Anti-Aliasing Filter**:",
-      "• IEPE Excitation: Constant current source of $4\\text{ mA}$ at $24\\text{ VDC}$ bias.",
-      "• AC-coupling capacitor: $C_c = 10\\ \\mu\\text{F}$ with input impedance $R_{\\text{in}} = 100\\text{ k}\\Omega$ gives high-pass cutoff $f_{HP} = \\frac{1}{2\\pi R C} = \\mathbf{0.159\\text{ Hz}}$ (passes all mechanical vibrations $> 1\\text{ Hz}$, blocks DC offset).",
-      "• Anti-Aliasing Filter: 6th-order active Butterworth LPF with cutoff $f_c = \\mathbf{5\\text{ kHz}}$.",
-      "• Attenuation at $25\\text{ kHz}$ VFD noise: Frequency ratio $f / f_c = 25 / 5 = 5$.",
-      "• Attenuation equation: $|H(25\\text{ kHz})| = \\frac{1}{\\sqrt{1 + 5^{2 \\times 6}}} = \\frac{1}{\\sqrt{1 + 5^{12}}} = \\frac{1}{15,625} \\approx \\mathbf{-83.9\\text{ dB}}$!",
-      "• Result: The $2\\text{ V}$ switching noise is crushed down to $2\\text{ V} / 15,625 = \\mathbf{128\\ \\mu\\text{V}}$ (below ADC noise floor!).",
-      "**Stage 3 — Nyquist Sampling & Aperture Jitter Limit**:",
-      "• Maximum frequency of interest: $f_{\\max} = 5\\text{ kHz}$. Nyquist minimum: $f_s > 10\\text{ kS/s}$.",
-      "• We select $f_s = \\mathbf{20\\text{ kS/s}}$ ($20\\text{ kHz}$), providing a generous $5\\text{ kHz}$ guard band ($5\\text{--}10\\text{ kHz}$).",
-      "• Sampling interval: $T_s = 1 / 20,000 = \\mathbf{50\\ \\mu\\text{s}}$.",
-      "• Aperture jitter constraint for 1 LSB accuracy at $5\\text{ kHz}$ and $V_0 = 5\\text{ V}$: $t_a < \\frac{\\Delta V}{2\\pi f_{\\max} V_0} = \\frac{0.000305}{2\\pi \\times 5000 \\times 5} = \\mathbf{1.94\\text{ ns}}$ (standard DAQ crystals achieve $< 20\\text{ ps}$)."
-    ],
-    speakerNotes: "Walk students through the math: Notice how the 6th-order Butterworth filter attenuates the 25 kHz inverter noise by over 83 dB, preventing it from ever folding back into the spectrum."
-  },
-  {
-    id: 49,
-    title: "Stage-by-Stage Mathematical Solution (Stages 4 to 6)",
-    subtitle: "Quantization, Hanning windowing buffer, and 4096-pt FFT spectral execution",
-    sectionTag: "Case Study · Solution Part 2",
-    type: "content",
-    bullets: [
-      "**Stage 4 — ADC Quantization & Dynamic Range**:",
-      "• ADC Selection: 16-bit successive approximation (SAR) ADC with Full-Scale Range $V_{\\text{FSR}} = \\pm 10\\text{ V}$ ($20\\text{ V}$ span).",
-      "• Discrete Quantization Levels: $2^{16} = 65,536\\text{ codes}$.",
-      "• Quantization Step Size (LSB Voltage): $\\Delta V = \\frac{20\\text{ V}}{65,535} = \\mathbf{305.18\\ \\mu\\text{V}}$.",
-      "• Minimum detectable vibration: $a_{\\min} = \\frac{\\Delta V}{S_a} = \\frac{305.18\\ \\mu\\text{V}}{100\\text{ mV/g}} = \\mathbf{0.00305\\text{ g}}$ ($3.05\\text{ mg}$).",
-      "• Signal-to-Quantization-Noise Ratio: $\\mathrm{SQNR} = 6.02 \\times 16 + 1.76 = \\mathbf{98.08\\text{ dB}}$.",
-      "• RMS Quantization Noise Voltage: $\\sigma_q = \\frac{\\Delta V}{\\sqrt{12}} = \\frac{305.18}{\\sqrt{12}} = \\mathbf{88.1\\ \\mu\\text{V}}$.",
-      "**Stage 5 — DSP Buffer, Frequency Bins & Windowing**:",
-      "• Block Length: Choose power of 2 for Radix-2 FFT: $N = \\mathbf{4096\\text{ samples}}$.",
-      "• Physical Recording Window: $T_{\\text{record}} = N \\cdot T_s = 4096 \\times 50\\ \\mu\\text{s} = \\mathbf{0.2048\\text{ seconds}}$ ($204.8\\text{ ms}$).",
-      "• Frequency Bin Spacing: $\\Delta f = \\frac{f_s}{N} = \\frac{20,000\\text{ Hz}}{4096} = \\mathbf{4.883\\text{ Hz}}$.",
-      "• Windowing Selection: Apply Hanning window $w[n] = 0.5 - 0.5\\cos\\left(\\frac{2\\pi n}{N}\\right)$. Sidelobes drop to $-32\\text{ dB}$, preventing unbalance leakage from masking bearing defects.",
-      "**Stage 6 — FFT Execution & Diagnostic Peak Interpretation**:",
-      "• Cooley-Tukey Radix-2 FFT operations: $\\frac{N}{2} \\log_2 N = 2048 \\times 12 = \\mathbf{24,576\\text{ complex MACs}}$ (vs. $16.78\\text{ million}$ direct DFT).",
-      "• Peak 1 (Bin $k = 41$): $f = 41 \\times 4.883 = \\mathbf{200.2\\text{ Hz}} \\implies \\mathbf{1.25\\text{ g}}$ (1X Rotor Mass Unbalance).",
-      "• Peak 2 (Bin $k = 82$): $f = 82 \\times 4.883 = \\mathbf{400.4\\text{ Hz}} \\implies \\mathbf{0.65\\text{ g}}$ (2X Shaft Angular Misalignment).",
-      "• Peak 3 (Bin $k = 205$): $f = 205 \\times 4.883 = \\mathbf{1,001.0\\text{ Hz}} \\implies \\mathbf{0.95\\text{ g}}$ (5-Blade Impeller Pass).",
-      "• Peak 4 (Bin $k = 492$): $f = 492 \\times 4.883 = \\mathbf{2,402.4\\text{ Hz}} \\implies \\mathbf{0.38\\text{ g}}$ (Outer Race Bearing Defect)."
-    ],
-    speakerNotes: "Highlight the diagnostic power: From a single 0.2-second recording, the engineer can distinguish unbalance, misalignment, blade-pass, and bearing defect frequencies with sub-5-Hz resolution."
-  },
-  {
-    id: 50,
-    title: "Complete Worked Problem: Full DAQ Pipeline Derivation",
-    subtitle: "Formal structured step-by-step numerical verification for students",
-    sectionTag: "Case Study · Worked Derivation",
+    title: "Comprehensive Worked Numerical Problem",
+    subtitle: "Mastering quantitative calculations for examinations and real-world system design",
+    sectionTag: "2.10 Worked Problem",
     type: "worked-example",
     workedExample: {
-      problem: "An industrial gas turbine rotating at 12,000 RPM (200 Hz fundamental) has potential blade pass harmonics up to 1 kHz and high-frequency bearing cage impacts up to 2.4 kHz. An adjacent inverter emits 25 kHz PWM noise. Design and calculate the complete DAQ pipeline: 1. Sensor voltage span, 2. Anti-aliasing filter attenuation at 25 kHz, 3. Sampling frequency and aperture jitter limit, 4. 16-bit ADC step size and SQNR, 5. Observation duration and bin spacing for N = 4096, 6. Radix-2 FFT speedup factor.",
+      problem: "An industrial monitoring module acquires a vibration accelerometer signal bandlimited to 400 Hz. The instrumentation engineer selects a sampling rate fs = 1024 Hz, a 12-bit ADC with full-scale range 0 to 5.0 V, and an FFT buffer size of N = 1024 points. Calculate: (a) The Nyquist frequency and verification of sampling criteria, (b) The voltage quantization resolution Delta V and RMS quantization noise, (c) The frequency bin resolution Delta f of the resulting FFT, and (d) The speedup factor of the Cooley-Tukey FFT compared to direct DFT.",
       given: {
-        "Rotor Speed": "12,000 RPM (f_1X = 200 Hz)",
-        "Max Bandwidth of Interest": "f_max = 5 kHz",
-        "Sensor Sensitivity": "Sa = 100 mV/g, Range = ±50 g",
-        "ADC Span": "VFSR = ±10 V (20 V total)",
-        "Inverter EMI Noise": "f_noise = 25 kHz",
-        "FFT Block Size": "N = 4096 samples"
+        "Maximum Signal Frequency (f_max)": "400 Hz",
+        "Sampling Frequency (f_s)": "1024 Samples/sec",
+        "ADC Bit Depth (N_bits)": "12 bits",
+        "Full-Scale Voltage Range (V_FS)": "5.000 V",
+        "FFT Buffer Size (N_samples)": "1024 points"
       },
       steps: [
         {
           stepNumber: 1,
-          title: "Sensor Output Voltage Span",
-          math: "V_{\\text{span}} = \\pm 50\\text{ g} \\times 0.100\\text{ V/g} = \\pm 5.0\\text{ V} \\implies V_{pk-pk} = 10.0\\text{ V}",
-          explanation: "The IEPE accelerometer produces a clean bipolar output between -5V and +5V, comfortably inside the ADC ±10V span."
+          title: "Verify Nyquist Criterion and Nyquist Frequency",
+          explanation: "The theoretical Nyquist frequency is exactly half the sampling rate:",
+          math: "f_N = \\frac{f_s}{2} = \\frac{1024\\text{ Hz}}{2} = 512\\text{ Hz} > f_{\\max} = 400\\text{ Hz} \\quad (\\text{PASS: No Aliasing})"
         },
         {
           stepNumber: 2,
-          title: "Anti-Aliasing Filter Attenuation at 25 kHz",
-          math: "|H(25\\text{ kHz})| = \\frac{1}{\\sqrt{1 + (25 / 5)^{12}}} = \\frac{1}{\\sqrt{1 + 5^{12}}} = \\frac{1}{15,625} = -83.87\\text{ dB}",
-          explanation: "A 6th-order Butterworth LPF with fc = 5 kHz rolls off at -120 dB/decade, attenuating the 25 kHz inverter switching noise by 83.87 dB (factor of 15,625)."
+          title: "Calculate Voltage Quantization Resolution (LSB Step Size)",
+          explanation: "Divide full-scale span by total number of 12-bit discrete binary states:",
+          math: "\\Delta V = \\frac{V_{FS}}{2^{12}} = \\frac{5.000\\text{ V}}{4096} = 1.2207\\text{ mV}"
         },
         {
           stepNumber: 3,
-          title: "Sampling Frequency & Aperture Jitter",
-          math: "f_s = 20\\text{ kS/s} \\implies f_{\\text{Nyquist}} = 10\\text{ kHz}, \\quad t_a < \\frac{305.2\\ \\mu\\text{V}}{2\\pi (5000)(5)} = 1.94\\text{ ns}",
-          explanation: "Sampling at 20 kS/s places the Nyquist boundary at 10 kHz, providing a 5 kHz guard band. Jitter must be under 1.94 ns to maintain 1 LSB accuracy."
+          title: "Determine RMS Quantization Noise Floor",
+          explanation: "Evaluate the uniform distribution RMS noise formula:",
+          math: "V_{q,RMS} = \\frac{\\Delta V}{\\sqrt{12}} = \\frac{1.2207\\text{ mV}}{3.4641} = 0.3524\\text{ mV} = 352.4\\,\\mu\\text{V}"
         },
         {
           stepNumber: 4,
-          title: "ADC Resolution Step Size & SQNR",
-          math: "\\Delta V = \\frac{20\\text{ V}}{65535} = 305.18\\ \\mu\\text{V}, \\quad \\mathrm{SQNR} = 6.02(16) + 1.76 = 98.08\\text{ dB}",
-          explanation: "The 16-bit ADC provides 65,536 discrete codes with 305.2 uV step size, resolving accelerations down to 0.00305 g with 98.08 dB SQNR."
+          title: "Compute FFT Frequency Bin Resolution",
+          explanation: "Divide sampling frequency by total number of points in the FFT buffer:",
+          math: "\\Delta f = \\frac{f_s}{N} = \\frac{1024\\text{ Hz}}{1024\\text{ points}} = 1.000\\text{ Hz/bin}"
         },
         {
           stepNumber: 5,
-          title: "Observation Time & Frequency Resolution",
-          math: "T_{\\text{record}} = \\frac{4096}{20,000} = 0.2048\\text{ s}, \\quad \\Delta f = \\frac{20,000}{4096} = 4.883\\text{ Hz}",
-          explanation: "A 4096-sample buffer takes 204.8 ms to capture and produces frequency bin lines spaced 4.883 Hz apart across the 0 to 10 kHz spectrum."
-        },
-        {
-          stepNumber: 6,
-          title: "Radix-2 FFT Computational Speedup",
-          math: "\\text{Speedup} = \\frac{N^2}{\\frac{N}{2}\\log_2 N} = \\frac{4096^2}{2048 \\times 12} = \\frac{16,777,216}{24,576} = 682.7\\times",
-          explanation: "The Cooley-Tukey FFT algorithm reduces computational operations by a factor of 682.7, executing in 0.2 ms on an embedded DSP."
+          title: "Calculate FFT Computational Speedup Factor",
+          explanation: "Compare direct DFT multiplications N^2 against Radix-2 FFT (N/2) log2(N):",
+          math: "\\text{Speedup} = \\frac{N^2}{\\frac{N}{2} \\log_2 N} = \\frac{1024^2}{512 \\times 10} = \\frac{1,048,576}{5,120} = \\mathbf{204.8\\times}"
         }
       ],
-      finalAnswer: "fs = 20 kS/s, fc = 5 kHz (6th-order), ΔV = 305.2 μV, Δf = 4.883 Hz, Speedup = 682.7x",
-      practicalInsight: "Applying this complete pipeline guarantees complete rejection of industrial inverter noise, resolves unbalance (200 Hz) and misalignment (400 Hz), and detects bearing fault pulses (2.4 kHz) with 98 dB dynamic range."
+      finalAnswer: "f_N = 512 Hz (Valid), Delta V = 1.221 mV, V_q,RMS = 352.4 uV, Delta f = 1.000 Hz, FFT Speedup = 204.8x faster",
+      practicalInsight: "With Delta f = 1.0 Hz, an engineer can easily distinguish a 50 Hz shaft rotation peak from a 52 Hz cooling fan vibration peak!"
     },
-    speakerNotes: "This structured example serves as the master review problem for students studying for university examinations or designing industrial DAQ systems."
+    speakerNotes: "Walk students through each step. Emphasize that these 5 steps represent the exact design workflow for specifying real DAQ hardware."
   },
-
-  // ---------------------------------------------------------------------------
-  // SECTION 2.10: DIAGNOSTIC REVIEW & MASTER FORMULAS
-  // ---------------------------------------------------------------------------
   {
-    id: 51,
-    title: "Common Engineering Misconceptions in DSP & DAQ",
-    subtitle: "Frequent pitfalls in industrial test, measurement, and laboratory instrumentation",
-    sectionTag: "Diagnostic Review",
+    id: 47,
+    title: "Top 5 Classic DSP & DAQ Misconceptions",
+    subtitle: "Critical pitfalls that lead to failed instrumentation projects and exam errors",
+    sectionTag: "2.11 Misconceptions",
     type: "misconceptions",
     bullets: [
-      "Misconception 1: 'Sampling at exactly 2x f_max is adequate in real hardware': In theory, $f_s = 2 f_{\\max}$ works for pure mathematical sines. In real practice, analog anti-aliasing filters have finite roll-off slopes. Standard practice mandates $f_s \\ge 2.5$ to $10 \\times f_{\\max}$ to provide a comfortable guard band.",
-      "Misconception 2: 'A 24-bit ADC always gives 24 effective bits': An ADC's physical resolution is bounded by thermal noise ($4 k_B T R \\Delta f$), amplifier 1/f noise, and clock jitter. A 24-bit ADC typically yields an Effective Number of Bits (ENOB) of $19\\text{--}21$ bits in a real PCB environment.",
-      "Misconception 3: 'Galvanic isolation is only for operator safety': While isolation prevents electric shock, its primary measurement purpose is breaking ground loops that convert common-mode noise into differential 50 Hz power hum.",
-      "Misconception 4: 'Zero-padding increases frequency resolution': Zero-padding interpolates the sinc display curve; it does NOT increase true physical Rayleigh resolution (which depends strictly on $T_{\\text{record}} = 1 / \\Delta f$).",
-      "Misconception 5: 'Software FIR filters can replace the analog anti-aliasing filter': Once aliasing occurs during ADC sampling, software cannot distinguish folded ghost tones from real frequencies."
+      "Software Can Fix Aliasing: Aliasing is mathematically irreversible once digitized. High frequencies fold across the Nyquist boundary and appear as legitimate low frequencies. An analog anti-aliasing low-pass filter MUST be placed in hardware before the ADC.",
+      "High Display Digits Mean High Accuracy: Display resolution describes the smallest readable numerical increment, NOT instrument accuracy. An uncalibrated 16-bit multimeter can display 12.3456 V with high resolution while suffering a 1.5 V systematic calibration error.",
+      "FFT is an Approximation of DFT: The FFT is NOT an approximation. It is an exact mathematical algorithm that produces identical numerical results to direct DFT down to machine precision, just hundreds of times faster.",
+      "Sampling Faster Gives Sharper FFT Peaks: Increasing fs actually WIDENS the frequency bin spacing (Delta f = fs / N) unless N is increased proportionally. To achieve finer bin resolution, you must increase total recording duration: Delta f = 1 / T_record.",
+      "Discrete-Time Signals Are Always Digital: Discrete-time describes the time axis (sampled at discrete clock intervals). Digital describes BOTH discrete time and quantized amplitude. A sample-and-hold capacitor holds discrete-time analog voltages."
     ],
-    speakerNotes: "Review these 5 misconceptions to ensure students do not make costly hardware architecture mistakes in the field."
+    speakerNotes: "Review each misconception thoroughly with the class. These 5 points separate novice students from competent instrumentation engineers."
   },
   {
-    id: 52,
-    title: "Unit II Master Formula Reference Sheet",
-    subtitle: "Comprehensive mathematical formula review for exam & laboratory",
-    sectionTag: "Formula Review",
+    id: 48,
+    title: "Master Formula Reference Sheet",
+    subtitle: "Complete mathematical summary of Unit II: Digital Signal Processing & DAQ",
+    sectionTag: "Summary Sheet",
     type: "review",
     bullets: [
-      "Nyquist Rate: $f_s \\ge 2 \\cdot f_{\\max}$",
-      "Nyquist Folding Frequency: $f_{\\text{Nyq}} = f_s / 2$",
-      "Aliased Apparent Frequency: $f_{\\text{alias}} = |f_{\\text{in}} - k \\cdot f_s| \\le f_s/2$",
-      "ADC Quantization Step: $\\Delta V = V_{\\text{FSR}} / (2^N - 1)$",
-      "Theoretical Max SQNR: $\\mathrm{SQNR}_{\\text{dB}} = 6.02 \\cdot N + 1.76\\text{ dB}$",
-      "RMS Quantization Noise: $\\sigma_q = \\Delta V / \\sqrt{12} \\approx 0.2887 \\cdot \\Delta V$",
-      "Aperture Jitter Limit: $t_a < \\Delta V / (2\\pi f_{\\max} V_0)$",
-      "Butterworth Filter Response: $|H(f)| = 1 / \\sqrt{1 + (f / f_c)^{2n}}$",
-      "Discrete Convolution: $y[n] = \\sum_{k=-\\infty}^{\\infty} x[k] \\cdot h[n - k]$",
-      "FIR Difference Equation: $y[n] = \\sum_{k=0}^{M} b_k \\cdot x[n - k]$",
-      "Continuous FT (CTFT): $X(f) = \\int_{-\\infty}^{\\infty} x(t) \\cdot e^{-j 2\\pi f t} dt$",
-      "Discrete FT (DFT): $X[k] = \\sum_{n=0}^{N-1} x[n] \\cdot e^{-j \\frac{2\\pi}{N} k n}$",
-      "Frequency Bin Spacing: $\\Delta f = f_s / N = 1 / T_{\\text{record}}$",
-      "Radix-2 FFT Operations: $C_{\\text{FFT}} = \\frac{N}{2} \\log_2 N$",
-      "Direct DFT Operations: $C_{\\text{DFT}} = N^2$",
-      "Inverse DFT (IDFT): $x[n] = \\frac{1}{N} \\sum_{k=0}^{N-1} X[k] \\cdot e^{j \\frac{2\\pi}{N} k n}$",
-      "Parseval's Theorem: $\\sum |x[n]|^2 = \\frac{1}{N} \\sum |X[k]|^2$",
-      "Heisenberg-Gabor Limit: $\\Delta t \\cdot \\Delta f \\ge 1 / (4\\pi)$"
+      "**Nyquist Sampling Theorem**: $f_s \\ge 2 \\cdot f_{\\max} \\quad \\Longleftrightarrow \\quad f_N = f_s / 2$",
+      "**Aliasing Folded Frequency**: $f_{\\text{apparent}} = |f_{\\text{in}} - k \\cdot f_s|$",
+      "**ADC Voltage Resolution**: $\\Delta V = V_{\\text{LSB}} = \\frac{V_{\\text{FS}}}{2^N}$",
+      "**RMS Quantization Noise**: $V_{q,RMS} = \\frac{\\Delta V}{\\sqrt{12}} = \\frac{\\Delta V}{2\\sqrt{3}}$",
+      "**Ideal ADC Dynamic Range**: $\\mathrm{SNR}_{\\text{ideal}} = 6.02 \\cdot N + 1.76\\text{ dB}$",
+      "**Continuous Fourier Transform (CTFT)**: $X(f) = \\int_{-\\infty}^{\\infty} x(t) \\cdot e^{-j 2\\pi f t} dt$",
+      "**Discrete Fourier Transform (DFT)**: $X[k] = \\sum_{n=0}^{N-1} x[n] \\cdot e^{-j \\frac{2\\pi}{N} k n}$",
+      "**FFT Frequency Bin Spacing**: $\\Delta f = \\frac{f_s}{N} = \\frac{1}{T_{\\text{record}}}$",
+      "**Radix-2 FFT Computational Operations**: $C_{\\text{FFT}} = \\frac{N}{2} \\log_2 N \\quad \\text{vs.} \\quad C_{\\text{DFT}} = N^2$",
+      "**Inverse Discrete Fourier Transform (IDFT)**: $x[n] = \\frac{1}{N} \\sum_{k=0}^{N-1} X[k] \\cdot e^{+j \\frac{2\\pi}{N} k n}$",
+      "**Parseval's Energy Conservation Theorem**: $\\sum_{n=0}^{N-1} |x[n]|^2 = \\frac{1}{N} \\sum_{k=0}^{N-1} |X[k]|^2$",
+      "**Hanning Window Formulation**: $w[n] = 0.5 - 0.5 \\cos\\left(\\frac{2\\pi n}{N-1}\\right)$"
     ],
-    speakerNotes: "Advise students to memorize these equations: they appear on every instrumentation engineering examination and in every DSP embedded driver."
+    takeaway: "Mastery of these 12 core formulas provides the complete mathematical and engineering toolkit for digital signal processing and data acquisition.",
+    speakerNotes: "End the presentation on this slide. Remind students that author Er. Saroj Chalise recommends memorizing these 12 fundamental formulas for both university examinations and industrial practice."
   }
 ];
 
@@ -920,133 +885,89 @@ format:
     chalkboard: true
 ---
 
-# 2.1 Types of Signals {.center}
+# 2.1 The Story of Signals & Signal Taxonomy {.center}
 
-## Signal Classification Fundamentals
+## The Story of Signals: Nature Doesn't Speak in 1s and 0s
 
-- **Continuous-Time vs Discrete-Time**: $x(t)$ for $t \\in \\mathbb{R}$ vs $x[n] = x(n T_s)$ for $n \\in \\mathbb{Z}$.
-- **Analog vs Quantized Digital**: Infinite continuum vs finite $2^N$ binary levels.
-- **Deterministic vs Random**: Analytical equations vs probability distributions (mean $\\mu$, variance $\\sigma^2$, PSD).
-- **Periodic vs Aperiodic**: $x(t) = x(t + T_0)$ vs transient impulses.
-- **Energy vs Power**: $E < \\infty, P_{\\text{avg}} = 0$ vs $E = \\infty, 0 < P_{\\text{avg}} < \\infty$.
+- Physical phenomena (heart ECG, voice pressure, motor vibration) exist as continuous analog waveforms.
+- A signal is a physical disturbance carrying information across time and space.
+- Computers have finite registers and cannot store an infinite continuum.
+- Time must be sampled; amplitude must be quantized.
 
 ::: {.notes}
-Clarify that discrete refers to time sampling, while digital refers to amplitude quantization.
+Start with everyday physical signals to build intuitive motivation.
 :::
 
-## Signal Taxonomy & Energy Formulations
+## Signal Taxonomy: The 5 Dimensions
 
 ![](figures_unit2/u2_fig1_signal_taxonomy.svg){width="100%" fig-align="center"}
 
 ::: {.notes}
-Point out the 4 quadrants: time/value domain, periodicity, predictability, and energy vs power formulations.
+Walk through time continuity, amplitude values, predictability, repetition, and energy persistence.
 :::
 
-# 2.2 Acquisition, Sampling & ADC Quantization {.center}
+# 2.2 The Acquisition Bridge: Sampling & Quantization {.center}
 
-## Nyquist-Shannon Sampling Theorem
+## Nyquist-Shannon Sampling Theorem & Aliasing
 
-- **Sampling Criterion**: A signal bandlimited to $f_{\\max}$ can be uniquely reconstructed if and only if $f_s \\ge 2 \\cdot f_{\\max}$.
-- **Aliasing Folding**: If $f_s < 2 f_{\\max}$, frequencies fold back: $f_{\\text{apparent}} = |f_{\\text{in}} - k \\cdot f_s|$.
-- **Quantization Step Size**: $\\Delta V = \\frac{V_{\\text{FSR}}}{2^N - 1}$.
-- **Ideal Dynamic Range**: $\\mathrm{SQNR}_{\\text{dB}} = 6.02 \\cdot N + 1.76\\text{ dB}$.
-- **Aperture Jitter Limit**: $t_a < \\frac{\\Delta V}{2\\pi f_{\\max} V_0}$.
-
-::: {.notes}
-Stress that aliasing cannot be filtered out digitally once the signal is sampled by the ADC.
-:::
-
-## Nyquist Theorem & Aliasing Spectrum
+- Sampling Criterion: $f_s \\ge 2 \\cdot f_{\\max}$.
+- Aliasing: Frequencies above Nyquist fold into false low-frequency ghosts.
+- The Airport Security Rule: Aliasing CANNOT be filtered in software; an analog anti-aliasing filter is mandatory before the ADC.
 
 ![](figures_unit2/u2_fig2_sampling_and_aliasing.svg){width="100%" fig-align="center"}
 
-::: {.notes}
-Compare proper sampling with guard band vs undersampling with overlapping spectral ghost folds.
-:::
+## ADC Bit Depth & Quantization Resolution
 
-## ADC Bit Depth & Resolution (8-bit to 24-bit)
+- Step Size: $\\Delta V = V_{\\text{FS}} / 2^N$.
+- The 6.02 dB Rule: Each bit adds $+6.02\\text{ dB}$ of dynamic range.
+- 8-bit (19.5 mV) vs 12-bit (1.22 mV) vs 16-bit (76 uV) vs 24-bit (>160 dB).
 
 ![](figures_unit2/u2_fig11_adc_bit_depth_comparison.svg){width="100%" fig-align="center"}
 
-::: {.notes}
-Explain why 24-bit Dewesoft DualCore ADC provides >160 dB dynamic range, eliminating manual range settings.
-:::
+# 2.3 Modern DAQ System Architecture {.center}
 
-# 2.3 Signal Conditioning & DAQ Architecture {.center}
-
-## Modern DAQ System Architecture (Dewesoft Model)
+## 4-Pillar DAQ Model & Sensor Conditioning Matrix
 
 ![](figures_unit2/u2_fig9_dewesoft_daq_architecture.svg){width="100%" fig-align="center"}
 
 ::: {.notes}
-Walk through the 4 pillars: Sensors, Signal Conditioning, High-Resolution ADC, and DAQ Processing Software.
+Review Sensors, Signal Conditioning, High-Resolution ADC, and DAQ Processing Software.
 :::
 
-## Universal Sensor Conditioning Circuit Topologies
+# 2.5–2.8 The Fourier Transform Story {.center}
 
-![](figures_unit2/u2_fig10_sensor_conditioning_matrix.svg){width="100%" fig-align="center"}
+## The Fruit Smoothie & Musical Chord Analogy
 
-::: {.notes}
-Review conditioning circuits for strain gauge bridges, IEPE accelerometers, thermocouples with CJC, and high-voltage dividers.
-:::
+- **Smoothie Analogy**: You cannot unmix a blended fruit smoothie with a spoon, but Fourier is the magical centrifuge that spits out exact fruit ingredients.
+- **Musical Chord**: The ear unmixes a composite piano chord (C-E-G) into pure fundamental musical notes.
 
-# 2.4 Signal Processing Techniques {.center}
+## Continuous vs. Discrete Fourier Transform
 
-## FIR vs. IIR Digital Filter Architectures
-
-![](figures_unit2/u2_fig4_fir_vs_iir_filters.svg){width="100%" fig-align="center"}
-
-::: {.notes}
-Highlight FIR tapped delay lines with linear phase vs IIR recursive feedback poles.
-:::
-
-# 2.5 Fourier Transform (CTFT) {.center}
-
-## Continuous Fourier Spectrum
+- **CTFT**: The theoretical prism $X(f) = \\int_{-\\infty}^{\\infty} x(t) e^{-j 2\\pi f t} dt$.
+- **Computer's Dilemma**: Computers cannot calculate infinite continuous integrals.
+- **DFT**: Evaluating $N$ samples into $N$ discrete frequency bins $\\Delta f = f_s / N$.
+- **Windowing**: Hanning window suppresses spectral leakage sidelobes by $-31.5\\text{ dB}$.
 
 ![](figures_unit2/u2_fig5_fourier_decomposition.svg){width="100%" fig-align="center"}
 
-::: {.notes}
-Show how the composite time waveform decomposes into orthogonal sinusoidal frequency delta spikes.
-:::
+## Fast Fourier Transform (FFT) & Inverse Transform (IDFT)
 
-# 2.6 Discrete Fourier Transform (DFT) {.center}
-
-## DFT Leakage & Windowing
-
-![](figures_unit2/u2_fig6_dft_leakage_and_windowing.svg){width="100%" fig-align="center"}
-
-::: {.notes}
-Examine the sidelobe suppression comparison between rectangular and Hanning windows.
-:::
-
-# 2.7 Fast Fourier Transform (FFT) {.center}
-
-## Radix-2 Butterfly Graph & O(N log N) Speedup
+- **Cooley-Tukey FFT**: Slashing complexity from $N^2$ to $\\frac{N}{2} \\log_2 N$ ($>680\\times$ speedup).
+- **IDFT**: Re-synthesizing time waves from frequency components: $x[n] = \\frac{1}{N} \\sum X[k] e^{+j \\frac{2\\pi}{N} k n}$.
+- **Superpower**: Surgical 50 Hz power hum elimination and MP3/JPEG data compression.
 
 ![](figures_unit2/u2_fig7_fft_butterfly_dit.svg){width="100%" fig-align="center"}
 
-::: {.notes}
-Trace the butterfly computation flow graph and the operational benchmark table showing >680x speedup for N=4096.
-:::
+# Simpler End-to-End Case Study {.center}
 
-# 2.8 & 2.9 Time-Frequency Spectrograms {.center}
+## Workshop Electric Motor Health Monitor
 
-## STFT Spectrogram & Uncertainty
-
-![](figures_unit2/u2_fig8_stft_spectrogram_presentation.svg){width="100%" fig-align="center"}
-
-::: {.notes}
-Conclude with the spectrogram visualization and Heisenberg-Gabor uncertainty tradeoff.
-:::
-
-# Comprehensive Solved Case Study {.center}
-
-## Gas Turbine Vibration DAQ Pipeline
+- **Physical Measurands**: 75°C Casing Heat + 50 Hz Shaft Vibration ($1.50\\text{ m/s}^2$).
+- **Analog Sensors**: LM35 (0.750V DC) and Accelerometer (0.150V 50 Hz AC).
+- **Conditioning**: 200 Hz Butterworth low-pass filter eliminates 10 kHz welder noise; DC level shift to 2.5V.
+- **12-Bit ADC**: $f_s = 1000\\text{ S/s}$, $\\Delta V = 1.221\\text{ mV}$. Code $D_{\\text{temp}} = 614$, Peak Vibration Code = 2171.
+- **Computer Storage**: DMA circular RAM array \`uint16_t buffer[]\` and CSV disk logging.
+- **Presentation**: Time-domain strip chart + 1024-pt FFT displaying razor-sharp 50 Hz peak + automated alarms.
 
 ![](figures_unit2/u2_fig12_end_to_end_case_study.svg){width="100%" fig-align="center"}
-
-::: {.notes}
-Trace the complete solution from 12,000 RPM rotor unbalance, 6th-order Butterworth AA filter, 16-bit ADC, Hanning window, and 4096-pt FFT spectral peak diagnosis.
-:::
 `;

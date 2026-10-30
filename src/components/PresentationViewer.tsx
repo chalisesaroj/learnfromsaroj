@@ -781,7 +781,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                 </div>
                 {/* Slide Footer */}
                 <div className="px-4 py-2 border-t text-[11px] text-slate-500 flex justify-between">
-                  <span>Unit I · Er. Saroj Chalise</span>
+                  <span>{chapter.unitNumber || 'Unit I'} · Er. Saroj Chalise</span>
                   <span>{currentSlideIndex + 1} / {totalSlides}</span>
                 </div>
               </div>

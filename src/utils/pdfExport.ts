@@ -86,39 +86,112 @@ export async function renderLatexToPng(
 export function cleanLatexForPdf(text: string): string {
   if (!text) return '';
   return text
-    .replace(/\*\*(.*?)\*\*/g, '$1') // Strip markdown bold
-    .replace(/\*([^*]+)\*/g, '$1')   // Strip markdown italic
+    // Strip markdown formatting
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\*([^*]+)\*/g, '$1')
+    .replace(/__([^_]+)__/g, '$1')
+    // Strip LaTeX math wrappers
     .replace(/\$\$(.*?)\$\$/g, '$1')
     .replace(/\$(.*?)\$/g, '$1')
-    .replace(/\\Delta/g, 'Δ')
-    .replace(/\\theta/g, 'θ')
-    .replace(/\\tau/g, 'τ')
-    .replace(/\\omega/g, 'ω')
-    .replace(/\\zeta/g, 'ζ')
-    .replace(/\\sigma/g, 'σ')
-    .replace(/\\mu/g, 'μ')
-    .replace(/\\pi/g, 'π')
-    .replace(/\\times/g, '×')
-    .replace(/\\cdot/g, '·')
-    .replace(/\\approx/g, '≈')
-    .replace(/\\le/g, '≤')
-    .replace(/\\ge/g, '≥')
-    .replace(/\\pm/g, '±')
-    .replace(/\\sqrt\{([^}]+)\}/g, '√($1)')
-    .replace(/\\sqrt/g, '√')
-    .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1 / $2)')
+    // Remove raw LaTeX text/mathrm/mathbf/mathit wrappers
     .replace(/\\text\{([^}]+)\}/g, '$1')
     .replace(/\\mathrm\{([^}]+)\}/g, '$1')
-    .replace(/\\implies/g, '➔')
-    .replace(/\\quad/g, '  ')
-    .replace(/\\qquad/g, '    ')
+    .replace(/\\mathbf\{([^}]+)\}/g, '$1')
+    .replace(/\\mathit\{([^}]+)\}/g, '$1')
+    // Convert Greek letters to clean ASCII words (CRITICAL: guarantees jsPDF WinAnsi font stability and 0% glyph corruption)
+    .replace(/\\Delta(?=[a-zA-Z0-9])/g, 'Delta ')
+    .replace(/\\Delta/g, 'Delta')
+    .replace(/\\delta(?=[a-zA-Z0-9])/g, 'delta ')
+    .replace(/\\delta/g, 'delta')
+    .replace(/\\alpha/g, 'alpha')
+    .replace(/\\beta/g, 'beta')
+    .replace(/\\gamma/g, 'gamma')
+    .replace(/\\varepsilon/g, 'epsilon')
+    .replace(/\\epsilon/g, 'epsilon')
+    .replace(/\\theta/g, 'theta')
+    .replace(/\\tau/g, 'tau')
+    .replace(/\\omega/g, 'omega')
+    .replace(/\\zeta/g, 'zeta')
+    .replace(/\\sigma/g, 'sigma')
+    .replace(/\\lambda/g, 'lambda')
+    .replace(/\\rho/g, 'rho')
+    .replace(/\\eta/g, 'eta')
+    .replace(/\\phi/g, 'phi')
+    .replace(/\\psi/g, 'psi')
+    .replace(/\\nu/g, 'nu')
+    .replace(/\\mu/g, 'u')
+    .replace(/\\pi/g, 'pi')
+    .replace(/\\Omega/g, 'Ohms')
+    // Sanitize any existing Unicode Greek letters in data strings
+    .replace(/Δ(?=[a-zA-Z0-9])/g, 'Delta ')
+    .replace(/Δ/g, 'Delta')
+    .replace(/δ(?=[a-zA-Z0-9])/g, 'delta ')
+    .replace(/δ/g, 'delta')
+    .replace(/α/g, 'alpha')
+    .replace(/β/g, 'beta')
+    .replace(/γ/g, 'gamma')
+    .replace(/θ/g, 'theta')
+    .replace(/τ/g, 'tau')
+    .replace(/ω/g, 'omega')
+    .replace(/ζ/g, 'zeta')
+    .replace(/σ/g, 'sigma')
+    .replace(/λ/g, 'lambda')
+    .replace(/ρ/g, 'rho')
+    .replace(/η/g, 'eta')
+    .replace(/φ/g, 'phi')
+    .replace(/ψ/g, 'psi')
+    .replace(/ν/g, 'nu')
+    .replace(/μ/g, 'u')
+    .replace(/π/g, 'pi')
+    .replace(/Ω/g, 'Ohms')
+    .replace(/°C/g, ' deg C')
+    .replace(/°/g, ' deg ')
+    // Convert math operators to standard ASCII
+    .replace(/\\times/g, 'x')
+    .replace(/\\cdot/g, '*')
+    .replace(/\\approx/g, '~=')
+    .replace(/\\le/g, '<=')
+    .replace(/\\ge/g, '>=')
+    .replace(/\\pm/g, '+/-')
+    .replace(/\\neq/g, '!=')
+    .replace(/\\infty/g, 'infinity')
+    .replace(/\\sqrt\{([^}]+)\}/g, 'sqrt($1)')
+    .replace(/\\sqrt/g, 'sqrt')
+    .replace(/\\frac\{([^}]+)\}\{([^}]+)\}/g, '($1 / $2)')
+    .replace(/\\implies/g, '->')
+    .replace(/\\to/g, '->')
+    .replace(/\\quad/g, ' ')
+    .replace(/\\qquad/g, ' ')
     .replace(/\\,/g, ' ')
-    .replace(/\^2/g, '²')
-    .replace(/\^3/g, '³')
-    .replace(/\^n/g, 'ⁿ')
+    // Exponents and subscripts to clean ASCII
+    .replace(/\^2/g, '^2')
+    .replace(/\^3/g, '^3')
+    .replace(/\^n/g, '^n')
     .replace(/\^\{([^}]+)\}/g, '^($1)')
-    .replace(/_\{([^}]+)\}/g, '_$1')
-    .replace(/[{}]/g, '');
+    .replace(/_\{([^}]+)\}/g, '$1')
+    .replace(/\\_/g, '_')
+    // Strip Unicode math symbols that fail in standard Helvetica WinAnsi
+    .replace(/[×✕]/g, 'x')
+    .replace(/[·•]/g, '*')
+    .replace(/[≈≃]/g, '~=')
+    .replace(/≤/g, '<=')
+    .replace(/≥/g, '>=')
+    .replace(/±/g, '+/-')
+    .replace(/√/g, 'sqrt')
+    .replace(/[²]/g, '^2')
+    .replace(/[³]/g, '^3')
+    .replace(/[ⁿ]/g, '^n')
+    .replace(/[➔→]/g, '->')
+    .replace(/[—–]/g, '-')
+    .replace(/[""]/g, '"')
+    .replace(/['']/g, "'")
+    // Clean curly braces and remaining stray backslashes
+    .replace(/[{}]/g, '')
+    .replace(/\\([a-zA-Z]+)/g, '$1')
+    // FINAL SANITIZATION: Eliminate any non-printable ASCII characters that could corrupt WinAnsi font metrics
+    .replace(/[^\x20-\x7E\n\r\t]/g, ' ')
+    .replace(/[ \t]+/g, ' ')
+    .trim();
 }
 
 /**
@@ -220,21 +293,29 @@ export async function exportChapterToPdf(
     ) => {
       if (!symbols || symbols.length === 0) return;
 
-      ensureSpace(10, sectionTag);
+      ensureSpace(8 + symbols.length * 4.2, sectionTag);
       doc.setFont('helvetica', 'bold');
       doc.setFontSize(7.5);
-      doc.setTextColor(79, 70, 229);
-      doc.text('WHERE THE SYMBOLS REPRESENT:', margin + 3, currentY);
-      currentY += 4.2;
+      doc.setTextColor(100, 116, 139);
+      doc.text('where:', margin + 2, currentY);
+      currentY += 3.8;
 
-      const symColW = 50;
-      const descColW = contentWidth - symColW - 8;
+      const symColW = 52;
+      const descColW = contentWidth - symColW - 6;
 
       for (const sym of symbols) {
-        const symStr = cleanLatexForPdf(sym.symbol);
-        const unitPart = sym.unit ? ` [${sym.unit}]` : '';
-        const leftText = `${symStr} = ${sym.name}${unitPart}:`;
-        const rightText = cleanLatexForPdf(sym.description || '');
+        const symClean = cleanLatexForPdf(sym.symbol).replace(/\\/g, '').replace(/_/g, '');
+        let rawUnit = sym.unit ? sym.unit : '';
+        rawUnit = rawUnit
+          .replace(/\\text\{([^}]+)\}/g, '$1')
+          .replace(/[\[\]\{\}\\]/g, '')
+          .replace(/\\cdot/g, '*')
+          .trim();
+        rawUnit = cleanLatexForPdf(rawUnit).trim();
+        const unitPart = rawUnit ? ` [${rawUnit}]` : '';
+        const symName = cleanLatexForPdf(sym.name).replace(/:+$/, '').trim();
+        const leftText = `• ${symClean} : ${symName}${unitPart}`;
+        const rightText = cleanLatexForPdf(sym.description || '').trim();
 
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(7.5);
@@ -245,25 +326,25 @@ export async function exportChapterToPdf(
         const rightLines = rightText ? doc.splitTextToSize(rightText, descColW) : [];
 
         const lineCount = Math.max(leftLines.length, rightLines.length, 1);
-        const rowH = lineCount * 3.6 + 1.2;
+        const rowH = lineCount * 3.4 + 0.8;
 
         ensureSpace(rowH + 1, sectionTag);
 
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(7.5);
-        doc.setTextColor(67, 56, 202);
-        doc.text(leftLines, margin + 4, currentY);
+        doc.setTextColor(51, 65, 85);
+        doc.text(leftLines, margin + 2, currentY);
 
         if (rightLines.length > 0) {
           doc.setFont('helvetica', 'normal');
           doc.setFontSize(7.5);
           doc.setTextColor(71, 85, 105);
-          doc.text(rightLines, margin + symColW + 6, currentY);
+          doc.text(rightLines, margin + symColW + 4, currentY);
         }
 
         currentY += rowH;
       }
-      currentY += 2;
+      currentY += 2.5;
     };
 
     // --- CASE A: SPECIALIZED COMPLETE TEXTBOOK FOR UNIT 1 ---
@@ -415,15 +496,8 @@ export async function exportChapterToPdf(
 
           // Optional Formula / Equation (Open display, no bordered box, high-DPI vector rendering!)
           if (sub.equation) {
-            ensureSpace(28, `Section ${sec.number}`);
+            ensureSpace(24, `Section ${sec.number}`);
             currentY += 2;
-
-            // Equation Label
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(7.5);
-            doc.setTextColor(79, 70, 229);
-            doc.text(sub.equation.label.toUpperCase(), margin, currentY);
-            currentY += 4;
 
             // Render vector equation via MathJax
             const eqImg = await latexToPngDataUrl(sub.equation.tex, contentWidth - 30, true);
@@ -431,23 +505,32 @@ export async function exportChapterToPdf(
               ensureSpace(eqImg.heightMm + 6, `Section ${sec.number}`);
               const eqX = (pageWidth - eqImg.widthMm) / 2;
               doc.addImage(eqImg.dataUrl, 'PNG', eqX, currentY, eqImg.widthMm, eqImg.heightMm, undefined, 'FAST');
-              currentY += eqImg.heightMm + 3.5;
+
+              // Academic right-aligned equation numbering e.g. (1.3)
+              const numMatch = sub.equation.label.match(/\d+(\.\d+)*/);
+              const eqTag = numMatch ? `(${numMatch[0]})` : `(${cleanLatexForPdf(sub.equation.label)})`;
+              doc.setFont('helvetica', 'normal');
+              doc.setFontSize(8);
+              doc.setTextColor(100, 116, 139);
+              doc.text(eqTag, pageWidth - margin, currentY + eqImg.heightMm / 2 + 1, { align: 'right' });
+
+              currentY += eqImg.heightMm + 2.5;
             } else {
               doc.setFont('helvetica', 'bold');
-              doc.setFontSize(9.5);
+              doc.setFontSize(9);
               doc.setTextColor(15, 23, 42);
               doc.text(cleanLatexForPdf(sub.equation.tex), pageWidth / 2, currentY + 4, { align: 'center' });
-              currentY += 8;
+              currentY += 7;
             }
 
             // Description
             if (sub.equation.description) {
               doc.setFont('helvetica', 'italic');
-              doc.setFontSize(7.8);
+              doc.setFontSize(7.6);
               doc.setTextColor(71, 85, 105);
-              const descLines = doc.splitTextToSize(cleanLatexForPdf(sub.equation.description), contentWidth - 10);
+              const descLines = doc.splitTextToSize(cleanLatexForPdf(sub.equation.description), contentWidth - 20);
               doc.text(descLines, pageWidth / 2, currentY, { align: 'center' });
-              currentY += descLines.length * 3.8 + 2;
+              currentY += descLines.length * 3.6 + 2;
             }
 
             // Parameter Definitions (dynamic wrapping, zero overlap)
@@ -466,36 +549,38 @@ export async function exportChapterToPdf(
 
           // Optional Second Formula / Equation (e.g. Eq. 1.4 RMS Quantization Noise)
           if (sub.secondEquation) {
-            ensureSpace(28, `Section ${sec.number}`);
+            ensureSpace(24, `Section ${sec.number}`);
             currentY += 2;
-
-            doc.setFont('helvetica', 'bold');
-            doc.setFontSize(7.5);
-            doc.setTextColor(79, 70, 229);
-            doc.text(sub.secondEquation.label.toUpperCase(), margin, currentY);
-            currentY += 4;
 
             const eqImg2 = await latexToPngDataUrl(sub.secondEquation.tex, contentWidth - 30, true);
             if (eqImg2) {
               ensureSpace(eqImg2.heightMm + 6, `Section ${sec.number}`);
               const eqX = (pageWidth - eqImg2.widthMm) / 2;
               doc.addImage(eqImg2.dataUrl, 'PNG', eqX, currentY, eqImg2.widthMm, eqImg2.heightMm, undefined, 'FAST');
-              currentY += eqImg2.heightMm + 3.5;
+
+              const numMatch2 = sub.secondEquation.label.match(/\d+(\.\d+)*/);
+              const eqTag2 = numMatch2 ? `(${numMatch2[0]})` : `(${cleanLatexForPdf(sub.secondEquation.label)})`;
+              doc.setFont('helvetica', 'normal');
+              doc.setFontSize(8);
+              doc.setTextColor(100, 116, 139);
+              doc.text(eqTag2, pageWidth - margin, currentY + eqImg2.heightMm / 2 + 1, { align: 'right' });
+
+              currentY += eqImg2.heightMm + 2.5;
             } else {
               doc.setFont('helvetica', 'bold');
-              doc.setFontSize(9.5);
+              doc.setFontSize(9);
               doc.setTextColor(15, 23, 42);
               doc.text(cleanLatexForPdf(sub.secondEquation.tex), pageWidth / 2, currentY + 4, { align: 'center' });
-              currentY += 8;
+              currentY += 7;
             }
 
             if (sub.secondEquation.description) {
               doc.setFont('helvetica', 'italic');
-              doc.setFontSize(7.8);
+              doc.setFontSize(7.6);
               doc.setTextColor(71, 85, 105);
-              const descLines = doc.splitTextToSize(cleanLatexForPdf(sub.secondEquation.description), contentWidth - 10);
+              const descLines = doc.splitTextToSize(cleanLatexForPdf(sub.secondEquation.description), contentWidth - 20);
               doc.text(descLines, pageWidth / 2, currentY, { align: 'center' });
-              currentY += descLines.length * 3.8 + 2;
+              currentY += descLines.length * 3.6 + 2;
             }
 
             renderPdfSymbolDefinitions(sub.secondEquation.symbols, `Section ${sec.number}`);
@@ -855,38 +940,41 @@ export async function exportChapterToPdf(
       // Formula Block: Render with genuine MathJax LaTeX Typesetting
       if (slide.type === 'formula' || slide.formulaBlock || slide.equation) {
         const rawEq = slide.formulaBlock?.equation || slide.equation || '';
-        const label = slide.formulaBlock?.label || 'Mathematical Relationship';
+        const rawLabel = slide.formulaBlock?.label || 'Mathematical Relationship';
 
-        ensureSpace(35, activeSectionName);
-
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(8);
-        doc.setTextColor(99, 102, 241);
-        doc.text(label.toUpperCase(), margin, currentY);
-        currentY += 4;
+        ensureSpace(24, activeSectionName);
+        currentY += 2;
 
         const eqImg = await latexToPngDataUrl(rawEq, contentWidth - 25, true);
         if (eqImg) {
-          ensureSpace(eqImg.heightMm + 8, activeSectionName);
+          ensureSpace(eqImg.heightMm + 6, activeSectionName);
           const eqX = (pageWidth - eqImg.widthMm) / 2;
           doc.addImage(eqImg.dataUrl, 'PNG', eqX, currentY, eqImg.widthMm, eqImg.heightMm, undefined, 'FAST');
-          currentY += eqImg.heightMm + 4;
+
+          const numMatch = rawLabel.match(/\d+(\.\d+)*/);
+          const eqTag = numMatch ? `(${numMatch[0]})` : `(${cleanLatexForPdf(rawLabel)})`;
+          doc.setFont('helvetica', 'normal');
+          doc.setFontSize(8);
+          doc.setTextColor(100, 116, 139);
+          doc.text(eqTag, pageWidth - margin, currentY + eqImg.heightMm / 2 + 1, { align: 'right' });
+
+          currentY += eqImg.heightMm + 2.5;
         } else {
           doc.setFont('helvetica', 'bold');
-          doc.setFontSize(10);
+          doc.setFontSize(9);
           doc.setTextColor(15, 23, 42);
           doc.text(cleanLatexForPdf(rawEq), pageWidth / 2, currentY + 4, { align: 'center' });
-          currentY += 8;
+          currentY += 7;
         }
 
         const desc = slide.formulaBlock?.description || slide.equationDescription;
         if (desc) {
           doc.setFont('helvetica', 'italic');
-          doc.setFontSize(8);
+          doc.setFontSize(7.6);
           doc.setTextColor(71, 85, 105);
           const descLines = doc.splitTextToSize(cleanLatexForPdf(desc), contentWidth - 20);
           doc.text(descLines, pageWidth / 2, currentY, { align: 'center' });
-          currentY += descLines.length * 3.8 + 2;
+          currentY += descLines.length * 3.6 + 2;
         }
 
         const symbols = slide.formulaBlock?.symbols || slide.symbols;

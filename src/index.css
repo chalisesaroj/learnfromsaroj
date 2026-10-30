@@ -1,49 +1,72 @@
 @import "tailwindcss";
 
-/* Professional Academic LaTeX Typesetting Enhancements */
-.katex {
-  font-size: 1.15em !important;
+/* =========================================================================
+   Unified Responsive Scaling System for KaTeX Formulas
+   ========================================================================= */
+
+.math-responsive {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5rem 0.25rem;
+  margin: 0.5rem 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (min-width: 640px) {
+  .math-responsive {
+    font-size: 1.0rem;
+    padding: 0.65rem 0.5rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .math-responsive {
+    font-size: 1.08rem;
+    padding: 0.75rem 0.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .math-responsive {
+    font-size: 1.15rem;
+    padding: 0.85rem 0.5rem;
+  }
+}
+
+/* Ensure KaTeX inside .math-responsive scales strictly via container */
+.math-responsive .katex-display {
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 1em !important;
+}
+
+.math-responsive .katex {
+  font-size: 1em !important;
   text-rendering: optimizeLegibility;
 }
 
+/* Inline math resets: strictly match surrounding text font size and baseline */
 .katex-inline {
   display: inline-flex;
   align-items: baseline;
-  padding: 0 0.15em;
-  vertical-align: -0.05em;
+  padding: 0 0.1em;
+  font-size: 1em !important;
+  vertical-align: baseline;
 }
 
-.katex-display {
-  margin: 0.6em 0 !important;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 0.5em 0;
+.katex-inline .katex {
+  font-size: 1em !important;
+  text-rendering: optimizeLegibility;
 }
 
-.katex-display > .katex {
-  font-size: 1.3em !important;
-  text-align: center;
-}
-
-.math-formula-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.25rem 2rem;
-  margin: 1.25rem 0;
-  border-radius: 1rem;
-  background: rgba(248, 250, 252, 0.9);
-  border: 1px solid rgba(226, 232, 240, 0.7);
-  box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.05);
-}
-
-.dark .math-formula-box {
-  background: rgba(15, 23, 42, 0.8);
-  border: 1px solid rgba(30, 41, 59, 0.6);
-  box-shadow: 0 2px 6px -1px rgba(0, 0, 0, 0.25);
-}
-
-/* Slide Typography Standards: Minimum 22px body text */
+/* Slide Typography Standards */
 .slide-body-text {
   font-size: 22px;
   line-height: 1.6;

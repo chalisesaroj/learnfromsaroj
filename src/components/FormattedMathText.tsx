@@ -90,11 +90,12 @@ export const FormattedMathText: React.FC<FormattedMathTextProps> = ({
             });
             if (isDisplay) {
               return (
-                <span
-                  key={idx}
-                  className="block my-3 text-center text-lg sm:text-xl font-normal"
-                  dangerouslySetInnerHTML={{ __html: html }}
-                />
+                <div key={idx} className="math-responsive">
+                  <span
+                    className="katex-display-inner text-slate-900 dark:text-slate-100 tracking-normal text-center select-all"
+                    dangerouslySetInnerHTML={{ __html: html }}
+                  />
+                </div>
               );
             }
             return (
