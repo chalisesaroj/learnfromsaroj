@@ -53,12 +53,14 @@ export const SyllabusGuide: React.FC<SyllabusGuideProps> = ({
       {/* Syllabus Header Banner */}
       <div className="p-6 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center gap-2 mb-2">
-            <span className="px-2.5 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-semibold border border-indigo-500/30">
-              IOE / University Curriculum Standard
+          <div className="flex items-center gap-2 mb-2 flex-wrap">
+            <span className="font-mono text-indigo-400 font-bold text-xs bg-indigo-500/10 px-2.5 py-0.5 rounded border border-indigo-500/30">
+              MEC 232 (3-1-1) · 3 Credits
             </span>
             <span className="text-xs text-slate-400">·</span>
-            <span className="text-xs font-mono text-slate-400">Instructor: {chapter.instructor}</span>
+            <span className="text-xs text-slate-300 font-medium">BE Mechanical · Total: 45 Hours (Full Marks: 100, Pass Marks: 45)</span>
+            <span className="text-xs text-slate-400">·</span>
+            <span className="text-xs font-mono text-indigo-300 font-semibold">Instructor: Er. Saroj Chalise</span>
           </div>
           <h2 className="text-2xl font-bold text-white tracking-tight">
             {chapter.title} ({chapter.hours})

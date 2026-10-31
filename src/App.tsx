@@ -8,6 +8,7 @@ import { AiTopicGenerator } from './components/AiTopicGenerator';
 import { ChapterJsonStudio } from './components/ChapterJsonStudio';
 import { BookChapterViewer } from './components/BookChapterViewer';
 import { PdfDownloadModal } from './components/PdfDownloadModal';
+import { InstructorPortfolio } from './components/InstructorPortfolio';
 import { CHAPTERS, ChapterConfig, ChapterId } from './data/chaptersData';
 import { exportChapterToJSON, parseAndValidateChapterJSON } from './utils/chapterJsonIO';
 import JSZip from 'jszip';
@@ -27,7 +28,9 @@ import {
   FileJson,
   CheckCircle2,
   PlusCircle,
-  FileDown
+  FileDown,
+  UserCheck,
+  Home
 } from 'lucide-react';
 
 export default function App() {
@@ -35,8 +38,8 @@ export default function App() {
   const [loadedChapters, setLoadedChapters] = useState<ChapterConfig[]>(() => Object.values(CHAPTERS));
   const [currentChapterId, setCurrentChapterId] = useState<string>('unit1');
   const [activeNav, setActiveNav] = useState<
-    'deck' | 'book' | 'code' | 'simulations' | 'figures' | 'syllabus' | 'generator' | 'json-studio'
-  >('deck');
+    'home' | 'deck' | 'book' | 'code' | 'simulations' | 'figures' | 'syllabus' | 'generator' | 'json-studio'
+  >('home');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
   const [pdfModalInitialLayout, setPdfModalInitialLayout] = useState<'book' | 'landscape' | 'handout'>('book');
@@ -222,22 +225,38 @@ quarto render lecture*.qmd
       {/* Top Bar / App Navigation */}
       <header className="sticky top-0 z-50 flex items-center justify-between gap-4 px-4 sm:px-6 py-3 border-b border-slate-800 bg-slate-950/95 backdrop-blur-md">
         {/* Zone 1: Wordmark brand */}
-        <div className="flex items-center gap-3 whitespace-nowrap shrink-0">
-          <div className="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-md shadow-indigo-600/30">
-            QD
+        <button
+          onClick={() => setActiveNav('home')}
+          className="flex items-center gap-3 whitespace-nowrap shrink-0 text-left hover:opacity-90 transition-opacity"
+        >
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-blue-600 to-indigo-500 flex items-center justify-center text-white font-black text-sm shadow-md shadow-indigo-600/30 font-mono border border-indigo-400/30">
+            SC
           </div>
           <div>
             <span className="text-base font-bold tracking-tight text-white block leading-none">
-              QuartoDeck Studio
+              Er. Saroj Chalise
             </span>
-            <span className="text-[10px] text-slate-400 font-mono">
-              Presentation App &amp; JSON Engine
+            <span className="text-[11px] text-indigo-400 font-mono flex items-center gap-1.5 mt-0.5">
+              <span>MEC 232</span>
+              <span>·</span>
+              <span className="text-slate-400">BE Mechanical, IOE</span>
             </span>
           </div>
-        </div>
+        </button>
 
         {/* Zone 2: Navigation Links */}
         <nav className="hidden lg:flex items-center gap-5 text-xs sm:text-sm font-medium text-slate-400">
+          <button
+            onClick={() => setActiveNav('home')}
+            className={`flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
+              activeNav === 'home'
+                ? 'text-white font-semibold border-b-2 border-indigo-500 pb-0.5'
+                : 'hover:text-slate-200'
+            }`}
+          >
+            <Home className="w-3.5 h-3.5 text-indigo-400" />
+            <span>Home &amp; Portfolio</span>
+          </button>
           <button
             onClick={() => setActiveNav('deck')}
             className={`flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
@@ -369,6 +388,15 @@ quarto render lecture*.qmd
       {/* Mobile/Tablet Sub-Navigation */}
       <div className="lg:hidden flex items-center gap-1.5 overflow-x-auto px-4 py-2 bg-slate-900 border-b border-slate-800 text-xs scrollbar-none">
         <button
+          onClick={() => setActiveNav('home')}
+          className={`px-3 py-1.5 rounded whitespace-nowrap flex items-center gap-1 ${
+            activeNav === 'home' ? 'bg-indigo-600 text-white font-medium' : 'text-slate-400'
+          }`}
+        >
+          <Home className="w-3 h-3" />
+          Home
+        </button>
+        <button
           onClick={() => setActiveNav('deck')}
           className={`px-3 py-1.5 rounded whitespace-nowrap ${
             activeNav === 'deck' ? 'bg-indigo-600 text-white font-medium' : 'text-slate-400'
@@ -430,73 +458,90 @@ quarto render lecture*.qmd
 
       {/* Main Content Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
-        {/* Course Header Banner with Chapter Switcher Carousel */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-5 pb-6 border-b border-slate-800/80">
-          <div>
-            <div className="flex items-center gap-2 text-xs text-slate-400 mb-2 flex-wrap">
-              <span>Instrumentation Engineering</span>
-              <span aria-hidden="true">·</span>
-              <span>Er. Saroj Chalise</span>
-              <span aria-hidden="true">·</span>
-              <span className="font-semibold text-indigo-400">{chapter.unitNumber} ({chapter.hours})</span>
-              <span aria-hidden="true">·</span>
-              <span>{chapter.slides.length} Pedagogical Slides</span>
+        {/* Course Header Banner with Chapter Switcher Carousel (Shown on study views) */}
+        {activeNav !== 'home' && (
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-5 pb-6 border-b border-slate-800/80">
+            <div>
+              <div className="flex items-center gap-2 text-xs text-slate-400 mb-2 flex-wrap">
+                <span className="font-mono text-indigo-400 font-semibold">MEC 232 (3-1-1)</span>
+                <span aria-hidden="true">·</span>
+                <span>BE Mechanical</span>
+                <span aria-hidden="true">·</span>
+                <span>Er. Saroj Chalise</span>
+                <span aria-hidden="true">·</span>
+                <span className="font-semibold text-white">{chapter.unitNumber} ({chapter.hours})</span>
+                <span aria-hidden="true">·</span>
+                <span>{chapter.slides.length} Slides</span>
+              </div>
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white text-balance">
+                {chapter.title}
+              </h1>
+              <p className="text-sm text-slate-400 mt-1 max-w-3xl leading-relaxed">
+                {chapter.summary}{' '}
+                {chapter.referenceUrl && (
+                  <a
+                    href={chapter.referenceUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-blue-400 underline hover:text-blue-300"
+                  >
+                    {chapter.referenceUrl.replace('https://', '')}
+                  </a>
+                )}
+              </p>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white text-balance">
-              {chapter.title}
-            </h1>
-            <p className="text-sm text-slate-400 mt-1 max-w-3xl leading-relaxed">
-              {chapter.summary}{' '}
-              {chapter.referenceUrl && (
-                <a
-                  href={chapter.referenceUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-blue-400 underline hover:text-blue-300"
-                >
-                  {chapter.referenceUrl.replace('https://', '')}
-                </a>
-              )}
-            </p>
-          </div>
 
-          {/* Dynamic Chapter Switcher Pill */}
-          <div className="flex items-center gap-1.5 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800 shrink-0 shadow-lg flex-wrap max-w-full overflow-x-auto">
-            {loadedChapters.map((ch) => {
-              const isSelected = currentChapterId === ch.id;
-              const isCustom = !['unit1', 'unit2', 'unit3', 'unit4', 'unit5'].includes(ch.id);
-              return (
-                <button
-                  key={ch.id}
-                  onClick={() => setCurrentChapterId(ch.id)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
-                    isSelected
-                      ? 'bg-indigo-600 text-white shadow-md'
-                      : 'text-slate-400 hover:text-slate-200'
-                  }`}
-                >
-                  <span>{ch.unitNumber}</span>
-                  {isCustom ? (
-                    <span className="text-[10px] px-1 py-0.2 rounded bg-amber-500/20 text-amber-300">Custom</span>
-                  ) : (
-                    <span className="text-[10px] opacity-75 hidden xl:inline">({ch.hours})</span>
-                  )}
-                </button>
-              );
-            })}
+            {/* Dynamic Chapter Switcher Pill */}
+            <div className="flex items-center gap-1.5 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800 shrink-0 shadow-lg flex-wrap max-w-full overflow-x-auto">
+              {loadedChapters.map((ch) => {
+                const isSelected = currentChapterId === ch.id;
+                const isCustom = !['unit1', 'unit2', 'unit3', 'unit4', 'unit5'].includes(ch.id);
+                return (
+                  <button
+                    key={ch.id}
+                    onClick={() => setCurrentChapterId(ch.id)}
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
+                      isSelected
+                        ? 'bg-indigo-600 text-white shadow-md'
+                        : 'text-slate-400 hover:text-slate-200'
+                    }`}
+                  >
+                    <span>{ch.unitNumber}</span>
+                    {isCustom ? (
+                      <span className="text-[10px] px-1 py-0.2 rounded bg-amber-500/20 text-amber-300">Custom</span>
+                    ) : (
+                      <span className="text-[10px] opacity-75 hidden xl:inline">({ch.hours})</span>
+                    )}
+                  </button>
+                );
+              })}
 
-            <button
-              onClick={() => setActiveNav('json-studio')}
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-amber-300 bg-amber-950/40 border border-amber-800/40 hover:bg-amber-900/50 transition-colors"
-              title="Add a new chapter via JSON or prompt"
-            >
-              <PlusCircle className="w-3.5 h-3.5" />
-              <span>+ Add Chapter</span>
-            </button>
+              <button
+                onClick={() => setActiveNav('json-studio')}
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-amber-300 bg-amber-950/40 border border-amber-800/40 hover:bg-amber-900/50 transition-colors"
+                title="Add a new chapter via JSON or prompt"
+              >
+                <PlusCircle className="w-3.5 h-3.5" />
+                <span>+ Add Chapter</span>
+              </button>
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Tab Content Display */}
+        {activeNav === 'home' && (
+          <InstructorPortfolio
+            chapters={loadedChapters}
+            currentChapterId={currentChapterId}
+            onSelectChapter={(id) => setCurrentChapterId(id)}
+            onNavigate={(view) => setActiveNav(view)}
+            onOpenPdfModal={(lyt) => {
+              setPdfModalInitialLayout(lyt);
+              setIsPdfModalOpen(true);
+            }}
+          />
+        )}
+
         {activeNav === 'deck' && (
           <PresentationViewer
             currentChapterId={currentChapterId}
@@ -582,20 +627,25 @@ quarto render lecture*.qmd
       />
 
       {/* Footer */}
-      <footer className="mt-auto px-6 py-4 border-t border-slate-900 bg-slate-950 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span>Quarto Reveal.js Format</span>
+      <footer className="mt-auto px-6 py-5 border-t border-slate-900 bg-slate-950 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <div className="flex items-center gap-2 flex-wrap text-center sm:text-left">
+          <span className="font-semibold text-slate-300">Er. Saroj Chalise</span>
           <span>·</span>
-          <span>Er. Saroj Chalise (<a href="https://chalisesaroj.github.io/slide/" target="_blank" rel="noreferrer" className="hover:text-slate-300 underline">chalisesaroj.github.io/slide</a>)</span>
+          <span>Mechanical Engineer (BE 2014, ME 2019 · IOE Pulchowk Campus)</span>
           <span>·</span>
-          <span className="text-indigo-400 font-medium">Units I to V + Dynamic JSON Engine</span>
+          <span className="text-indigo-400 font-mono">MEC 232: Instrumentation &amp; Measurement (3-1-1)</span>
         </div>
-        <div className="flex items-center gap-4 text-slate-500 flex-wrap">
-          <span>Section 8A Pure White Background</span>
+        <div className="flex items-center gap-3 text-slate-500 flex-wrap justify-center sm:justify-end">
+          <a
+            href="https://chalisesaroj.github.io/slide/"
+            target="_blank"
+            rel="noreferrer"
+            className="text-indigo-400 hover:text-indigo-300 underline font-mono text-[11px]"
+          >
+            chalisesaroj.github.io/slide
+          </a>
           <span>·</span>
-          <span>LaTeX Formulas &amp; Mathtext</span>
-          <span>·</span>
-          <span>JSON Schema 2.0 Import/Export</span>
+          <span>45 Total Lecture Hours</span>
         </div>
       </footer>
     </div>
