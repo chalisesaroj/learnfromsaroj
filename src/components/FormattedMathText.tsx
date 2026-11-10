@@ -90,12 +90,12 @@ export const FormattedMathText: React.FC<FormattedMathTextProps> = ({
             });
             if (isDisplay) {
               return (
-                <div key={idx} className="math-responsive">
+                <span key={idx} className="math-responsive block">
                   <span
                     className="katex-display-inner text-slate-900 dark:text-slate-100 tracking-normal text-center select-all"
                     dangerouslySetInnerHTML={{ __html: html }}
                   />
-                </div>
+                </span>
               );
             }
             return (

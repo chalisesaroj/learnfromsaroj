@@ -201,6 +201,16 @@ export const InstructorPortfolio: React.FC<InstructorPortfolioProps> = ({
                   <span>Read Book Chapter</span>
                 </button>
 
+                <a
+                  href="Unit1_Fundamentals_of_Measurement_Systems.pptx"
+                  download="Unit1_Fundamentals_of_Measurement_Systems.pptx"
+                  className="flex-1 min-w-[140px] flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 font-semibold text-xs sm:text-sm transition-all shadow-lg shadow-amber-950/20"
+                  title="Download Chapter 1 Microsoft PowerPoint presentation (.pptx)"
+                >
+                  <Presentation className="w-4 h-4 text-amber-400" />
+                  <span>Download Ch 1 PPT</span>
+                </a>
+
                 <button
                   onClick={() => onOpenPdfModal('book')}
                   className="flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs transition-colors border border-slate-700"
@@ -329,24 +339,36 @@ export const InstructorPortfolio: React.FC<InstructorPortfolioProps> = ({
                   </p>
                 </div>
 
-                <div className="pt-3 border-t border-slate-800/60 flex items-center justify-between gap-2">
+                <div className="pt-3 border-t border-slate-800/60 flex items-center justify-between gap-1.5">
                   <button
                     onClick={() => {
                       onSelectChapter(ch.id);
                       onNavigate('deck');
                     }}
-                    className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-indigo-600/90 hover:bg-indigo-600 text-white text-xs font-semibold transition-colors"
+                    className="flex-1 flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-indigo-600/90 hover:bg-indigo-600 text-white text-xs font-semibold transition-colors"
                   >
                     <Presentation className="w-3.5 h-3.5" />
                     <span>Presentation</span>
                   </button>
+
+                  {ch.id === 'unit1' && (
+                    <a
+                      href="Unit1_Fundamentals_of_Measurement_Systems.pptx"
+                      download="Unit1_Fundamentals_of_Measurement_Systems.pptx"
+                      className="px-2.5 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 text-xs font-semibold transition-colors flex items-center justify-center gap-1"
+                      title="Download PowerPoint (.pptx)"
+                    >
+                      <Presentation className="w-3 h-3 text-amber-400" />
+                      <span>PPT</span>
+                    </a>
+                  )}
 
                   <button
                     onClick={() => {
                       onSelectChapter(ch.id);
                       onNavigate('book');
                     }}
-                    className="flex-1 flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors border border-slate-700"
+                    className="flex-1 flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors border border-slate-700"
                   >
                     <BookOpen className="w-3.5 h-3.5 text-rose-400" />
                     <span>Textbook</span>

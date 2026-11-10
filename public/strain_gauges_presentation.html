@@ -1,0 +1,2394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit III: Strain Gauges · Interactive Engineering Presentation · Er. Saroj Chalise</title>
+  <meta name="description" content="Unit III: Strain Gauges - Gauge Factor, Bonded & Unbonded, Ballast, Quarter/Half/Full Bridge, Constant Current & Temperature Compensation by Er. Saroj Chalise, Pokhara University">
+  
+  <!-- KaTeX for pristine mathematical typesetting -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+
+  <!-- Google Fonts: Inter and JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #101B2A;
+      --bg-light: #EDF1F5;
+      --accent-teal: #147D8B;
+      --accent-amber: #E7A83E;
+      --text-dark: #172B45;
+      --text-muted: #64748B;
+      --border-light: #CBD5E1;
+      --card-white: #FFFFFF;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      background-color: #0b111a;
+      color: #f8fafc;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      user-select: none;
+    }
+
+    /* Presentation Header Strip */
+    header {
+      background-color: rgba(16, 27, 42, 0.95);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 50;
+      height: 52px;
+    }
+    .header-title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--accent-amber);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .header-badge {
+      background-color: rgba(20, 125, 139, 0.25);
+      border: 1px solid var(--accent-teal);
+      color: #38bdf8;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+    }
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-ctrl {
+      background-color: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: #e2e8f0;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+    .btn-ctrl:hover {
+      background-color: rgba(20, 125, 139, 0.4);
+      border-color: var(--accent-teal);
+      color: #ffffff;
+    }
+
+    /* 16:9 Presentation Stage */
+    #stage-container {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      background: radial-gradient(circle at center, #132235 0%, #090e17 100%);
+      position: relative;
+    }
+    #stage {
+      width: 100%;
+      max-width: 1540px;
+      aspect-ratio: 16 / 9;
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+      border-radius: 12px;
+      box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Slide Theming: Dark vs Light */
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 44px 56px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translateX(30px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-y: auto;
+    }
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+      z-index: 10;
+    }
+    .slide.slide-dark {
+      background-color: var(--bg-dark);
+      color: #f8fafc;
+    }
+    .slide.slide-light {
+      background-color: var(--bg-light);
+      color: var(--text-dark);
+    }
+
+    /* Slide Typography */
+    .slide-tag {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-teal);
+      margin-bottom: 8px;
+      display: inline-block;
+    }
+    .slide-dark .slide-tag { color: var(--accent-amber); }
+    .slide-title {
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .slide-subtitle {
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.4;
+    }
+    .slide-dark .slide-subtitle { color: #94a3b8; }
+
+    /* Layout Grids */
+    .content-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      flex: 1;
+      align-items: center;
+    }
+    .content-grid-wide {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 32px;
+      flex: 1;
+      align-items: center;
+    }
+    .card-box {
+      background-color: var(--card-white);
+      border: 1px solid var(--border-light);
+      border-radius: 10px;
+      padding: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+    }
+    .slide-dark .card-box {
+      background-color: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: none;
+    }
+
+    /* Bullet List Design (Anti-Slop) */
+    .clean-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      font-size: 17px;
+      line-height: 1.5;
+    }
+    .clean-list li {
+      position: relative;
+      padding-left: 28px;
+    }
+    .clean-list li::before {
+      content: "•";
+      color: var(--accent-teal);
+      font-size: 24px;
+      position: absolute;
+      left: 6px;
+      top: -4px;
+      font-weight: bold;
+    }
+    .slide-dark .clean-list li::before { color: var(--accent-amber); }
+
+    /* Interactive Simulation Panels */
+    .sim-panel {
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .sim-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 14px;
+    }
+    .sim-slider {
+      flex: 1;
+      accent-color: var(--accent-teal);
+      cursor: pointer;
+    }
+    .sim-metric-badge {
+      background: #f1f5f9;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-weight: 700;
+      color: var(--accent-teal);
+      font-size: 15px;
+    }
+    .sim-visual-display {
+      height: 140px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Slide Footer */
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 14px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .slide-dark .slide-footer {
+      border-top-color: rgba(255, 255, 255, 0.1);
+      color: #94a3b8;
+    }
+
+    /* Bottom Navigation Strip */
+    footer {
+      background-color: rgba(16, 27, 42, 0.95);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 50;
+      height: 52px;
+    }
+    .nav-btn {
+      background: var(--accent-teal);
+      color: #ffffff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+    .nav-btn:hover { background: #0e5b66; }
+    .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .progress-bar-container {
+      flex: 1;
+      max-width: 450px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+      overflow: hidden;
+      margin: 0 20px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent-teal), var(--accent-amber));
+      width: 0%;
+      transition: width 0.25s ease;
+    }
+
+    /* Speaker Notes Drawer */
+    #notes-drawer {
+      position: fixed;
+      bottom: 52px;
+      left: 0;
+      right: 0;
+      background: rgba(15, 23, 42, 0.97);
+      border-top: 2px solid var(--accent-amber);
+      color: #e2e8f0;
+      padding: 16px 32px;
+      font-size: 14px;
+      line-height: 1.6;
+      max-height: 180px;
+      overflow-y: auto;
+      transform: translateY(100%);
+      transition: transform 0.25s ease;
+      z-index: 40;
+    }
+    #notes-drawer.open {
+      transform: translateY(0);
+    }
+
+    /* Overview Grid Modal */
+    #overview-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 16, 26, 0.95);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      padding: 40px;
+      overflow-y: auto;
+      display: none;
+    }
+    #overview-modal.open {
+      display: block;
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .overview-card {
+      background: #172436;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 14px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 130px;
+    }
+    .overview-card:hover, .overview-card.active {
+      border-color: var(--accent-amber);
+      transform: translateY(-2px);
+      background: #1f3149;
+    }
+    .overview-card-num {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--accent-amber);
+      text-transform: uppercase;
+    }
+    .overview-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.3;
+    }
+
+    /* Print & Fullscreen optimization */
+    @media print {
+      body { overflow: visible; height: auto; }
+      header, footer, #notes-drawer { display: none !important; }
+      #stage-container { padding: 0; background: none; }
+      #stage { max-width: none; box-shadow: none; border: none; }
+      .slide { position: relative; opacity: 1 !important; visibility: visible !important; transform: none !important; page-break-after: always; height: 100vh; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Reveal.js Header Strip -->
+  <header>
+    <div class="header-title">
+      <span>UNIT III: STRAIN GAUGES</span>
+      <span class="header-badge">MEC 232 · 6 Hours</span>
+    </div>
+    <div class="header-controls">
+      <button class="btn-ctrl" onclick="toggleOverview()" title="View All Slides [O]">
+        <span>Grid [O]</span>
+      </button>
+      <button class="btn-ctrl" onclick="toggleNotes()" title="Toggle Speaker Notes [S]">
+        <span>Notes [S]</span>
+      </button>
+      <button class="btn-ctrl" onclick="toggleFullscreen()" title="Toggle Fullscreen [F]">
+        <span>Fullscreen [F]</span>
+      </button>
+      <a href="index.html" class="btn-ctrl" style="text-decoration:none;" title="Return to Applet Hub">
+        <span>← Main Applet</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- 16:9 Presentation Stage -->
+  <div id="stage-container">
+    <div id="stage">
+
+      <!-- SLIDE 1: Title Opening (Dark) -->
+      <div class="slide slide-dark active" data-id="1" data-notes="Welcome to Unit III: Strain Gauges. In this 6-hour lecture series aligned with Pokhara University and BE Mechanical syllabi, we discover how to measure mechanical deformations smaller than a human hair using electrical resistance.">
+        <div>
+          <span class="slide-tag">Pokhara University · BE Mechanical · MEC 232</span>
+          <h1 class="slide-title" style="font-size: 52px; color: #ffffff; margin-top: 10px;">STRAIN GAUGES</h1>
+          <p class="slide-subtitle" style="font-size: 24px; color: var(--accent-amber); font-weight: 600;">
+            Measuring the Invisible Deformation
+          </p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box" style="border-left: 4px solid var(--accent-teal);">
+            <h3 style="color: #38bdf8; font-size: 18px; margin-bottom: 12px; font-weight: 700;">Course Information & Attribution</h3>
+            <ul class="clean-list" style="font-size: 15px; gap: 10px;">
+              <li><strong>Course Code:</strong> MEC 232 (3 Credits) · Full Marks: 100 · Pass Marks: 45</li>
+              <li><strong>Course Title:</strong> Instrumentation and Measurement (3-1-1) · 45 Hours</li>
+              <li><strong>Instructor:</strong> Er. Saroj Chalise · BE Mech (2014) · ME Mech (2019) IOE Pulchowk</li>
+              <li><strong>Experience:</strong> 10+ Years in Hydropower Machinery, Automotive & Teaching</li>
+            </ul>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid var(--accent-amber);">
+            <h3 style="color: var(--accent-amber); font-size: 18px; margin-bottom: 12px; font-weight: 700;">Prescribed Syllabus Structure</h3>
+            <ul class="clean-list" style="font-size: 15px; gap: 10px;">
+              <li><strong>3.1 Gauge Factor:</strong> First-principles derivation, dimensional & piezoresistive terms.</li>
+              <li><strong>3.2 Bonded vs Unbonded:</strong> Foil matrix shear lag vs flexure wire frames.</li>
+              <li><strong>3.3 Circuit Configurations:</strong> Ballast, Quarter, Half, Full & 4-wire Constant Current.</li>
+              <li><strong>3.4 Temperature Compensation:</strong> Apparent strain, Adjacent Dummy & STC alloys.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Section 3.1–3.4</span>
+          <span>Er. Saroj Chalise · IOE Pulchowk</span>
+          <span>Slide 1 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 2: Can We See Deformation? (Light) -->
+      <div class="slide slide-light" data-id="2" data-notes="Ask the provocative question: Can we see a steel rod becoming longer? The answer is: Yes, but the change is usually so small that human eyes cannot resolve it.">
+        <div>
+          <span class="slide-tag">3.1 Physical Observation</span>
+          <h2 class="slide-title">Can We See Deformation?</h2>
+          <p class="slide-subtitle">The physical limits of direct human observation in engineering structures</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 14px; font-size: 20px;">The Engineering Observation</h3>
+            <ul class="clean-list">
+              <li>When a 500-ton train crosses a steel bridge, or when an airliner lands, do the steel girders visibly stretch?</li>
+              <li>A $1000\text{ mm}$ structural steel girder under a heavy stress of $150\text{ MPa}$ elongates by only $0.75\text{ mm}$ ($0.075\%$).</li>
+              <li>Human vision cannot detect whether a structural member is safely loaded at $20\%$ or on the brink of fatigue yield at $95\%$.</li>
+              <li><strong>Core Problem:</strong> How do we convert an invisible mechanical displacement into an electrical signal?</li>
+            </ul>
+          </div>
+
+          <div class="card-box" style="text-align: center; background: #ffffff;">
+            <h4 style="color: var(--accent-teal); font-size: 16px; margin-bottom: 16px;">Elastic Elongation Governing Law</h4>
+            <div style="font-size: 28px; margin: 20px 0; font-family: var(--font-mono); color: #0f172a;">
+              $$\Delta L = \frac{F \cdot L_0}{A \cdot E}$$
+            </div>
+            <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">
+              For structural metals, elastic deflections $\Delta L$ range between $10^{-6}\text{ m}$ (1 micrometer) and $10^{-3}\text{ m}$ (1 millimeter).
+            </p>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Gauge Factor</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 2 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: Understanding Strain (Light) -->
+      <div class="slide slide-light" data-id="3" data-notes="Strain is dimensionless length change divided by original length. Define microstrain clearly: 1 microstrain = 10^-6 m/m.">
+        <div>
+          <span class="slide-tag">3.1 Fundamentals</span>
+          <h2 class="slide-title">Understanding Strain ($\epsilon = \Delta L / L_0$)</h2>
+          <p class="slide-subtitle">Dimensionless deformation metric and the microstrain ($\mu\epsilon$) scaling</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 14px;">Definition & Mathematical Formulation</h3>
+            <div style="font-size: 26px; margin: 16px 0; color: #0284c7;">
+              $$\epsilon = \frac{\Delta L}{L_0} = \frac{L_{\text{final}} - L_0}{L_0}$$
+            </div>
+            <ul class="clean-list" style="font-size: 15px;">
+              <li><strong>Dimensionless Quantity:</strong> Ratio of length to length ($[\text{m}] / [\text{m}]$).</li>
+              <li><strong>The Microstrain ($\mu\epsilon$):</strong> Because elastic strains are minute, engineers use:
+                $$1\,\mu\epsilon = 10^{-6}\text{ m/m} = 0.0001\%$$
+              </li>
+              <li><strong>Yield Limit:</strong> Structural mild steel yields around $1200\text{ to }1500\,\mu\epsilon$.</li>
+            </ul>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid var(--accent-teal);">
+            <h3 style="color: var(--accent-teal); margin-bottom: 12px;">Immediate Numerical Check</h3>
+            <p style="font-size: 15px; line-height: 1.6; margin-bottom: 14px;">
+              A $100.0\text{ mm}$ steel rod elongates by $0.10\text{ mm}$ during a tensile machine test. What is the indicated strain?
+            </p>
+            <div style="background: #f1f5f9; padding: 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 15px; color: #0f172a;">
+              $$\epsilon = \frac{0.10\text{ mm}}{100.0\text{ mm}} = 0.0010 = \mathbf{1000\,\mu\epsilon}$$
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 10px;">
+              A $1000\,\mu\epsilon$ strain corresponds to an internal tensile stress of $\sigma = E \cdot \epsilon = 200\text{ GPa} \times 0.001 = 200\text{ MPa}$.
+            </p>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Gauge Factor</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 3 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: What Happens to Electrical Resistance? (Light) -->
+      <div class="slide slide-light" data-id="4" data-notes="Explain the transition from mechanical deformation to electrical resistance change. Wire gets longer and thinner, both increasing resistance.">
+        <div>
+          <span class="slide-tag">3.1 Physics of Transduction</span>
+          <h2 class="slide-title">What Happens to Electrical Resistance?</h2>
+          <p class="slide-subtitle">The physical bridge linking mechanical elasticity to solid-state conduction</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 14px;">Governing Resistance Law</h3>
+            <div style="font-size: 26px; margin: 16px 0; color: #d97706;">
+              $$R = \rho \frac{L}{A}$$
+            </div>
+            <ul class="clean-list" style="font-size: 15px;">
+              <li><strong>Conductor Lengthening ($L \uparrow$):</strong> Axial tension increases path length; electrons collide with more vibrating crystal ions.</li>
+              <li><strong>Lateral Thinning ($A \downarrow$):</strong> Poisson contraction narrows the cross-section, constricting electron flow.</li>
+              <li><strong>Piezoresistive Lattice Shift ($\rho \pm$):</strong> Interatomic lattice spacing deformation alters conduction band electron mobility.</li>
+            </ul>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid var(--accent-amber);">
+            <h3 style="color: var(--accent-amber); margin-bottom: 12px;">The Transduction Core</h3>
+            <p style="font-size: 16px; line-height: 1.6; color: var(--text-dark);">
+              <strong>Mechanical Deformation $\implies$ Resistance Shift:</strong><br>
+              By bonding an ultra-thin conductive foil directly onto a mechanical specimen, surface strain $\epsilon$ is converted directly into a measurable change in resistance $\Delta R$.
+            </p>
+            <div style="margin-top: 20px; padding: 14px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px;">
+              <span style="font-weight: 700; color: #b45309;">Core Takeaway:</span>
+              <p style="font-size: 14px; color: #78350f; margin-top: 4px;">
+                Tension stretches and narrows the wire $\implies \Delta R > 0$.<br>
+                Compression shortens and thickens the wire $\implies \Delta R < 0$.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Gauge Factor</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 4 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 5: What Is a Strain Gauge? (Light) -->
+      <div class="slide slide-light" data-id="5" data-notes="Anatomy of a bonded foil gauge: foil grid (Constantan/Karma), polyimide backing, adhesive cement, and solder tabs.">
+        <div>
+          <span class="slide-tag">3.1 Transducer Anatomy</span>
+          <h2 class="slide-title">What Is a Strain Gauge?</h2>
+          <p class="slide-subtitle">Formal definition, operating principle, and structural components</p>
+        </div>
+
+        <div class="content-grid-wide">
+          <div class="card-box">
+            <blockquote style="border-left: 4px solid var(--accent-teal); padding-left: 14px; font-style: italic; font-size: 16px; color: #0f172a; margin-bottom: 16px;">
+              "An electrical resistance strain gauge is a passive electromechanical sensor that measures surface mechanical strain by transducing dimensional and piezoresistive deformations into proportional variations in electrical resistance."
+            </blockquote>
+            <ul class="clean-list" style="font-size: 15px;">
+              <li><strong>Metallic Foil Grid:</strong> Serpentine etched Constantan ($55\%\text{ Cu}, 45\%\text{ Ni}$) or Karma alloy foil ($3–5\,\mu\text{m}$ thick) maximizing longitudinal length while canceling transverse strain.</li>
+              <li><strong>Polyimide Backing Matrix:</strong> Tough insulating film ($25\,\mu\text{m}$ thick) electrically isolating the grid from the metal beam.</li>
+              <li><strong>Adhesive Layer:</strong> High-shear cyanoacrylate or epoxy transferring surface deformation into the grid via pure shear stress.</li>
+              <li><strong>Solder Terminals:</strong> Reinforced copper tabs for lead-wire connection.</li>
+            </ul>
+          </div>
+
+          <div class="card-box" style="text-align: center;">
+            <h4 style="color: var(--accent-teal); font-size: 15px; margin-bottom: 12px;">Standard Industrial Ratings</h4>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <div style="background: #f8fafc; padding: 10px; border-radius: 6px;">
+                <span style="font-size: 12px; color: var(--text-muted); display: block;">Nominal Resistance ($R_0$)</span>
+                <span style="font-size: 20px; font-weight: 700; color: #0284c7;">$120\,\Omega$ or $350\,\Omega$</span>
+              </div>
+              <div style="background: #f8fafc; padding: 10px; border-radius: 6px;">
+                <span style="font-size: 12px; color: var(--text-muted); display: block;">Nominal Gauge Factor ($GF$)</span>
+                <span style="font-size: 20px; font-weight: 700; color: #059669;">$2.00\text{ to }2.15$</span>
+              </div>
+              <div style="background: #f8fafc; padding: 10px; border-radius: 6px;">
+                <span style="font-size: 12px; color: var(--text-muted); display: block;">Max Elastic Strain Range</span>
+                <span style="font-size: 20px; font-weight: 700; color: #d97706;">$\pm 20,000\,\mu\epsilon$ ($2\%$)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Gauge Factor</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 5 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 6: Gauge Factor Derivation (Dark) -->
+      <div class="slide slide-dark" data-id="6" data-notes="Walk through logarithmic differentiation: ln R = ln rho + ln L - ln A. Substitute Poisson contraction dA/A = -2*nu*epsilon. Result is 1 + 2nu + (drho/rho)/epsilon.">
+        <div>
+          <span class="slide-tag">3.1 Analytical Derivation</span>
+          <h2 class="slide-title">Derivation of Gauge Factor (GF)</h2>
+          <p class="slide-subtitle">First-principles breakdown from logarithmic differentiation of Ohm's resistance law</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--accent-amber); margin-bottom: 12px;">Step-by-Step Mathematical Proof</h3>
+            <ol style="font-size: 14px; line-height: 1.6; display: flex; flex-direction: column; gap: 8px; padding-left: 18px;">
+              <li>Conductor resistance: $R = \rho \frac{L}{A}$</li>
+              <li>Take natural logarithms: $\ln R = \ln \rho + \ln L - \ln A$</li>
+              <li>Differentiate completely: $\frac{dR}{R} = \frac{d\rho}{\rho} + \frac{dL}{L} - \frac{dA}{A}$</li>
+              <li>For a circular wire ($A = \frac{\pi}{4} D^2$): $\frac{dA}{A} = 2 \frac{dD}{D}$</li>
+              <li>By Poisson's ratio ($\nu = -\frac{dD/D}{dL/L}$): $\frac{dA}{A} = -2\nu \frac{dL}{L} = -2\nu \epsilon$</li>
+              <li>Substitute back: $\frac{dR}{R} = \epsilon + 2\nu\epsilon + \frac{d\rho}{\rho} = [1 + 2\nu + \frac{d\rho/\rho}{\epsilon}]\epsilon$</li>
+            </ol>
+          </div>
+
+          <div class="card-box" style="border: 2px solid var(--accent-amber); background: rgba(231, 168, 62, 0.05);">
+            <h3 style="color: #ffffff; margin-bottom: 12px; font-size: 20px;">The Canonical Gauge Factor Equation</h3>
+            <div style="font-size: 24px; color: var(--accent-amber); margin: 16px 0; text-align: center;">
+              $$GF = \frac{\Delta R / R_0}{\epsilon} = 1 + 2\nu + \frac{\Delta\rho / \rho_0}{\epsilon}$$
+            </div>
+            <ul class="clean-list" style="font-size: 14px;">
+              <li><strong>$1$ (Axial Elongation):</strong> Direct path lengthening term.</li>
+              <li><strong>$+2\nu$ (Poisson Contraction):</strong> Lateral area necking term ($2 \times 0.3 = 0.6$).</li>
+              <li><strong>$\frac{\Delta\rho/\rho}{\epsilon}$ (Piezoresistive Shift):</strong> Solid-state lattice resistivity shift ($+0.4$ in Constantan; $+100$ in Silicon).</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Gauge Factor</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 6 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 7: Gauge Factor Solved Problem (Light) -->
+      <div class="slide slide-light" data-id="7" data-notes="Worked numerical problem: R0 = 120 ohm, GF = 2.00, strain = 1000 microstrain. Show that Delta R is only 0.24 ohms. Highlight why ordinary multimeters fail!">
+        <div>
+          <span class="slide-tag">3.1 Worked Example</span>
+          <h2 class="slide-title">Gauge Factor: Solved Numerical Problem</h2>
+          <p class="slide-subtitle">Quantitative calculation of fractional resistance shift on a structural beam</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 12px;">Problem Statement</h3>
+            <p style="font-size: 15px; line-height: 1.6; margin-bottom: 14px;">
+              A standard metallic foil strain gauge with nominal resistance $R_0 = 120.00\,\Omega$ and gauge factor $GF = 2.00$ is bonded to a structural steel girder. Under peak tensile load, the measured strain is $\epsilon = 0.00100$ ($1000\,\mu\epsilon$).
+            </p>
+            <div style="background: #f8fafc; padding: 12px; border-radius: 6px; font-size: 14px;">
+              <strong>Determine:</strong><br>
+              1. Fractional change in resistance ($\Delta R / R_0$)<br>
+              2. Absolute resistance change ($\Delta R$ in $\Omega$)<br>
+              3. Final strained resistance ($R_{\text{strained}}$)
+            </div>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid var(--accent-teal);">
+            <h3 style="color: var(--accent-teal); margin-bottom: 12px;">Analytical Solution</h3>
+            <div style="font-size: 14px; line-height: 1.6; display: flex; flex-direction: column; gap: 8px;">
+              <div>
+                <strong>Step 1: Fractional Resistance Shift</strong>
+                <div style="font-family: var(--font-mono); color: #0369a1;">
+                  $$\frac{\Delta R}{R_0} = GF \cdot \epsilon = 2.00 \times 0.00100 = \mathbf{0.00200 = 0.20\%}$$
+                </div>
+              </div>
+              <div>
+                <strong>Step 2: Absolute Resistance Shift</strong>
+                <div style="font-family: var(--font-mono); color: #0369a1;">
+                  $$\Delta R = R_0 (GF \cdot \epsilon) = 120.00\,\Omega \times 0.002 = \mathbf{+0.240\,\Omega}$$
+                </div>
+              </div>
+              <div>
+                <strong>Step 3: Strained Resistance</strong>
+                <div style="font-family: var(--font-mono); color: #0369a1;">
+                  $$R_{\text{strained}} = 120.000 + 0.240 = \mathbf{120.240\,\Omega}$$
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: 10px; padding: 8px 12px; background: #ecfdf5; border-radius: 6px; font-size: 13px; color: #065f46;">
+              <strong>Key Pedagogical Takeaway:</strong> A heavy structural strain produces only a $0.24\,\Omega$ shift! That is why specialized bridge circuits are mandatory.
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Worked Example</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 7 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 8: Interactive Lab 1: Stretch the Material (Light) -->
+      <div class="slide slide-light" data-id="8" data-notes="Interactive Lab 1: Let students manipulate strain, GF, and R0 sliders in real-time to watch resistance shift and material elongation.">
+        <div>
+          <span class="slide-tag">Interactive Virtual Lab</span>
+          <h2 class="slide-title">Lab 1: Stretch the Material</h2>
+          <p class="slide-subtitle">Live simulation: Adjust tensile strain and gauge factor to observe resistance modulation</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="sim-panel">
+            <h3 style="color: var(--accent-teal); font-size: 17px; margin-bottom: 4px;">Simulation Controls</h3>
+            
+            <div class="sim-row">
+              <span style="width: 140px;">Mechanical Strain ($\epsilon$):</span>
+              <input type="range" class="sim-slider" id="lab1-strain" min="-1500" max="2500" value="1000" step="50" oninput="updateLab1()">
+              <span class="sim-metric-badge" id="lab1-strain-val">1000 με</span>
+            </div>
+
+            <div class="sim-row">
+              <span style="width: 140px;">Gauge Factor ($GF$):</span>
+              <input type="range" class="sim-slider" id="lab1-gf" min="1.80" max="4.00" value="2.05" step="0.05" oninput="updateLab1()">
+              <span class="sim-metric-badge" id="lab1-gf-val">2.05</span>
+            </div>
+
+            <div class="sim-row">
+              <span style="width: 140px;">Nominal $R_0$:</span>
+              <select id="lab1-r0" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #cbd5e1; font-weight: 600;" onchange="updateLab1()">
+                <option value="120">120 Ω (Standard Industrial)</option>
+                <option value="350">350 Ω (Load Cell Standard)</option>
+                <option value="1000">1000 Ω (Low-Power)</option>
+              </select>
+            </div>
+
+            <div style="background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #e2e8f0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div>
+                <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Resistance Shift ($\Delta R$)</span>
+                <div style="font-size: 20px; font-weight: 700; color: #0284c7;" id="lab1-deltar">+0.252 Ω</div>
+              </div>
+              <div>
+                <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Strained Resistance ($R$)</span>
+                <div style="font-size: 20px; font-weight: 700; color: #0f172a;" id="lab1-rtot">120.252 Ω</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-box" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+            <h4 style="color: var(--accent-teal); margin-bottom: 16px;">Physical Specimen Elongation Visualizer</h4>
+            <div class="sim-visual-display" style="width: 100%;">
+              <svg id="lab1-svg" width="400" height="100" viewBox="0 0 400 100">
+                <rect x="50" y="35" width="300" height="30" fill="#94a3b8" rx="4" />
+                <rect id="lab1-foil" x="120" y="42" width="160" height="16" fill="#e7a83e" rx="2" />
+                <text x="200" y="25" text-anchor="middle" font-size="12" fill="#475569" font-weight="600">Specimen Bar (L₀ = 100 mm)</text>
+              </svg>
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 14px;">
+              Notice how even at $2000\,\mu\epsilon$ ($0.2\%$), the physical elongation is microscopic while the electrical resistance shifts by a fraction of an ohm.
+            </p>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Virtual Laboratory</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 8 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 9: Part B Divider (Dark) -->
+      <div class="slide slide-dark" data-id="9" data-notes="Introduce Part B: Bonded versus Unbonded strain gauges. Direct surface adhesion vs suspended wire mechanisms.">
+        <div>
+          <span class="slide-tag">Syllabus Section 3.2</span>
+          <h1 class="slide-title" style="font-size: 46px; margin-top: 20px;">PART B: BONDED &amp; UNBONDED STRAIN GAUGES</h1>
+          <p class="slide-subtitle" style="color: var(--accent-amber);">
+            Structural taxonomy, strain transmission mechanics, and transducer integration
+          </p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: #38bdf8; margin-bottom: 12px;">3.2.1 Bonded Foil Gauges</h3>
+            <p style="font-size: 15px; line-height: 1.6; color: #cbd5e1;">
+              Photo-etched metallic foil cemented directly to the specimen. Mechanical strain couples into the sensing grid via shear stress in the adhesive layer. Universal in stress analysis.
+            </p>
+          </div>
+          <div class="card-box">
+            <h3 style="color: var(--accent-amber); margin-bottom: 12px;">3.2.2 Unbonded Wire Gauges</h3>
+            <p style="font-size: 15px; line-height: 1.6; color: #cbd5e1;">
+              Fine resistance wires stretched between stationary posts and a movable flexure armature. Eliminates organic adhesive creep; used inside pressure and acceleration transducers.
+            </p>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Section 3.2</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 9 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 10: Bonded Strain Gauge Construction (Light) -->
+      <div class="slide slide-light" data-id="10" data-notes="Explain shear lag theory: adhesive transfers normal stress from specimen into the foil grid. High shear modulus and void-free bonding are critical.">
+        <div>
+          <span class="slide-tag">3.2 Bonded Gauges</span>
+          <h2 class="slide-title">Bonded Strain Gauge Construction</h2>
+          <p class="slide-subtitle">Carrier matrix, adhesive shear lag mechanics, and cross-sensitivity suppression</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 12px;">Structural Architecture</h3>
+            <ul class="clean-list" style="font-size: 15px;">
+              <li><strong>Etched Foil Grid ($3–5\,\mu\text{m}$):</strong> Constantan alloy photo-etched with wide end turnaround loops to minimize transverse strain sensitivity ($< 1\%$).</li>
+              <li><strong>Polyimide Carrier ($25\,\mu\text{m}$):</strong> High-dielectric backing providing electrical isolation up to $1000\text{ V}$ and high fatigue endurance.</li>
+              <li><strong>Bonding Matrix:</strong> Cyanoacrylate (room temp) or heat-cured epoxy ($150^\circ\text{C}$) transferring strain via pure shear lag.</li>
+              <li><strong>Solder Pads:</strong> Copper pads for wire stress relief.</li>
+            </ul>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid var(--accent-teal);">
+            <h3 style="color: var(--accent-teal); margin-bottom: 12px;">Shear Lag Transmission Theory</h3>
+            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+              Surface strain $\epsilon_s$ is not transmitted instantly. Shear stress $\tau(x)$ in the glue layer builds normal strain $\epsilon_g(x)$ in the foil over a characteristic transfer length:
+            </p>
+            <div style="background: #f1f5f9; padding: 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 15px; color: #0f172a;">
+              $$\tau_{\text{adhesive}}(x) = G_{\text{glue}} \frac{u_{\text{substrate}}(x) - u_{\text{foil}}(x)}{t_{\text{glue}}}$$
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 10px;">
+              Improperly cured or overly thick adhesive layers cause viscoelastic creep, hysteresis, and loss of high-frequency fidelity.
+            </p>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Bonded vs Unbonded</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 10 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 11: Unbonded Strain Gauge Construction (Light) -->
+      <div class="slide slide-light" data-id="11" data-notes="Unbonded wire gauges use fine platinum-tungsten wires suspended between flexure posts. They avoid adhesive creep entirely.">
+        <div>
+          <span class="slide-tag">3.2 Unbonded Gauges</span>
+          <h2 class="slide-title">Unbonded Strain Gauge Construction</h2>
+          <p class="slide-subtitle">Suspended filament flexures, mechanical pre-tension, and zero adhesive creep</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 12px;">Mechanical Flexure Assembly</h3>
+            <ul class="clean-list" style="font-size: 15px;">
+              <li><strong>Filament Wires ($25\,\mu\text{m}$):</strong> High-strength platinum-tungsten or nickel-chrome resistance wire wound under pre-tension between insulated sapphire posts.</li>
+              <li><strong>Movable Flexure Armature:</strong> Connects to an external force or pressure diaphragm.</li>
+              <li><strong>Push-Pull Arrangement:</strong> As the armature deflects, wires in group A tighten ($+\Delta R$) while wires in group B relax ($-\Delta R$).</li>
+              <li><strong>Zero Organic Glue:</strong> Because no glue layer exists in the load train, organic viscoelastic creep is completely eliminated!</li>
+            </ul>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid var(--accent-amber);">
+            <h3 style="color: var(--accent-amber); margin-bottom: 12px;">Primary Transducer Applications</h3>
+            <ul class="clean-list" style="font-size: 15px;">
+              <li><strong>Biomedical Blood Pressure Transducers:</strong> Extreme long-term baseline stability without zero drift.</li>
+              <li><strong>Oceanographic Depth Capsules:</strong> Unbonded bridge diaphragms measuring hydrostatic pressures up to $70\text{ MPa}$.</li>
+              <li><strong>Flight Inertial Accelerometers:</strong> Seismic mass suspended by unbonded flexure wires with built-in fluid damping.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Bonded vs Unbonded</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 11 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 12: Bonded vs Unbonded Comparison (Light) -->
+      <div class="slide slide-light" data-id="12" data-notes="Structured comparison across mounting, frequency range, creep, and cost. Bonded dominates stress analysis; unbonded inside sealed instruments.">
+        <div>
+          <span class="slide-tag">3.2 Engineering Comparison</span>
+          <h2 class="slide-title">Bonded vs Unbonded Comparison</h2>
+          <p class="slide-subtitle">Direct parameter trade-offs for sensor selection in mechanical design</p>
+        </div>
+
+        <div class="card-box" style="padding: 0; overflow: hidden;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 15px; text-align: left;">
+            <thead>
+              <tr style="background: #172b45; color: #ffffff;">
+                <th style="padding: 14px 20px;">Parameter</th>
+                <th style="padding: 14px 20px;">Bonded Foil Strain Gauge</th>
+                <th style="padding: 14px 20px;">Unbonded Wire Strain Gauge</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid #e2e8f0; background: #ffffff;">
+                <td style="padding: 12px 20px; font-weight: 700;">Attachment</td>
+                <td style="padding: 12px 20px;">Direct chemical bonding to specimen surface</td>
+                <td style="padding: 12px 20px;">Mechanical linkage to internal flexure posts</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
+                <td style="padding: 12px 20px; font-weight: 700;">Strain Coupling</td>
+                <td style="padding: 12px 20px;">Adhesive shear stress transfer</td>
+                <td style="padding: 12px 20px;">Direct post deflection under wire pre-tension</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0; background: #ffffff;">
+                <td style="padding: 12px 20px; font-weight: 700;">Frequency Response</td>
+                <td style="padding: 12px 20px; color: #059669; font-weight: 700;">Extremely high (>50 kHz up to 200 kHz)</td>
+                <td style="padding: 12px 20px; color: #d97706; font-weight: 700;">Limited by armature inertia (<2 kHz)</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
+                <td style="padding: 12px 20px; font-weight: 700;">Creep &amp; Hysteresis</td>
+                <td style="padding: 12px 20px;">Dependent on adhesive matrix curing quality</td>
+                <td style="padding: 12px 20px; color: #059669; font-weight: 700;">Virtually zero (no organic glue layer)</td>
+              </tr>
+              <tr style="background: #ffffff;">
+                <td style="padding: 12px 20px; font-weight: 700;">Cost &amp; Profile</td>
+                <td style="padding: 12px 20px;">Low cost ($5–$25); paper-thin profile</td>
+                <td style="padding: 12px 20px;">High cost ($300+); bulky instrument frame</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Bonded vs Unbonded</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 12 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 13: Part C Divider (Dark) -->
+      <div class="slide slide-dark" data-id="13" data-notes="Section 3.3: Related Circuit Configurations. Ballast circuit, Wheatstone Bridge (Quarter, Half, Full), and 4-wire Constant Current.">
+        <div>
+          <span class="slide-tag">Syllabus Section 3.3</span>
+          <h1 class="slide-title" style="font-size: 46px; margin-top: 20px;">PART C: RELATED CIRCUIT CONFIGURATIONS</h1>
+          <p class="slide-subtitle" style="color: var(--accent-amber);">
+            The signal conditioning challenge: Resolving fractional millivolt signals
+          </p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: #38bdf8; margin-bottom: 12px;">The Signal Problem</h3>
+            <p style="font-size: 15px; line-height: 1.6; color: #cbd5e1;">
+              A $1000\,\mu\epsilon$ strain produces only $\Delta R = 0.24\,\Omega$ out of $120\,\Omega$ ($0.2\%$). Ordinary multimeters suffer from lead-wire drift and contact noise. We need circuits that eliminate baseline offset and amplify the change.
+            </p>
+          </div>
+          <div class="card-box">
+            <h3 style="color: var(--accent-amber); margin-bottom: 12px;">Topologies Covered</h3>
+            <ul class="clean-list" style="font-size: 14px; color: #cbd5e1;">
+              <li><strong>3.3.1 Ballast Circuit:</strong> Voltage divider and the fatal DC offset problem.</li>
+              <li><strong>3.3.2 Wheatstone Bridge:</strong> Quarter ($1\times$), Half ($2\times$), and Full ($4\times$) configurations.</li>
+              <li><strong>3.3.3 Constant Current:</strong> 4-wire Kelvin excitation with zero lead error.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Section 3.3</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 13 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 14: Ballast Circuit (Light) -->
+      <div class="slide slide-light" data-id="14" data-notes="Ballast circuit: Vs across Rb and Rg in series. Derive Delta V0 = Vs * m/(1+m)^2 * Delta R / R0. Maximum sensitivity occurs at m = 1 where eta = 0.25.">
+        <div>
+          <span class="slide-tag">3.3.1 Ballast Circuit</span>
+          <h2 class="slide-title">Ballast Circuit: Voltage Divider Analysis</h2>
+          <p class="slide-subtitle">Series topology, transfer equation, and sensitivity maximization at $m = R_b/R_g = 1$</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 12px;">Circuit Transfer Function</h3>
+            <p style="font-size: 15px; line-height: 1.6; margin-bottom: 12px;">
+              A series ballast resistor $R_b$ is connected with the strain gauge $R_g$ across excitation $V_s$. The output voltage across the gauge is:
+            </p>
+            <div style="font-size: 22px; color: #0284c7; margin: 14px 0;">
+              $$V_0 = V_s \frac{R_g}{R_b + R_g}$$
+            </div>
+            <p style="font-size: 14px; line-height: 1.5; color: var(--text-dark);">
+              Defining ballast ratio $m = R_b / R_g$, the incremental change in output voltage due to strain $\Delta R$ is:
+            </p>
+            <div style="font-size: 20px; color: #d97706; margin: 10px 0;">
+              $$\Delta V_0 = V_s \frac{m}{(1+m)^2} \frac{\Delta R}{R_0} = V_s \cdot \eta(m) \cdot (GF \cdot \epsilon)$$
+            </div>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid var(--accent-teal);">
+            <h3 style="color: var(--accent-teal); margin-bottom: 12px;">Sensitivity Maximization Proof</h3>
+            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+              To find the maximum sensitivity factor $\eta(m) = \frac{m}{(1+m)^2}$, we differentiate with respect to $m$ and set to zero:
+            </p>
+            <div style="background: #f1f5f9; padding: 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 14px; color: #0f172a;">
+              $$\frac{d\eta}{dm} = \frac{(1+m)^2 - 2m(1+m)}{(1+m)^4} = \frac{1 - m}{(1+m)^3} = 0$$
+            </div>
+            <p style="font-size: 15px; font-weight: 700; color: #059669; margin-top: 10px;">
+              $$\implies m = \frac{R_b}{R_g} = 1.00 \quad \implies \quad \eta_{\max} = \frac{1}{(1+1)^2} = \mathbf{0.25}$$
+            </p>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 6px;">
+              Maximum sensitivity occurs when the ballast resistor exactly equals nominal gauge resistance.
+            </p>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Circuit Configurations</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 14 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 15: Ballast Limitations & AC Coupling (Light) -->
+      <div class="slide slide-light" data-id="15" data-notes="The fatal DC offset flaw: Vs = 10V means V0 = 5V at rest! A 5mV signal riding on 5V DC is impossible to measure statically. AC coupling solves this for vibration.">
+        <div>
+          <span class="slide-tag">3.3.1 Ballast Circuit</span>
+          <h2 class="slide-title">Ballast Circuit: The Fatal DC Offset Flaw</h2>
+          <p class="slide-subtitle">Why ballast circuits fail for static strain and excel in dynamic vibration</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box" style="border-left: 4px solid #ef4444;">
+            <h3 style="color: #b91c1c; margin-bottom: 12px;">The 5.000 V Resting Pedestal Problem</h3>
+            <ul class="clean-list" style="font-size: 15px;">
+              <li>At optimal sensitivity ($m=1$), the resting output voltage is:
+                $$V_0 = \frac{V_s}{2} = 5.000\text{ V (for } V_s = 10\text{ V)}$$
+              </li>
+              <li>Under a massive $1000\,\mu\epsilon$ strain, $\Delta V_0 = 10 \times 0.25 \times 0.002 = 5.0\text{ mV}$.</li>
+              <li>A $5\text{ mV}$ signal riding on a $5000\text{ mV}$ DC pedestal requires an impossible $0.001\%$ ADC baseline stability!</li>
+              <li><strong>Result:</strong> Ballast circuits are totally unusable for static weighing or steady structural loads.</li>
+            </ul>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid #059669;">
+            <h3 style="color: #047857; margin-bottom: 12px;">The AC Dynamic Vibration Solution</h3>
+            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 12px;">
+              By placing a series capacitor $C_b$ before the amplifier, the $5.0\text{ V}$ DC pedestal is completely blocked, passing only dynamic AC vibrations:
+            </p>
+            <div style="background: #f1f5f9; padding: 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 14px; color: #0f172a;">
+              $$V_{\text{ac}}(t) = V_s \frac{m}{(1+m)^2} [GF \cdot \epsilon(t)], \quad f_{\text{cutoff}} = \frac{1}{2\pi R_{\text{in}} C_b}$$
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 10px;">
+              Widely used in high-speed turbine blade dynamic vibration monitoring where DC baseline is irrelevant.
+            </p>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Circuit Configurations</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 15 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 16: The Wheatstone Bridge (Dark) -->
+      <div class="slide slide-dark" data-id="16" data-notes="The Wheatstone bridge: differential null topology. Output is zero at rest, eliminating the fatal 5V pedestal of the ballast circuit.">
+        <div>
+          <span class="slide-tag">3.3.2 Bridge Circuits</span>
+          <h2 class="slide-title">The Wheatstone Bridge: Zero DC Offset</h2>
+          <p class="slide-subtitle">Differential diamond topology establishing a true zero-volt resting baseline</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--accent-amber); margin-bottom: 12px;">The Differential Diamond</h3>
+            <p style="font-size: 15px; line-height: 1.6; color: #cbd5e1; margin-bottom: 14px;">
+              Four resistive arms arranged in a closed loop. Excitation voltage $V_{EX}$ is applied across nodes A and C; differential output $V_0$ is measured between nodes B and D:
+            </p>
+            <div style="font-size: 20px; color: #38bdf8; margin: 12px 0;">
+              $$V_0 = V_B - V_D = V_{EX} \left( \frac{R_1}{R_1 + R_2} - \frac{R_4}{R_3 + R_4} \right)$$
+            </div>
+            <div style="background: rgba(255,255,255,0.06); padding: 10px; border-radius: 6px; font-size: 14px; color: #e2e8f0;">
+              <strong>Bridge Null Balance Condition ($V_0 = 0.000\text{ V}$):</strong>
+              <div style="font-family: var(--font-mono); color: var(--accent-amber); margin-top: 4px;">
+                $$\frac{R_1}{R_2} = \frac{R_4}{R_3} \quad \Longleftrightarrow \quad R_1 \cdot R_3 = R_2 \cdot R_4$$
+              </div>
+            </div>
+          </div>
+
+          <div class="card-box" style="border: 2px solid var(--accent-teal); background: rgba(20, 125, 139, 0.08);">
+            <h3 style="color: #38bdf8; margin-bottom: 12px;">Why It Overcomes the Ballast Circuit</h3>
+            <ul class="clean-list" style="font-size: 14px; color: #cbd5e1;">
+              <li><strong>Zero Resting Voltage:</strong> When initial arm resistances match, $V_0 = 0.000\text{ V}$.</li>
+              <li><strong>Common-Mode Noise Rejection:</strong> Power supply noise affects both divider legs equally, subtracting to zero.</li>
+              <li><strong>Full Dynamic Range:</strong> High-gain instrumentation amplifiers can amplify the microvolt strain signal directly without saturating from a DC pedestal.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Wheatstone Bridge</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 16 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 17: Quarter Bridge (Light) -->
+      <div class="slide slide-light" data-id="17" data-notes="Quarter bridge: 1 active gauge, 3 fixed resistors. Sensitivity multiplier is 1/4. Point out denominator non-linearity error.">
+        <div>
+          <span class="slide-tag">3.3.2 Bridge Circuits</span>
+          <h2 class="slide-title">Quarter Bridge ($1\times$ Configuration)</h2>
+          <p class="slide-subtitle">Single active gauge with completion resistors, small-strain approximation &amp; non-linearity</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 12px;">Transfer Function Derivation</h3>
+            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 10px;">
+              Arm 1 has the active gauge ($R_1 = R_0 + \Delta R$); arms 2, 3, 4 are fixed resistors ($R_0$):
+            </p>
+            <div style="font-size: 18px; color: #0284c7; margin: 12px 0;">
+              $$V_0 = V_{EX} \left( \frac{R_0 + \Delta R}{2R_0 + \Delta R} - \frac{1}{2} \right) = V_{EX} \left( \frac{\Delta R / R_0}{4 + 2(\Delta R / R_0)} \right)$$
+            </div>
+            <p style="font-size: 14px; line-height: 1.5;">
+              <strong>Small-Strain Approximation:</strong> Since $\Delta R / R_0 \ll 1$, we drop $2(\Delta R / R_0)$ in the denominator:
+            </p>
+            <div style="font-size: 22px; font-weight: 700; color: #059669; margin: 10px 0;">
+              $$V_0 \approx \frac{V_{EX}}{4} \frac{\Delta R}{R_0} = \mathbf{\frac{V_{EX}}{4} (GF \cdot \epsilon)}$$
+            </div>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid var(--accent-amber);">
+            <h3 style="color: var(--accent-amber); margin-bottom: 12px;">Intrinsic Non-Linearity Error</h3>
+            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 10px;">
+              The neglected term causes fractional non-linearity:
+            </p>
+            <div style="background: #f1f5f9; padding: 10px; border-radius: 6px; font-family: var(--font-mono); font-size: 15px; color: #0f172a;">
+              $$\text{Non-Linearity Error} \approx \frac{1}{2} \frac{\Delta R}{R_0} = \frac{1}{2} GF \cdot \epsilon$$
+            </div>
+            <p style="font-size: 14px; color: var(--text-dark); margin-top: 10px;">
+              At $\epsilon = 1000\,\mu\epsilon$ ($GF=2$): Error is $\approx 0.10\%$.<br>
+              At $\epsilon = 10,000\,\mu\epsilon$ (composites/plastics): Error rises to $1.0\%$, requiring software compensation.
+            </p>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Quarter Bridge</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 17 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 18: Half Bridge (Light) -->
+      <div class="slide slide-light" data-id="18" data-notes="Half bridge in bending: R1 = R0 + Delta R, R2 = R0 - Delta R. Show that the denominator sum is strictly 2R0! Zero non-linearity and automatic temperature cancellation!">
+        <div>
+          <span class="slide-tag">3.3.2 Bridge Circuits</span>
+          <h2 class="slide-title">Half Bridge ($2\times$ Bending Configuration)</h2>
+          <p class="slide-subtitle">Two active complementary gauges: Doubled sensitivity, perfect linearity &amp; thermal cancellation</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 12px;">The Mathematical Miracle of Push-Pull</h3>
+            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 10px;">
+              On opposite surfaces of a cantilever beam in pure bending: $R_1 = R_0 + \Delta R$ (tension) and $R_2 = R_0 - \Delta R$ (compression):
+            </p>
+            <div style="font-size: 18px; color: #0284c7; margin: 12px 0;">
+              $$V_0 = V_{EX} \left( \frac{R_0 + \Delta R}{(R_0 + \Delta R) + (R_0 - \Delta R)} - \frac{1}{2} \right)$$
+            </div>
+            <p style="font-size: 14px; line-height: 1.5;">
+              Notice the denominator: $(R_0 + \Delta R) + (R_0 - \Delta R) = \mathbf{2R_0}$! The $\Delta R$ terms cancel identically!
+            </p>
+            <div style="font-size: 22px; font-weight: 700; color: #059669; margin: 12px 0;">
+              $$V_0 = \frac{V_{EX}}{2} \frac{\Delta R}{R_0} = \mathbf{\frac{V_{EX}}{2} (GF \cdot \epsilon)}$$
+            </div>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid var(--accent-teal);">
+            <h3 style="color: var(--accent-teal); margin-bottom: 12px;">Three Massive Advantages</h3>
+            <ol class="clean-list" style="font-size: 14px; gap: 10px;">
+              <li><strong>$2\times$ Sensitivity Multiplier:</strong> Exactly twice the voltage output of a quarter bridge.</li>
+              <li><strong>Zero Non-Linearity Error:</strong> Because the denominator sum is strictly constant, the transfer function is mathematically linear!</li>
+              <li><strong>Automatic Thermal Cancellation:</strong> Ambient temperature shifts affect both gauges equally ($\Delta R_T$), canceling completely in adjacent bridge arms!</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Half Bridge</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 18 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 19: Full Bridge (Dark) -->
+      <div class="slide slide-light" data-id="19" data-notes="Full bridge in bending: 4 active gauges. Sensitivity is 4x that of a quarter bridge. Gold standard in commercial load cells.">
+        <div>
+          <span class="slide-tag">3.3.2 Bridge Circuits</span>
+          <h2 class="slide-title">Full Bridge ($4\times$ Bending Configuration)</h2>
+          <p class="slide-subtitle">Four active gauges: Maximum sensitivity, highest SNR, and complete lead-wire immunity</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 12px;">Four-Arm Differential Summation</h3>
+            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 10px;">
+              Two gauges on top in tension ($R_1 = R_3 = R_0 + \Delta R$) and two on bottom in compression ($R_2 = R_4 = R_0 - \Delta R$):
+            </p>
+            <div style="font-size: 18px; color: #0284c7; margin: 12px 0;">
+              $$V_0 = V_{EX} \left( \frac{R_0 + \Delta R}{2R_0} - \frac{R_0 - \Delta R}{2R_0} \right) = V_{EX} \frac{2\Delta R}{2R_0}$$
+            </div>
+            <div style="font-size: 24px; font-weight: 800; color: #b91c1c; margin: 12px 0;">
+              $$V_0 = V_{EX} \frac{\Delta R}{R_0} = \mathbf{V_{EX} \cdot GF \cdot \epsilon}$$
+            </div>
+            <p style="font-size: 14px; font-weight: 600; color: #047857;">
+              $$S_{\text{full}} = 4 \times S_{\text{quarter}} = 2 \times S_{\text{half}}$$
+            </p>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid var(--accent-amber);">
+            <h3 style="color: var(--accent-amber); margin-bottom: 12px;">The Gold Standard in Transducers</h3>
+            <ul class="clean-list" style="font-size: 14px;">
+              <li><strong>$4\times$ Sensitivity Gain:</strong> Quadruples millivolt output, maximizing Signal-to-Noise Ratio (SNR).</li>
+              <li><strong>Full Thermal Rejection:</strong> Complete 4-arm symmetry cancels ambient thermal expansion.</li>
+              <li><strong>Rejection of Spurious Loads:</strong> Cancels axial tension and torsional twisting while responding purely to bending moments.</li>
+              <li><strong>Industrial Use:</strong> Standard in precision electronic weighing scales, dynamometers, and materials test frames.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Full Bridge</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 19 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 20: Interactive Lab 2: Build a Wheatstone Bridge (Light) -->
+      <div class="slide slide-light" data-id="20" data-notes="Interactive Lab 2: Students can toggle between Quarter (1x), Half (2x), and Full (4x) bridge topologies and observe output voltage and non-linearity in real time.">
+        <div>
+          <span class="slide-tag">Interactive Virtual Lab</span>
+          <h2 class="slide-title">Lab 2: Wheatstone Bridge Simulator</h2>
+          <p class="slide-subtitle">Compare Quarter ($1\times$), Half ($2\times$), and Full ($4\times$) bridge sensitivity and linearity</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="sim-panel">
+            <h3 style="color: var(--accent-teal); font-size: 17px; margin-bottom: 4px;">Bridge Controls</h3>
+
+            <div class="sim-row">
+              <span style="width: 140px;">Bridge Topology:</span>
+              <div style="display: flex; gap: 8px; flex: 1;">
+                <button id="topo-q" class="btn-ctrl" style="background: var(--accent-teal); color:#fff; flex:1;" onclick="setBridgeTopo('quarter')">Quarter (1×)</button>
+                <button id="topo-h" class="btn-ctrl" style="flex:1;" onclick="setBridgeTopo('half')">Half (2×)</button>
+                <button id="topo-f" class="btn-ctrl" style="flex:1;" onclick="setBridgeTopo('full')">Full (4×)</button>
+              </div>
+            </div>
+
+            <div class="sim-row">
+              <span style="width: 140px;">Applied Strain ($\epsilon$):</span>
+              <input type="range" class="sim-slider" id="lab2-strain" min="-2000" max="2000" value="1000" step="50" oninput="updateLab2()">
+              <span class="sim-metric-badge" id="lab2-strain-val">1000 με</span>
+            </div>
+
+            <div class="sim-row">
+              <span style="width: 140px;">Excitation ($V_{EX}$):</span>
+              <input type="range" class="sim-slider" id="lab2-vex" min="2" max="15" value="10" step="0.5" oninput="updateLab2()">
+              <span class="sim-metric-badge" id="lab2-vex-val">10.0 V</span>
+            </div>
+
+            <div style="background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #e2e8f0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div>
+                <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Differential Output ($V_0$)</span>
+                <div style="font-size: 22px; font-weight: 800; color: #b91c1c;" id="lab2-v0">5.125 mV</div>
+              </div>
+              <div>
+                <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Non-Linearity Error</span>
+                <div style="font-size: 18px; font-weight: 700; color: #0284c7;" id="lab2-nl">0.10 %</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-box" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+            <h4 style="color: var(--accent-teal); margin-bottom: 12px;">Active Arms vs Sensitivity Multiplier</h4>
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; margin-bottom: 14px;">
+              <div style="background: #f1f5f9; padding: 10px; border-radius: 6px;">
+                <span style="font-size: 12px; color: var(--text-muted);">Quarter</span>
+                <span style="font-size: 18px; font-weight: 700; color: #475569; display: block;">1× ($V_{EX}/4$)</span>
+              </div>
+              <div style="background: #f1f5f9; padding: 10px; border-radius: 6px;">
+                <span style="font-size: 12px; color: var(--text-muted);">Half</span>
+                <span style="font-size: 18px; font-weight: 700; color: #0284c7; display: block;">2× ($V_{EX}/2$)</span>
+              </div>
+              <div style="background: #f1f5f9; padding: 10px; border-radius: 6px;">
+                <span style="font-size: 12px; color: var(--text-muted);">Full</span>
+                <span style="font-size: 18px; font-weight: 700; color: #059669; display: block;">4× ($1.0 V_{EX}$)</span>
+              </div>
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+              Switching from Quarter to Full bridge quadruples the output voltage from $5.1\text{ mV}$ to $20.5\text{ mV}$ and eliminates non-linearity error completely.
+            </p>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Virtual Laboratory</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 20 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 21: Constant Current Circuit (Light) -->
+      <div class="slide slide-light" data-id="21" data-notes="Constant current 4-wire Kelvin circuit: separates drive current and sense leads. Completely immune to long lead wire resistance.">
+        <div>
+          <span class="slide-tag">3.3.3 Constant Current</span>
+          <h2 class="slide-title">4-Wire Kelvin Constant Current Circuit</h2>
+          <p class="slide-subtitle">Zero lead-wire attenuation and strictly linear transfer characteristics</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 12px;">4-Wire Kelvin Operating Principle</h3>
+            <ul class="clean-list" style="font-size: 15px;">
+              <li><strong>Current Loop (Leads 1 &amp; 4):</strong> A precision current source injects an ultrastable current $I_0$ through the gauge.</li>
+              <li><strong>Voltage Sense Loop (Leads 2 &amp; 3):</strong> High-input-impedance amplifier ($R_{\text{in}} > 10\text{ G}\Omega$) reads voltage directly at gauge terminals.</li>
+              <li><strong>Zero Voltage Drop in Sense Wires:</strong> Because $I_{\text{sense}} \approx 0$, the $I \cdot R_{\text{lead}}$ error is mathematically zero, regardless of cable length!</li>
+            </ul>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid var(--accent-teal);">
+            <h3 style="color: var(--accent-teal); margin-bottom: 12px;">Strict Linearity Equation</h3>
+            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 10px;">
+              Total gauge voltage is $V(t) = I_0(R_0 + \Delta R) = I_0 R_0 + I_0 \Delta R$. Subtracting the baseline $I_0 R_0$ gives:
+            </p>
+            <div style="background: #f1f5f9; padding: 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 17px; color: #0f172a;">
+              $$\Delta V_0 = I_0 \cdot \Delta R = I_0 \cdot R_0 (GF \cdot \epsilon)$$
+            </div>
+            <div style="margin-top: 14px; padding: 10px; background: #ecfdf5; border-radius: 6px; font-size: 13px; color: #065f46;">
+              <strong>Key Advantage:</strong> Notice there is NO denominator term! Perfect mathematical linearity across the entire measurement range.
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Constant Current</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 21 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 22: Circuit Selection Guide (Light) -->
+      <div class="slide slide-light" data-id="22" data-notes="Summary matrix comparing Ballast, Quarter, Half, Full, and Constant Current across sensitivity, linearity, lead wire rejection, and application.">
+        <div>
+          <span class="slide-tag">3.3 Synthesis</span>
+          <h2 class="slide-title">Circuit Topology Selection Matrix</h2>
+          <p class="slide-subtitle">Comprehensive engineering comparison across all five circuit configurations</p>
+        </div>
+
+        <div class="card-box" style="padding: 0; overflow: hidden;">
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px; text-align: left;">
+            <thead>
+              <tr style="background: #172b45; color: #ffffff;">
+                <th style="padding: 12px 16px;">Circuit Topology</th>
+                <th style="padding: 12px 16px;">Sensitivity</th>
+                <th style="padding: 12px 16px;">Linearity</th>
+                <th style="padding: 12px 16px;">Thermal Drift</th>
+                <th style="padding: 12px 16px;">Best Application</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid #e2e8f0; background: #ffffff;">
+                <td style="padding: 10px 16px; font-weight: 700;">Ballast Circuit</td>
+                <td style="padding: 10px 16px;">0.25 (at $m=1$)</td>
+                <td style="padding: 10px 16px; color: #b91c1c;">Poor (approx)</td>
+                <td style="padding: 10px 16px; color: #b91c1c;">Severe</td>
+                <td style="padding: 10px 16px;">Dynamic AC vibration only</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
+                <td style="padding: 10px 16px; font-weight: 700;">Quarter Bridge</td>
+                <td style="padding: 10px 16px;">$1\times$ ($V_{EX}/4$)</td>
+                <td style="padding: 10px 16px;">Approx (0.1% err)</td>
+                <td style="padding: 10px 16px; color: #b91c1c;">Requires STC/Dummy</td>
+                <td style="padding: 10px 16px;">General structural testing</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0; background: #ffffff;">
+                <td style="padding: 10px 16px; font-weight: 700;">Half Bridge</td>
+                <td style="padding: 10px 16px; color: #0284c7; font-weight: 700;">$2\times$ ($V_{EX}/2$)</td>
+                <td style="padding: 10px 16px; color: #059669; font-weight: 700;">Strictly Linear</td>
+                <td style="padding: 10px 16px; color: #059669; font-weight: 700;">Automatic Cancellation</td>
+                <td style="padding: 10px 16px;">Cantilever beams in bending</td>
+              </tr>
+              <tr style="border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
+                <td style="padding: 10px 16px; font-weight: 700;">Full Bridge</td>
+                <td style="padding: 10px 16px; color: #059669; font-weight: 700;">$4\times$ ($1.0 V_{EX}$)</td>
+                <td style="padding: 10px 16px; color: #059669; font-weight: 700;">Strictly Linear</td>
+                <td style="padding: 10px 16px; color: #059669; font-weight: 700;">Complete Immunity</td>
+                <td style="padding: 10px 16px;">Precision commercial load cells</td>
+              </tr>
+              <tr style="background: #ffffff;">
+                <td style="padding: 10px 16px; font-weight: 700;">Constant Current</td>
+                <td style="padding: 10px 16px;">Proportional to $I_0$</td>
+                <td style="padding: 10px 16px; color: #059669; font-weight: 700;">Strictly Linear</td>
+                <td style="padding: 10px 16px;">Requires Dummy</td>
+                <td style="padding: 10px 16px;">Remote sensing (long cables)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Synthesis Matrix</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 22 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 23: Part D Divider (Dark) -->
+      <div class="slide slide-dark" data-id="23" data-notes="Introduce Part D: Temperature Compensation Techniques. Explain that thermal drift is the number one source of false readings in strain metrology.">
+        <div>
+          <span class="slide-tag">Syllabus Section 3.4</span>
+          <h1 class="slide-title" style="font-size: 46px; margin-top: 20px;">PART D: TEMPERATURE COMPENSATION</h1>
+          <p class="slide-subtitle" style="color: var(--accent-amber);">
+            Understanding and neutralizing the two primary thermal error mechanisms
+          </p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: #38bdf8; margin-bottom: 12px;">The Thermal Trap</h3>
+            <p style="font-size: 15px; line-height: 1.6; color: #cbd5e1;">
+              An unloaded steel girder in sunlight heats up by $25^\circ\text{C}$. The gauge indicates hundreds of microstrain—false strain! If uncompensated, engineers mistake thermal expansion for dangerous mechanical overload.
+            </p>
+          </div>
+          <div class="card-box">
+            <h3 style="color: var(--accent-amber); margin-bottom: 12px;">Two Prescribed Solutions</h3>
+            <ul class="clean-list" style="font-size: 14px; color: #cbd5e1;">
+              <li><strong>3.4.1 Adjacent Arm Balancing:</strong> Dummy gauge on unstressed matched coupon subtracts thermal shift algebraically.</li>
+              <li><strong>3.4.2 Self-Temperature Compensation (STC):</strong> Metallurgically tailoring alloy TCR to cancel substrate expansion directly.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Section 3.4</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 23 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 24: Physics of Apparent Strain (Light) -->
+      <div class="slide slide-light" data-id="24" data-notes="Thermal apparent strain consists of resistivity shift (beta*Delta T) and differential thermal expansion (alpha_s - alpha_g)*Delta T.">
+        <div>
+          <span class="slide-tag">3.4 Temperature Compensation</span>
+          <h2 class="slide-title">The Physics of Thermal Apparent Strain</h2>
+          <p class="slide-subtitle">Two distinct physical origins: Conductor resistivity change vs differential expansion</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 12px;">The Two Physical Mechanisms</h3>
+            <ul class="clean-list" style="font-size: 15px;">
+              <li><strong>1. Thermal Coefficient of Resistance (TCR, $\beta$):</strong> The alloy's intrinsic electrical resistivity shifts with temperature:
+                $$\left(\frac{\Delta R}{R_0}\right)_{\text{resistivity}} = \beta \cdot \Delta T$$
+              </li>
+              <li><strong>2. Differential Thermal Expansion ($(\alpha_s - \alpha_g)$):</strong> Substrate expands at rate $\alpha_s$; gauge foil expands at rate $\alpha_g$. Substrate physically stretches the bonded foil:
+                $$\epsilon_{\text{thermal}} = (\alpha_s - \alpha_g) \Delta T$$
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-box" style="border: 2px solid var(--accent-amber); background: #fffbeb;">
+            <h3 style="color: #b45309; margin-bottom: 10px;">The Apparent Strain Equation</h3>
+            <div style="font-size: 20px; color: #92400e; margin: 12px 0;">
+              $$\epsilon_{\text{app}} = \left[ \frac{\beta}{GF} + (\alpha_s - \alpha_g) \right] \Delta T$$
+            </div>
+            <p style="font-size: 14px; color: #78350f; line-height: 1.5;">
+              <strong>Alarming Scale:</strong> On an aluminum beam ($\alpha_s = 23\text{ ppm}/^\circ\text{C}$), a $25^\circ\text{C}$ temperature rise in an uncompensated gauge produces over <strong>$1000\,\mu\epsilon$</strong> of fake apparent strain!
+            </p>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Temperature Compensation</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 24 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 25: Adjacent Arm Balancing (Light) -->
+      <div class="slide slide-light" data-id="25" data-notes="Adjacent arm dummy balancing: active gauge R1 on loaded beam, dummy gauge R2 on unstressed coupon in identical thermal environment. R1 - R2 cancels thermal shift.">
+        <div>
+          <span class="slide-tag">3.4.1 Adjacent Arm Balancing</span>
+          <h2 class="slide-title">Adjacent Arm Balancing (Dummy Gauge)</h2>
+          <p class="slide-subtitle">Using a matched dummy gauge on an unstressed specimen for algebraic cancellation</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 12px;">Physical Arrangement</h3>
+            <ul class="clean-list" style="font-size: 15px;">
+              <li><strong>Active Gauge ($R_1$):</strong> Bonded to the loaded mechanical member. Senses mechanical strain $\epsilon_{\text{mech}}$ plus ambient thermal drift $\Delta T$:
+                $$\Delta R_1 = \Delta R_{\text{mech}} + \Delta R_T$$
+              </li>
+              <li><strong>Dummy Gauge ($R_2$):</strong> Bonded to an identical, unstressed piece of the same metal in immediate thermal contact. Senses only temperature:
+                $$\Delta R_2 = \Delta R_T$$
+              </li>
+            </ul>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid var(--accent-teal);">
+            <h3 style="color: var(--accent-teal); margin-bottom: 12px;">Wheatstone Subtraction Proof</h3>
+            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 10px;">
+              Connected into adjacent bridge arms ($R_1$ and $R_2$), the bridge output obeys:
+            </p>
+            <div style="font-size: 18px; color: #0284c7; margin: 10px 0;">
+              $$V_0 \approx \frac{V_{EX}}{4} \left( \frac{\Delta R_1 - \Delta R_2}{R_0} \right)$$
+            </div>
+            <div style="background: #f1f5f9; padding: 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 15px; color: #059669;">
+              $$\Delta R_1 - \Delta R_2 = (\Delta R_{\text{mech}} + \Delta R_T) - \Delta R_T = \mathbf{\Delta R_{\text{mech}}}$$
+            </div>
+            <p style="font-size: 13px; color: var(--text-muted); margin-top: 10px;">
+              Thermal resistance shifts cancel out algebraically, leaving only the pure mechanical strain signal!
+            </p>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Temperature Compensation</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 25 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 26: Self-Temperature Compensation (STC) (Light) -->
+      <div class="slide slide-light" data-id="26" data-notes="STC principle: cold work the alloy so beta = -GF*(alpha_s - alpha_g). Commercial numbers: STC-13 for steel, STC-23 for aluminum, STC-06 for titanium.">
+        <div>
+          <span class="slide-tag">3.4.2 Self-Temperature Compensation</span>
+          <h2 class="slide-title">Self-Temperature Compensation (STC)</h2>
+          <p class="slide-subtitle">Metallurgical alloy tailoring to neutralize substrate thermal expansion</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 12px;">The Metallurgical Principle</h3>
+            <p style="font-size: 15px; line-height: 1.6; margin-bottom: 12px;">
+              What if there is no physical space for a dummy block? Metallurgists heat-treat and cold-work Constantan or Karma foil so its TCR $\beta$ is intentionally <strong>negative</strong>:
+            </p>
+            <div style="font-size: 20px; color: #b91c1c; margin: 12px 0;">
+              $$\beta = -GF \cdot (\alpha_s - \alpha_g)$$
+            </div>
+            <p style="font-size: 14px; line-height: 1.5; color: var(--text-dark);">
+              The negative resistivity change cancels the positive mechanical elongation of the substrate, keeping $\epsilon_{\text{app}} \approx 0$ over $-20^\circ\text{C to }+150^\circ\text{C}$.
+            </p>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid var(--accent-amber);">
+            <h3 style="color: var(--accent-amber); margin-bottom: 12px;">Standard Industrial STC Ratings</h3>
+            <ul class="clean-list" style="font-size: 14px;">
+              <li><strong>STC-13:</strong> Matched to mild steel &amp; carbon steels ($\alpha_s \approx 11–13\,\text{ppm}/^\circ\text{C}$).</li>
+              <li><strong>STC-23:</strong> Matched to 2024 / 7075 aluminum alloys ($\alpha_s \approx 23\,\text{ppm}/^\circ\text{C}$).</li>
+              <li><strong>STC-06:</strong> Matched to titanium &amp; stainless steel ($\alpha_s \approx 6\,\text{ppm}/^\circ\text{C}$).</li>
+            </ul>
+            <div style="margin-top: 14px; padding: 8px 12px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; font-size: 13px; color: #991b1b;">
+              <strong>Critical Warning:</strong> STC gauges work ONLY on their matched substrate material. Mounting an STC-13 gauge on aluminum creates huge errors!
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Temperature Compensation</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 26 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 27: Interactive Lab 3: Temperature Compensation (Light) -->
+      <div class="slide slide-light" data-id="27" data-notes="Interactive Lab 3: Move the temperature slider from -20°C to +60°C and switch between Uncompensated, Dummy Balancing, and STC-23 Matched.">
+        <div>
+          <span class="slide-tag">Interactive Virtual Lab</span>
+          <h2 class="slide-title">Lab 3: Temperature Compensation Simulator</h2>
+          <p class="slide-subtitle">Witness the thermal trap: Uncompensated vs Dummy Gauge vs STC Matched Alloy</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="sim-panel">
+            <h3 style="color: var(--accent-teal); font-size: 17px; margin-bottom: 4px;">Simulation Controls</h3>
+
+            <div class="sim-row">
+              <span style="width: 140px;">Compensation Mode:</span>
+              <div style="display: flex; gap: 8px; flex: 1;">
+                <button id="comp-none" class="btn-ctrl" style="background: #ef4444; color:#fff; flex:1;" onclick="setCompMode('none')">Uncompensated</button>
+                <button id="comp-dummy" class="btn-ctrl" style="flex:1;" onclick="setCompMode('dummy')">Dummy Gauge</button>
+                <button id="comp-stc" class="btn-ctrl" style="flex:1;" onclick="setCompMode('stc')">STC-23 Matched</button>
+              </div>
+            </div>
+
+            <div class="sim-row">
+              <span style="width: 140px;">Temperature Shift ($\Delta T$):</span>
+              <input type="range" class="sim-slider" id="lab3-dt" min="-25" max="50" value="25" step="1" oninput="updateLab3()">
+              <span class="sim-metric-badge" id="lab3-dt-val">+25 °C</span>
+            </div>
+
+            <div style="background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #e2e8f0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+              <div>
+                <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Thermal Apparent Strain</span>
+                <div style="font-size: 22px; font-weight: 800; color: #b91c1c;" id="lab3-strain">+1075 με</div>
+              </div>
+              <div>
+                <span style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">False Stress (Aluminum)</span>
+                <div style="font-size: 20px; font-weight: 700; color: #d97706;" id="lab3-stress">75.25 MPa</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-box" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+            <h4 style="color: var(--accent-teal); margin-bottom: 12px;">Apparent Strain Reduction Performance</h4>
+            <div id="lab3-status-box" style="background: #fef2f2; border: 1.5px solid #ef4444; border-radius: 8px; padding: 16px; width: 100%;">
+              <span style="font-size: 18px; font-weight: 800; color: #991b1b; display: block;" id="lab3-perf-title">UNCOMPENSATED ERROR</span>
+              <p style="font-size: 13px; color: #7f1d1d; margin-top: 6px;" id="lab3-perf-desc">
+                A $+25^\circ\text{C}$ rise creates $75.25\text{ MPa}$ of false stress! An uncompensated aircraft wing would trigger a false emergency shutdown.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Virtual Laboratory</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 27 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 28: Worked Problem: Thermal Apparent Strain (Light) -->
+      <div class="slide slide-light" data-id="28" data-notes="Worked numerical problem: Aluminum beam, uncompensated gauge vs STC-23 gauge. Over 75 MPa false stress is eliminated down to <1 MPa.">
+        <div>
+          <span class="slide-tag">3.4 Worked Example</span>
+          <h2 class="slide-title">Temperature Compensation: Solved Problem</h2>
+          <p class="slide-subtitle">Quantifying thermal drift vs mechanical strain on an aluminum aerospace beam</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 10px;">Problem Statement</h3>
+            <p style="font-size: 14px; line-height: 1.6; margin-bottom: 10px;">
+              An uncompensated gauge ($GF=2.0$, $\beta = +70\text{ ppm}/^\circ\text{C}$, $\alpha_g = 15\text{ ppm}/^\circ\text{C}$) is mounted on an aluminum beam ($\alpha_s = 23\text{ ppm}/^\circ\text{C}$, $E = 70\text{ GPa}$). Calibrated at $20^\circ\text{C}$, it operates in desert heat at $45^\circ\text{C}$ ($\Delta T = +25^\circ\text{C}$).
+            </p>
+            <div style="background: #f8fafc; padding: 10px; border-radius: 6px; font-size: 13px;">
+              <strong>Determine:</strong><br>
+              1. Fractional resistance shift from temperature ($\Delta R / R_0$)<br>
+              2. Thermal apparent strain ($\epsilon_{\text{app}}$ in $\mu\epsilon$)<br>
+              3. Equivalent false stress ($\sigma_{\text{false}}$ in $\text{MPa}$)<br>
+              4. Compare with an STC-23 matched gauge
+            </div>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid var(--accent-teal);">
+            <h3 style="color: var(--accent-teal); margin-bottom: 10px;">Analytical Solution</h3>
+            <div style="font-size: 13px; line-height: 1.5; display: flex; flex-direction: column; gap: 6px;">
+              <div>
+                <strong>Step 1: Fractional Resistance Shift</strong>
+                <div style="font-family: var(--font-mono); color: #0369a1;">
+                  $$\frac{\Delta R}{R_0} = [70 + 2.0(23 - 15)] \times 10^{-6} \times 25 = \mathbf{2150\text{ ppm}}$$
+                </div>
+              </div>
+              <div>
+                <strong>Step 2: Thermal Apparent Strain</strong>
+                <div style="font-family: var(--font-mono); color: #0369a1;">
+                  $$\epsilon_{\text{app}} = \frac{2150 \times 10^{-6}}{2.0} = \mathbf{+1075\,\mu\epsilon}$$
+                </div>
+              </div>
+              <div>
+                <strong>Step 3: False Stress in Aluminum ($E=70\text{ GPa}$)</strong>
+                <div style="font-family: var(--font-mono); color: #b91c1c;">
+                  $$\sigma_{\text{false}} = 70\text{ GPa} \times 1075 \times 10^{-6} = \mathbf{75.25\text{ MPa}!}$$
+                </div>
+              </div>
+              <div style="padding: 6px 10px; background: #ecfdf5; border-radius: 4px; color: #065f46;">
+                <strong>Step 4: STC-23 Gauge Performance:</strong> Apparent strain drops to $< \pm 15\,\mu\epsilon$ ($\sigma_{\text{false}} < 1.05\text{ MPa}$), a <strong>$98.6\%$ error reduction</strong>!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Worked Example</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 28 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 29: Part E Divider (Dark) -->
+      <div class="slide slide-dark" data-id="29" data-notes="Part E: Real-world engineering applications, the complete measurement chain, quiz assessment, and master review.">
+        <div>
+          <span class="slide-tag">Syllabus Section 3.1–3.4 Integration</span>
+          <h1 class="slide-title" style="font-size: 46px; margin-top: 20px;">PART E: APPLICATIONS &amp; MEASUREMENT CHAIN</h1>
+          <p class="slide-subtitle" style="color: var(--accent-amber);">
+            From physical force to digital display: Complete industrial implementation
+          </p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: #38bdf8; margin-bottom: 12px;">Real-World Engineering</h3>
+            <p style="font-size: 15px; line-height: 1.6; color: #cbd5e1;">
+              How strain gauges are deployed in commercial load cells, cable-stayed bridge health monitoring, high-speed rotating driveshafts, and universal testing machines.
+            </p>
+          </div>
+          <div class="card-box">
+            <h3 style="color: var(--accent-amber); margin-bottom: 12px;">The Signal Chain</h3>
+            <p style="font-size: 15px; line-height: 1.6; color: #cbd5e1;">
+              Force $\implies$ Strain $\implies$ $\Delta R$ $\implies$ Bridge Millivolts $\implies$ Instrumentation Amplifier $\implies$ ADC $\implies$ PC Display.
+            </p>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Part E</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 29 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 30: Real-World Applications (Light) -->
+      <div class="slide slide-light" data-id="30" data-notes="Review four industrial pillars: Load cells, bridge structural health monitoring, rotating shaft torque telemetry, and UTM testing.">
+        <div>
+          <span class="slide-tag">Engineering Practice</span>
+          <h2 class="slide-title">Real-World Applications of Strain Gauges</h2>
+          <p class="slide-subtitle">Four industrial pillars powering mechanical metrology and structural safety</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; flex: 1; align-items: stretch;">
+          <div class="card-box" style="border-top: 4px solid #0284c7; padding: 16px;">
+            <h4 style="color: #0369a1; font-size: 16px; margin-bottom: 8px;">1. Industrial Load Cells</h4>
+            <ul class="clean-list" style="font-size: 13px; gap: 8px; padding-left: 18px;">
+              <li>S-beam &amp; shear-web designs.</li>
+              <li>4-gauge full bridge bending.</li>
+              <li>Capacities: 10 N to 500 kN.</li>
+              <li>Resolution down to 0.01%.</li>
+            </ul>
+          </div>
+
+          <div class="card-box" style="border-top: 4px solid #059669; padding: 16px;">
+            <h4 style="color: #047857; font-size: 16px; margin-bottom: 8px;">2. Bridge Health Monitoring</h4>
+            <ul class="clean-list" style="font-size: 13px; gap: 8px; padding-left: 18px;">
+              <li>Fatigue cycle rainflow counting.</li>
+              <li>Seismic event damage detection.</li>
+              <li>Wireless solar-powered nodes.</li>
+              <li>Weldment stress concentration.</li>
+            </ul>
+          </div>
+
+          <div class="card-box" style="border-top: 4px solid #d97706; padding: 16px;">
+            <h4 style="color: #b45309; font-size: 16px; margin-bottom: 8px;">3. Rotating Shaft Torque</h4>
+            <ul class="clean-list" style="font-size: 13px; gap: 8px; padding-left: 18px;">
+              <li>$45^\circ$ torque rosette gauges.</li>
+              <li>Cancels bending &amp; thrust.</li>
+              <li>Wireless RF telemetry up to 15,000 RPM.</li>
+              <li>Vehicle drivetrain dynamometry.</li>
+            </ul>
+          </div>
+
+          <div class="card-box" style="border-top: 4px solid #9333ea; padding: 16px;">
+            <h4 style="color: #7e22ce; font-size: 16px; margin-bottom: 8px;">4. Materials Testing (UTM)</h4>
+            <ul class="clean-list" style="font-size: 13px; gap: 8px; padding-left: 18px;">
+              <li>True stress-strain $\sigma$-$\epsilon$ curves.</li>
+              <li>Young's Modulus ($E$) &amp; Yield ($\sigma_y$).</li>
+              <li>Poisson's ratio ($\nu$) T-rosettes.</li>
+              <li>Crack propagation tracking.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Industrial Applications</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 30 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 31: Complete Strain Measurement Signal Chain (Light) -->
+      <div class="slide slide-light" data-id="31" data-notes="Walk through the 6 stages of the signal chain: Force -> Strain -> Resistance -> Bridge -> InAmp -> ADC -> PC.">
+        <div>
+          <span class="slide-tag">Systems Engineering</span>
+          <h2 class="slide-title">The Complete Strain Measurement Chain</h2>
+          <p class="slide-subtitle">From physical load to calibrated digital display: The six mandatory engineering stages</p>
+        </div>
+
+        <div class="card-box" style="display: flex; flex-direction: column; gap: 14px; padding: 24px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 14px;">
+            <div style="background: #f1f5f9; padding: 12px; border-radius: 8px; flex: 1; text-align: center; border-left: 4px solid #0284c7;">
+              <strong style="color: #0369a1; display: block;">1. Physical Load</strong>
+              <span>Force $F$, Torque $T$, Pressure $P$</span>
+            </div>
+            <span style="font-weight: bold; color: #94a3b8;">➔</span>
+            <div style="background: #f1f5f9; padding: 12px; border-radius: 8px; flex: 1; text-align: center; border-left: 4px solid #059669;">
+              <strong style="color: #047857; display: block;">2. Specimen Strain</strong>
+              <span>$\epsilon = \Delta L / L_0$ ($\mu\epsilon$)</span>
+            </div>
+            <span style="font-weight: bold; color: #94a3b8;">➔</span>
+            <div style="background: #f1f5f9; padding: 12px; border-radius: 8px; flex: 1; text-align: center; border-left: 4px solid #d97706;">
+              <strong style="color: #b45309; display: block;">3. Strain Gauge</strong>
+              <span>$\Delta R = R_0 \cdot GF \cdot \epsilon$</span>
+            </div>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 14px;">
+            <div style="background: #f1f5f9; padding: 12px; border-radius: 8px; flex: 1; text-align: center; border-left: 4px solid #9333ea;">
+              <strong style="color: #7e22ce; display: block;">4. Wheatstone Bridge</strong>
+              <span>Millivolt output ($V_0 \approx 5\text{ to }25\text{ mV}$)</span>
+            </div>
+            <span style="font-weight: bold; color: #94a3b8;">➔</span>
+            <div style="background: #f1f5f9; padding: 12px; border-radius: 8px; flex: 1; text-align: center; border-left: 4px solid #ef4444;">
+              <strong style="color: #b91c1c; display: block;">5. InAmp &amp; Filter</strong>
+              <span>Low-noise gain ($G=200\times$), CMRR > 100 dB</span>
+            </div>
+            <span style="font-weight: bold; color: #94a3b8;">➔</span>
+            <div style="background: #f1f5f9; padding: 12px; border-radius: 8px; flex: 1; text-align: center; border-left: 4px solid #147d8b;">
+              <strong style="color: #0e5b66; display: block;">6. 24-Bit ADC &amp; PC</strong>
+              <span>Calibrated engineering units ($\text{kN}, \text{MPa}$)</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 10px; padding: 12px; background: #f8fafc; border-radius: 6px; font-size: 13px; color: var(--text-muted); text-align: center;">
+            Every stage must preserve linearity, reject temperature drift, and minimize electromagnetic interference (EMI).
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Signal Chain</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 31 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 32: Check Your Understanding (Light) -->
+      <div class="slide slide-light" data-id="32" data-notes="Formative Quiz: Ask students why half bridge bending eliminates non-linearity. Have them select B and explain the constant sum in the denominator.">
+        <div>
+          <span class="slide-tag">Formative Assessment</span>
+          <h2 class="slide-title">Check Your Understanding</h2>
+          <p class="slide-subtitle">Interactive conceptual check on Wheatstone bridge linearity</p>
+        </div>
+
+        <div class="card-box" style="padding: 24px;">
+          <h3 style="color: var(--text-dark); margin-bottom: 16px; font-size: 19px;">
+            Question: Why does a Half Bridge bending configuration completely eliminate bridge non-linearity error, unlike a Quarter Bridge?
+          </h3>
+
+          <div style="display: flex; flex-direction: column; gap: 10px;" id="quiz-opts">
+            <button class="btn-ctrl" style="justify-content: flex-start; padding: 12px 16px; font-size: 15px; color: var(--text-dark); background: #f8fafc;" onclick="answerQuiz(0)">
+              <strong>A.</strong> &nbsp; Because it uses a 4-wire Kelvin current drive instead of voltage excitation.
+            </button>
+            <button class="btn-ctrl" style="justify-content: flex-start; padding: 12px 16px; font-size: 15px; color: var(--text-dark); background: #f8fafc;" onclick="answerQuiz(1)">
+              <strong>B.</strong> &nbsp; Because the sum of active arm resistances (R1 + R2 = 2R0) remains strictly constant under pure bending.
+            </button>
+            <button class="btn-ctrl" style="justify-content: flex-start; padding: 12px 16px; font-size: 15px; color: var(--text-dark); background: #f8fafc;" onclick="answerQuiz(2)">
+              <strong>C.</strong> &nbsp; Because the gauge factor of the compressive strain gauge is mathematically zero.
+            </button>
+            <button class="btn-ctrl" style="justify-content: flex-start; padding: 12px 16px; font-size: 15px; color: var(--text-dark); background: #f8fafc;" onclick="answerQuiz(3)">
+              <strong>D.</strong> &nbsp; Because the high-pass AC coupling capacitor blocks all non-linear DC terms.
+            </button>
+          </div>
+
+          <div id="quiz-feedback" style="display: none; margin-top: 16px; padding: 14px; border-radius: 8px; font-size: 14px; line-height: 1.5;"></div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Quiz Assessment</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 32 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 33: Comprehensive Worked Problem: Cantilever Load Cell (Light) -->
+      <div class="slide slide-light" data-id="33" data-notes="Comprehensive Worked Problem: Steel cantilever beam b=25mm, h=10mm, L=200mm, F=500N. Calculate strain, bridge output (25.2 mV), and amplifier gain (200x).">
+        <div>
+          <span class="slide-tag">Comprehensive Problem</span>
+          <h2 class="slide-title">Solved Problem: Cantilever Load Cell Design</h2>
+          <p class="slide-subtitle">Step-by-step mechanical-to-electrical calculation for an industrial weigh cell</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 8px; font-size: 16px;">Given Engineering Parameters</h3>
+            <ul class="clean-list" style="font-size: 13px; gap: 6px;">
+              <li>Cantilever Beam: $b = 25\text{ mm}$, $h = 10\text{ mm}$, $L = 200\text{ mm}$</li>
+              <li>Steel Modulus: $E = 200\text{ GPa}$, Applied Tip Force: $F = 500\text{ N}$</li>
+              <li>Bridge: Full Bridge ($GF = 2.10$, $R_0 = 120\,\Omega$, $V_{EX} = 10.0\text{ V}$)</li>
+            </ul>
+            <div style="margin-top: 10px; padding: 10px; background: #f8fafc; border-radius: 6px; font-size: 13px;">
+              <strong>1. Bending Moment &amp; Stress:</strong>
+              $$M = F \cdot L = 500 \times 0.20 = 100\text{ N}\cdot\text{m}$$
+              $$Z = \frac{b h^2}{6} = \frac{0.025 \times 0.010^2}{6} = 4.167 \times 10^{-7}\text{ m}^3$$
+              $$\sigma = \frac{M}{Z} = \frac{100}{4.167 \times 10^{-7}} = \mathbf{240\text{ MPa}}$$
+            </div>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid var(--accent-teal);">
+            <h3 style="color: var(--accent-teal); margin-bottom: 8px; font-size: 16px;">Electrical Output &amp; Gain Calculation</h3>
+            <div style="font-size: 13px; display: flex; flex-direction: column; gap: 8px;">
+              <div>
+                <strong>2. Surface Mechanical Strain:</strong>
+                <div style="font-family: var(--font-mono); color: #0284c7;">
+                  $$\epsilon = \frac{\sigma}{E} = \frac{240 \times 10^6}{200 \times 10^9} = \mathbf{1200\,\mu\epsilon}$$
+                </div>
+              </div>
+              <div>
+                <strong>3. Full Bridge Differential Output Voltage ($4\times$):</strong>
+                <div style="font-family: var(--font-mono); color: #b91c1c;">
+                  $$V_0 = V_{EX} \cdot GF \cdot \epsilon = 10.0 \times 2.10 \times 0.00120 = \mathbf{25.20\text{ mV}}$$
+                </div>
+              </div>
+              <div>
+                <strong>4. Required Instrumentation Amplifier Gain:</strong>
+                <div style="font-family: var(--font-mono); color: #059669;">
+                  $$G_{\text{amp}} = \frac{V_{\text{ADC, FS}}}{V_{0, \max}} = \frac{5.000\text{ V}}{0.0252\text{ V}} \approx \mathbf{198.4 \approx 200\times}$$
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Comprehensive Problem</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 33 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 34: University Exam Preparation Guide (Light) -->
+      <div class="slide slide-light" data-id="34" data-notes="High-frequency exam questions for Pokhara University and BE Mechanical curricula. Derivation of GF, comparison of bridges, and STC principle.">
+        <div>
+          <span class="slide-tag">Exam Preparation</span>
+          <h2 class="slide-title">University Exam Focus &amp; High-Yield Questions</h2>
+          <p class="slide-subtitle">Frequent question patterns from Pokhara University and IOE examinations</p>
+        </div>
+
+        <div class="content-grid-2">
+          <div class="card-box">
+            <h3 style="color: var(--text-dark); margin-bottom: 12px;">Theoretical Exam Questions</h3>
+            <ol style="font-size: 14px; line-height: 1.6; display: flex; flex-direction: column; gap: 8px; padding-left: 18px;">
+              <li><strong>Derivation (5–8 Marks):</strong> Derive the expression for Gauge Factor ($GF = 1 + 2\nu + \frac{\Delta\rho/\rho}{\epsilon}$) from fundamentals and explain each term's physical meaning.</li>
+              <li><strong>Bridge Comparison (6 Marks):</strong> Compare Quarter, Half, and Full bridge configurations with neat sketches, transfer equations, and linearity proofs.</li>
+              <li><strong>Temperature Drift (5 Marks):</strong> Explain thermal apparent strain and show how an adjacent arm dummy gauge cancels thermal drift with algebraic derivation.</li>
+              <li><strong>STC Principle (4 Marks):</strong> Explain the metallurgical basis of Self-Temperature Compensation and state what happens if an STC-13 gauge is mounted on aluminum.</li>
+            </ol>
+          </div>
+
+          <div class="card-box" style="border-left: 4px solid var(--accent-amber);">
+            <h3 style="color: var(--accent-amber); margin-bottom: 12px;">Numerical Exam Pitfalls to Avoid</h3>
+            <ul class="clean-list" style="font-size: 14px; gap: 10px;">
+              <li><strong>Unit Traps:</strong> Forgetting that microstrain ($\mu\epsilon$) has a factor of $10^{-6}$. $800\,\mu\epsilon = 0.000800$.</li>
+              <li><strong>Bridge Multipliers:</strong> Mixing up the 1/4 factor for Quarter bridge with the 1/2 factor for Half bridge and 1.0 factor for Full bridge.</li>
+              <li><strong>Modulus Units:</strong> Converting $\text{GPa}$ to $\text{Pa}$ ($1\text{ GPa} = 10^9\text{ Pa}$) and dimensions from $\text{mm}$ to $\text{m}$.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Exam Guide</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 34 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 35: Master Formula Cheat Sheet (Dark) -->
+      <div class="slide slide-dark" data-id="35" data-notes="Master formula reference card. Summarizes GF, Ballast, Quarter, Half, Full, Constant Current, and Apparent Strain formulas.">
+        <div>
+          <span class="slide-tag">Unit III Master Reference</span>
+          <h2 class="slide-title">Master Formula Reference Sheet</h2>
+          <p class="slide-subtitle">High-yield mathematical synthesis for engineering practice and examinations</p>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; flex: 1;">
+          <div class="card-box" style="border-top: 3px solid var(--accent-amber);">
+            <h4 style="color: var(--accent-amber); font-size: 15px; margin-bottom: 8px;">1. Gauge Factor &amp; Resistance</h4>
+            <div style="font-size: 14px; line-height: 1.6; color: #e2e8f0;">
+              $$GF = 1 + 2\nu + \frac{\Delta\rho / \rho_0}{\epsilon}$$
+              $$\Delta R = R_0 \cdot GF \cdot \epsilon$$
+            </div>
+          </div>
+
+          <div class="card-box" style="border-top: 3px solid #38bdf8;">
+            <h4 style="color: #38bdf8; font-size: 15px; margin-bottom: 8px;">2. Ballast Circuit ($m = R_b/R_g$)</h4>
+            <div style="font-size: 14px; line-height: 1.6; color: #e2e8f0;">
+              $$\Delta V_0 = V_s \frac{m}{(1+m)^2} \frac{\Delta R}{R_0}$$
+              $$\eta_{\max} = 0.25 \quad \text{at } m = 1.0$$
+            </div>
+          </div>
+
+          <div class="card-box" style="border-top: 3px solid #34d399;">
+            <h4 style="color: #34d399; font-size: 15px; margin-bottom: 8px;">3. Wheatstone Bridge Topologies</h4>
+            <div style="font-size: 13px; line-height: 1.5; color: #e2e8f0;">
+              $$\text{Quarter: } V_0 \approx \frac{V_{EX}}{4} GF \epsilon$$
+              $$\text{Half: } V_0 = \frac{V_{EX}}{2} GF \epsilon$$
+              $$\text{Full: } V_0 = V_{EX} \cdot GF \cdot \epsilon$$
+            </div>
+          </div>
+
+          <div class="card-box" style="border-top: 3px solid #f472b6;">
+            <h4 style="color: #f472b6; font-size: 15px; margin-bottom: 8px;">4. Constant Current 4-Wire</h4>
+            <div style="font-size: 14px; line-height: 1.6; color: #e2e8f0;">
+              $$\Delta V_0 = I_0 \cdot R_0 \cdot GF \cdot \epsilon$$
+              $$\text{Zero lead-wire attenuation}$$
+            </div>
+          </div>
+
+          <div class="card-box" style="border-top: 3px solid #fbbf24;">
+            <h4 style="color: #fbbf24; font-size: 15px; margin-bottom: 8px;">5. Apparent Thermal Strain</h4>
+            <div style="font-size: 13px; line-height: 1.5; color: #e2e8f0;">
+              $$\epsilon_{\text{app}} = \left[\frac{\beta}{GF} + (\alpha_s - \alpha_g)\right]\Delta T$$
+              $$\text{STC Condition: } \beta = -GF(\alpha_s - \alpha_g)$$
+            </div>
+          </div>
+
+          <div class="card-box" style="border-top: 3px solid #a78bfa;">
+            <h4 style="color: #a78bfa; font-size: 15px; margin-bottom: 8px;">6. Beam Bending Hooke's Law</h4>
+            <div style="font-size: 14px; line-height: 1.6; color: #e2e8f0;">
+              $$\sigma = \frac{M \cdot y}{I} = \frac{M}{Z}, \quad \epsilon = \frac{\sigma}{E}$$
+              $$Z_{\text{rect}} = \frac{b h^2}{6}$$
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Unit III · Master Reference</span>
+          <span>Er. Saroj Chalise</span>
+          <span>Slide 35 of 36</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 36: Closing & Course Takeaway (Dark) -->
+      <div class="slide slide-dark" data-id="36" data-notes="Conclude Unit III. Thank students and reinforce the central motto: You cannot always see deformation, but you can measure it.">
+        <div style="text-align: center; margin-top: 30px;">
+          <span class="slide-tag" style="color: var(--accent-amber);">Unit III Synthesis Completed</span>
+          <h1 class="slide-title" style="font-size: 48px; color: #ffffff; margin-top: 14px;">
+            "You cannot always see deformation, but you can measure it."
+          </h1>
+          <p class="slide-subtitle" style="font-size: 20px; color: #38bdf8; margin-top: 14px;">
+            Er. Saroj Chalise · BE Mechanical (2014) · ME Mechanical (2019) IOE Pulchowk
+          </p>
+        </div>
+
+        <div class="card-box" style="max-width: 900px; margin: 0 auto; text-align: center; border: 1px solid rgba(255,255,255,0.15);">
+          <h3 style="color: var(--accent-amber); font-size: 20px; margin-bottom: 12px;">Next Module: Unit IV — Sensors and Transducers</h3>
+          <p style="font-size: 15px; line-height: 1.6; color: #cbd5e1;">
+            We expand from strain gauges into complete multi-axis force balances, rotating torque telemetry rosettes, piezoelectric vibration accelerometers, ultrasonic time-of-flight distance ranging, and non-intrusive optical flow visualization (PIV &amp; Schlieren).
+          </p>
+          <div style="margin-top: 16px; display: flex; justify-content: center; gap: 14px;">
+            <a href="index.html" class="nav-btn" style="text-decoration:none;">Open Main Interactive Applet</a>
+            <button class="nav-btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);" onclick="goToSlide(0)">Restart Deck</button>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>MEC 232 · Instrumentation and Measurement</span>
+          <span>Pokhara University</span>
+          <span>Slide 36 of 36</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Bottom Navigation Strip -->
+  <footer>
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <button class="nav-btn" id="prev-btn" onclick="prevSlide()">← Prev [←]</button>
+      <button class="nav-btn" id="next-btn" onclick="nextSlide()">Next [→] / [Space]</button>
+    </div>
+
+    <div class="progress-bar-container">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 14px; font-size: 13px; color: #94a3b8; font-family: var(--font-mono);">
+      <span id="slide-indicator">Slide 1 of 36</span>
+    </div>
+  </footer>
+
+  <!-- Speaker Notes Drawer -->
+  <div id="notes-drawer">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+      <strong style="color: var(--accent-amber); font-size: 13px; text-transform: uppercase;">Instructor Speaker Notes (Er. Saroj Chalise):</strong>
+      <button onclick="toggleNotes()" style="background:none; border:none; color:#94a3b8; cursor:pointer; font-size:16px;">✕</button>
+    </div>
+    <div id="notes-content">Welcome to Unit III: Strain Gauges.</div>
+  </div>
+
+  <!-- Overview Grid Modal -->
+  <div id="overview-modal" onclick="if(event.target === this) toggleOverview()">
+    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1400px; margin: 0 auto 24px auto;">
+      <h2 style="color: #ffffff; font-size: 24px;">Slide Navigation Overview (36 Slides)</h2>
+      <button class="btn-ctrl" onclick="toggleOverview()">Close [ESC]</button>
+    </div>
+    <div class="overview-grid" id="overview-grid"></div>
+  </div>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let bridgeTopo = 'quarter';
+    let compMode = 'none';
+
+    function showSlide(index) {
+      if (index < 0 || index >= totalSlides) return;
+      slides[currentSlide].classList.remove('active');
+      currentSlide = index;
+      slides[currentSlide].classList.add('active');
+
+      // Update footer
+      document.getElementById('slide-indicator').textContent = `Slide ${currentSlide + 1} of ${totalSlides}`;
+      const pct = ((currentSlide + 1) / totalSlides) * 100;
+      document.getElementById('progress-fill').style.width = `${pct}%`;
+
+      document.getElementById('prev-btn').disabled = currentSlide === 0;
+      document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
+
+      // Update speaker notes
+      const notes = slides[currentSlide].getAttribute('data-notes') || 'No notes for this slide.';
+      document.getElementById('notes-content').textContent = notes;
+
+      // Re-trigger math typesetting for dynamic elements
+      if (window.renderMathInElement) {
+        renderMathInElement(slides[currentSlide], {
+          delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]
+        });
+      }
+    }
+
+    function nextSlide() { showSlide(currentSlide + 1); }
+    function prevSlide() { showSlide(currentSlide - 1); }
+    function goToSlide(i) {
+      showSlide(i);
+      document.getElementById('overview-modal').classList.remove('open');
+    }
+
+    function toggleNotes() {
+      document.getElementById('notes-drawer').classList.toggle('open');
+    }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        if (document.exitFullscreen) document.exitFullscreen();
+      }
+    }
+
+    function toggleOverview() {
+      const modal = document.getElementById('overview-modal');
+      const isOpen = modal.classList.toggle('open');
+      if (isOpen) populateOverview();
+    }
+
+    function populateOverview() {
+      const grid = document.getElementById('overview-grid');
+      grid.innerHTML = '';
+      slides.forEach((sl, idx) => {
+        const titleEl = sl.querySelector('.slide-title');
+        const title = titleEl ? titleEl.textContent : `Slide ${idx + 1}`;
+        const tagEl = sl.querySelector('.slide-tag');
+        const tag = tagEl ? tagEl.textContent : `Slide ${idx + 1}`;
+
+        const card = document.createElement('div');
+        card.className = `overview-card ${idx === currentSlide ? 'active' : ''}`;
+        card.onclick = () => goToSlide(idx);
+        card.innerHTML = `
+          <div class="overview-card-num">${tag} · #${idx + 1}</div>
+          <div class="overview-card-title">${title}</div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Keyboard Shortcuts (Standard Reveal.js / Saroj Chalise)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+        e.preventDefault();
+        nextSlide();
+      } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+        e.preventDefault();
+        prevSlide();
+      } else if (e.key.toLowerCase() === 'f') {
+        e.preventDefault();
+        toggleFullscreen();
+      } else if (e.key.toLowerCase() === 's') {
+        e.preventDefault();
+        toggleNotes();
+      } else if (e.key.toLowerCase() === 'o') {
+        e.preventDefault();
+        toggleOverview();
+      } else if (e.key === 'Escape') {
+        document.getElementById('overview-modal').classList.remove('open');
+      } else if (e.key === 'Home') {
+        goToSlide(0);
+      } else if (e.key === 'End') {
+        goToSlide(totalSlides - 1);
+      }
+    });
+
+    // Lab 1: Stretch the Material Simulation Logic
+    function updateLab1() {
+      const strain = parseFloat(document.getElementById('lab1-strain').value);
+      const gf = parseFloat(document.getElementById('lab1-gf').value);
+      const r0 = parseFloat(document.getElementById('lab1-r0').value);
+
+      document.getElementById('lab1-strain-val').textContent = `${strain > 0 ? '+' : ''}${strain} με`;
+      document.getElementById('lab1-gf-val').textContent = gf.toFixed(2);
+
+      const deltaR = r0 * gf * (strain * 1e-6);
+      const rTot = r0 + deltaR;
+
+      document.getElementById('lab1-deltar').textContent = `${deltaR >= 0 ? '+' : ''}${deltaR.toFixed(4)} Ω`;
+      document.getElementById('lab1-rtot').textContent = `${rTot.toFixed(4)} Ω`;
+
+      // Visual scale animation
+      const foil = document.getElementById('lab1-foil');
+      const baseW = 160;
+      const stretchW = baseW + (strain / 2500) * 40;
+      foil.setAttribute('width', Math.max(80, stretchW));
+    }
+
+    // Lab 2: Wheatstone Bridge Simulation Logic
+    function setBridgeTopo(topo) {
+      bridgeTopo = topo;
+      ['q', 'h', 'f'].forEach(t => {
+        const btn = document.getElementById(`topo-${t}`);
+        btn.style.background = 'rgba(255,255,255,0.08)';
+        btn.style.color = '#e2e8f0';
+      });
+      const activeBtn = document.getElementById(`topo-${topo[0]}`);
+      activeBtn.style.background = 'var(--accent-teal)';
+      activeBtn.style.color = '#ffffff';
+      updateLab2();
+    }
+
+    function updateLab2() {
+      const strain = parseFloat(document.getElementById('lab2-strain').value);
+      const vex = parseFloat(document.getElementById('lab2-vex').value);
+      const gf = 2.05;
+
+      document.getElementById('lab2-strain-val').textContent = `${strain > 0 ? '+' : ''}${strain} με`;
+      document.getElementById('lab2-vex-val').textContent = `${vex.toFixed(1)} V`;
+
+      const eps = strain * 1e-6;
+      let v0 = 0;
+      let nl = 0;
+
+      if (bridgeTopo === 'quarter') {
+        v0 = vex * ((gf * eps) / (4 + 2 * gf * eps));
+        nl = (0.5 * Math.abs(gf * eps)) * 100;
+      } else if (bridgeTopo === 'half') {
+        v0 = (vex / 2) * gf * eps;
+        nl = 0.00;
+      } else if (bridgeTopo === 'full') {
+        v0 = vex * gf * eps;
+        nl = 0.00;
+      }
+
+      document.getElementById('lab2-v0').textContent = `${(v0 * 1000).toFixed(3)} mV`;
+      document.getElementById('lab2-nl').textContent = `${nl.toFixed(2)} %`;
+    }
+
+    // Lab 3: Temperature Compensation Logic
+    function setCompMode(m) {
+      compMode = m;
+      ['none', 'dummy', 'stc'].forEach(mode => {
+        const btn = document.getElementById(`comp-${mode}`);
+        btn.style.background = 'rgba(255,255,255,0.08)';
+        btn.style.color = '#e2e8f0';
+      });
+      const activeBtn = document.getElementById(`comp-${m}`);
+      if (m === 'none') { activeBtn.style.background = '#ef4444'; activeBtn.style.color = '#fff'; }
+      else if (m === 'dummy') { activeBtn.style.background = 'var(--accent-teal)'; activeBtn.style.color = '#fff'; }
+      else if (m === 'stc') { activeBtn.style.background = '#059669'; activeBtn.style.color = '#fff'; }
+      updateLab3();
+    }
+
+    function updateLab3() {
+      const dt = parseFloat(document.getElementById('lab3-dt').value);
+      document.getElementById('lab3-dt-val').textContent = `${dt > 0 ? '+' : ''}${dt} °C`;
+
+      const gf = 2.0;
+      const beta = 70e-6;
+      const alpha_s = 23e-6; // Aluminum
+      const alpha_g = 15e-6;
+      const E = 70e9; // Aluminum Young's modulus (70 GPa)
+
+      let eps_app = 0;
+      if (compMode === 'none') {
+        const deltaR_R0 = (beta + gf * (alpha_s - alpha_g)) * dt;
+        eps_app = deltaR_R0 / gf;
+      } else if (compMode === 'dummy') {
+        eps_app = 0; // Ideal adjacent arm subtraction
+      } else if (compMode === 'stc') {
+        // STC-23 has small residual polynomial curve
+        eps_app = 0.02 * (dt * 1e-6);
+      }
+
+      const strain_ue = eps_app * 1e6;
+      const stress_mpa = (E * eps_app) / 1e6;
+
+      document.getElementById('lab3-strain').textContent = `${strain_ue >= 0 ? '+' : ''}${strain_ue.toFixed(1)} με`;
+      document.getElementById('lab3-stress').textContent = `${Math.abs(stress_mpa).toFixed(2)} MPa`;
+
+      const box = document.getElementById('lab3-status-box');
+      const title = document.getElementById('lab3-perf-title');
+      const desc = document.getElementById('lab3-perf-desc');
+
+      if (compMode === 'none') {
+        box.style.background = '#fef2f2'; box.style.borderColor = '#ef4444';
+        title.style.color = '#991b1b'; title.textContent = 'UNCOMPENSATED ERROR';
+        desc.style.color = '#7f1d1d'; desc.textContent = `A ${dt > 0 ? '+' : ''}${dt}°C shift produces ${Math.abs(stress_mpa).toFixed(2)} MPa of fake stress! An engineer would falsely suspect structural failure.`;
+      } else if (compMode === 'dummy') {
+        box.style.background = '#ecfdf5'; box.style.borderColor = '#059669';
+        title.style.color = '#065f46'; title.textContent = 'DUMMY GAUGE BALANCED';
+        desc.style.color = '#064e3b'; desc.textContent = 'Thermal drift canceled algebraically in adjacent bridge arms. Indicated apparent strain is exactly 0.0 με.';
+      } else if (compMode === 'stc') {
+        box.style.background = '#ecfdf5'; box.style.borderColor = '#059669';
+        title.style.color = '#065f46'; title.textContent = 'STC-23 ALLOY MATCHED';
+        desc.style.color = '#064e3b'; desc.textContent = 'Metallurgically tailored alloy cancels aluminum expansion. Apparent stress suppressed by >98% without needing a dummy coupon.';
+      }
+    }
+
+    // Quiz logic
+    function answerQuiz(idx) {
+      const fb = document.getElementById('quiz-feedback');
+      fb.style.display = 'block';
+      if (idx === 1) {
+        fb.style.background = '#ecfdf5';
+        fb.style.border = '1.5px solid #059669';
+        fb.style.color = '#065f46';
+        fb.innerHTML = '<strong>✓ Correct!</strong> In a half bridge in bending, one arm increases by +ΔR while the adjacent arm decreases by -ΔR. Their sum (R1 + R2 = 2R0) is strictly constant, eliminating the non-linear ΔR term from the bridge transfer denominator!';
+      } else {
+        fb.style.background = '#fef2f2';
+        fb.style.border = '1.5px solid #ef4444';
+        fb.style.color = '#991b1b';
+        fb.innerHTML = '<strong>✗ Incorrect.</strong> The correct answer is <strong>B</strong>. The sum (R1 + R2) remains strictly 2R0 in pure bending, canceling out denominator non-linearity.';
+      }
+    }
+
+    // Initialize on load
+    window.addEventListener('DOMContentLoaded', () => {
+      showSlide(0);
+      updateLab1();
+      updateLab2();
+      updateLab3();
+    });
+  </script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ChapterConfig, CHAPTERS } from '../data/chaptersData';
 import { exportChapterToPdf } from '../utils/pdfExport';
+import { exportChapterToPptx } from '../utils/pptxExport';
 import {
   FileDown,
   X,
@@ -12,7 +13,8 @@ import {
   Sliders,
   Archive,
   Download,
-  AlertCircle
+  AlertCircle,
+  Presentation
 } from 'lucide-react';
 import JSZip from 'jszip';
 
@@ -75,6 +77,42 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
       console.error('PDF export error:', err);
       setIsExporting(false);
       setProgressStatus('Export failed. Please try again.');
+    }
+  };
+
+  const handleDownloadPptx = async () => {
+    if (targetChapter.id === 'unit1') {
+      const link = document.createElement('a');
+      link.href = 'Unit1_Fundamentals_of_Measurement_Systems.pptx';
+      link.download = 'Unit1_Fundamentals_of_Measurement_Systems.pptx';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      onClose();
+      return;
+    }
+
+    try {
+      setIsExporting(true);
+      setProgressPercent(0);
+      setProgressStatus(`Generating PowerPoint (.pptx) for ${targetChapter.unitNumber}...`);
+      await exportChapterToPptx(targetChapter, {
+        includeNotes,
+        onProgress: (current, total, status) => {
+          setProgressStatus(status);
+          if (total > 0) setProgressPercent(Math.round((current / total) * 100));
+        }
+      });
+      setTimeout(() => {
+        setIsExporting(false);
+        setProgressStatus('');
+        setProgressPercent(0);
+        onClose();
+      }, 600);
+    } catch (err) {
+      console.error('PPTX export error:', err);
+      setIsExporting(false);
+      setProgressStatus('PowerPoint export failed.');
     }
   };
 
@@ -370,13 +408,22 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
             <span>Download All Units (ZIP)</span>
           </button>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto justify-end">
+          <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto justify-end">
             <button
               onClick={onClose}
               disabled={isExporting || isExportingAll}
               className="px-4 py-2 text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
             >
               Cancel
+            </button>
+            <button
+              onClick={handleDownloadPptx}
+              disabled={isExporting || isExportingAll}
+              className="flex items-center justify-center gap-1.5 px-4 py-2.5 text-xs font-bold text-amber-900 dark:text-amber-100 bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 rounded-xl transition-all disabled:opacity-50"
+              title="Download PowerPoint Presentation (.pptx)"
+            >
+              <Presentation className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+              <span>Download PPT (.pptx)</span>
             </button>
             <button
               onClick={handleDownloadSinglePdf}

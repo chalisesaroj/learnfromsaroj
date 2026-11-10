@@ -24,9 +24,13 @@ import {
   BookOpenCheck,
   Sparkles,
   Upload,
-  FileDown
+  FileDown,
+  ExternalLink,
+  Camera,
+  Presentation
 } from 'lucide-react';
 import { ChapterConfig } from '../data/chaptersData';
+import { exportChapterToPptx } from '../utils/pptxExport';
 
 export interface PresentationViewerProps {
   currentChapterId?: ChapterId | string;
@@ -113,9 +117,9 @@ const StructuredWorkedExampleSlide: React.FC<{ example: any; title: string }> = 
         <div className="md:col-span-5 space-y-4">
           <div className="p-6 rounded-2xl bg-slate-50/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
             <h3 className="font-bold text-slate-900 dark:text-white text-xl">Problem Statement:</h3>
-            <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+            <div className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
               <FormattedMathText text={example.problem} />
-            </p>
+            </div>
 
             {example.given && Object.keys(example.given).length > 0 && (
               <div className="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2">
@@ -151,9 +155,9 @@ const StructuredWorkedExampleSlide: React.FC<{ example: any; title: string }> = 
                       <MathRenderer math={st.math} display />
                     </div>
                   )}
-                  <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                  <div className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
                     <FormattedMathText text={st.explanation} />
-                  </p>
+                  </div>
                 </div>
               ))}
             </div>
@@ -166,6 +170,70 @@ const StructuredWorkedExampleSlide: React.FC<{ example: any; title: string }> = 
         </div>
       </div>
     </div>
+  );
+};
+
+const SlideImageCard: React.FC<{
+  imageUrl: string;
+  imageCaption?: string;
+  className?: string;
+  maxHeight?: string;
+}> = ({ imageUrl, imageCaption, className = '', maxHeight = 'max-h-[70vh]' }) => {
+  const [isZoomed, setIsZoomed] = useState(false);
+
+  return (
+    <>
+      <div className={`flex flex-col h-full justify-center w-full ${className}`}>
+        <div
+          onClick={() => setIsZoomed(true)}
+          className={`relative group cursor-zoom-in overflow-hidden rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-slate-950 shadow-lg transition-all hover:shadow-2xl hover:border-blue-500/50 flex flex-col items-center justify-center ${maxHeight}`}
+        >
+          <img
+            src={imageUrl}
+            alt={imageCaption || 'Technical presentation visual'}
+            className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
+            loading="eager"
+          />
+          <div className="absolute top-3 right-3 px-2 py-1 rounded-md bg-black/60 backdrop-blur-sm text-[11px] font-medium text-white/90 opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1 pointer-events-none">
+            <Eye className="w-3 h-3" />
+            <span>Click to inspect</span>
+          </div>
+        </div>
+        {imageCaption && (
+          <div className="mt-2.5 px-1 flex items-start gap-2 text-xs md:text-sm text-slate-600 dark:text-slate-400">
+            <Camera className="w-4 h-4 text-blue-500 shrink-0 mt-0.5" />
+            <span className="leading-snug">{imageCaption}</span>
+          </div>
+        )}
+      </div>
+
+      {/* Lightbox / Zoom modal */}
+      {isZoomed && (
+        <div
+          onClick={() => setIsZoomed(false)}
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex flex-col items-center justify-center p-4 cursor-zoom-out"
+        >
+          <div className="relative max-w-5xl max-h-[90vh] flex flex-col items-center">
+            <img
+              src={imageUrl}
+              alt={imageCaption || 'Zoomed view'}
+              className="max-w-full max-h-[82vh] object-contain rounded-xl shadow-2xl border border-white/20"
+            />
+            {imageCaption && (
+              <p className="mt-3 text-center text-sm md:text-base text-slate-200 max-w-2xl bg-black/50 px-4 py-2 rounded-lg">
+                {imageCaption}
+              </p>
+            )}
+            <button
+              onClick={() => setIsZoomed(false)}
+              className="absolute -top-12 right-0 p-2 text-white/80 hover:text-white"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
@@ -208,6 +276,28 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
   const [isDarkMode, setIsDarkMode] = useState(false); // Quarto defaults to clean light theme
   const [showNotesExplainer, setShowNotesExplainer] = useState(false);
   const [presenterMode, setPresenterMode] = useState(false); // Dual window / split presenter view
+  const [figureViewMode, setFigureViewMode] = useState<'schematic' | 'photo'>('schematic');
+  const [isPptxExporting, setIsPptxExporting] = useState(false);
+
+  const handleDownloadPptx = async () => {
+    if (chapter.id === 'unit1') {
+      const link = document.createElement('a');
+      link.href = 'Unit1_Fundamentals_of_Measurement_Systems.pptx';
+      link.download = 'Unit1_Fundamentals_of_Measurement_Systems.pptx';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      return;
+    }
+    try {
+      setIsPptxExporting(true);
+      await exportChapterToPptx(chapter);
+    } catch (err) {
+      console.error('PPTX export error:', err);
+    } finally {
+      setIsPptxExporting(false);
+    }
+  };
 
   const [showFloatingControls, setShowFloatingControls] = useState(false);
   const [showFullscreenHint, setShowFullscreenHint] = useState(false);
@@ -243,6 +333,11 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
       document.removeEventListener('webkitfullscreenchange', handleFullscreenChange);
     };
   }, []);
+
+  // Reset figure view toggle whenever navigating to another slide
+  useEffect(() => {
+    setFigureViewMode('schematic');
+  }, [currentSlideIndex]);
 
   const handleMouseMove = () => {
     if (isFullscreen) {
@@ -522,6 +617,57 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
             </button>
           )}
 
+          {/* PowerPoint (.pptx) Download button */}
+          <button
+            onClick={handleDownloadPptx}
+            disabled={isPptxExporting}
+            className={`px-2.5 py-1 rounded text-xs font-semibold transition-colors flex items-center gap-1.5 ${
+              isDarkMode
+                ? 'bg-amber-950/60 hover:bg-amber-900/80 border border-amber-800 text-amber-300'
+                : 'bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-800'
+            }`}
+            title="Download Chapter as genuine Microsoft PowerPoint presentation (.pptx)"
+          >
+            <Presentation className="w-3.5 h-3.5 text-amber-500" />
+            <span>{isPptxExporting ? 'Generating PPT...' : 'PPT (.pptx)'}</span>
+          </button>
+
+          {/* Standalone HTML Presentation for Unit 1 */}
+          {chapter.id === 'unit1' && (
+            <a
+              href="chapter1_presentation.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`px-2.5 py-1 rounded text-xs font-semibold transition-colors flex items-center gap-1.5 ${
+                isDarkMode
+                  ? 'bg-cyan-950/60 hover:bg-cyan-900/80 border border-cyan-800 text-cyan-300'
+                  : 'bg-cyan-50 hover:bg-cyan-100 border border-cyan-200 text-cyan-800'
+              }`}
+              title="Open Standalone Interactive HTML Presentation (94 Slides Master Deck)"
+            >
+              <ExternalLink className="w-3.5 h-3.5 text-cyan-500" />
+              <span>HTML Deck</span>
+            </a>
+          )}
+
+          {/* Standalone HTML Presentation for Unit 3 */}
+          {chapter.id === 'unit3' && (
+            <a
+              href="strain_gauges_presentation.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`px-2.5 py-1 rounded text-xs font-semibold transition-colors flex items-center gap-1.5 ${
+                isDarkMode
+                  ? 'bg-teal-950/60 hover:bg-teal-900/80 border border-teal-800 text-teal-300'
+                  : 'bg-teal-50 hover:bg-teal-100 border border-teal-200 text-teal-800'
+              }`}
+              title="Open Standalone Interactive HTML Presentation (Pokhara University Master Deck)"
+            >
+              <ExternalLink className="w-3.5 h-3.5 text-teal-500" />
+              <span>HTML Deck</span>
+            </a>
+          )}
+
           {/* Fullscreen button */}
           <button
             onClick={toggleFullscreen}
@@ -766,14 +912,23 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                       </h2>
                       <div className="space-y-2.5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
                         {currentSlide.bullets?.map((b, i) => (
-                          <p key={i} className="leading-relaxed">
+                          <div key={i} className="leading-relaxed">
                             <FormattedMathText text={b} />
-                          </p>
+                          </div>
                         ))}
                       </div>
                       {currentSlide.equation && (
                         <div className="py-2 text-center">
                           <MathRenderer math={currentSlide.equation} display />
+                        </div>
+                      )}
+                      {currentSlide.imageUrl && (
+                        <div className="pt-1 flex justify-center">
+                          <img
+                            src={currentSlide.imageUrl}
+                            alt={currentSlide.imageCaption || 'Slide visual'}
+                            className="max-h-24 w-auto object-cover rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
+                          />
                         </div>
                       )}
                     </div>
@@ -877,22 +1032,67 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
             } flex flex-col justify-center overflow-y-auto`}>
               {/* 1. Title Slide */}
               {currentSlide.type === 'title' && (
-                <div className="text-center max-w-5xl mx-auto my-auto space-y-8">
-                  <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
-                    {currentSlide.title}
-                  </h1>
-                  <p className="text-[24px] md:text-[28px] text-slate-600 dark:text-slate-300 font-normal leading-relaxed max-w-4xl mx-auto">
-                    <FormattedMathText text={currentSlide.subtitle || ''} />
-                  </p>
-                  <div className="pt-4 space-y-2">
-                    <div className="text-[24px] md:text-[28px] font-bold text-blue-600 dark:text-blue-400">
-                      Er. Saroj Chalise
+                currentSlide.imageUrl ? (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-6xl mx-auto my-auto w-full">
+                    <div className="lg:col-span-7 space-y-6 text-left">
+                      {currentSlide.sectionTag && (
+                        <span className="text-xs md:text-sm font-mono font-bold tracking-widest text-blue-600 dark:text-cyan-400 uppercase">
+                          {currentSlide.sectionTag}
+                        </span>
+                      )}
+                      <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+                        {currentSlide.title}
+                      </h1>
+                      <p className="text-xl md:text-2xl text-amber-600 dark:text-amber-400 font-semibold leading-relaxed">
+                        <FormattedMathText text={currentSlide.subtitle || ''} />
+                      </p>
+
+                      {currentSlide.bullets && currentSlide.bullets.length > 0 && (
+                        <div className="space-y-2 pt-2 border-t border-slate-200/60 dark:border-slate-800">
+                          {currentSlide.bullets.map((b, i) => (
+                            <div key={i} className="text-sm md:text-base text-slate-700 dark:text-slate-300 leading-snug">
+                              <FormattedMathText text={b} />
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="pt-2">
+                        <div className="text-lg md:text-xl font-bold text-blue-600 dark:text-blue-400">
+                          Er. Saroj Chalise
+                        </div>
+                        <div className="text-xs md:text-sm text-slate-500 dark:text-slate-400">
+                          IOE Pulchowk · Department of Mechanical &amp; Hydropower Engineering
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-[20px] text-slate-500 dark:text-slate-400">
-                      2026-10-21 · Department of Electrical &amp; Instrumentation Engineering
+
+                    <div className="lg:col-span-5 flex justify-center">
+                      <SlideImageCard
+                        imageUrl={currentSlide.imageUrl}
+                        imageCaption={currentSlide.imageCaption}
+                        maxHeight="max-h-[55vh]"
+                      />
                     </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="text-center max-w-5xl mx-auto my-auto space-y-8">
+                    <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+                      {currentSlide.title}
+                    </h1>
+                    <p className="text-[24px] md:text-[28px] text-slate-600 dark:text-slate-300 font-normal leading-relaxed max-w-4xl mx-auto">
+                      <FormattedMathText text={currentSlide.subtitle || ''} />
+                    </p>
+                    <div className="pt-4 space-y-2">
+                      <div className="text-[24px] md:text-[28px] font-bold text-blue-600 dark:text-blue-400">
+                        Er. Saroj Chalise
+                      </div>
+                      <div className="text-[20px] text-slate-500 dark:text-slate-400">
+                        2026-10-21 · Department of Electrical &amp; Instrumentation Engineering
+                      </div>
+                    </div>
+                  </div>
+                )
               )}
 
               {/* 2. Lecture Roadmap */}
@@ -947,9 +1147,9 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                   </h2>
                   <div className="space-y-4 text-[22px] md:text-[25px] text-slate-700 dark:text-slate-200 leading-relaxed text-justify sm:text-left">
                     {currentSlide.bullets?.map((b, i) => (
-                      <p key={i} className="leading-relaxed">
+                      <div key={i} className="leading-relaxed">
                         <FormattedMathText text={b} />
-                      </p>
+                      </div>
                     ))}
                   </div>
                   {currentSlide.equation && (
@@ -965,105 +1165,240 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
               {/* 5. Standard Content, Concept & Objectives Slides */}
               {(currentSlide.type === 'content' || currentSlide.type === 'objectives' || currentSlide.type === 'concept') && (
-                <div className="space-y-6 max-w-5xl mx-auto my-auto w-full">
-                  <div className="border-b pb-3 border-slate-200/50 dark:border-slate-800/40">
-                    <span className="text-xs font-mono font-bold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase">
-                      {currentSlide.sectionTag || 'Topic Content'}
-                    </span>
-                    <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
-                      {currentSlide.title}
-                    </h2>
-                    {currentSlide.subtitle && (
-                      <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 mt-1">
-                        <FormattedMathText text={currentSlide.subtitle} />
-                      </p>
+                currentSlide.imageUrl ? (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-6xl mx-auto my-auto w-full">
+                    <div className="lg:col-span-7 space-y-5 text-left">
+                      <div className="border-b pb-3 border-slate-200/50 dark:border-slate-800/40">
+                        <span className="text-xs font-mono font-bold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase">
+                          {currentSlide.sectionTag || 'Topic Content'}
+                        </span>
+                        <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
+                          {currentSlide.title}
+                        </h2>
+                        {currentSlide.subtitle && (
+                          <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 mt-1">
+                            <FormattedMathText text={currentSlide.subtitle} />
+                          </p>
+                        )}
+                      </div>
+
+                      {currentSlide.equation && (
+                        <MathRenderer
+                          math={currentSlide.equation}
+                          display
+                          label={currentSlide.formulaBlock?.label}
+                          description={currentSlide.equationDescription}
+                          symbols={currentSlide.symbols || currentSlide.formulaBlock?.symbols}
+                        />
+                      )}
+
+                      {currentSlide.bullets && (
+                        <div className="space-y-3 text-base md:text-lg text-slate-800 dark:text-slate-100 leading-relaxed text-justify sm:text-left">
+                          {currentSlide.bullets.map((b, i) => (
+                            <div key={i} className="leading-relaxed">
+                              <FormattedMathText text={b} />
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {currentSlide.takeaway && (
+                        <div className="p-3.5 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-sm md:text-base text-indigo-950 dark:text-indigo-200 flex items-start gap-2.5">
+                          <strong className="text-indigo-600 dark:text-indigo-400 shrink-0 font-bold">Key Takeaway:</strong>
+                          <FormattedMathText text={currentSlide.takeaway} />
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="lg:col-span-5 flex justify-center">
+                      <SlideImageCard
+                        imageUrl={currentSlide.imageUrl}
+                        imageCaption={currentSlide.imageCaption}
+                        maxHeight="max-h-[58vh]"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-6 max-w-5xl mx-auto my-auto w-full">
+                    <div className="border-b pb-3 border-slate-200/50 dark:border-slate-800/40">
+                      <span className="text-xs font-mono font-bold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase">
+                        {currentSlide.sectionTag || 'Topic Content'}
+                      </span>
+                      <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
+                        {currentSlide.title}
+                      </h2>
+                      {currentSlide.subtitle && (
+                        <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 mt-1">
+                          <FormattedMathText text={currentSlide.subtitle} />
+                        </p>
+                      )}
+                    </div>
+
+                    {/* If slide has an equation, render it prominently in a standard textbook plaque */}
+                    {currentSlide.equation && (
+                      <MathRenderer
+                        math={currentSlide.equation}
+                        display
+                        label={currentSlide.formulaBlock?.label}
+                        description={currentSlide.equationDescription}
+                        symbols={currentSlide.symbols || currentSlide.formulaBlock?.symbols}
+                      />
+                    )}
+
+                    {currentSlide.bullets && (
+                      <div className="space-y-4 text-[20px] md:text-[23px] text-slate-800 dark:text-slate-100 leading-relaxed text-justify sm:text-left">
+                        {currentSlide.bullets.map((b, i) => (
+                          <div key={i} className="leading-relaxed">
+                            <FormattedMathText text={b} />
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {currentSlide.takeaway && (
+                      <div className="p-4 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-base md:text-lg text-indigo-950 dark:text-indigo-200 flex items-start gap-3">
+                        <strong className="text-indigo-600 dark:text-indigo-400 shrink-0 font-bold">Key Takeaway:</strong>
+                        <FormattedMathText text={currentSlide.takeaway} />
+                      </div>
                     )}
                   </div>
-
-                  {/* If slide has an equation, render it prominently in a standard textbook plaque */}
-                  {currentSlide.equation && (
-                    <MathRenderer
-                      math={currentSlide.equation}
-                      display
-                      label={currentSlide.formulaBlock?.label}
-                      description={currentSlide.equationDescription}
-                      symbols={currentSlide.symbols || currentSlide.formulaBlock?.symbols}
-                    />
-                  )}
-
-                  {currentSlide.bullets && (
-                    <div className="space-y-4 text-[20px] md:text-[23px] text-slate-800 dark:text-slate-100 leading-relaxed text-justify sm:text-left">
-                      {currentSlide.bullets.map((b, i) => (
-                        <p key={i} className="leading-relaxed">
-                          <FormattedMathText text={b} />
-                        </p>
-                      ))}
-                    </div>
-                  )}
-
-                  {currentSlide.takeaway && (
-                    <div className="p-4 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-base md:text-lg text-indigo-950 dark:text-indigo-200 flex items-start gap-3">
-                      <strong className="text-indigo-600 dark:text-indigo-400 shrink-0 font-bold">Key Takeaway:</strong>
-                      <FormattedMathText text={currentSlide.takeaway} />
-                    </div>
-                  )}
-                </div>
+                )
               )}
 
               {/* 5B. Dedicated Formula & Derivation Slide (Single Idea Focus) */}
               {currentSlide.type === 'formula' && (
-                <div className="space-y-5 max-w-5xl mx-auto my-auto w-full">
-                  <div className="border-b pb-3 border-slate-200/50 dark:border-slate-800/40">
-                    <span className="text-xs font-mono font-bold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase">
-                      {currentSlide.sectionTag || 'Mathematical Model'}
-                    </span>
-                    <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
-                      {currentSlide.title}
-                    </h2>
-                    {currentSlide.subtitle && (
-                      <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 mt-1">
-                        <FormattedMathText text={currentSlide.subtitle} />
-                      </p>
+                currentSlide.imageUrl ? (
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-6xl mx-auto my-auto w-full">
+                    <div className="lg:col-span-7 space-y-4 text-left">
+                      <div className="border-b pb-2 border-slate-200/50 dark:border-slate-800/40">
+                        <span className="text-xs font-mono font-bold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase">
+                          {currentSlide.sectionTag || 'Mathematical Model'}
+                        </span>
+                        <h2 className="text-2xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
+                          {currentSlide.title}
+                        </h2>
+                        {currentSlide.subtitle && (
+                          <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 mt-1">
+                            <FormattedMathText text={currentSlide.subtitle} />
+                          </p>
+                        )}
+                      </div>
+
+                      <MathRenderer
+                        math={currentSlide.formulaBlock?.equation || currentSlide.equation || ''}
+                        display
+                        label={currentSlide.formulaBlock?.label}
+                        description={currentSlide.formulaBlock?.description || currentSlide.equationDescription}
+                        symbols={currentSlide.formulaBlock?.symbols || currentSlide.symbols}
+                      />
+
+                      {currentSlide.bullets && currentSlide.bullets.length > 0 && (
+                        <div className="space-y-2.5 p-4 rounded-xl bg-slate-50/80 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800/50 text-base md:text-lg text-slate-800 dark:text-slate-200 leading-relaxed text-justify sm:text-left">
+                          {currentSlide.bullets.map((b, i) => (
+                            <div key={i} className="leading-relaxed">
+                              <FormattedMathText text={b} />
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
+                      {currentSlide.takeaway && (
+                        <div className="p-3 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-xs md:text-sm text-indigo-950 dark:text-indigo-200 flex items-start gap-2.5">
+                          <strong className="text-indigo-600 dark:text-indigo-400 shrink-0 font-bold">Key Takeaway:</strong>
+                          <FormattedMathText text={currentSlide.takeaway} />
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="lg:col-span-5 flex justify-center">
+                      <SlideImageCard
+                        imageUrl={currentSlide.imageUrl}
+                        imageCaption={currentSlide.imageCaption}
+                        maxHeight="max-h-[58vh]"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-5 max-w-5xl mx-auto my-auto w-full">
+                    <div className="border-b pb-3 border-slate-200/50 dark:border-slate-800/40">
+                      <span className="text-xs font-mono font-bold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase">
+                        {currentSlide.sectionTag || 'Mathematical Model'}
+                      </span>
+                      <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
+                        {currentSlide.title}
+                      </h2>
+                      {currentSlide.subtitle && (
+                        <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 mt-1">
+                          <FormattedMathText text={currentSlide.subtitle} />
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Primary Equation Plaque with Symbol Breakdown */}
+                    <MathRenderer
+                      math={currentSlide.formulaBlock?.equation || currentSlide.equation || ''}
+                      display
+                      label={currentSlide.formulaBlock?.label}
+                      description={currentSlide.formulaBlock?.description || currentSlide.equationDescription}
+                      symbols={currentSlide.formulaBlock?.symbols || currentSlide.symbols}
+                    />
+
+                    {/* Single-Focus Narrative Paragraphs */}
+                    {currentSlide.bullets && currentSlide.bullets.length > 0 && (
+                      <div className="space-y-3 p-5 rounded-2xl bg-slate-50/80 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800/50 text-lg md:text-xl text-slate-800 dark:text-slate-200 leading-relaxed text-justify sm:text-left">
+                        {currentSlide.bullets.map((b, i) => (
+                          <p key={i} className="leading-relaxed">
+                            <FormattedMathText text={b} />
+                          </p>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Single Core Takeaway */}
+                    {currentSlide.takeaway && (
+                      <div className="p-3.5 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-base md:text-lg text-indigo-950 dark:text-indigo-200 flex items-start gap-3">
+                        <strong className="text-indigo-600 dark:text-indigo-400 shrink-0 font-bold">Key Takeaway:</strong>
+                        <FormattedMathText text={currentSlide.takeaway} />
+                      </div>
                     )}
                   </div>
-
-                  {/* Primary Equation Plaque with Symbol Breakdown */}
-                  <MathRenderer
-                    math={currentSlide.formulaBlock?.equation || currentSlide.equation || ''}
-                    display
-                    label={currentSlide.formulaBlock?.label}
-                    description={currentSlide.formulaBlock?.description || currentSlide.equationDescription}
-                    symbols={currentSlide.formulaBlock?.symbols || currentSlide.symbols}
-                  />
-
-                  {/* Single-Focus Narrative Paragraphs */}
-                  {currentSlide.bullets && currentSlide.bullets.length > 0 && (
-                    <div className="space-y-3 p-5 rounded-2xl bg-slate-50/80 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800/50 text-lg md:text-xl text-slate-800 dark:text-slate-200 leading-relaxed text-justify sm:text-left">
-                      {currentSlide.bullets.map((b, i) => (
-                        <p key={i} className="leading-relaxed">
-                          <FormattedMathText text={b} />
-                        </p>
-                      ))}
-                    </div>
-                  )}
-
-                  {/* Single Core Takeaway */}
-                  {currentSlide.takeaway && (
-                    <div className="p-3.5 rounded-xl bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-base md:text-lg text-indigo-950 dark:text-indigo-200 flex items-start gap-3">
-                      <strong className="text-indigo-600 dark:text-indigo-400 shrink-0 font-bold">Key Takeaway:</strong>
-                      <FormattedMathText text={currentSlide.takeaway} />
-                    </div>
-                  )}
-                </div>
+                )
               )}
 
-              {/* 6. Figure Slide (Supports both SvgAsset registry and inline figureSvg) */}
-              {currentSlide.type === 'figure' && svgToRender && (
+              {/* 6. Figure Slide (Supports both SvgAsset registry, inline figureSvg, and imageUrl toggle) */}
+              {currentSlide.type === 'figure' && (svgToRender || currentSlide.imageUrl) && (
                 <div className="h-full flex flex-col items-center justify-between w-full flex-1">
                   <div className="flex items-center justify-between border-b pb-2 w-full border-slate-200/50 dark:border-slate-800/40">
-                    <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                      {currentSlide.title}
-                    </h2>
+                    <div className="flex items-center gap-3">
+                      <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                        {currentSlide.title}
+                      </h2>
+                      {svgToRender && currentSlide.imageUrl && (
+                        <div className="hidden sm:flex items-center rounded-lg p-0.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                          <button
+                            onClick={() => setFigureViewMode('schematic')}
+                            className={`px-2.5 py-1 rounded-md transition-colors ${
+                              figureViewMode === 'schematic'
+                                ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm'
+                                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                            }`}
+                          >
+                            Schematic Diagram
+                          </button>
+                          <button
+                            onClick={() => setFigureViewMode('photo')}
+                            className={`px-2.5 py-1 rounded-md transition-colors flex items-center gap-1 ${
+                              figureViewMode === 'photo'
+                                ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm'
+                                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                            }`}
+                          >
+                            <Camera className="w-3 h-3" />
+                            <span>Physical Hardware Photo</span>
+                          </button>
+                        </div>
+                      )}
+                    </div>
                     {currentSlide.sectionTag && (
                       <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
                         {currentSlide.sectionTag}
@@ -1071,10 +1406,28 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                     )}
                   </div>
 
-                  <div
-                    className="w-full flex-1 min-h-[500px] max-h-[82vh] flex items-center justify-center bg-white rounded-2xl shadow-sm border border-slate-200/40 p-1 md:p-3 [&>svg]:w-full [&>svg]:h-full [&>svg]:max-h-[80vh] [&>svg]:object-contain my-1"
-                    dangerouslySetInnerHTML={{ __html: svgToRender }}
-                  />
+                  {figureViewMode === 'photo' && currentSlide.imageUrl ? (
+                    <div className="w-full flex-1 flex items-center justify-center py-2 max-h-[75vh]">
+                      <SlideImageCard
+                        imageUrl={currentSlide.imageUrl}
+                        imageCaption={currentSlide.imageCaption}
+                        maxHeight="max-h-[68vh]"
+                      />
+                    </div>
+                  ) : svgToRender ? (
+                    <div
+                      className="w-full flex-1 min-h-[500px] max-h-[82vh] flex items-center justify-center bg-white rounded-2xl shadow-sm border border-slate-200/40 p-1 md:p-3 [&>svg]:w-full [&>svg]:h-full [&>svg]:max-h-[80vh] [&>svg]:object-contain my-1"
+                      dangerouslySetInnerHTML={{ __html: svgToRender }}
+                    />
+                  ) : currentSlide.imageUrl ? (
+                    <div className="w-full flex-1 flex items-center justify-center py-2 max-h-[75vh]">
+                      <SlideImageCard
+                        imageUrl={currentSlide.imageUrl}
+                        imageCaption={currentSlide.imageCaption}
+                        maxHeight="max-h-[68vh]"
+                      />
+                    </div>
+                  ) : null}
 
                   {/* Isolated KaTeX Formula Plaque (Outside SVG) if formula exists on this figure */}
                   {(currentSlide.formulaBlock || currentSlide.equation) && (
@@ -1220,36 +1573,48 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                   <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
                     {currentSlide.title}
                   </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {/* Advantages */}
-                    <div className="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 shadow-sm space-y-4">
-                      <h3 className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
-                        ✓ Key Advantages
-                      </h3>
-                      <ul className="space-y-3">
-                        {currentSlide.prosCons.advantages.map((adv, idx) => (
-                          <li key={idx} className="flex items-start gap-2.5 text-lg text-slate-700 dark:text-slate-200 leading-relaxed">
-                            <span className="text-emerald-500 font-bold shrink-0 mt-0.5">•</span>
-                            <FormattedMathText text={adv} />
-                          </li>
-                        ))}
-                      </ul>
+                  <div className={`grid gap-6 ${currentSlide.imageUrl ? 'grid-cols-1 lg:grid-cols-12 items-center' : 'grid-cols-1 md:grid-cols-2'}`}>
+                    <div className={`${currentSlide.imageUrl ? 'lg:col-span-8' : 'col-span-1'} grid grid-cols-1 md:grid-cols-2 gap-5`}>
+                      {/* Advantages */}
+                      <div className="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 shadow-sm space-y-4">
+                        <h3 className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+                          ✓ Key Advantages
+                        </h3>
+                        <ul className="space-y-3">
+                          {currentSlide.prosCons.advantages.map((adv, idx) => (
+                            <li key={idx} className="flex items-start gap-2.5 text-base md:text-lg text-slate-700 dark:text-slate-200 leading-relaxed">
+                              <span className="text-emerald-500 font-bold shrink-0 mt-0.5">•</span>
+                              <FormattedMathText text={adv} />
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Disadvantages */}
+                      <div className="p-6 rounded-2xl bg-rose-500/5 border border-rose-500/20 shadow-sm space-y-4">
+                        <h3 className="text-2xl font-bold text-rose-600 dark:text-rose-400 flex items-center gap-2">
+                          ✗ Limitations &amp; Trade-offs
+                        </h3>
+                        <ul className="space-y-3">
+                          {currentSlide.prosCons.disadvantages.map((dis, idx) => (
+                            <li key={idx} className="flex items-start gap-2.5 text-base md:text-lg text-slate-700 dark:text-slate-200 leading-relaxed">
+                              <span className="text-rose-500 font-bold shrink-0 mt-0.5">•</span>
+                              <FormattedMathText text={dis} />
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
 
-                    {/* Disadvantages */}
-                    <div className="p-6 rounded-2xl bg-rose-500/5 border border-rose-500/20 shadow-sm space-y-4">
-                      <h3 className="text-2xl font-bold text-rose-600 dark:text-rose-400 flex items-center gap-2">
-                        ✗ Limitations &amp; Trade-offs
-                      </h3>
-                      <ul className="space-y-3">
-                        {currentSlide.prosCons.disadvantages.map((dis, idx) => (
-                          <li key={idx} className="flex items-start gap-2.5 text-lg text-slate-700 dark:text-slate-200 leading-relaxed">
-                            <span className="text-rose-500 font-bold shrink-0 mt-0.5">•</span>
-                            <FormattedMathText text={dis} />
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                    {currentSlide.imageUrl && (
+                      <div className="lg:col-span-4 flex items-center justify-center">
+                        <SlideImageCard
+                          imageUrl={currentSlide.imageUrl}
+                          imageCaption={currentSlide.imageCaption}
+                          maxHeight="max-h-[46vh]"
+                        />
+                      </div>
+                    )}
                   </div>
 
                   {currentSlide.prosCons.engineeringVerdict && (
@@ -1392,15 +1757,29 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {currentSlide.bullets.map((b, i) => {
-                      const [heading, body] = b.split(': ');
+                      let heading = `Point ${i + 1}`;
+                      let body = b;
+                      const colonBoldIdx = b.indexOf(':** ');
+                      const colonSpaceIdx = b.indexOf(': ');
+                      if (colonBoldIdx >= 0) {
+                        heading = b.slice(0, colonBoldIdx + 3).trim();
+                        body = b.slice(colonBoldIdx + 4).trim();
+                      } else if (colonSpaceIdx >= 0) {
+                        heading = b.slice(0, colonSpaceIdx).trim();
+                        body = b.slice(colonSpaceIdx + 2).trim();
+                      } else if (b.includes(':')) {
+                        const idx = b.indexOf(':');
+                        heading = b.slice(0, idx).trim();
+                        body = b.slice(idx + 1).trim();
+                      }
                       return (
                         <div key={i} className="p-6 rounded-2xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/40 dark:border-slate-800/30 space-y-2.5 shadow-sm">
                           <div className="font-bold text-rose-600 dark:text-rose-400 text-[24px]">
                             <FormattedMathText text={heading} />
                           </div>
-                          <p className="text-slate-700 dark:text-slate-200 text-[22px] md:text-[24px] leading-relaxed">
+                          <div className="text-slate-700 dark:text-slate-200 text-[22px] md:text-[24px] leading-relaxed">
                             <FormattedMathText text={body} />
-                          </p>
+                          </div>
                         </div>
                       );
                     })}
@@ -1416,14 +1795,29 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                   </h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     {currentSlide.bullets.map((formula, i) => {
-                      const [name, math] = formula.split(': ');
+                      let name = `Item ${i + 1}`;
+                      let math = formula;
+                      const colonBoldIdx = formula.indexOf(':** ');
+                      const colonSpaceIdx = formula.indexOf(': ');
+                      if (colonBoldIdx >= 0) {
+                        name = formula.slice(0, colonBoldIdx + 3).trim();
+                        math = formula.slice(colonBoldIdx + 4).trim();
+                      } else if (colonSpaceIdx >= 0) {
+                        name = formula.slice(0, colonSpaceIdx).trim();
+                        math = formula.slice(colonSpaceIdx + 2).trim();
+                      } else if (formula.includes(':')) {
+                        const idx = formula.indexOf(':');
+                        name = formula.slice(0, idx).trim();
+                        math = formula.slice(idx + 1).trim();
+                      }
+                      const hasMath = Boolean(math && (math.includes('$') || math.includes('\\')));
                       return (
                         <div key={i} className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-sm">
                           <span className="font-bold text-lg md:text-xl text-slate-800 dark:text-slate-200 border-b pb-2 border-slate-100 dark:border-slate-800">
                             <FormattedMathText text={name} />
                           </span>
                           <div className="py-2 text-xl md:text-2xl text-indigo-600 dark:text-cyan-400 font-serif text-center overflow-x-auto scrollbar-thin">
-                            <FormattedMathText text={math.includes('$') ? math : `$$${math}$$`} />
+                            <FormattedMathText text={hasMath ? (math.includes('$') ? math : `$$${math}$$`) : math || ''} />
                           </div>
                         </div>
                       );
@@ -1439,7 +1833,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                 isDarkMode ? 'bg-slate-950/80 border-slate-800 text-slate-400' : 'bg-slate-50 border-slate-200 text-slate-600'
               }`}>
                 <span className="truncate max-w-md font-medium">
-                  Unit I: Fundamentals of Measurement Systems · Er. Saroj Chalise
+                  {chapter.unitNumber}: {chapter.shortTitle || chapter.title} · Er. Saroj Chalise
                 </span>
                 <div className="flex items-center gap-4">
                   <span className="font-mono text-xs font-semibold">

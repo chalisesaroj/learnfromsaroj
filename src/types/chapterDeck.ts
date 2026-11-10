@@ -114,6 +114,8 @@ export interface SlideData {
   figureKey?: string; // References figures dictionary key
   figureSvg?: string; // Inline SVG content (for uploaded custom chapters)
   figureCaption?: string;
+  imageUrl?: string; // High-resolution photo asset (e.g. macro strain gauge, bridge, load cell)
+  imageCaption?: string;
 
   // Text & Structure
   bullets?: string[];

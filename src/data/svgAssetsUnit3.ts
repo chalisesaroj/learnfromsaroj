@@ -1123,5 +1123,308 @@ export const SVG_FIGURES_UNIT3: Record<string, SvgAsset> = {
     • <tspan font-family="monospace" font-weight="700" fill="#2563eb">STC-06:</tspan> Matched to titanium &amp; stainless austenitic steel (<tspan font-family="monospace">α_s ≈ 6 to 9 ppm/°C</tspan>).
   </text>
 </svg>`
+  },
+
+  u3_fig_deformation: {
+    id: 'u3_fig_deformation',
+    filename: 'u3_fig_deformation.svg',
+    title: 'Figure 3.8: From Tensile Force to Microscopic Grid Strain',
+    topicRef: '3.1 Mechanical Deformation to Electrical Resistance',
+    description: 'Visualization of specimen elongation L to L+ΔL and Poisson lateral contraction under axial tensile load.',
+    svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+  <rect width="1600" height="900" fill="#ffffff" />
+  <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
+  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
+    Figure 3.8: Physical Transformation · Applied Tensile Force ⟹ Microscopic Deformation
+  </text>
+  <text x="1250" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#147d8b">
+    Unit III · Section 3.1
+  </text>
+
+  <!-- Panel 1: Original Unstressed Specimen -->
+  <g transform="translate(60, 150)">
+    <rect width="450" height="680" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
+    <rect width="450" height="45" rx="8" fill="#eff6ff" />
+    <text x="25" y="30" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1e40af">
+      1. Original Specimen (F = 0 N)
+    </text>
+    
+    <!-- Specimen Bar -->
+    <rect x="75" y="100" width="300" height="200" rx="6" fill="#e2e8f0" stroke="#64748b" stroke-width="2" />
+    <text x="145" y="205" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#334155">Steel Rod (L₀, A₀)</text>
+    <line x1="75" y1="330" x2="375" y2="330" stroke="#0f172a" stroke-width="2.5" />
+    <line x1="75" y1="320" x2="75" y2="340" stroke="#0f172a" stroke-width="2.5" />
+    <line x1="375" y1="320" x2="375" y2="340" stroke="#0f172a" stroke-width="2.5" />
+    <text x="175" y="360" font-family="monospace" font-size="22" font-weight="700" fill="#0f172a">Length L₀</text>
+
+    <!-- Bonded Grid Rest State -->
+    <rect x="100" y="420" width="250" height="120" rx="6" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.5" />
+    <text x="120" y="450" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#854d0e">Foil Grid Resistance R₀</text>
+    <text x="120" y="490" font-family="monospace" font-size="24" font-weight="800" fill="#0f172a">R = 120.000 Ω</text>
+    <text x="120" y="525" font-family="system-ui, sans-serif" font-size="15" fill="#475569">Strain: ε = 0.000 με</text>
+  </g>
+
+  <!-- Panel 2: Applied Force Vectors -->
+  <g transform="translate(560, 150)">
+    <rect width="460" height="680" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
+    <rect width="460" height="45" rx="8" fill="#fff7ed" />
+    <text x="25" y="30" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#c2410c">
+      2. Applied Tensile Force (+F)
+    </text>
+
+    <!-- Force Arrows -->
+    <path d="M 30 200 L 90 200 M 90 200 L 70 190 M 90 200 L 70 210" stroke="#dc2626" stroke-width="5" stroke-linecap="round" fill="none" />
+    <path d="M 430 200 L 370 200 M 370 200 L 390 190 M 370 200 L 390 210" stroke="#dc2626" stroke-width="5" stroke-linecap="round" fill="none" />
+    
+    <text x="35" y="170" font-family="system-ui, sans-serif" font-size="22" font-weight="800" fill="#dc2626">← Force F</text>
+    <text x="330" y="170" font-family="system-ui, sans-serif" font-size="22" font-weight="800" fill="#dc2626">Force F →</text>
+
+    <rect x="90" y="110" width="280" height="180" rx="6" fill="#fed7aa" stroke="#ea580c" stroke-width="2" />
+    <text x="140" y="205" font-family="system-ui, sans-serif" font-size="19" font-weight="700" fill="#9a3412">Internal Stress σ = F/A</text>
+
+    <!-- Physical Explanation Card -->
+    <rect x="30" y="320" width="400" height="320" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
+    <text x="50" y="360" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">Mechanical Chain of Events:</text>
+    <text x="50" y="405" font-family="system-ui, sans-serif" font-size="17" fill="#334155">1. Tensile force pulls atomic lattice apart.</text>
+    <text x="50" y="445" font-family="system-ui, sans-serif" font-size="17" fill="#334155">2. Rod elongates axially by <tspan font-weight="700" fill="#2563eb">+ΔL</tspan>.</text>
+    <text x="50" y="485" font-family="system-ui, sans-serif" font-size="17" fill="#334155">3. Poisson effect contracts width by <tspan font-weight="700" fill="#dc2626">-ΔW</tspan>.</text>
+    <text x="50" y="525" font-family="system-ui, sans-serif" font-size="17" fill="#334155">4. Adhesive layer transfers strain to foil.</text>
+    <text x="50" y="565" font-family="monospace" font-size="18" font-weight="700" fill="#147d8b">Strain: ε = ΔL / L₀</text>
+  </g>
+
+  <!-- Panel 3: Deformed Strained State -->
+  <g transform="translate(1070, 150)">
+    <rect width="470" height="680" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
+    <rect width="470" height="45" rx="8" fill="#f0fdf4" />
+    <text x="25" y="30" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#166534">
+      3. Strained Specimen (L₀ + ΔL)
+    </text>
+
+    <!-- Elongated & Thinned Specimen Bar -->
+    <rect x="40" y="115" width="390" height="170" rx="6" fill="#bbf7d0" stroke="#16a34a" stroke-width="2" />
+    <text x="140" y="205" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#14532d">Elongated Rod (L₀ + ΔL)</text>
+    <line x1="40" y1="330" x2="430" y2="330" stroke="#15803d" stroke-width="2.5" />
+    <line x1="40" y1="320" x2="40" y2="340" stroke="#15803d" stroke-width="2.5" />
+    <line x1="430" y1="320" x2="430" y2="340" stroke="#15803d" stroke-width="2.5" />
+    <text x="170" y="360" font-family="monospace" font-size="22" font-weight="700" fill="#15803d">L₀ + ΔL (Stretched)</text>
+
+    <!-- Gauge Grid Stretched -->
+    <rect x="60" y="420" width="350" height="180" rx="6" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.5" />
+    <text x="80" y="455" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#854d0e">Electrical Resistance Increases:</text>
+    <text x="80" y="500" font-family="monospace" font-size="26" font-weight="800" fill="#dc2626">R = 120.240 Ω</text>
+    <text x="80" y="540" font-family="monospace" font-size="18" font-weight="700" fill="#15803d">ΔR = +0.240 Ω (+0.20%)</text>
+    <text x="80" y="575" font-family="system-ui, sans-serif" font-size="15" fill="#475569">For ε = 1000 με, GF = 2.00</text>
+  </g>
+</svg>`
+  },
+
+  u3_fig_measurement_chain: {
+    id: 'u3_fig_measurement_chain',
+    filename: 'u3_fig_measurement_chain.svg',
+    title: 'Figure 3.9: Complete Strain Measurement Signal Chain',
+    topicRef: '3.3 Measurement Chain Architecture',
+    description: 'End-to-end signal flow from mechanical force, to micro-strain, to resistance change, Wheatstone bridge, instrumentation amplifier, ADC, and computer display.',
+    svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+  <rect width="1600" height="900" fill="#ffffff" />
+  <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
+  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
+    Figure 3.9: Complete Strain Measurement Signal Chain — From Mechanical Force to Digital Readout
+  </text>
+  <text x="1250" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#147d8b">
+    Unit III · Section 3.3
+  </text>
+
+  <!-- Stage 1: Mechanical Force -->
+  <g transform="translate(60, 200)">
+    <rect width="210" height="520" rx="10" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+    <text x="20" y="40" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#1e3a8a">1. Physical Force</text>
+    <rect x="25" y="80" width="160" height="120" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="45" y="130" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#dc2626">Mechanical Load</text>
+    <text x="60" y="165" font-family="monospace" font-size="20" font-weight="800" fill="#0f172a">F = 15 kN</text>
+    <text x="25" y="240" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Applied stress σ</text>
+    <text x="25" y="275" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Machine casing</text>
+    <text x="25" y="310" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Aircraft wing root</text>
+    <rect x="20" y="420" width="170" height="70" rx="6" fill="#dbeafe" />
+    <text x="35" y="450" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#1e40af">Measurand:</text>
+    <text x="35" y="475" font-family="monospace" font-size="16" font-weight="700" fill="#1e40af">Stress σ (MPa)</text>
+  </g>
+  <path d="M 275 460 L 305 460 M 305 460 L 295 450 M 305 460 L 295 470" stroke="#0f172a" stroke-width="3" stroke-linecap="round" fill="none" />
+
+  <!-- Stage 2: Specimen Strain -->
+  <g transform="translate(310, 200)">
+    <rect width="210" height="520" rx="10" fill="#fefce8" stroke="#fde047" stroke-width="1.5" />
+    <text x="20" y="40" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#854d0e">2. Deformation</text>
+    <rect x="25" y="80" width="160" height="120" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="40" y="130" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#ca8a04">Elastic Strain</text>
+    <text x="45" y="165" font-family="monospace" font-size="20" font-weight="800" fill="#0f172a">ε = +800 με</text>
+    <text x="25" y="240" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• ε = ΔL / L₀</text>
+    <text x="25" y="275" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Sub-micrometer</text>
+    <text x="25" y="310" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Invisible to eye</text>
+    <rect x="20" y="420" width="170" height="70" rx="6" fill="#fef08a" />
+    <text x="35" y="450" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#713f12">Constitutive:</text>
+    <text x="35" y="475" font-family="monospace" font-size="16" font-weight="700" fill="#713f12">ε = σ / E</text>
+  </g>
+  <path d="M 525 460 L 555 460 M 555 460 L 545 450 M 555 460 L 545 470" stroke="#0f172a" stroke-width="3" stroke-linecap="round" fill="none" />
+
+  <!-- Stage 3: Strain Gauge Resistance -->
+  <g transform="translate(560, 200)">
+    <rect width="210" height="520" rx="10" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5" />
+    <text x="20" y="40" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#9a3412">3. Strain Gauge</text>
+    <rect x="25" y="80" width="160" height="120" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="45" y="130" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#ea580c">Resistance ΔR</text>
+    <text x="40" y="165" font-family="monospace" font-size="19" font-weight="800" fill="#0f172a">+0.1968 Ω</text>
+    <text x="25" y="240" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• GF = 2.05</text>
+    <text x="25" y="275" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• ΔR = R₀ · GF · ε</text>
+    <text x="25" y="310" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Very tiny change!</text>
+    <rect x="20" y="420" width="170" height="70" rx="6" fill="#fed7aa" />
+    <text x="35" y="450" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#7c2d12">Transduction:</text>
+    <text x="35" y="475" font-family="monospace" font-size="16" font-weight="700" fill="#7c2d12">ΔR / R₀ = GF·ε</text>
+  </g>
+  <path d="M 775 460 L 805 460 M 805 460 L 795 450 M 805 460 L 795 470" stroke="#0f172a" stroke-width="3" stroke-linecap="round" fill="none" />
+
+  <!-- Stage 4: Wheatstone Bridge -->
+  <g transform="translate(810, 200)">
+    <rect width="220" height="520" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+    <text x="20" y="40" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#14532d">4. Bridge Circuit</text>
+    <rect x="25" y="80" width="170" height="120" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="40" y="130" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#16a34a">Bridge Output</text>
+    <text x="50" y="165" font-family="monospace" font-size="20" font-weight="800" fill="#0f172a">V₀ = 4.10 mV</text>
+    <text x="25" y="240" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Quarter / Full</text>
+    <text x="25" y="275" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Zero DC baseline</text>
+    <text x="25" y="310" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Temp compensated</text>
+    <rect x="20" y="420" width="180" height="70" rx="6" fill="#bbf7d0" />
+    <text x="35" y="450" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#14532d">Signal Level:</text>
+    <text x="35" y="475" font-family="monospace" font-size="16" font-weight="700" fill="#14532d">V₀ ≈ (V_EX/4)GF·ε</text>
+  </g>
+  <path d="M 1035 460 L 1065 460 M 1065 460 L 1055 450 M 1065 460 L 1055 470" stroke="#0f172a" stroke-width="3" stroke-linecap="round" fill="none" />
+
+  <!-- Stage 5: Conditioning & ADC -->
+  <g transform="translate(1070, 200)">
+    <rect width="220" height="520" rx="10" fill="#fdf4ff" stroke="#f0abfc" stroke-width="1.5" />
+    <text x="20" y="40" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#701a75">5. Amplifier &amp; ADC</text>
+    <rect x="25" y="80" width="170" height="120" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
+    <text x="45" y="130" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#c026d3">InAmp + ADC</text>
+    <text x="40" y="165" font-family="monospace" font-size="20" font-weight="800" fill="#0f172a">Gain = 1000×</text>
+    <text x="25" y="240" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• InAmp: 4.1 mV → 4.1 V</text>
+    <text x="25" y="275" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Anti-aliasing filter</text>
+    <text x="25" y="310" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• 16-bit ADC sampling</text>
+    <rect x="20" y="420" width="180" height="70" rx="6" fill="#f5d0fe" />
+    <text x="35" y="450" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#701a75">Conditioned Output:</text>
+    <text x="35" y="475" font-family="monospace" font-size="16" font-weight="700" fill="#701a75">V_amp = 4.100 V</text>
+  </g>
+  <path d="M 1295 460 L 1325 460 M 1325 460 L 1315 450 M 1325 460 L 1315 470" stroke="#0f172a" stroke-width="3" stroke-linecap="round" fill="none" />
+
+  <!-- Stage 6: Computer Display & DAQ -->
+  <g transform="translate(1330, 200)">
+    <rect width="210" height="520" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5" />
+    <text x="20" y="40" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">6. User Display</text>
+    <rect x="25" y="80" width="160" height="120" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" />
+    <text x="40" y="125" font-family="monospace" font-size="13" font-weight="700" fill="#22c55e">LIVE READOUT:</text>
+    <text x="35" y="160" font-family="monospace" font-size="20" font-weight="800" fill="#ffffff">800.0 με</text>
+    <text x="40" y="185" font-family="monospace" font-size="13" font-weight="700" fill="#38bdf8">σ = 160.0 MPa</text>
+    <text x="25" y="240" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Real-time logging</text>
+    <text x="25" y="275" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Structural alarms</text>
+    <text x="25" y="310" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• ISO certification</text>
+    <rect x="20" y="420" width="170" height="70" rx="6" fill="#e2e8f0" />
+    <text x="35" y="450" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#0f172a">Actionable Data:</text>
+    <text x="35" y="475" font-family="monospace" font-size="16" font-weight="700" fill="#0f172a">Safety Margin OK</text>
+  </g>
+</svg>`
+  },
+
+  u3_fig_applications: {
+    id: 'u3_fig_applications',
+    filename: 'u3_fig_applications.svg',
+    title: 'Figure 3.10: Real-World Industrial & Engineering Applications',
+    topicRef: '3.4 Practical Applications & Modern Metrology',
+    description: 'Four major engineering domains: Load cells, Structural health monitoring of bridges, Automotive torque and chassis testing, and Material universal testing machines.',
+    svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+  <rect width="1600" height="900" fill="#ffffff" />
+  <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
+  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
+    Figure 3.10: Real-World Industrial Applications of Electrical Resistance Strain Gauges
+  </text>
+  <text x="1250" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#147d8b">
+    Unit III · Section 3.4
+  </text>
+
+  <!-- App 1: Industrial Load Cells -->
+  <g transform="translate(60, 140)">
+    <rect width="700" height="340" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="700" height="45" rx="8" fill="#eff6ff" />
+    <text x="25" y="30" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1e40af">
+      1. Industrial Load Cells &amp; Electronic Weighing Systems
+    </text>
+    <rect x="30" y="65" width="280" height="250" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
+    <text x="50" y="110" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#2563eb">S-Beam &amp; Canister</text>
+    <rect x="70" y="140" width="200" height="120" rx="6" fill="#cbd5e1" stroke="#64748b" stroke-width="2" />
+    <text x="110" y="205" font-family="monospace" font-size="20" font-weight="800" fill="#0f172a">LOAD CELL</text>
+    <circle cx="170" cy="160" r="12" fill="#ef4444" />
+    <circle cx="170" cy="235" r="12" fill="#ef4444" />
+    <text x="340" y="100" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">Architecture &amp; Features:</text>
+    <text x="340" y="140" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Full Wheatstone bridge arrangement (4 active arms).</text>
+    <text x="340" y="180" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Hermetically sealed stainless steel body (IP68).</text>
+    <text x="340" y="220" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Rated capacities from 500 g up to 500 tonnes.</text>
+    <text x="340" y="260" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Certified legal-for-trade truck scales &amp; silo weighing.</text>
+  </g>
+
+  <!-- App 2: Structural Health Monitoring -->
+  <g transform="translate(840, 140)">
+    <rect width="700" height="340" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="700" height="45" rx="8" fill="#f0fdf4" />
+    <text x="25" y="30" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#166534">
+      2. Structural Health Monitoring (Bridges, Dams &amp; Airframes)
+    </text>
+    <rect x="30" y="65" width="280" height="250" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
+    <text x="60" y="110" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#16a34a">Civil Infrastructure</text>
+    <path d="M 50 250 L 170 140 L 290 250 Z M 110 250 L 170 140 L 230 250 Z" fill="none" stroke="#64748b" stroke-width="4" />
+    <circle cx="170" cy="180" r="10" fill="#16a34a" />
+    <text x="340" y="100" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">Architecture &amp; Features:</text>
+    <text x="340" y="140" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Continuous fatigue cycle counting (Rainflow algorithm).</text>
+    <text x="340" y="180" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Weldment stress concentration monitoring.</text>
+    <text x="340" y="220" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Automated seismic damage detection.</text>
+    <text x="340" y="260" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Wireless solar-powered telemetry nodes on cable bridges.</text>
+  </g>
+
+  <!-- App 3: Automobile & Powertrain Testing -->
+  <g transform="translate(60, 510)">
+    <rect width="700" height="340" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="700" height="45" rx="8" fill="#fff7ed" />
+    <text x="25" y="30" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#c2410c">
+      3. Automobile Testing &amp; Rotating Shaft Torque Telemetry
+    </text>
+    <rect x="30" y="65" width="280" height="250" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
+    <text x="50" y="110" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#ea580c">Rotating Torque Shaft</text>
+    <rect x="50" y="170" width="240" height="60" rx="4" fill="#cbd5e1" stroke="#475569" stroke-width="2" />
+    <line x1="140" y1="170" x2="200" y2="230" stroke="#dc2626" stroke-width="3" />
+    <line x1="200" y1="170" x2="140" y2="230" stroke="#2563eb" stroke-width="3" />
+    <text x="340" y="100" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">Architecture &amp; Features:</text>
+    <text x="340" y="140" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• 45° torque rosette gauges mounted directly on drive shafts.</text>
+    <text x="340" y="180" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Resolves pure torsional shear while rejecting bending &amp; thrust.</text>
+    <text x="340" y="220" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Non-contact wireless RF telemetry up to 15,000 RPM.</text>
+    <text x="340" y="260" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Suspension multi-axis road load data acquisition (RLDA).</text>
+  </g>
+
+  <!-- App 4: Material Testing UTM -->
+  <g transform="translate(840, 510)">
+    <rect width="700" height="340" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="700" height="45" rx="8" fill="#fdf4ff" />
+    <text x="25" y="30" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#a21caf">
+      4. Material Testing &amp; Extensometer Verification (UTM)
+    </text>
+    <rect x="30" y="65" width="280" height="250" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
+    <text x="60" y="110" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#c026d3">Universal Testing Machine</text>
+    <rect x="90" y="140" width="160" height="130" fill="none" stroke="#64748b" stroke-width="3" />
+    <line x1="170" y1="140" x2="170" y2="270" stroke="#dc2626" stroke-width="4" />
+    <text x="340" y="100" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">Architecture &amp; Features:</text>
+    <text x="340" y="140" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Stress-strain curve derivation: Young's modulus E &amp; yield σ_y.</text>
+    <text x="340" y="180" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Poisson's ratio ν determination using biaxial T-rosettes.</text>
+    <text x="340" y="220" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• High-temperature ceramic cement bonding up to 800°C.</text>
+    <text x="340" y="260" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Fracture mechanics testing &amp; crack propagation tracking.</text>
+  </g>
+</svg>`
   }
 };
