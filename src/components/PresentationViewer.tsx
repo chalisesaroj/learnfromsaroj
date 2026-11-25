@@ -28,7 +28,9 @@ import {
   ExternalLink,
   Camera,
   Presentation,
-  Download
+  Download,
+  LayoutGrid,
+  MoreVertical
 } from 'lucide-react';
 import { ChapterConfig } from '../data/chaptersData';
 import { exportChapterToPptx, svgToPngDataUrlBrowser } from '../utils/pptxExport';
@@ -48,17 +50,17 @@ const InteractiveQuizSlide: React.FC<{ quiz: any; title: string }> = ({ quiz, ti
   const [showExplanation, setShowExplanation] = useState(false);
 
   return (
-    <div className="space-y-6 max-w-4xl mx-auto my-auto w-full">
-      <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
+    <div className="space-y-4 md:space-y-6 max-w-4xl mx-auto my-auto w-full">
+      <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-2.5 md:pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
         {title}
       </h2>
 
-      <div className="p-7 rounded-3xl bg-slate-50/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-md space-y-6">
-        <div className="text-2xl md:text-3xl font-semibold text-slate-900 dark:text-white leading-relaxed">
+      <div className="p-4 sm:p-6 md:p-7 rounded-2xl md:rounded-3xl bg-slate-50/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-md space-y-4 md:space-y-6">
+        <div className="text-lg sm:text-xl md:text-3xl font-semibold text-slate-900 dark:text-white leading-relaxed">
           <FormattedMathText text={quiz.question} />
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-2.5 md:space-y-3">
           {quiz.options.map((opt: string, idx: number) => {
             const isSelected = selectedIdx === idx;
             const isCorrect = idx === quiz.correctIndex;
@@ -80,16 +82,16 @@ const InteractiveQuizSlide: React.FC<{ quiz: any; title: string }> = ({ quiz, ti
                   setSelectedIdx(idx);
                   setShowExplanation(true);
                 }}
-                className={`w-full text-left p-4 rounded-xl border text-lg md:text-xl transition-all flex items-center justify-between ${btnClass}`}
+                className={`w-full text-left p-3 md:p-4 min-h-[48px] rounded-xl border text-base sm:text-lg md:text-xl transition-all flex items-center justify-between gap-2 ${btnClass}`}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-3 min-w-0">
                   <span className="w-7 h-7 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center text-sm font-bold shrink-0">
                     {String.fromCharCode(65 + idx)}
                   </span>
-                  <span><FormattedMathText text={opt} /></span>
+                  <span className="break-words"><FormattedMathText text={opt} /></span>
                 </div>
                 {showExplanation && isCorrect && (
-                  <span className="text-emerald-600 dark:text-emerald-400 font-bold text-sm">✓ Correct</span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-bold text-xs sm:text-sm shrink-0">✓ Correct</span>
                 )}
               </button>
             );
@@ -97,7 +99,7 @@ const InteractiveQuizSlide: React.FC<{ quiz: any; title: string }> = ({ quiz, ti
         </div>
 
         {showExplanation && (
-          <div className="p-5 rounded-2xl bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 text-base md:text-lg text-slate-800 dark:text-slate-200 space-y-1">
+          <div className="p-3.5 sm:p-4 md:p-5 rounded-xl md:rounded-2xl bg-indigo-50/80 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 text-sm sm:text-base md:text-lg text-slate-800 dark:text-slate-200 space-y-1">
             <strong className="text-indigo-600 dark:text-indigo-400 block mb-1">Explanation:</strong>
             <FormattedMathText text={quiz.explanation} />
           </div>
@@ -109,28 +111,28 @@ const InteractiveQuizSlide: React.FC<{ quiz: any; title: string }> = ({ quiz, ti
 
 const StructuredWorkedExampleSlide: React.FC<{ example: any; title: string }> = ({ example, title }) => {
   return (
-    <div className="space-y-6 max-w-6xl mx-auto my-auto w-full">
-      <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
+    <div className="space-y-4 md:space-y-6 max-w-6xl mx-auto my-auto w-full">
+      <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-2.5 md:pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
         {title}
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6">
         {/* Left Column: Problem & Given */}
-        <div className="md:col-span-5 space-y-4">
-          <div className="p-6 rounded-2xl bg-slate-50/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-            <h3 className="font-bold text-slate-900 dark:text-white text-2xl">Problem Statement:</h3>
-            <div className="text-xl md:text-[22px] text-slate-800 dark:text-slate-200 leading-relaxed">
+        <div className="md:col-span-5 space-y-3 md:space-y-4">
+          <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-slate-50/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 md:space-y-4">
+            <h3 className="font-bold text-slate-900 dark:text-white text-lg sm:text-xl md:text-2xl">Problem Statement:</h3>
+            <div className="text-base sm:text-lg md:text-[22px] text-slate-800 dark:text-slate-200 leading-relaxed">
               <FormattedMathText text={example.problem} />
             </div>
 
             {example.given && Object.keys(example.given).length > 0 && (
-              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2.5">
+              <div className="pt-3 border-t border-slate-200 dark:border-slate-800 space-y-2 md:space-y-2.5">
                 <h4 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-500">Given Parameters:</h4>
-                <div className="space-y-2 font-mono text-base text-indigo-700 dark:text-indigo-300">
+                <div className="space-y-2 font-mono text-xs sm:text-sm md:text-base text-indigo-700 dark:text-indigo-300">
                   {Object.entries(example.given).map(([key, val]) => (
-                    <div key={key} className="flex justify-between gap-3 p-2 rounded bg-slate-100 dark:bg-slate-950">
+                    <div key={key} className="flex flex-col sm:flex-row sm:justify-between gap-1 sm:gap-3 p-2 rounded bg-slate-100 dark:bg-slate-950 overflow-x-auto">
                       <span className="text-slate-600 dark:text-slate-400">{key}:</span>
-                      <span className="font-bold text-right">{String(val)}</span>
+                      <span className="font-bold sm:text-right break-words">{String(val)}</span>
                     </div>
                   ))}
                 </div>
@@ -140,33 +142,33 @@ const StructuredWorkedExampleSlide: React.FC<{ example: any; title: string }> = 
         </div>
 
         {/* Right Column: Step-by-Step Derivation */}
-        <div className="md:col-span-7 space-y-4">
-          <div className="p-6 rounded-2xl bg-slate-50/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-            <h3 className="font-bold text-slate-900 dark:text-white text-2xl">Step-by-Step Solution:</h3>
-            <div className="space-y-3.5 max-h-[480px] overflow-y-auto pr-1">
+        <div className="md:col-span-7 space-y-3 md:space-y-4">
+          <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-slate-50/80 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 md:space-y-4">
+            <h3 className="font-bold text-slate-900 dark:text-white text-lg sm:text-xl md:text-2xl">Step-by-Step Solution:</h3>
+            <div className="space-y-3 md:space-y-3.5 md:max-h-[480px] md:overflow-y-auto md:pr-1">
               {example.steps.map((st: any, idx: number) => (
-                <div key={idx} className="p-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800/80 space-y-2">
-                  <div className="flex items-center gap-2.5 font-bold text-slate-900 dark:text-white text-base md:text-lg">
+                <div key={idx} className="p-3 sm:p-4 rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800/80 space-y-2">
+                  <div className="flex items-center gap-2.5 font-bold text-slate-900 dark:text-white text-sm sm:text-base md:text-lg">
                     <span className="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs sm:text-sm shrink-0">
                       {st.stepNumber || idx + 1}
                     </span>
                     <span>{st.title}</span>
                   </div>
                   {st.math && (
-                    <div className="my-1 text-lg text-indigo-600 dark:text-cyan-400 font-mono">
+                    <div className="my-1 text-base md:text-lg text-indigo-600 dark:text-cyan-400 font-mono overflow-x-auto max-w-full">
                       <MathRenderer math={st.math} display />
                     </div>
                   )}
-                  <div className="text-base md:text-[17px] text-slate-700 dark:text-slate-300 leading-relaxed">
+                  <div className="text-sm sm:text-base md:text-[17px] text-slate-700 dark:text-slate-300 leading-relaxed">
                     <FormattedMathText text={st.explanation} />
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-lg md:text-xl font-bold text-emerald-800 dark:text-emerald-200 flex items-center justify-between gap-3 flex-wrap">
+            <div className="p-3 sm:p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-sm sm:text-base md:text-xl font-bold text-emerald-800 dark:text-emerald-200 flex items-center justify-between gap-2 sm:gap-3 flex-wrap">
               <span>Final Answer:</span>
-              <span className="font-mono text-emerald-700 dark:text-emerald-400">{example.finalAnswer}</span>
+              <span className="font-mono text-emerald-700 dark:text-emerald-400 break-words">{example.finalAnswer}</span>
             </div>
           </div>
         </div>
@@ -345,6 +347,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
   const [figureViewMode, setFigureViewMode] = useState<'schematic' | 'photo'>('schematic');
   const [isSvgZoomed, setIsSvgZoomed] = useState(false);
   const [isPptxExporting, setIsPptxExporting] = useState(false);
+  const [showMobileActions, setShowMobileActions] = useState(false);
 
   const handleDownloadPptx = async () => {
     if (chapter.id === 'unit1') {
@@ -419,6 +422,9 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
+    if (isFullscreen) {
+      setShowFloatingControls(true);
+    }
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
@@ -534,9 +540,262 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
           : 'relative flex flex-col rounded-xl border border-slate-300 dark:border-slate-800 shadow-2xl overflow-hidden'
       }`}
     >
-      {/* Top Reveal.js Header Controls Strip (Shown only in standard mode, completely hidden in fullscreen) */}
+      {/* Mobile Compact Header Bar (<768px only) */}
       {!isFullscreen && (
-        <div className={`flex items-center justify-between px-4 py-2 border-b select-none transition-colors ${
+        <div className={`md:hidden border-b select-none transition-colors ${
+          isDarkMode ? 'bg-slate-900/95 border-slate-800' : 'bg-white/95 border-slate-200'
+        }`}>
+          <div className="flex items-center justify-between px-2.5 py-1.5 gap-1.5">
+            <div className="flex items-center gap-1.5 min-w-0">
+              <button
+                onClick={() => {
+                  setShowMobileActions(false);
+                  setShowMenu(!showMenu);
+                }}
+                className={`min-h-[42px] min-w-[42px] flex items-center justify-center rounded-lg transition-colors ${
+                  showMenu
+                    ? 'bg-blue-600 text-white'
+                    : isDarkMode
+                    ? 'hover:bg-slate-800 text-slate-300'
+                    : 'hover:bg-slate-100 text-slate-700'
+                }`}
+                aria-label="Slide Menu"
+                title="Slide Menu [M]"
+              >
+                <Menu className="w-5 h-5" />
+              </button>
+              <div className="min-w-0">
+                <div className="text-xs font-bold truncate">
+                  {chapter.unitNumber}
+                </div>
+                <div className="text-[11px] text-slate-500 font-mono">
+                  Slide {currentSlideIndex + 1} / {totalSlides}
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1 shrink-0">
+              <button
+                onClick={() => setIsDarkMode(!isDarkMode)}
+                className={`min-h-[42px] min-w-[42px] flex items-center justify-center rounded-lg transition-colors ${
+                  isDarkMode ? 'hover:bg-slate-800 text-amber-300' : 'hover:bg-slate-100 text-slate-700'
+                }`}
+                aria-label="Toggle Light / Dark Theme"
+              >
+                {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowMobileActions(false);
+                  setShowOverview(!showOverview);
+                }}
+                className={`min-h-[42px] min-w-[42px] flex items-center justify-center rounded-lg transition-colors ${
+                  showOverview
+                    ? 'bg-blue-600 text-white'
+                    : isDarkMode
+                    ? 'hover:bg-slate-800 text-slate-300'
+                    : 'hover:bg-slate-100 text-slate-700'
+                }`}
+                aria-label="Slide Overview"
+              >
+                <LayoutGrid className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={() => setShowNotes(!showNotes)}
+                className={`min-h-[42px] min-w-[42px] flex items-center justify-center rounded-lg transition-colors ${
+                  showNotes
+                    ? 'bg-amber-600 text-white'
+                    : isDarkMode
+                    ? 'hover:bg-slate-800 text-slate-300'
+                    : 'hover:bg-slate-100 text-slate-700'
+                }`}
+                aria-label="Toggle Speaker Notes"
+              >
+                <BookOpen className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowMobileActions(false);
+                  toggleFullscreen();
+                }}
+                className={`min-h-[42px] min-w-[42px] flex items-center justify-center rounded-lg transition-colors ${
+                  isDarkMode ? 'hover:bg-slate-800 text-slate-300' : 'hover:bg-slate-100 text-slate-700'
+                }`}
+                aria-label="Fullscreen"
+              >
+                <Maximize2 className="w-4 h-4" />
+              </button>
+
+              <button
+                onClick={() => setShowMobileActions((prev) => !prev)}
+                className={`min-h-[42px] min-w-[42px] flex items-center justify-center rounded-lg transition-colors ${
+                  showMobileActions
+                    ? 'bg-indigo-600 text-white'
+                    : isDarkMode
+                    ? 'hover:bg-slate-800 text-slate-300'
+                    : 'hover:bg-slate-100 text-slate-700'
+                }`}
+                aria-label="More Deck Tools"
+              >
+                {showMobileActions ? <X className="w-4 h-4" /> : <MoreVertical className="w-4 h-4" />}
+              </button>
+            </div>
+          </div>
+
+          {showMobileActions && (
+            <div className={`px-3 pb-3 pt-2 border-t space-y-2.5 ${
+              isDarkMode ? 'border-slate-800 bg-slate-900' : 'border-slate-200 bg-slate-50/90'
+            }`}>
+              <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+                {chapterList.map((ch) => {
+                  const isSelected = ch.id === chapter.id;
+                  return (
+                    <button
+                      key={ch.id}
+                      onClick={() => {
+                        handleSelectChapter(ch.id);
+                        setShowMobileActions(false);
+                      }}
+                      className={`px-3 py-2 rounded-lg text-xs font-semibold whitespace-nowrap shrink-0 min-h-[38px] transition-all ${
+                        isSelected
+                          ? 'bg-blue-600 text-white shadow-xs'
+                          : isDarkMode
+                          ? 'bg-slate-800 text-slate-300'
+                          : 'bg-white border border-slate-200 text-slate-700'
+                      }`}
+                    >
+                      {ch.unitNumber}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="grid grid-cols-2 gap-2">
+                <button
+                  onClick={() => {
+                    setPresenterMode(!presenterMode);
+                    setShowMobileActions(false);
+                  }}
+                  className={`min-h-[42px] px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 border ${
+                    presenterMode
+                      ? 'bg-indigo-600 border-indigo-600 text-white'
+                      : isDarkMode
+                      ? 'bg-slate-800 border-slate-700 text-slate-200'
+                      : 'bg-white border-slate-200 text-slate-700'
+                  }`}
+                >
+                  <Eye className="w-3.5 h-3.5" />
+                  <span>{presenterMode ? 'Audience View' : 'Presenter View'}</span>
+                </button>
+
+                {onOpenPdfModal && (
+                  <button
+                    onClick={() => {
+                      setShowMobileActions(false);
+                      onOpenPdfModal();
+                    }}
+                    className={`min-h-[42px] px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 border ${
+                      isDarkMode
+                        ? 'bg-rose-950/60 border-rose-800 text-rose-300'
+                        : 'bg-rose-50 border-rose-200 text-rose-700'
+                    }`}
+                  >
+                    <FileDown className="w-3.5 h-3.5 text-rose-500" />
+                    <span>PDF Handout</span>
+                  </button>
+                )}
+
+                <button
+                  onClick={() => {
+                    setShowMobileActions(false);
+                    handleDownloadPptx();
+                  }}
+                  disabled={isPptxExporting}
+                  className={`min-h-[42px] px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 border ${
+                    isDarkMode
+                      ? 'bg-amber-950/60 border-amber-800 text-amber-300'
+                      : 'bg-amber-50 border-amber-200 text-amber-800'
+                  }`}
+                >
+                  <Presentation className="w-3.5 h-3.5 text-amber-500" />
+                  <span>{isPptxExporting ? 'Generating...' : 'PPT (.pptx)'}</span>
+                </button>
+
+                {chapter.id === 'unit1' && (
+                  <a
+                    href="chapter1_presentation.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`min-h-[42px] px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 border ${
+                      isDarkMode
+                        ? 'bg-cyan-950/60 border-cyan-800 text-cyan-300'
+                        : 'bg-cyan-50 border-cyan-200 text-cyan-800'
+                    }`}
+                  >
+                    <ExternalLink className="w-3.5 h-3.5 text-cyan-500" />
+                    <span>HTML Deck</span>
+                  </a>
+                )}
+
+                {chapter.id === 'unit3' && (
+                  <a
+                    href="strain_gauges_presentation.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`min-h-[42px] px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 border ${
+                      isDarkMode
+                        ? 'bg-teal-950/60 border-teal-800 text-teal-300'
+                        : 'bg-teal-50 border-teal-200 text-teal-800'
+                    }`}
+                  >
+                    <ExternalLink className="w-3.5 h-3.5 text-teal-500" />
+                    <span>HTML Deck</span>
+                  </a>
+                )}
+
+                {onOpenUploadStudio && (
+                  <button
+                    onClick={() => {
+                      setShowMobileActions(false);
+                      onOpenUploadStudio();
+                    }}
+                    className={`min-h-[42px] px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 border ${
+                      isDarkMode
+                        ? 'bg-slate-800 border-slate-700 text-indigo-300'
+                        : 'bg-white border-slate-200 text-indigo-600'
+                    }`}
+                  >
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload JSON</span>
+                  </button>
+                )}
+
+                <button
+                  onClick={() => {
+                    setShowNotesExplainer(!showNotesExplainer);
+                    setShowMobileActions(false);
+                  }}
+                  className={`min-h-[42px] px-3 py-2 rounded-lg text-xs font-semibold flex items-center justify-center gap-1.5 border ${
+                    isDarkMode
+                      ? 'bg-emerald-950/40 border-emerald-800 text-emerald-300'
+                      : 'bg-emerald-50 border-emerald-200 text-emerald-800'
+                  }`}
+                >
+                  <UserCheck className="w-3.5 h-3.5" />
+                  <span>Notes Info</span>
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Top Reveal.js Header Controls Strip (Desktop/Laptop >=768px untouched) */}
+      {!isFullscreen && (
+        <div className={`hidden md:flex items-center justify-between px-4 py-2 border-b select-none transition-colors ${
           isDarkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white/95 border-slate-200'
         }`}>
           <div className="flex items-center gap-3">
@@ -752,11 +1011,13 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
       </div>
       )}
 
-      {/* Floating HUD in Fullscreen (Auto-hiding on mouse move, no bottom buttons) */}
+      {/* Floating HUD in Fullscreen (Always reachable on mobile touch; auto-hiding on mouse move on desktop) */}
       {isFullscreen && (
         <div
-          className={`absolute top-4 right-4 z-40 flex items-center gap-2 p-1.5 px-3 rounded-full bg-slate-900/85 dark:bg-black/85 backdrop-blur-md border border-slate-700/60 text-white text-xs shadow-2xl transition-all duration-300 ${
-            showFloatingControls ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'
+          className={`absolute top-3 right-3 md:top-4 md:right-4 z-40 flex items-center gap-2 p-1.5 px-2.5 md:px-3 rounded-full bg-slate-900/85 dark:bg-black/85 backdrop-blur-md border border-slate-700/60 text-white text-xs shadow-2xl transition-all duration-300 ${
+            showFloatingControls
+              ? 'opacity-100 translate-y-0'
+              : 'opacity-100 translate-y-0 md:opacity-0 md:-translate-y-2 md:pointer-events-none'
           }`}
         >
           <span className="font-mono text-slate-300 font-semibold px-1 text-[11px]">
@@ -765,7 +1026,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
           <div className="w-px h-3.5 bg-slate-700" />
           <button
             onClick={() => setIsDarkMode(!isDarkMode)}
-            className="p-1 rounded-full hover:bg-slate-800 text-slate-300 hover:text-white transition-colors"
+            className="min-h-[36px] min-w-[36px] md:min-h-0 md:min-w-0 flex items-center justify-center p-1 rounded-full hover:bg-slate-800 text-slate-300 hover:text-white transition-colors"
             title="Toggle presentation theme"
           >
             {isDarkMode ? <Sun className="w-3.5 h-3.5 text-amber-300" /> : <Moon className="w-3.5 h-3.5" />}
@@ -773,21 +1034,22 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
           <div className="w-px h-3.5 bg-slate-700" />
           <button
             onClick={toggleFullscreen}
-            className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white transition-colors font-semibold text-[11px] shadow-sm"
+            className="flex items-center gap-1 min-h-[36px] md:min-h-0 px-2.5 py-1 rounded-full bg-indigo-600 hover:bg-indigo-500 text-white transition-colors font-semibold text-[11px] shadow-sm"
             title="Exit Fullscreen [Esc or F]"
           >
             <Minimize2 className="w-3.5 h-3.5" />
-            <span>Exit Fullscreen</span>
+            <span>Exit <span className="hidden sm:inline">Fullscreen</span></span>
           </button>
         </div>
       )}
 
       {/* Floating onboarding hint when entering fullscreen */}
       {isFullscreen && showFullscreenHint && (
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 pointer-events-none bg-slate-950/85 backdrop-blur-md text-white text-xs px-4 py-2 rounded-full border border-slate-700/60 shadow-xl flex items-center gap-2">
-          <span>Navigate with <kbd className="px-1.5 py-0.5 rounded bg-slate-800 font-mono text-[10px]">Space</kbd> or <kbd className="px-1.5 py-0.5 rounded bg-slate-800 font-mono text-[10px]">←</kbd> <kbd className="px-1.5 py-0.5 rounded bg-slate-800 font-mono text-[10px]">→</kbd></span>
-          <span className="text-slate-400">•</span>
-          <span><kbd className="px-1.5 py-0.5 rounded bg-slate-800 font-mono text-[10px]">Esc</kbd> to exit</span>
+        <div className="absolute bottom-16 md:bottom-6 left-1/2 -translate-x-1/2 z-30 pointer-events-none bg-slate-950/85 backdrop-blur-md text-white text-xs px-4 py-2 rounded-full border border-slate-700/60 shadow-xl flex items-center gap-2 whitespace-nowrap">
+          <span className="md:hidden">Swipe left / right or tap arrows to navigate</span>
+          <span className="hidden md:inline">Navigate with <kbd className="px-1.5 py-0.5 rounded bg-slate-800 font-mono text-[10px]">Space</kbd> or <kbd className="px-1.5 py-0.5 rounded bg-slate-800 font-mono text-[10px]">←</kbd> <kbd className="px-1.5 py-0.5 rounded bg-slate-800 font-mono text-[10px]">→</kbd></span>
+          <span className="hidden md:inline text-slate-400">•</span>
+          <span className="hidden md:inline"><kbd className="px-1.5 py-0.5 rounded bg-slate-800 font-mono text-[10px]">Esc</kbd> to exit</span>
         </div>
       )}
 
@@ -820,15 +1082,15 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
       {/* Slide Menu Drawer (Left Sliding Panel matching Reveal Menu plugin) */}
       {showMenu && (
         <div
-          className={`absolute left-0 top-10 bottom-0 w-80 z-40 border-r shadow-2xl flex flex-col p-4 overflow-hidden backdrop-blur-md transition-all ${
+          className={`absolute left-0 top-0 md:top-10 bottom-0 w-[86vw] max-w-80 md:w-80 z-40 border-r shadow-2xl flex flex-col p-4 overflow-hidden backdrop-blur-md transition-all ${
             isDarkMode ? 'bg-slate-900/98 border-slate-800 text-slate-200' : 'bg-white/98 border-slate-200 text-slate-800'
           }`}
         >
           <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800 mb-2">
-            <span className="font-bold text-xs uppercase tracking-wider text-blue-600 dark:text-blue-400">
+            <span className="font-bold text-xs uppercase tracking-wider text-blue-600 dark:text-blue-400 truncate">
               {chapter.unitNumber}: {chapter.shortTitle}
             </span>
-            <button onClick={() => setShowMenu(false)} className="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-800">
+            <button onClick={() => setShowMenu(false)} className="min-h-[36px] min-w-[36px] flex items-center justify-center p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-800">
               <X className="w-4 h-4" />
             </button>
           </div>
@@ -858,7 +1120,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                   setCurrentSlideIndex(idx);
                   setShowMenu(false);
                 }}
-                className={`w-full text-left p-2 rounded transition-colors flex items-start gap-2 ${
+                className={`w-full text-left py-2.5 px-2.5 md:p-2 rounded transition-colors flex items-start gap-2 ${
                   idx === currentSlideIndex
                     ? 'bg-blue-600 text-white font-semibold'
                     : isDarkMode
@@ -866,7 +1128,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                     : 'hover:bg-slate-100 text-slate-700'
                 }`}
               >
-                <span className="font-mono text-[11px] opacity-70 shrink-0 w-5">
+                <span className="font-mono text-[11px] opacity-70 shrink-0 w-6">
                   {idx + 1}.
                 </span>
                 <span className="truncate">{s.title}</span>
@@ -874,7 +1136,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
             ))}
           </div>
 
-          <div className="pt-3 border-t border-slate-200 dark:border-slate-800 text-[11px] text-slate-500 space-y-1">
+          <div className="hidden md:block pt-3 border-t border-slate-200 dark:border-slate-800 text-[11px] text-slate-500 space-y-1">
             <div className="flex justify-between"><span>Next / Prev</span><span className="font-mono font-bold">Space / ← / →</span></div>
             <div className="flex justify-between"><span>Fullscreen</span><span className="font-mono font-bold">F</span></div>
             <div className="flex justify-between"><span>Presenter Notes</span><span className="font-mono font-bold">S</span></div>
@@ -888,7 +1150,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                 setShowMenu(false);
                 onOpenPdfModal();
               }}
-              className="mt-3 w-full flex items-center justify-center gap-2 p-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs shadow-sm transition-colors"
+              className="mt-3 w-full min-h-[42px] md:min-h-0 flex items-center justify-center gap-2 p-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs shadow-sm transition-colors"
             >
               <FileDown className="w-4 h-4" />
               <span>Download Chapter PDF</span>
@@ -899,36 +1161,50 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
       {/* Slide Overview Grid (when overview is active) */}
       {showOverview && (
-        <div className={`absolute inset-0 top-10 z-30 p-6 overflow-y-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 backdrop-blur-md ${
+        <div className={`absolute inset-0 top-0 md:top-10 z-30 p-3 sm:p-4 md:p-6 overflow-y-auto backdrop-blur-md ${
           isDarkMode ? 'bg-slate-950/95' : 'bg-slate-100/95'
         }`}>
-          {slides.map((s, idx) => (
+          <div className="flex md:hidden items-center justify-between pb-2.5 mb-3 border-b border-slate-300/60 dark:border-slate-800">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200">
+              All Slides ({totalSlides})
+            </span>
             <button
-              key={s.id}
-              onClick={() => {
-                setCurrentSlideIndex(idx);
-                setShowOverview(false);
-              }}
-              className={`aspect-[16/9] p-3 rounded-lg border text-left flex flex-col justify-between transition-all ${
-                idx === currentSlideIndex
-                  ? 'border-blue-600 ring-2 ring-blue-600 bg-blue-50 dark:bg-blue-950/40'
-                  : isDarkMode
-                  ? 'border-slate-800 bg-slate-900 hover:border-slate-700'
-                  : 'border-slate-200 bg-white hover:border-slate-300 shadow-sm'
-              }`}
+              onClick={() => setShowOverview(false)}
+              className="min-h-[38px] px-3 py-1 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-xs font-semibold flex items-center gap-1"
             >
-              <div className="flex justify-between text-[11px] text-slate-400 font-mono">
-                <span>#{idx + 1}</span>
-                <span className="truncate max-w-[80px]">{s.sectionTag}</span>
-              </div>
-              <p className="text-xs font-semibold line-clamp-2 leading-tight">
-                {s.title}
-              </p>
-              <div className="text-[10px] text-slate-500">
-                {s.type === 'figure' ? '🖼 Figure' : s.type === 'section-divider' ? '📌 Section' : '📄 Slide'}
-              </div>
+              <X className="w-3.5 h-3.5" />
+              <span>Close</span>
             </button>
-          ))}
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 md:gap-4">
+            {slides.map((s, idx) => (
+              <button
+                key={s.id}
+                onClick={() => {
+                  setCurrentSlideIndex(idx);
+                  setShowOverview(false);
+                }}
+                className={`min-h-[84px] sm:min-h-0 sm:aspect-[16/9] p-3 rounded-lg border text-left flex flex-col justify-between transition-all ${
+                  idx === currentSlideIndex
+                    ? 'border-blue-600 ring-2 ring-blue-600 bg-blue-50 dark:bg-blue-950/40'
+                    : isDarkMode
+                    ? 'border-slate-800 bg-slate-900 hover:border-slate-700'
+                    : 'border-slate-200 bg-white hover:border-slate-300 shadow-sm'
+                }`}
+              >
+                <div className="flex justify-between text-[11px] text-slate-400 font-mono w-full">
+                  <span>#{idx + 1}</span>
+                  <span className="truncate max-w-[120px] sm:max-w-[80px]">{s.sectionTag}</span>
+                </div>
+                <p className="text-xs font-semibold line-clamp-2 leading-tight">
+                  {s.title}
+                </p>
+                <div className="text-[10px] text-slate-500">
+                  {s.type === 'figure' ? '🖼 Figure' : s.type === 'section-divider' ? '📌 Section' : '📄 Slide'}
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
       )}
 
@@ -941,14 +1217,14 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
         onTouchStart={handleTouchStart}
         onTouchEnd={handleTouchEnd}
         className={`relative flex-1 flex flex-col items-center justify-center transition-colors ${
-          isFullscreen ? 'p-0 w-full h-full' : 'p-3 sm:p-6'
+          isFullscreen ? 'p-0 w-full h-full' : 'p-1.5 sm:p-4 md:p-6'
         } ${
           isDarkMode ? 'bg-slate-950' : 'bg-slate-200/80'
         }`}
       >
         {presenterMode ? (
           /* ================= PRESENTER VIEW (PRESENTER SCREEN) ================= */
-          <div className="w-full max-w-[96vw] grid grid-cols-1 lg:grid-cols-12 gap-6 my-auto">
+          <div className="w-full max-w-[96vw] grid grid-cols-1 lg:grid-cols-12 gap-4 md:gap-6 my-auto">
             {/* Left: What the Audience Sees */}
             <div className="lg:col-span-8 flex flex-col gap-2">
               <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
@@ -957,31 +1233,31 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                 </span>
                 <span>Slide {currentSlideIndex + 1} of {totalSlides}</span>
               </div>
-              <div className={`w-full aspect-[16/9] rounded-xl border shadow-xl flex flex-col justify-between overflow-hidden ${
+              <div className={`w-full min-h-[260px] md:min-h-0 md:aspect-[16/9] rounded-xl border shadow-xl flex flex-col justify-between overflow-hidden ${
                 isDarkMode ? 'bg-slate-900 border-slate-800 text-slate-100' : 'bg-white border-slate-300 text-slate-900'
               }`}>
                 {/* Render Slide */}
-                <div className={`flex-1 ${currentSlide.type === 'figure' ? 'p-2 md:p-3' : 'p-6 md:p-8'} flex flex-col justify-center overflow-y-auto`}>
+                <div className={`flex-1 ${currentSlide.type === 'figure' ? 'p-2 md:p-3' : 'p-4 sm:p-6 md:p-8'} flex flex-col justify-center overflow-y-auto`}>
                   {currentSlide.type === 'figure' && currentFigure ? (
                     <div className="h-full flex flex-col items-center justify-center w-full">
                       <div
-                        className="w-full h-full flex items-center justify-center [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain cursor-zoom-in"
+                        className="w-full h-full aspect-[16/9] md:aspect-auto flex items-center justify-center [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain cursor-zoom-in"
                         onClick={() => setIsSvgZoomed(true)}
                         dangerouslySetInnerHTML={{ __html: currentFigure.svgContent }}
                       />
                     </div>
                   ) : currentSlide.type === 'title' ? (
-                    <div className="text-center my-auto space-y-4">
-                      <h1 className="text-3xl md:text-4xl font-bold">{currentSlide.title}</h1>
-                      <p className="text-base md:text-lg text-slate-600 dark:text-slate-300">{currentSlide.subtitle}</p>
+                    <div className="text-center my-auto space-y-3 md:space-y-4">
+                      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">{currentSlide.title}</h1>
+                      <p className="text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300">{currentSlide.subtitle}</p>
                       <div className="text-sm text-blue-600 font-semibold">Er. Saroj Chalise</div>
                     </div>
                   ) : (
-                    <div className="space-y-4 my-auto">
-                      <h2 className="text-2xl md:text-3xl font-bold border-b pb-2 border-slate-200 dark:border-slate-800">
+                    <div className="space-y-3 md:space-y-4 my-auto">
+                      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold border-b pb-2 border-slate-200 dark:border-slate-800">
                         {currentSlide.title}
                       </h2>
-                      <div className="space-y-3 text-base md:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+                      <div className="space-y-2.5 md:space-y-3 text-sm sm:text-base md:text-lg leading-relaxed text-slate-700 dark:text-slate-300">
                         {currentSlide.bullets?.map((b, i) => (
                           <div key={i} className="leading-relaxed">
                             <FormattedMathText text={b} />
@@ -989,7 +1265,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                         ))}
                       </div>
                       {currentSlide.equation && (
-                        <div className="py-2 text-center">
+                        <div className="py-2 text-center overflow-x-auto max-w-full">
                           <MathRenderer math={currentSlide.equation} display />
                         </div>
                       )}
@@ -1016,7 +1292,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
             {/* Right: Instructor's Private Presenter Console */}
             <div className="lg:col-span-4 flex flex-col gap-4">
               {/* Private Notes Panel */}
-              <div className="p-5 rounded-xl border bg-amber-50 dark:bg-amber-950/30 border-amber-300 dark:border-amber-800/60 shadow-lg flex-1 flex flex-col justify-between">
+              <div className="p-4 sm:p-5 rounded-xl border bg-amber-50 dark:bg-amber-950/30 border-amber-300 dark:border-amber-800/60 shadow-lg flex-1 flex flex-col justify-between">
                 <div>
                   <div className="flex items-center gap-2 pb-2 border-b border-amber-200 dark:border-amber-800 text-xs font-bold uppercase tracking-wider text-amber-800 dark:text-amber-300 mb-3">
                     <UserCheck className="w-4 h-4 text-emerald-600" />
@@ -1052,17 +1328,17 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
             </div>
           </div>
         ) : (
-          /* ================= STANDARD FULL 16:9 SLIDE CANVAS ================= */
+          /* ================= STANDARD FULL 16:9 SLIDE CANVAS (Fluid height on mobile, crisp 16:9 on md+) ================= */
           <div className={`w-full ${
             isFullscreen
               ? 'h-full max-w-none rounded-none border-0 shadow-none'
-              : 'max-w-7xl aspect-[16/9] rounded-xl border shadow-2xl'
+              : 'max-w-7xl min-h-[60vh] md:min-h-0 md:aspect-[16/9] rounded-xl border shadow-2xl'
           } relative flex flex-col justify-between overflow-hidden transition-colors ${
             isDarkMode
               ? 'bg-slate-900 border-slate-800 text-slate-100'
               : 'bg-white border-slate-300 text-slate-900'
           }`}>
-            {/* Fullscreen Edge Navigation Zones (Left & Right hover chevrons) */}
+            {/* Fullscreen Edge Navigation Zones (Desktop hover chevrons + Mobile touch pills) */}
             {isFullscreen && (
               <>
                 <button
@@ -1071,7 +1347,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                     setCurrentSlideIndex((p) => Math.max(p - 1, 0));
                   }}
                   disabled={currentSlideIndex === 0}
-                  className="absolute left-0 top-0 bottom-0 w-16 md:w-24 z-20 flex items-center justify-start pl-3 opacity-0 hover:opacity-100 transition-opacity disabled:opacity-0 disabled:pointer-events-none group cursor-pointer select-none"
+                  className="hidden md:flex absolute left-0 top-0 bottom-0 w-16 md:w-24 z-20 items-center justify-start pl-3 opacity-0 hover:opacity-100 transition-opacity disabled:opacity-0 disabled:pointer-events-none group cursor-pointer select-none"
                   title="Previous slide [Left Arrow]"
                   aria-label="Previous slide"
                 >
@@ -1086,7 +1362,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                     setCurrentSlideIndex((p) => Math.min(p + 1, totalSlides - 1));
                   }}
                   disabled={currentSlideIndex === totalSlides - 1}
-                  className="absolute right-0 top-0 bottom-0 w-16 md:w-24 z-20 flex items-center justify-end pr-3 opacity-0 hover:opacity-100 transition-opacity disabled:opacity-0 disabled:pointer-events-none group cursor-pointer select-none"
+                  className="hidden md:flex absolute right-0 top-0 bottom-0 w-16 md:w-24 z-20 items-center justify-end pr-3 opacity-0 hover:opacity-100 transition-opacity disabled:opacity-0 disabled:pointer-events-none group cursor-pointer select-none"
                   title="Next slide [Right Arrow or Space]"
                   aria-label="Next slide"
                 >
@@ -1094,36 +1370,64 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                     <ChevronRight className="w-6 h-6" />
                   </div>
                 </button>
+
+                {/* Mobile Touch Fullscreen Prev / Next Bar */}
+                <div className="md:hidden fixed bottom-4 left-3 right-3 z-40 flex items-center justify-between pointer-events-none">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCurrentSlideIndex((p) => Math.max(p - 1, 0));
+                    }}
+                    disabled={currentSlideIndex === 0}
+                    className="pointer-events-auto min-h-[44px] min-w-[44px] px-3 rounded-full bg-slate-900/80 text-white backdrop-blur-md shadow-lg border border-white/15 flex items-center gap-1 text-xs font-semibold disabled:opacity-30"
+                    aria-label="Previous slide"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                    <span>Prev</span>
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCurrentSlideIndex((p) => Math.min(p + 1, totalSlides - 1));
+                    }}
+                    disabled={currentSlideIndex === totalSlides - 1}
+                    className="pointer-events-auto min-h-[44px] min-w-[44px] px-3 rounded-full bg-blue-600/90 text-white backdrop-blur-md shadow-lg border border-white/15 flex items-center gap-1 text-xs font-semibold disabled:opacity-30"
+                    aria-label="Next slide"
+                  >
+                    <span>Next</span>
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
               </>
             )}
 
-            {/* SLIDE CONTENT AREA (Minimum text size 22px+, minimal borders, large imagery & formulas) */}
+            {/* SLIDE CONTENT AREA (Responsive mobile sizing, laptop md:22px+ untouched) */}
             <div className={`flex-1 ${
               currentSlide.type === 'figure'
-                ? isFullscreen ? 'p-4 md:p-8' : 'p-4 md:p-6'
-                : isFullscreen ? 'p-8 md:p-14 lg:p-16' : 'p-7 md:p-11'
-            } flex flex-col justify-center overflow-y-auto`}>
+                ? isFullscreen ? 'p-2.5 sm:p-4 md:p-8 pb-16 md:pb-8' : 'p-3 sm:p-4 md:p-6'
+                : isFullscreen ? 'p-4 sm:p-8 md:p-14 lg:p-16 pb-20 md:pb-16' : 'p-4 sm:p-6 md:p-11'
+            } flex flex-col justify-center overflow-y-auto overflow-x-hidden`}>
               {/* 1. Title Slide */}
               {currentSlide.type === 'title' && (
                 currentSlide.imageUrl ? (
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-6xl mx-auto my-auto w-full">
-                    <div className="lg:col-span-7 space-y-6 text-left">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-8 items-center max-w-6xl mx-auto my-auto w-full">
+                    <div className="lg:col-span-7 space-y-4 md:space-y-6 text-left">
                       {currentSlide.sectionTag && (
                         <span className="text-xs md:text-sm font-mono font-bold tracking-widest text-blue-600 dark:text-cyan-400 uppercase">
                           {currentSlide.sectionTag}
                         </span>
                       )}
-                      <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+                      <h1 className="text-2xl sm:text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
                         {currentSlide.title}
                       </h1>
-                      <p className="text-xl md:text-2xl text-amber-600 dark:text-amber-400 font-semibold leading-relaxed">
+                      <p className="text-base sm:text-xl md:text-2xl text-amber-600 dark:text-amber-400 font-semibold leading-relaxed">
                         <FormattedMathText text={currentSlide.subtitle || ''} />
                       </p>
 
                       {currentSlide.bullets && currentSlide.bullets.length > 0 && (
-                        <div className="space-y-2.5 pt-2 border-t border-slate-200/60 dark:border-slate-800">
+                        <div className="space-y-2 md:space-y-2.5 pt-2 border-t border-slate-200/60 dark:border-slate-800">
                           {currentSlide.bullets.map((b, i) => (
-                            <div key={i} className="text-base md:text-lg text-slate-700 dark:text-slate-300 leading-snug">
+                            <div key={i} className="text-sm sm:text-base md:text-lg text-slate-700 dark:text-slate-300 leading-snug">
                               <FormattedMathText text={b} />
                             </div>
                           ))}
@@ -1131,7 +1435,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                       )}
 
                       <div className="pt-2">
-                        <div className="text-lg md:text-xl font-bold text-blue-600 dark:text-blue-400">
+                        <div className="text-base sm:text-lg md:text-xl font-bold text-blue-600 dark:text-blue-400">
                           Er. Saroj Chalise
                         </div>
                         <div className="text-xs md:text-sm text-slate-500 dark:text-slate-400">
@@ -1144,23 +1448,23 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                       <SlideImageCard
                         imageUrl={currentSlide.imageUrl}
                         imageCaption={currentSlide.imageCaption}
-                        maxHeight="max-h-[55vh]"
+                        maxHeight="max-h-[36vh] sm:max-h-[45vh] lg:max-h-[55vh]"
                       />
                     </div>
                   </div>
                 ) : (
-                  <div className="text-center max-w-5xl mx-auto my-auto space-y-8">
-                    <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+                  <div className="text-center max-w-5xl mx-auto my-auto space-y-5 md:space-y-8">
+                    <h1 className="text-2xl sm:text-4xl md:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
                       {currentSlide.title}
                     </h1>
-                    <p className="text-[24px] md:text-[28px] text-slate-600 dark:text-slate-300 font-normal leading-relaxed max-w-4xl mx-auto">
+                    <p className="text-lg sm:text-2xl md:text-[28px] text-slate-600 dark:text-slate-300 font-normal leading-relaxed max-w-4xl mx-auto">
                       <FormattedMathText text={currentSlide.subtitle || ''} />
                     </p>
-                    <div className="pt-4 space-y-2">
-                      <div className="text-[24px] md:text-[28px] font-bold text-blue-600 dark:text-blue-400">
+                    <div className="pt-2 md:pt-4 space-y-1.5 md:space-y-2">
+                      <div className="text-xl sm:text-[24px] md:text-[28px] font-bold text-blue-600 dark:text-blue-400">
                         Er. Saroj Chalise
                       </div>
-                      <div className="text-[20px] text-slate-500 dark:text-slate-400">
+                      <div className="text-sm sm:text-base md:text-[20px] text-slate-500 dark:text-slate-400">
                         2026-10-21 · Department of Electrical &amp; Instrumentation Engineering
                       </div>
                     </div>
@@ -1170,24 +1474,24 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
               {/* 2. Lecture Roadmap */}
               {currentSlide.type === 'roadmap' && currentSlide.columns && (
-                <div className="space-y-8 max-w-6xl mx-auto my-auto w-full">
-                  <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-4 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
+                <div className="space-y-5 md:space-y-8 max-w-6xl mx-auto my-auto w-full">
+                  <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-3 md:pb-4 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
                     {currentSlide.title}
                   </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-10">
                     {/* Left Column */}
-                    <div className="space-y-5">
+                    <div className="space-y-3 md:space-y-5">
                       {currentSlide.columns.left.map((item, i) => (
-                        <div key={i} className="flex items-start gap-3.5 text-[22px] md:text-[25px] text-slate-700 dark:text-slate-200 leading-relaxed">
+                        <div key={i} className="flex items-start gap-2.5 md:gap-3.5 text-base sm:text-lg md:text-[25px] text-slate-700 dark:text-slate-200 leading-relaxed">
                           <span className="text-blue-600 dark:text-blue-400 font-bold shrink-0 mt-0.5">•</span>
                           <FormattedMathText text={item} />
                         </div>
                       ))}
                     </div>
                     {/* Right Column */}
-                    <div className="space-y-5">
+                    <div className="space-y-3 md:space-y-5">
                       {currentSlide.columns.right.map((item, i) => (
-                        <div key={i} className="flex items-start gap-3.5 text-[22px] md:text-[25px] text-slate-700 dark:text-slate-200 leading-relaxed">
+                        <div key={i} className="flex items-start gap-2.5 md:gap-3.5 text-base sm:text-lg md:text-[25px] text-slate-700 dark:text-slate-200 leading-relaxed">
                           <span className="text-blue-600 dark:text-blue-400 font-bold shrink-0 mt-0.5">•</span>
                           <FormattedMathText text={item} />
                         </div>
@@ -1199,14 +1503,14 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
               {/* 3. Section Title Slide (Level 1 heading center) */}
               {currentSlide.type === 'section-divider' && (
-                <div className="text-center my-auto space-y-6 max-w-5xl mx-auto">
-                  <span className="text-[20px] md:text-[22px] uppercase tracking-widest text-blue-600 dark:text-blue-400 font-bold block">
+                <div className="text-center my-auto space-y-4 md:space-y-6 max-w-5xl mx-auto">
+                  <span className="text-sm sm:text-lg md:text-[22px] uppercase tracking-widest text-blue-600 dark:text-blue-400 font-bold block">
                     Unit I Section Divider
                   </span>
-                  <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
+                  <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
                     {currentSlide.title}
                   </h1>
-                  <p className="text-[24px] md:text-[28px] text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
+                  <p className="text-base sm:text-xl md:text-[28px] text-slate-600 dark:text-slate-300 max-w-3xl mx-auto leading-relaxed">
                     <FormattedMathText text={currentSlide.takeaway || ''} />
                   </p>
                 </div>
@@ -1214,11 +1518,11 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
               {/* 4. Why This Chapter Matters */}
               {currentSlide.type === 'why-matters' && (
-                <div className="space-y-6 max-w-5xl mx-auto my-auto w-full">
-                  <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-4 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
+                <div className="space-y-4 md:space-y-6 max-w-5xl mx-auto my-auto w-full">
+                  <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-3 md:pb-4 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
                     {currentSlide.title}
                   </h2>
-                  <div className="space-y-4 text-[22px] md:text-[25px] text-slate-700 dark:text-slate-200 leading-relaxed text-justify sm:text-left">
+                  <div className="space-y-3 md:space-y-4 text-base sm:text-lg md:text-[25px] text-slate-700 dark:text-slate-200 leading-relaxed text-left">
                     {currentSlide.bullets?.map((b, i) => (
                       <div key={i} className="leading-relaxed">
                         <FormattedMathText text={b} />
@@ -1226,11 +1530,11 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                     ))}
                   </div>
                   {currentSlide.equation && (
-                    <div className="my-6">
+                    <div className="my-4 md:my-6 overflow-x-auto max-w-full">
                       <MathRenderer math={currentSlide.equation} display />
                     </div>
                   )}
-                  <p className="text-[24px] md:text-[26px] font-bold text-slate-900 dark:text-white pt-2">
+                  <p className="text-lg sm:text-xl md:text-[26px] font-bold text-slate-900 dark:text-white pt-1 md:pt-2">
                     This chapter is about that fundamental chain.
                   </p>
                 </div>
@@ -1239,17 +1543,17 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
               {/* 5. Standard Content, Concept & Objectives Slides */}
               {(currentSlide.type === 'content' || currentSlide.type === 'objectives' || currentSlide.type === 'concept') && (
                 currentSlide.imageUrl ? (
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-6xl mx-auto my-auto w-full">
-                    <div className="lg:col-span-7 space-y-5 text-left">
-                      <div className="border-b pb-3 border-slate-200/50 dark:border-slate-800/40">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-8 items-center max-w-6xl mx-auto my-auto w-full">
+                    <div className="lg:col-span-7 space-y-3.5 md:space-y-5 text-left">
+                      <div className="border-b pb-2.5 md:pb-3 border-slate-200/50 dark:border-slate-800/40">
                         <span className="text-xs sm:text-sm font-mono font-bold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase">
                           {currentSlide.sectionTag || 'Topic Content'}
                         </span>
-                        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
+                        <h2 className="text-xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
                           {currentSlide.title}
                         </h2>
                         {currentSlide.subtitle && (
-                          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 mt-1">
+                          <p className="text-sm sm:text-lg md:text-xl text-slate-600 dark:text-slate-300 mt-1">
                             <FormattedMathText text={currentSlide.subtitle} />
                           </p>
                         )}
@@ -1266,7 +1570,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                       )}
 
                       {currentSlide.bullets && (
-                        <div className="space-y-3.5 text-lg md:text-[21px] text-slate-800 dark:text-slate-100 leading-relaxed text-justify sm:text-left">
+                        <div className="space-y-2.5 md:space-y-3.5 text-[15px] sm:text-lg md:text-[21px] text-slate-800 dark:text-slate-100 leading-relaxed text-left">
                           {currentSlide.bullets.map((b, i) => (
                             <div key={i} className="leading-relaxed">
                               <FormattedMathText text={b} />
@@ -1276,7 +1580,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                       )}
 
                       {currentSlide.takeaway && (
-                        <div className="p-4 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-base md:text-lg text-indigo-950 dark:text-indigo-200 flex items-start gap-2.5">
+                        <div className="p-3 sm:p-4 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-sm sm:text-base md:text-lg text-indigo-950 dark:text-indigo-200 flex items-start gap-2.5">
                           <strong className="text-indigo-600 dark:text-indigo-400 shrink-0 font-bold">Key Takeaway:</strong>
                           <FormattedMathText text={currentSlide.takeaway} />
                         </div>
@@ -1287,21 +1591,21 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                       <SlideImageCard
                         imageUrl={currentSlide.imageUrl}
                         imageCaption={currentSlide.imageCaption}
-                        maxHeight="max-h-[58vh]"
+                        maxHeight="max-h-[38vh] sm:max-h-[48vh] lg:max-h-[58vh]"
                       />
                     </div>
                   </div>
                 ) : (
-                  <div className="space-y-6 max-w-6xl mx-auto my-auto w-full">
-                    <div className="border-b pb-3 border-slate-200/50 dark:border-slate-800/40">
+                  <div className="space-y-4 md:space-y-6 max-w-6xl mx-auto my-auto w-full">
+                    <div className="border-b pb-2.5 md:pb-3 border-slate-200/50 dark:border-slate-800/40">
                       <span className="text-xs sm:text-sm font-mono font-bold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase">
                         {currentSlide.sectionTag || 'Topic Content'}
                       </span>
-                      <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
+                      <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
                         {currentSlide.title}
                       </h2>
                       {currentSlide.subtitle && (
-                        <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mt-1">
+                        <p className="text-base sm:text-xl md:text-2xl text-slate-600 dark:text-slate-300 mt-1">
                           <FormattedMathText text={currentSlide.subtitle} />
                         </p>
                       )}
@@ -1319,7 +1623,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                     )}
 
                     {currentSlide.bullets && (
-                      <div className="space-y-4 text-[22px] md:text-[25px] text-slate-800 dark:text-slate-100 leading-relaxed text-justify sm:text-left">
+                      <div className="space-y-3 md:space-y-4 text-base sm:text-lg md:text-[25px] text-slate-800 dark:text-slate-100 leading-relaxed text-left">
                         {currentSlide.bullets.map((b, i) => (
                           <div key={i} className="leading-relaxed">
                             <FormattedMathText text={b} />
@@ -1329,7 +1633,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                     )}
 
                     {currentSlide.takeaway && (
-                      <div className="p-4 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-lg md:text-xl text-indigo-950 dark:text-indigo-200 flex items-start gap-3">
+                      <div className="p-3.5 sm:p-4 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-sm sm:text-base md:text-xl text-indigo-950 dark:text-indigo-200 flex items-start gap-2.5 md:gap-3">
                         <strong className="text-indigo-600 dark:text-indigo-400 shrink-0 font-bold">Key Takeaway:</strong>
                         <FormattedMathText text={currentSlide.takeaway} />
                       </div>
@@ -1341,17 +1645,17 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
               {/* 5B. Dedicated Formula & Derivation Slide (Single Idea Focus) */}
               {currentSlide.type === 'formula' && (
                 currentSlide.imageUrl ? (
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center max-w-6xl mx-auto my-auto w-full">
-                    <div className="lg:col-span-7 space-y-4 text-left">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 md:gap-8 items-center max-w-6xl mx-auto my-auto w-full">
+                    <div className="lg:col-span-7 space-y-3.5 md:space-y-4 text-left">
                       <div className="border-b pb-2 border-slate-200/50 dark:border-slate-800/40">
                         <span className="text-xs sm:text-sm font-mono font-bold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase">
                           {currentSlide.sectionTag || 'Mathematical Model'}
                         </span>
-                        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
+                        <h2 className="text-xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
                           {currentSlide.title}
                         </h2>
                         {currentSlide.subtitle && (
-                          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 mt-1">
+                          <p className="text-sm sm:text-lg md:text-xl text-slate-600 dark:text-slate-300 mt-1">
                             <FormattedMathText text={currentSlide.subtitle} />
                           </p>
                         )}
@@ -1366,7 +1670,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                       />
 
                       {currentSlide.bullets && currentSlide.bullets.length > 0 && (
-                        <div className="space-y-3 p-4 rounded-xl bg-slate-50/80 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800/50 text-lg md:text-[20px] text-slate-800 dark:text-slate-200 leading-relaxed text-justify sm:text-left">
+                        <div className="space-y-2.5 md:space-y-3 p-3.5 sm:p-4 rounded-xl bg-slate-50/80 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800/50 text-[15px] sm:text-lg md:text-[20px] text-slate-800 dark:text-slate-200 leading-relaxed text-left">
                           {currentSlide.bullets.map((b, i) => (
                             <div key={i} className="leading-relaxed">
                               <FormattedMathText text={b} />
@@ -1376,7 +1680,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                       )}
 
                       {currentSlide.takeaway && (
-                        <div className="p-3.5 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-base md:text-lg text-indigo-950 dark:text-indigo-200 flex items-start gap-2.5">
+                        <div className="p-3 sm:p-3.5 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-sm sm:text-base md:text-lg text-indigo-950 dark:text-indigo-200 flex items-start gap-2.5">
                           <strong className="text-indigo-600 dark:text-indigo-400 shrink-0 font-bold">Key Takeaway:</strong>
                           <FormattedMathText text={currentSlide.takeaway} />
                         </div>
@@ -1387,21 +1691,21 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                       <SlideImageCard
                         imageUrl={currentSlide.imageUrl}
                         imageCaption={currentSlide.imageCaption}
-                        maxHeight="max-h-[58vh]"
+                        maxHeight="max-h-[38vh] sm:max-h-[48vh] lg:max-h-[58vh]"
                       />
                     </div>
                   </div>
                 ) : (
-                  <div className="space-y-5 max-w-6xl mx-auto my-auto w-full">
-                    <div className="border-b pb-3 border-slate-200/50 dark:border-slate-800/40">
+                  <div className="space-y-4 md:space-y-5 max-w-6xl mx-auto my-auto w-full">
+                    <div className="border-b pb-2.5 md:pb-3 border-slate-200/50 dark:border-slate-800/40">
                       <span className="text-xs sm:text-sm font-mono font-bold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase">
                         {currentSlide.sectionTag || 'Mathematical Model'}
                       </span>
-                      <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
+                      <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight mt-1">
                         {currentSlide.title}
                       </h2>
                       {currentSlide.subtitle && (
-                        <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 mt-1">
+                        <p className="text-base sm:text-xl md:text-2xl text-slate-600 dark:text-slate-300 mt-1">
                           <FormattedMathText text={currentSlide.subtitle} />
                         </p>
                       )}
@@ -1418,7 +1722,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
                     {/* Single-Focus Narrative Paragraphs */}
                     {currentSlide.bullets && currentSlide.bullets.length > 0 && (
-                      <div className="space-y-3 p-5 rounded-2xl bg-slate-50/80 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800/50 text-[20px] md:text-[22px] text-slate-800 dark:text-slate-200 leading-relaxed text-justify sm:text-left">
+                      <div className="space-y-2.5 md:space-y-3 p-3.5 sm:p-5 rounded-xl md:rounded-2xl bg-slate-50/80 dark:bg-slate-900/60 border border-slate-200/60 dark:border-slate-800/50 text-[15px] sm:text-lg md:text-[22px] text-slate-800 dark:text-slate-200 leading-relaxed text-left">
                         {currentSlide.bullets.map((b, i) => (
                           <p key={i} className="leading-relaxed">
                             <FormattedMathText text={b} />
@@ -1429,7 +1733,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
                     {/* Single Core Takeaway */}
                     {currentSlide.takeaway && (
-                      <div className="p-4 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-lg md:text-xl text-indigo-950 dark:text-indigo-200 flex items-start gap-3">
+                      <div className="p-3.5 sm:p-4 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-sm sm:text-base md:text-xl text-indigo-950 dark:text-indigo-200 flex items-start gap-2.5 md:gap-3">
                         <strong className="text-indigo-600 dark:text-indigo-400 shrink-0 font-bold">Key Takeaway:</strong>
                         <FormattedMathText text={currentSlide.takeaway} />
                       </div>
@@ -1440,41 +1744,41 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
               {/* 6. Figure Slide (Supports both SvgAsset registry, inline figureSvg, and imageUrl toggle) */}
               {currentSlide.type === 'figure' && (svgToRender || currentSlide.imageUrl) && (
-                <div className="h-full flex flex-col items-center justify-between w-full flex-1">
-                  <div className="flex items-center justify-between border-b pb-2 w-full border-slate-200/50 dark:border-slate-800/40">
-                    <div className="flex items-center gap-3">
-                      <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                <div className="h-full flex flex-col items-center justify-between w-full flex-1 gap-2 md:gap-0">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-2 w-full border-slate-200/50 dark:border-slate-800/40">
+                    <div className="flex flex-wrap items-center gap-2 sm:gap-3">
+                      <h2 className="text-lg sm:text-2xl md:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                         {currentSlide.title}
                       </h2>
                       {svgToRender && currentSlide.imageUrl && (
-                        <div className="hidden sm:flex items-center rounded-lg p-0.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold">
+                        <div className="flex items-center rounded-lg p-0.5 bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs font-semibold">
                           <button
                             onClick={() => setFigureViewMode('schematic')}
-                            className={`px-2.5 py-1 rounded-md transition-colors ${
+                            className={`px-2.5 py-1.5 sm:py-1 rounded-md transition-colors ${
                               figureViewMode === 'schematic'
                                 ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm'
                                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                             }`}
                           >
-                            Schematic Diagram
+                            Schematic
                           </button>
                           <button
                             onClick={() => setFigureViewMode('photo')}
-                            className={`px-2.5 py-1 rounded-md transition-colors flex items-center gap-1 ${
+                            className={`px-2.5 py-1.5 sm:py-1 rounded-md transition-colors flex items-center gap-1 ${
                               figureViewMode === 'photo'
                                 ? 'bg-white dark:bg-slate-900 text-indigo-600 dark:text-indigo-400 shadow-sm'
                                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
                             }`}
                           >
                             <Camera className="w-3 h-3" />
-                            <span>Physical Hardware Photo</span>
+                            <span>Hardware Photo</span>
                           </button>
                         </div>
                       )}
                     </div>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                       {svgToRender && figureViewMode !== 'photo' && (
-                        <div className="hidden md:flex items-center gap-1.5">
+                        <div className="flex items-center gap-1.5">
                           <button
                             type="button"
                             onClick={async () => {
@@ -1486,7 +1790,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                                 triggerBlobDownload(pngDataUrl, `${baseName}_3K.png`);
                               }
                             }}
-                            className="px-2.5 py-1 rounded-md bg-teal-50 dark:bg-teal-950/60 hover:bg-teal-100 dark:hover:bg-teal-900 border border-teal-200 dark:border-teal-800 text-teal-700 dark:text-teal-300 text-xs font-semibold flex items-center gap-1 transition-colors"
+                            className="px-2.5 py-1.5 md:py-1 rounded-md bg-teal-50 dark:bg-teal-950/60 hover:bg-teal-100 dark:hover:bg-teal-900 border border-teal-200 dark:border-teal-800 text-teal-700 dark:text-teal-300 text-xs font-semibold flex items-center gap-1 transition-colors"
                             title="Download ultra-sharp 2880×1620 (3K) PNG diagram"
                           >
                             <Download className="w-3 h-3" />
@@ -1503,7 +1807,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                               triggerBlobDownload(url, `${baseName}.svg`);
                               setTimeout(() => URL.revokeObjectURL(url), 2500);
                             }}
-                            className="px-2 py-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors"
+                            className="px-2 py-1.5 md:py-1 rounded-md bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-xs font-semibold transition-colors"
                             title="Download infinitely scalable vector SVG"
                           >
                             SVG
@@ -1514,7 +1818,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                         <button
                           type="button"
                           onClick={() => downloadPhotoHighRes(currentSlide.imageUrl!, currentSlide.imageCaption || currentSlide.title)}
-                          className="px-2.5 py-1 rounded-md bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-xs font-semibold flex items-center gap-1 transition-colors"
+                          className="px-2.5 py-1.5 md:py-1 rounded-md bg-blue-50 dark:bg-blue-950/60 hover:bg-blue-100 border border-blue-200 dark:border-blue-800 text-blue-700 dark:text-blue-300 text-xs font-semibold flex items-center gap-1 transition-colors"
                           title="Download high-resolution laboratory photograph"
                         >
                           <Download className="w-3 h-3" />
@@ -1522,7 +1826,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                         </button>
                       )}
                       {currentSlide.sectionTag && (
-                        <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
+                        <span className="text-[11px] sm:text-xs font-mono font-bold px-2.5 sm:px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20">
                           {currentSlide.sectionTag}
                         </span>
                       )}
@@ -1530,41 +1834,42 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                   </div>
 
                   {figureViewMode === 'photo' && currentSlide.imageUrl ? (
-                    <div className="w-full flex-1 flex items-center justify-center py-2 max-h-[75vh]">
+                    <div className="w-full flex-1 flex items-center justify-center py-2 max-h-[60vh] md:max-h-[75vh]">
                       <SlideImageCard
                         imageUrl={currentSlide.imageUrl}
                         imageCaption={currentSlide.imageCaption}
-                        maxHeight="max-h-[68vh]"
+                        maxHeight="max-h-[52vh] md:max-h-[68vh]"
                       />
                     </div>
                   ) : svgToRender ? (
                     <div
                       onClick={() => setIsSvgZoomed(true)}
-                      className="w-full flex-1 min-h-[520px] max-h-[84vh] flex items-center justify-center bg-white rounded-2xl shadow-sm border border-slate-200/60 p-0.5 [&>svg]:w-full [&>svg]:h-full [&>svg]:max-h-[82vh] [&>svg]:object-contain my-1 relative group cursor-zoom-in"
+                      className="w-full aspect-[16/9] md:aspect-auto md:flex-1 min-h-[210px] sm:min-h-[340px] md:min-h-[520px] max-h-[84vh] flex items-center justify-center bg-white rounded-xl md:rounded-2xl shadow-sm border border-slate-200/60 p-0.5 [&>svg]:w-full [&>svg]:h-full [&>svg]:max-h-[82vh] [&>svg]:object-contain my-1 relative group cursor-zoom-in"
                       title="Click diagram to inspect full-screen"
                     >
                       <div
                         className="w-full h-full flex items-center justify-center [&>svg]:w-full [&>svg]:h-full [&>svg]:max-h-[82vh] [&>svg]:object-contain"
                         dangerouslySetInnerHTML={{ __html: svgToRender }}
                       />
-                      <div className="absolute bottom-3 right-3 px-2.5 py-1 rounded-md bg-slate-900/80 text-white text-xs font-semibold flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                        <Maximize2 className="w-3.5 h-3.5" />
-                        <span>Click to Enlarge</span>
+                      <div className="absolute bottom-2 right-2 md:bottom-3 md:right-3 px-2 py-1 md:px-2.5 rounded-md bg-slate-900/80 text-white text-[11px] md:text-xs font-semibold flex items-center gap-1.5 opacity-85 md:opacity-0 md:group-hover:opacity-100 transition-opacity pointer-events-none">
+                        <Maximize2 className="w-3 h-3 md:w-3.5 md:h-3.5" />
+                        <span className="md:hidden">Tap to Zoom</span>
+                        <span className="hidden md:inline">Click to Enlarge</span>
                       </div>
                     </div>
                   ) : currentSlide.imageUrl ? (
-                    <div className="w-full flex-1 flex items-center justify-center py-2 max-h-[75vh]">
+                    <div className="w-full flex-1 flex items-center justify-center py-2 max-h-[60vh] md:max-h-[75vh]">
                       <SlideImageCard
                         imageUrl={currentSlide.imageUrl}
                         imageCaption={currentSlide.imageCaption}
-                        maxHeight="max-h-[68vh]"
+                        maxHeight="max-h-[52vh] md:max-h-[68vh]"
                       />
                     </div>
                   ) : null}
 
                   {/* Isolated KaTeX Formula Plaque (Outside SVG) if formula exists on this figure */}
                   {(currentSlide.formulaBlock || currentSlide.equation) && (
-                    <div className="w-full my-2">
+                    <div className="w-full my-1.5 md:my-2 overflow-x-auto max-w-full">
                       <MathRenderer
                         math={currentSlide.formulaBlock?.equation || currentSlide.equation || ''}
                         display
@@ -1576,7 +1881,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                   )}
 
                   {currentSlide.takeaway && (
-                    <div className="w-full p-3 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-base md:text-lg text-indigo-950 dark:text-indigo-200 flex items-start gap-2 mt-1">
+                    <div className="w-full p-2.5 sm:p-3 rounded-xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 text-sm sm:text-base md:text-lg text-indigo-950 dark:text-indigo-200 flex items-start gap-2 mt-1">
                       <strong className="text-indigo-600 dark:text-indigo-400 shrink-0 font-bold">Key Insight:</strong>
                       <FormattedMathText text={currentSlide.takeaway} />
                     </div>
@@ -1592,9 +1897,9 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
               {/* 7. Definition Slide */}
               {(currentSlide.type === 'definition' || currentSlide.definition) && currentSlide.definition && (
-                <div className="space-y-6 max-w-5xl mx-auto my-auto w-full">
-                  <div className="flex items-center justify-between border-b pb-3 border-slate-200/50 dark:border-slate-800/40">
-                    <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                <div className="space-y-4 md:space-y-6 max-w-5xl mx-auto my-auto w-full">
+                  <div className="flex flex-wrap items-center justify-between gap-2 border-b pb-2.5 md:pb-3 border-slate-200/50 dark:border-slate-800/40">
+                    <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                       {currentSlide.title}
                     </h2>
                     {currentSlide.definition.standardReference && (
@@ -1604,32 +1909,32 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                     )}
                   </div>
 
-                  <div className="p-8 rounded-3xl bg-slate-50/80 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 shadow-md space-y-6">
-                    <div className="flex items-baseline gap-4 flex-wrap">
-                      <h3 className="text-4xl md:text-5xl font-black text-indigo-600 dark:text-indigo-400">
+                  <div className="p-4 sm:p-6 md:p-8 rounded-2xl md:rounded-3xl bg-slate-50/80 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 shadow-md space-y-4 md:space-y-6">
+                    <div className="flex items-baseline gap-3 md:gap-4 flex-wrap">
+                      <h3 className="text-2xl sm:text-4xl md:text-5xl font-black text-indigo-600 dark:text-indigo-400">
                         {currentSlide.definition.term}
                       </h3>
                       {currentSlide.definition.symbol && (
-                        <span className="font-mono text-xl font-bold px-3.5 py-1.5 rounded-lg bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-300 dark:border-indigo-800 flex items-center gap-2">
+                        <span className="font-mono text-base sm:text-lg md:text-xl font-bold px-3 py-1 md:px-3.5 md:py-1.5 rounded-lg bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-300 dark:border-indigo-800 flex items-center gap-2">
                           <span className="text-xs uppercase text-slate-500 dark:text-slate-400 font-sans">Symbol:</span>
                           <FormattedMathText text={currentSlide.definition.symbol} />
                         </span>
                       )}
                       {currentSlide.definition.units && (
-                        <span className="font-mono text-lg text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
+                        <span className="font-mono text-sm sm:text-base md:text-lg text-slate-600 dark:text-slate-300 flex items-center gap-1.5">
                           <span className="text-xs uppercase text-slate-400 font-sans">Units:</span>
                           <span>[<FormattedMathText text={currentSlide.definition.units} />]</span>
                         </span>
                       )}
                     </div>
 
-                    <blockquote className="border-l-4 border-indigo-600 dark:border-indigo-400 pl-6 py-2 text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-serif italic leading-relaxed">
+                    <blockquote className="border-l-4 border-indigo-600 dark:border-indigo-400 pl-3.5 sm:pl-5 md:pl-6 py-1.5 md:py-2 text-lg sm:text-2xl md:text-3xl text-slate-800 dark:text-slate-100 font-serif italic leading-relaxed">
                       &ldquo;{currentSlide.definition.formalDefinition || currentSlide.definition.formalText}&rdquo;
                     </blockquote>
 
                     {currentSlide.definition.operationalMeaning && (
-                      <div className="p-5 rounded-2xl bg-indigo-50/40 dark:bg-slate-900/50 border border-indigo-100 dark:border-slate-800 text-lg md:text-xl text-slate-700 dark:text-slate-200 whitespace-pre-line leading-relaxed">
-                        <strong className="text-indigo-700 dark:text-indigo-400 block mb-2 font-mono text-sm uppercase tracking-wider">
+                      <div className="p-3.5 sm:p-5 rounded-xl md:rounded-2xl bg-indigo-50/40 dark:bg-slate-900/50 border border-indigo-100 dark:border-slate-800 text-sm sm:text-lg md:text-xl text-slate-700 dark:text-slate-200 whitespace-pre-line leading-relaxed">
+                        <strong className="text-indigo-700 dark:text-indigo-400 block mb-1.5 md:mb-2 font-mono text-xs sm:text-sm uppercase tracking-wider">
                           Operational Values:
                         </strong>
                         <FormattedMathText text={currentSlide.definition.operationalMeaning} />
@@ -1637,9 +1942,9 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                     )}
 
                     {currentSlide.bullets && currentSlide.bullets.length > 0 && (
-                      <div className="space-y-2.5 pt-2">
+                      <div className="space-y-2 md:space-y-2.5 pt-1 md:pt-2">
                         {currentSlide.bullets.map((b, i) => (
-                          <div key={i} className="flex items-start gap-3 text-lg md:text-xl text-slate-700 dark:text-slate-200">
+                          <div key={i} className="flex items-start gap-2.5 md:gap-3 text-base sm:text-lg md:text-xl text-slate-700 dark:text-slate-200">
                             <span className="text-indigo-600 dark:text-indigo-400 font-bold shrink-0 mt-0.5">•</span>
                             <FormattedMathText text={b} />
                           </div>
@@ -1648,7 +1953,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                     )}
 
                     {currentSlide.definition.keyImplication && (
-                      <div className="p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/50 text-base md:text-lg text-slate-700 dark:text-slate-300 flex items-start gap-3">
+                      <div className="p-3.5 sm:p-4 rounded-xl bg-indigo-50/50 dark:bg-indigo-950/30 border border-indigo-100 dark:border-indigo-900/50 text-sm sm:text-base md:text-lg text-slate-700 dark:text-slate-300 flex items-start gap-2.5 md:gap-3">
                         <span className="font-bold text-indigo-600 dark:text-indigo-400 shrink-0">Key Takeaway:</span>
                         <span>{currentSlide.definition.keyImplication}</span>
                       </div>
@@ -1659,19 +1964,19 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
               {/* 8. Types & Classification Taxonomy Slide */}
               {(currentSlide.type === 'types' || currentSlide.typesGrid) && currentSlide.typesGrid && (
-                <div className="space-y-6 max-w-6xl mx-auto my-auto w-full">
-                  <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
+                <div className="space-y-4 md:space-y-6 max-w-6xl mx-auto my-auto w-full">
+                  <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-2.5 md:pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
                     {currentSlide.title}
                   </h2>
-                  <div className={`grid gap-5 ${currentSlide.typesGrid.length === 2 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-3'}`}>
+                  <div className={`grid gap-4 md:gap-5 ${currentSlide.typesGrid.length === 2 ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-3'}`}>
                     {currentSlide.typesGrid.map((typeItem, idx) => (
                       <div
                         key={idx}
-                        className="p-6 rounded-2xl bg-slate-50/80 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-4"
+                        className="p-4 sm:p-5 md:p-6 rounded-2xl bg-slate-50/80 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between space-y-3 md:space-y-4"
                       >
-                        <div className="space-y-3">
-                          <div className="flex items-center justify-between gap-2">
-                            <h3 className="text-2xl font-bold text-slate-900 dark:text-white">
+                        <div className="space-y-2 md:space-y-3">
+                          <div className="flex items-center justify-between gap-2 flex-wrap">
+                            <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-slate-900 dark:text-white">
                               {typeItem.typeName}
                             </h3>
                             {typeItem.badge && (
@@ -1680,16 +1985,16 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                               </span>
                             )}
                           </div>
-                          <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+                          <p className="text-sm sm:text-base md:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
                             {typeItem.description}
                           </p>
                         </div>
-                        <div className="space-y-2.5 pt-3 border-t border-slate-200/60 dark:border-slate-800">
-                          <div className="text-base">
+                        <div className="space-y-2 md:space-y-2.5 pt-2.5 md:pt-3 border-t border-slate-200/60 dark:border-slate-800">
+                          <div className="text-sm md:text-base">
                             <span className="font-semibold text-slate-900 dark:text-white">Key Mechanism: </span>
                             <span className="text-slate-700 dark:text-slate-300">{typeItem.keyFeature}</span>
                           </div>
-                          <div className="text-base">
+                          <div className="text-sm md:text-base">
                             <span className="font-semibold text-indigo-600 dark:text-indigo-400">Examples: </span>
                             <span className="text-slate-700 dark:text-slate-300">{typeItem.example}</span>
                           </div>
@@ -1702,20 +2007,20 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
               {/* 9. Advantages vs. Disadvantages (Pros/Cons) Slide */}
               {(currentSlide.type === 'pros-cons' || currentSlide.prosCons) && currentSlide.prosCons && (
-                <div className="space-y-6 max-w-6xl mx-auto my-auto w-full">
-                  <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
+                <div className="space-y-4 md:space-y-6 max-w-6xl mx-auto my-auto w-full">
+                  <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-2.5 md:pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
                     {currentSlide.title}
                   </h2>
-                  <div className={`grid gap-6 ${currentSlide.imageUrl ? 'grid-cols-1 lg:grid-cols-12 items-center' : 'grid-cols-1 md:grid-cols-2'}`}>
-                    <div className={`${currentSlide.imageUrl ? 'lg:col-span-8' : 'col-span-1'} grid grid-cols-1 md:grid-cols-2 gap-5`}>
+                  <div className={`grid gap-4 md:gap-6 ${currentSlide.imageUrl ? 'grid-cols-1 lg:grid-cols-12 items-center' : 'grid-cols-1 md:grid-cols-2'}`}>
+                    <div className={`${currentSlide.imageUrl ? 'lg:col-span-8' : 'col-span-1'} grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5`}>
                       {/* Advantages */}
-                      <div className="p-6 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 shadow-sm space-y-4">
-                        <h3 className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
+                      <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 shadow-sm space-y-3 md:space-y-4">
+                        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
                           ✓ Key Advantages
                         </h3>
-                        <ul className="space-y-3">
+                        <ul className="space-y-2.5 md:space-y-3">
                           {currentSlide.prosCons.advantages.map((adv, idx) => (
-                            <li key={idx} className="flex items-start gap-2.5 text-lg md:text-xl text-slate-800 dark:text-slate-200 leading-relaxed">
+                            <li key={idx} className="flex items-start gap-2.5 text-sm sm:text-base md:text-xl text-slate-800 dark:text-slate-200 leading-relaxed">
                               <span className="text-emerald-600 font-bold shrink-0 mt-0.5">•</span>
                               <FormattedMathText text={adv} />
                             </li>
@@ -1724,13 +2029,13 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                       </div>
 
                       {/* Disadvantages */}
-                      <div className="p-6 rounded-2xl bg-rose-500/5 border border-rose-500/20 shadow-sm space-y-4">
-                        <h3 className="text-2xl font-bold text-rose-600 dark:text-rose-400 flex items-center gap-2">
+                      <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-rose-500/5 border border-rose-500/20 shadow-sm space-y-3 md:space-y-4">
+                        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-rose-600 dark:text-rose-400 flex items-center gap-2">
                           ✗ Limitations &amp; Trade-offs
                         </h3>
-                        <ul className="space-y-3">
+                        <ul className="space-y-2.5 md:space-y-3">
                           {currentSlide.prosCons.disadvantages.map((dis, idx) => (
-                            <li key={idx} className="flex items-start gap-2.5 text-lg md:text-xl text-slate-800 dark:text-slate-200 leading-relaxed">
+                            <li key={idx} className="flex items-start gap-2.5 text-sm sm:text-base md:text-xl text-slate-800 dark:text-slate-200 leading-relaxed">
                               <span className="text-rose-600 font-bold shrink-0 mt-0.5">•</span>
                               <FormattedMathText text={dis} />
                             </li>
@@ -1744,14 +2049,14 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                         <SlideImageCard
                           imageUrl={currentSlide.imageUrl}
                           imageCaption={currentSlide.imageCaption}
-                          maxHeight="max-h-[46vh]"
+                          maxHeight="max-h-[36vh] lg:max-h-[46vh]"
                         />
                       </div>
                     )}
                   </div>
 
                   {currentSlide.prosCons.engineeringVerdict && (
-                    <div className="p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-lg text-slate-800 dark:text-slate-200">
+                    <div className="p-3.5 sm:p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-sm sm:text-base md:text-lg text-slate-800 dark:text-slate-200">
                       <strong className="text-indigo-600 dark:text-indigo-400 mr-2">Engineering Verdict:</strong>
                       {currentSlide.prosCons.engineeringVerdict}
                     </div>
@@ -1761,35 +2066,35 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
               {/* 10. Concept & Physical Analogy Slide */}
               {(currentSlide.type === 'analogy' || currentSlide.analogy) && currentSlide.analogy && (
-                <div className="space-y-6 max-w-6xl mx-auto my-auto w-full">
-                  <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
+                <div className="space-y-4 md:space-y-6 max-w-6xl mx-auto my-auto w-full">
+                  <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-2.5 md:pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
                     {currentSlide.title}
                   </h2>
-                  <div className="p-6 rounded-2xl bg-amber-500/5 border border-amber-500/20 shadow-sm space-y-5">
-                    <div className="flex items-center gap-3 text-amber-600 dark:text-amber-400">
-                      <Sparkles className="w-6 h-6 shrink-0" />
-                      <h3 className="text-2xl md:text-3xl font-black">
+                  <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-amber-500/5 border border-amber-500/20 shadow-sm space-y-4 md:space-y-5">
+                    <div className="flex items-center gap-2.5 md:gap-3 text-amber-600 dark:text-amber-400">
+                      <Sparkles className="w-5 h-5 md:w-6 md:h-6 shrink-0" />
+                      <h3 className="text-lg sm:text-2xl md:text-3xl font-black">
                         Mental Model: {currentSlide.analogy.everydayConcept}
                       </h3>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 pt-2">
-                      <div className="p-5 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-2">
-                        <h4 className="font-bold text-slate-900 dark:text-white text-lg">How it Maps to Engineering:</h4>
-                        <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5 pt-1 md:pt-2">
+                      <div className="p-4 md:p-5 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-1.5 md:space-y-2">
+                        <h4 className="font-bold text-slate-900 dark:text-white text-base md:text-lg">How it Maps to Engineering:</h4>
+                        <p className="text-sm sm:text-base md:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
                           {currentSlide.analogy.technicalMapping}
                         </p>
                       </div>
 
-                      <div className="p-5 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-2">
-                        <h4 className="font-bold text-emerald-600 dark:text-emerald-400 text-lg">Why the Intuition Holds:</h4>
-                        <p className="text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
+                      <div className="p-4 md:p-5 rounded-xl bg-slate-100 dark:bg-slate-900/80 border border-slate-200 dark:border-slate-800 space-y-1.5 md:space-y-2">
+                        <h4 className="font-bold text-emerald-600 dark:text-emerald-400 text-base md:text-lg">Why the Intuition Holds:</h4>
+                        <p className="text-sm sm:text-base md:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
                           {currentSlide.analogy.whyItWorks}
                         </p>
                       </div>
                     </div>
 
-                    <div className="p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-base md:text-lg text-slate-800 dark:text-slate-200">
+                    <div className="p-3.5 md:p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-sm sm:text-base md:text-lg text-slate-800 dark:text-slate-200">
                       <strong className="text-rose-600 dark:text-rose-400 mr-1.5">Where the Analogy Breaks Down:</strong>
                       {currentSlide.analogy.limitsOfAnalogy}
                     </div>
@@ -1803,40 +2108,40 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
               )}
 
               {currentSlide.type === 'worked-example' && !currentSlide.workedExample && currentSlide.contentHtml && (
-                <div className="space-y-6 max-w-6xl mx-auto my-auto w-full">
-                  <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
+                <div className="space-y-4 md:space-y-6 max-w-6xl mx-auto my-auto w-full">
+                  <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-2.5 md:pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
                     {currentSlide.title}
                   </h2>
                   <div
-                    className="prose prose-slate dark:prose-invert max-w-none text-lg"
+                    className="prose prose-slate dark:prose-invert max-w-none text-sm sm:text-base md:text-lg overflow-x-auto"
                     dangerouslySetInnerHTML={{ __html: currentSlide.contentHtml }}
                   />
                 </div>
               )}
 
               {currentSlide.type === 'worked-example' && !currentSlide.workedExample && !currentSlide.contentHtml && (
-                <div className="space-y-6 max-w-6xl mx-auto my-auto w-full">
-                  <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
+                <div className="space-y-4 md:space-y-6 max-w-6xl mx-auto my-auto w-full">
+                  <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-2.5 md:pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
                     {currentSlide.title}
                   </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-[22px]">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 text-base md:text-[22px]">
                     {/* Left: Problem Statement Card */}
-                    <div className="p-6 rounded-2xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/40 dark:border-slate-800/30 shadow-sm space-y-4">
+                    <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/40 dark:border-slate-800/30 shadow-sm space-y-3 md:space-y-4">
                       {currentSlide.columns ? (
-                        <div className="space-y-3">
+                        <div className="space-y-2.5 md:space-y-3">
                           {currentSlide.columns.left.map((item, idx) => (
-                            <div key={idx} className="text-slate-700 dark:text-slate-200 text-[22px] md:text-[23px] leading-relaxed">
+                            <div key={idx} className="text-slate-700 dark:text-slate-200 text-base sm:text-lg md:text-[23px] leading-relaxed">
                               <FormattedMathText text={item} />
                             </div>
                           ))}
                         </div>
                       ) : (
                         <>
-                          <h3 className="font-bold text-slate-900 dark:text-white text-[24px] md:text-[26px]">Problem Statement:</h3>
-                          <p className="text-slate-700 dark:text-slate-300 text-[22px] leading-relaxed">
+                          <h3 className="font-bold text-slate-900 dark:text-white text-lg sm:text-xl md:text-[26px]">Problem Statement:</h3>
+                          <p className="text-slate-700 dark:text-slate-300 text-base sm:text-lg md:text-[22px] leading-relaxed">
                             A pressure transducer follows the transfer function:
                           </p>
-                          <div className="my-3">
+                          <div className="my-3 overflow-x-auto max-w-full">
                             <MathRenderer math="P = \frac{V_{\mathrm{out}}}{S}" display />
                           </div>
                         </>
@@ -1844,11 +2149,11 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                     </div>
 
                     {/* Right: Step-by-Step Solution Card */}
-                    <div className="p-6 rounded-2xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/40 dark:border-slate-800/30 shadow-sm space-y-4">
+                    <div className="p-4 sm:p-5 md:p-6 rounded-2xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/40 dark:border-slate-800/30 shadow-sm space-y-3 md:space-y-4">
                       {currentSlide.columns && (
-                        <div className="space-y-3">
+                        <div className="space-y-2.5 md:space-y-3">
                           {currentSlide.columns.right.map((item, idx) => (
-                            <div key={idx} className="text-slate-700 dark:text-slate-200 text-[22px] md:text-[23px] leading-relaxed">
+                            <div key={idx} className="text-slate-700 dark:text-slate-200 text-base sm:text-lg md:text-[23px] leading-relaxed">
                               <FormattedMathText text={item} />
                             </div>
                           ))}
@@ -1865,16 +2170,16 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
               )}
 
               {currentSlide.type === 'check-understanding' && !currentSlide.quiz && currentSlide.bullets && (
-                <div className="space-y-8 max-w-5xl mx-auto my-auto w-full">
-                  <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-4 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
+                <div className="space-y-5 md:space-y-8 max-w-5xl mx-auto my-auto w-full">
+                  <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-3 md:pb-4 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
                     {currentSlide.title}
                   </h2>
-                  <div className="p-7 rounded-2xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/40 dark:border-slate-800/30 space-y-6 shadow-sm">
-                    <div className="text-[24px] md:text-[26px] text-slate-900 dark:text-white font-semibold leading-relaxed">
+                  <div className="p-4 sm:p-6 md:p-7 rounded-2xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/40 dark:border-slate-800/30 space-y-4 md:space-y-6 shadow-sm">
+                    <div className="text-lg sm:text-xl md:text-[26px] text-slate-900 dark:text-white font-semibold leading-relaxed">
                       <FormattedMathText text={currentSlide.bullets[0]} />
                     </div>
                     {currentSlide.bullets[1] && (
-                      <div className="p-6 bg-blue-50/70 dark:bg-blue-950/40 rounded-xl border border-blue-200/40 dark:border-blue-800/30 text-[22px] md:text-[24px] text-blue-950 dark:text-blue-100 leading-relaxed">
+                      <div className="p-4 sm:p-5 md:p-6 bg-blue-50/70 dark:bg-blue-950/40 rounded-xl border border-blue-200/40 dark:border-blue-800/30 text-base sm:text-lg md:text-[24px] text-blue-950 dark:text-blue-100 leading-relaxed">
                         <FormattedMathText text={currentSlide.bullets[1]} />
                       </div>
                     )}
@@ -1884,11 +2189,11 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
               {/* 9. Misconceptions Slide */}
               {currentSlide.type === 'misconceptions' && currentSlide.bullets && (
-                <div className="space-y-6 max-w-6xl mx-auto my-auto w-full">
-                  <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
+                <div className="space-y-4 md:space-y-6 max-w-6xl mx-auto my-auto w-full">
+                  <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-2.5 md:pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
                     {currentSlide.title}
                   </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                     {currentSlide.bullets.map((b, i) => {
                       let heading = `Point ${i + 1}`;
                       let body = b;
@@ -1906,11 +2211,11 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                         body = b.slice(idx + 1).trim();
                       }
                       return (
-                        <div key={i} className="p-6 rounded-2xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/40 dark:border-slate-800/30 space-y-2.5 shadow-sm">
-                          <div className="font-bold text-rose-600 dark:text-rose-400 text-[24px]">
+                        <div key={i} className="p-4 sm:p-5 md:p-6 rounded-2xl bg-slate-50/70 dark:bg-slate-900/60 border border-slate-200/40 dark:border-slate-800/30 space-y-2 md:space-y-2.5 shadow-sm">
+                          <div className="font-bold text-rose-600 dark:text-rose-400 text-lg sm:text-xl md:text-[24px]">
                             <FormattedMathText text={heading} />
                           </div>
-                          <div className="text-slate-700 dark:text-slate-200 text-[22px] md:text-[24px] leading-relaxed">
+                          <div className="text-slate-700 dark:text-slate-200 text-base sm:text-lg md:text-[24px] leading-relaxed">
                             <FormattedMathText text={body} />
                           </div>
                         </div>
@@ -1922,11 +2227,11 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
               {/* 10. Review Formula Sheet */}
               {currentSlide.type === 'review' && currentSlide.bullets && (
-                <div className="space-y-6 max-w-6xl mx-auto my-auto w-full">
-                  <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
+                <div className="space-y-4 md:space-y-6 max-w-6xl mx-auto my-auto w-full">
+                  <h2 className="text-xl sm:text-3xl md:text-5xl font-extrabold text-slate-900 dark:text-white border-b pb-2.5 md:pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
                     {currentSlide.title}
                   </h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
                     {currentSlide.bullets.map((formula, i) => {
                       let name = `Item ${i + 1}`;
                       let math = formula;
@@ -1945,11 +2250,11 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                       }
                       const hasMath = Boolean(math && (math.includes('$') || math.includes('\\')));
                       return (
-                        <div key={i} className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-sm">
-                          <span className="font-bold text-lg md:text-xl text-slate-800 dark:text-slate-200 border-b pb-2 border-slate-100 dark:border-slate-800">
+                        <div key={i} className="p-4 md:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex flex-col justify-between shadow-sm overflow-hidden">
+                          <span className="font-bold text-base sm:text-lg md:text-xl text-slate-800 dark:text-slate-200 border-b pb-2 border-slate-100 dark:border-slate-800">
                             <FormattedMathText text={name} />
                           </span>
-                          <div className="py-2 text-xl md:text-2xl text-indigo-600 dark:text-cyan-400 font-serif text-center overflow-x-auto scrollbar-thin">
+                          <div className="py-2 text-base sm:text-lg md:text-2xl text-indigo-600 dark:text-cyan-400 font-serif text-center overflow-x-auto max-w-full scrollbar-thin">
                             <FormattedMathText text={hasMath ? (math.includes('$') ? math : `$$${math}$$`) : math || ''} />
                           </div>
                         </div>
@@ -1962,14 +2267,14 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
             {/* REVEAL.JS FOOTER STRIP (Hidden in fullscreen so slide covers entire window) */}
             {!isFullscreen && (
-              <div className={`px-6 py-2.5 border-t text-xs flex items-center justify-between select-none ${
+              <div className={`px-3 sm:px-6 py-2 md:py-2.5 border-t text-[11px] sm:text-xs flex items-center justify-between gap-2 select-none ${
                 isDarkMode ? 'bg-slate-950/80 border-slate-800 text-slate-400' : 'bg-slate-50 border-slate-200 text-slate-600'
               }`}>
-                <span className="truncate max-w-md font-medium">
+                <span className="truncate max-w-[70%] sm:max-w-md font-medium">
                   {chapter.unitNumber}: {chapter.shortTitle || chapter.title} · Er. Saroj Chalise
                 </span>
-                <div className="flex items-center gap-4">
-                  <span className="font-mono text-xs font-semibold">
+                <div className="flex items-center gap-4 shrink-0">
+                  <span className="font-mono text-[11px] sm:text-xs font-semibold">
                     {currentSlideIndex + 1} / {totalSlides}
                   </span>
                 </div>
@@ -1987,45 +2292,48 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
         )}
       </div>
 
-      {/* Slide Navigation Bottom Bar (Hidden in fullscreen: no next, previous, slider or bottoms) */}
+      {/* Slide Navigation Bottom Bar (Hidden in fullscreen) */}
       {!isFullscreen && (
-        <div className={`px-6 py-3 border-t flex items-center justify-between ${
+        <div className={`px-3 sm:px-6 py-2.5 md:py-3 border-t flex items-center justify-between gap-2.5 sm:gap-4 ${
           isDarkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
         }`}>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setCurrentSlideIndex((p) => Math.max(p - 1, 0))}
-              disabled={currentSlideIndex === 0}
-              className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed ${
-                isDarkMode ? 'bg-slate-800 hover:bg-slate-700 text-slate-200' : 'bg-slate-100 hover:bg-slate-200 text-slate-800'
-              }`}
-            >
-              <ChevronLeft className="w-4 h-4" />
-              Previous
-            </button>
-            <button
-              onClick={() => setCurrentSlideIndex((p) => Math.min(p + 1, totalSlides - 1))}
-              disabled={currentSlideIndex === totalSlides - 1}
-              className="flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
-            >
-              Next
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
+          <button
+            onClick={() => setCurrentSlideIndex((p) => Math.max(p - 1, 0))}
+            disabled={currentSlideIndex === 0}
+            className={`min-h-[44px] md:min-h-0 flex items-center gap-1 px-3 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium transition-colors shrink-0 disabled:opacity-40 disabled:cursor-not-allowed ${
+              isDarkMode ? 'bg-slate-800 hover:bg-slate-700 text-slate-200' : 'bg-slate-100 hover:bg-slate-200 text-slate-800'
+            }`}
+          >
+            <ChevronLeft className="w-4 h-4" />
+            <span className="hidden xs:inline sm:inline">Previous</span>
+            <span className="xs:hidden sm:hidden">Prev</span>
+          </button>
 
-          {/* Progress Slider */}
-          <div className="hidden sm:flex items-center gap-3 w-1/3">
+          {/* Progress Slider (touch-friendly on mobile & desktop) */}
+          <div className="flex flex-1 sm:flex-none sm:w-1/3 items-center gap-2 md:gap-3 min-w-0">
             <input
               type="range"
               min={0}
               max={totalSlides - 1}
               value={currentSlideIndex}
               onChange={(e) => setCurrentSlideIndex(Number(e.target.value))}
-              className="w-full accent-blue-600 h-1.5 rounded cursor-pointer"
+              aria-label="Slide progress slider"
+              className="w-full accent-blue-600 h-2 md:h-1.5 rounded cursor-pointer"
             />
           </div>
 
-          {/* Keyboard shortcut hint */}
+          <div className="flex items-center gap-2 shrink-0">
+            <button
+              onClick={() => setCurrentSlideIndex((p) => Math.min(p + 1, totalSlides - 1))}
+              disabled={currentSlideIndex === totalSlides - 1}
+              className="min-h-[44px] md:min-h-0 flex items-center gap-1 px-3.5 sm:px-4 py-2 rounded-lg text-xs sm:text-sm font-medium bg-blue-600 text-white hover:bg-blue-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            >
+              <span>Next</span>
+              <ChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Keyboard shortcut hint (desktop only, preserves desktop layout slot) */}
           <div className="text-xs text-slate-400 hidden md:flex items-center gap-3">
             <span>Navigate with <kbd className="px-1.5 py-0.5 rounded border text-[11px] font-mono">←</kbd> <kbd className="px-1.5 py-0.5 rounded border text-[11px] font-mono">→</kbd> or <kbd className="px-1.5 py-0.5 rounded border text-[11px] font-mono">Space</kbd></span>
           </div>
@@ -2034,11 +2342,11 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
 
       {/* Speaker Notes Drawer (Reveal.js <aside class="notes"> console, hidden in fullscreen) */}
       {showNotes && !presenterMode && !isFullscreen && (
-        <div className="border-t border-amber-500/30 bg-amber-50 dark:bg-amber-950/20 p-4 px-6 flex items-start gap-3">
+        <div className="border-t border-amber-500/30 bg-amber-50 dark:bg-amber-950/20 p-3.5 sm:p-4 sm:px-6 flex items-start gap-2.5 sm:gap-3">
           <BookOpen className="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0" />
           <div className="flex-1 space-y-1">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
+            <div className="flex items-center justify-between gap-2">
+              <div className="flex items-center gap-2 flex-wrap">
                 <h4 className="text-xs font-semibold uppercase tracking-wider text-amber-700 dark:text-amber-400">
                   Presenter Speaker Notes
                 </h4>
@@ -2048,7 +2356,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
               </div>
               <button
                 onClick={() => setShowNotes(false)}
-                className="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                className="min-h-[36px] md:min-h-0 px-2 text-xs text-slate-500 hover:text-slate-700 dark:hover:text-slate-200"
               >
                 Close
               </button>
@@ -2064,27 +2372,27 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
       {isSvgZoomed && svgToRender && (
         <div
           onClick={() => setIsSvgZoomed(false)}
-          className="fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6 cursor-zoom-out"
+          className="fixed inset-0 z-50 bg-slate-900/85 backdrop-blur-sm flex items-center justify-center p-2.5 sm:p-6 cursor-zoom-out"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-[95vw] max-h-[94vh] bg-white rounded-2xl border border-slate-200 shadow-2xl p-4 sm:p-5 flex flex-col gap-3 cursor-default"
+            className="w-full max-w-[96vw] md:max-w-[95vw] max-h-[94vh] bg-white rounded-2xl border border-slate-200 shadow-2xl p-3 sm:p-5 flex flex-col gap-2.5 sm:gap-3 cursor-default"
           >
-            <div className="flex items-center justify-between gap-3 border-b border-slate-200 pb-2.5">
-              <h4 className="font-bold text-slate-900 text-base sm:text-xl truncate">
+            <div className="flex items-center justify-between gap-3 border-b border-slate-200 pb-2">
+              <h4 className="font-bold text-slate-900 text-sm sm:text-xl truncate">
                 {currentSlide.title}
               </h4>
               <button
                 type="button"
                 onClick={() => setIsSvgZoomed(false)}
-                className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+                className="min-h-[40px] min-w-[40px] flex items-center justify-center p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
                 aria-label="Close zoomed diagram"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
             <div
-              className="w-full aspect-[16/9] max-h-[82vh] flex items-center justify-center bg-white rounded-xl overflow-hidden [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain"
+              className="w-full aspect-[16/9] max-h-[82vh] flex items-center justify-center bg-white rounded-xl overflow-auto [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain"
               dangerouslySetInnerHTML={{ __html: svgToRender }}
             />
           </div>

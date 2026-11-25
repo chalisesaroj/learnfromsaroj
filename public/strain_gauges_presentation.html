@@ -410,6 +410,91 @@
       #stage { max-width: none; box-shadow: none; border: none; }
       .slide { position: relative; opacity: 1 !important; visibility: visible !important; transform: none !important; page-break-after: always; height: 100vh; }
     }
+
+    /* Mobile Responsive Overrides (<768px only; desktop >=768px unchanged) */
+    @media (max-width: 767px) {
+      body { height: 100dvh; }
+      header {
+        height: auto;
+        min-height: 48px;
+        padding: 8px 12px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .header-title {
+        font-size: 12px;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .header-badge {
+        font-size: 10px;
+        padding: 2px 6px;
+      }
+      .header-controls {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 2px;
+        gap: 6px;
+      }
+      .btn-ctrl {
+        padding: 8px 10px;
+        min-height: 36px;
+        font-size: 11px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      #stage-container {
+        padding: 8px;
+        align-items: stretch;
+        overflow: hidden;
+      }
+      #stage {
+        height: 100%;
+        max-width: 100%;
+        aspect-ratio: auto;
+        border-radius: 10px;
+      }
+      .slide {
+        padding: 18px 16px;
+      }
+      .slide-title {
+        font-size: 22px !important;
+        line-height: 1.25;
+      }
+      .slide-subtitle {
+        font-size: 14px !important;
+        margin-bottom: 12px;
+      }
+      .content-grid-2,
+      .content-grid-wide,
+      .slide [style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+      }
+      .card-box, .sim-panel {
+        padding: 14px 16px;
+      }
+      .clean-list {
+        font-size: 14px !important;
+        gap: 10px !important;
+      }
+      .slide-footer {
+        font-size: 10px;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      footer {
+        padding: 8px 12px;
+        height: 56px;
+        gap: 8px;
+      }
+      #overview-modal {
+        padding: 16px;
+      }
+      .overview-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -2380,6 +2465,22 @@
         fb.style.color = '#991b1b';
         fb.innerHTML = '<strong>✗ Incorrect.</strong> The correct answer is <strong>B</strong>. The sum (R1 + R2) remains strictly 2R0 in pure bending, canceling out denominator non-linearity.';
       }
+    }
+
+    // Touch Swipe Support for Mobile
+    let touchStartX = null;
+    const stageEl = document.getElementById('stage-container');
+    if (stageEl) {
+      stageEl.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+      }, { passive: true });
+      stageEl.addEventListener('touchend', (e) => {
+        if (touchStartX === null) return;
+        const diff = e.changedTouches[0].clientX - touchStartX;
+        if (diff < -50) nextSlide();
+        else if (diff > 50) prevSlide();
+        touchStartX = null;
+      }, { passive: true });
     }
 
     // Initialize on load

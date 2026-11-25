@@ -742,6 +742,104 @@ function generateHtml(): string {
       color: #ffffff;
       line-height: 1.3;
     }
+
+    /* Mobile Responsive Overrides (<768px only; desktop >=768px unchanged) */
+    @media (max-width: 767px) {
+      body { height: 100dvh; }
+      header {
+        height: auto;
+        min-height: 48px;
+        padding: 8px 12px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .header-title {
+        font-size: 12px;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .header-badge {
+        font-size: 10px;
+        padding: 2px 6px;
+      }
+      .header-controls {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 2px;
+        gap: 6px;
+      }
+      .btn-ctrl {
+        padding: 8px 10px;
+        min-height: 36px;
+        font-size: 11px;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      #stage-container {
+        padding: 8px;
+        align-items: stretch;
+        overflow: hidden;
+      }
+      #stage {
+        height: 100%;
+        max-width: 100%;
+        aspect-ratio: auto;
+        border-radius: 10px;
+      }
+      .slide {
+        padding: 18px 16px;
+      }
+      .slide-title {
+        font-size: 22px !important;
+        line-height: 1.25;
+      }
+      .slide-subtitle {
+        font-size: 14px !important;
+        margin-bottom: 10px;
+      }
+      .content-grid-2,
+      .slide [style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 12px !important;
+      }
+      .card-box {
+        padding: 14px 16px;
+      }
+      .clean-list {
+        font-size: 14px !important;
+        gap: 8px !important;
+      }
+      .math-banner {
+        font-size: 16px;
+        padding: 10px 12px;
+        overflow-x: auto;
+        max-width: 100%;
+      }
+      .slide-footer {
+        font-size: 10px;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      footer {
+        padding: 8px 12px;
+        height: 56px;
+        gap: 8px;
+      }
+      .nav-btn {
+        min-height: 40px;
+        padding: 8px 14px;
+        font-size: 12px;
+      }
+      .progress-bar-container {
+        margin: 0 8px;
+      }
+      #overview-modal {
+        padding: 16px;
+      }
+      .overview-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -918,6 +1016,22 @@ function generateHtml(): string {
         goToSlide(totalSlides - 1);
       }
     });
+
+    // Touch Swipe Support for Mobile
+    let touchStartX = null;
+    const stageEl = document.getElementById('stage-container');
+    if (stageEl) {
+      stageEl.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].clientX;
+      }, { passive: true });
+      stageEl.addEventListener('touchend', (e) => {
+        if (touchStartX === null) return;
+        const diff = e.changedTouches[0].clientX - touchStartX;
+        if (diff < -50) nextSlide();
+        else if (diff > 50) prevSlide();
+        touchStartX = null;
+      }, { passive: true });
+    }
 
     // Initial render
     window.addEventListener('DOMContentLoaded', () => {

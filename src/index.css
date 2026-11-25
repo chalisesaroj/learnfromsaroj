@@ -9,7 +9,7 @@
   font-size: 1.05rem;
   line-height: 1.45;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
   max-width: 100%;
@@ -18,6 +18,10 @@
   padding: 0.55rem 0.25rem;
   margin: 0.5rem 0;
   -webkit-overflow-scrolling: touch;
+}
+
+.math-responsive .katex-display-inner {
+  margin: 0 auto;
 }
 
 @media (min-width: 640px) {

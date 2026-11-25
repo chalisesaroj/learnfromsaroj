@@ -479,7 +479,7 @@ quarto render lecture*.qmd
       </div>
 
       {/* Main Content Container */}
-      <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-2.5 py-4 sm:p-6 lg:p-8 space-y-6">
         {/* Course Header Banner with Chapter Switcher Carousel (Shown on study views) */}
         {activeNav !== 'home' && (
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-5 pb-6 border-b border-slate-200">
