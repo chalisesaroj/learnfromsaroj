@@ -155,41 +155,41 @@ STRICT MASTER PROMPT RULES:
 
   return (
     <div className="space-y-6">
-      <div className="p-4 rounded-xl bg-slate-900 border border-slate-800">
+      <div className="p-4 rounded-xl bg-white border border-slate-200 shadow-xs">
         <div className="flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-amber-400" />
-          <h3 className="text-base font-semibold text-white">
+          <Sparkles className="w-5 h-5 text-amber-500" />
+          <h3 className="text-base font-semibold text-slate-900">
             Master Prompt AI Generator Studio
           </h3>
         </div>
-        <p className="text-xs text-slate-400 mt-1">
+        <p className="text-xs text-slate-600 mt-1">
           Apply the strict Master Prompt rules to generate new classroom-ready Quarto Reveal.js + Python SVG presentations for any syllabus topic or engineering chapter.
         </p>
       </div>
 
       {/* Input Form */}
-      <div className="p-5 rounded-xl bg-slate-900 border border-slate-800 space-y-4">
+      <div className="p-5 rounded-xl bg-white border border-slate-200 shadow-xs space-y-4">
         <div>
-          <label className="text-xs font-semibold text-slate-200 block mb-1.5">
+          <label className="text-xs font-semibold text-slate-800 block mb-1.5">
             Syllabus Content / Topic Notes to Generate:
           </label>
           <textarea
             rows={5}
             value={topicInput}
             onChange={(e) => setTopicInput(e.target.value)}
-            className="w-full bg-slate-950 border border-slate-800 rounded-lg p-3 text-xs font-mono text-slate-200 focus:outline-none focus:border-indigo-500 transition-colors"
+            className="w-full bg-slate-50 border border-slate-200 rounded-lg p-3 text-xs font-mono text-slate-800 focus:outline-none focus:border-indigo-500 transition-colors"
             placeholder="Paste syllabus section, learning objectives, and topics..."
           />
         </div>
 
-        <div className="flex items-center justify-between">
-          <div className="text-xs text-slate-400">
+        <div className="flex items-center justify-between flex-wrap gap-2">
+          <div className="text-xs text-slate-500">
             Adheres strictly to the 18 Master Prompt constraints (Single-block output, SVG 16:9, ≥50% area floor).
           </div>
           <button
             onClick={handleGenerate}
             disabled={isGenerating || !topicInput.trim()}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-medium text-xs transition-colors shadow-lg shadow-indigo-600/20"
+            className="flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white font-medium text-xs transition-colors shadow-sm"
           >
             {isGenerating ? (
               <>
@@ -206,8 +206,8 @@ STRICT MASTER PROMPT RULES:
         </div>
 
         {errorMessage && (
-          <div className="p-3 rounded-lg bg-rose-950/30 border border-rose-800/40 text-xs text-rose-300 flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 shrink-0" />
+          <div className="p-3 rounded-lg bg-rose-50 border border-rose-200 text-xs text-rose-800 flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0 text-rose-600" />
             <span>{errorMessage}</span>
           </div>
         )}
@@ -216,44 +216,44 @@ STRICT MASTER PROMPT RULES:
       {/* Generated Results */}
       {generatedOutput && (
         <div className="space-y-4">
-          <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
-            <h4 className="text-sm font-semibold text-white">
+          <div className="p-4 rounded-xl bg-white border border-slate-200 flex items-center justify-between shadow-xs">
+            <h4 className="text-sm font-semibold text-slate-900">
               Generated Source Output (Master Prompt Format)
             </h4>
-            <span className="text-xs text-emerald-400 font-mono">Format Verified</span>
+            <span className="text-xs text-emerald-700 font-mono font-semibold">Format Verified</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* lecture.py preview */}
-            <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+            <div className="p-4 rounded-xl bg-white border border-slate-200 space-y-2 shadow-xs">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono text-cyan-400 font-semibold">FILE 1: lecture.py</span>
+                <span className="text-xs font-mono text-cyan-700 font-semibold">FILE 1: lecture.py</span>
                 <button
                   onClick={() => copyToClipboard(generatedOutput.pyCode, 'gen_py')}
-                  className="px-2.5 py-1 rounded bg-slate-800 text-xs text-slate-300 hover:text-white flex items-center gap-1"
+                  className="px-2.5 py-1 rounded bg-slate-100 text-xs text-slate-700 hover:text-slate-900 border border-slate-200 flex items-center gap-1"
                 >
-                  {copiedSection === 'gen_py' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                  {copiedSection === 'gen_py' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
                   <span>Copy</span>
                 </button>
               </div>
-              <pre className="text-[11px] font-mono text-slate-300 bg-slate-900/60 p-3 rounded max-h-72 overflow-auto scrollbar-thin">
+              <pre className="text-[11px] font-mono text-slate-800 bg-slate-50 border border-slate-200 p-3 rounded max-h-72 overflow-auto scrollbar-thin">
                 <code>{generatedOutput.pyCode}</code>
               </pre>
             </div>
 
             {/* lecture.qmd preview */}
-            <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+            <div className="p-4 rounded-xl bg-white border border-slate-200 space-y-2 shadow-xs">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-mono text-amber-400 font-semibold">FILE 2: lecture.qmd</span>
+                <span className="text-xs font-mono text-amber-700 font-semibold">FILE 2: lecture.qmd</span>
                 <button
                   onClick={() => copyToClipboard(generatedOutput.qmdCode, 'gen_qmd')}
-                  className="px-2.5 py-1 rounded bg-slate-800 text-xs text-slate-300 hover:text-white flex items-center gap-1"
+                  className="px-2.5 py-1 rounded bg-slate-100 text-xs text-slate-700 hover:text-slate-900 border border-slate-200 flex items-center gap-1"
                 >
-                  {copiedSection === 'gen_qmd' ? <Check className="w-3 h-3 text-emerald-400" /> : <Copy className="w-3 h-3" />}
+                  {copiedSection === 'gen_qmd' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
                   <span>Copy</span>
                 </button>
               </div>
-              <pre className="text-[11px] font-mono text-slate-300 bg-slate-900/60 p-3 rounded max-h-72 overflow-auto scrollbar-thin">
+              <pre className="text-[11px] font-mono text-slate-800 bg-slate-50 border border-slate-200 p-3 rounded max-h-72 overflow-auto scrollbar-thin">
                 <code>{generatedOutput.qmdCode}</code>
               </pre>
             </div>

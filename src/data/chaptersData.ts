@@ -151,25 +151,26 @@ export const SYLLABUS_UNIT1_SECTIONS: SyllabusSection[] = [
   {
     number: "1.4",
     title: "Static Calibration & Instrument Characteristics",
-    hours: "1.0 Hour",
-    specificObjective: "Calculate static sensitivity, zero drift, sensitivity drift, and hysteresis error from calibration data.",
+    hours: "1.5 Hours",
+    specificObjective: "Calculate static sensitivity, zero drift, sensitivity drift, and hysteresis error, and apply Single-Point, Two-Point, and Multi-Point least-squares calibration procedures.",
     coreConcepts: [
-      "Static calibration transfer function: y = f(x).",
-      "Static sensitivity: S = dy / dx.",
+      "Static calibration transfer function: y = f(x) and static sensitivity S = dy / dx.",
       "Zero drift (bias shift) vs. sensitivity drift (span shift).",
-      "Hysteresis error: loop area due to magnetic domain friction, elastic mechanical lag, or thermal delay.",
-      "Linearity, dead-band, threshold, and repeatability."
+      "Single-Point Calibration (offset trim): y_cal = y_raw - (y_raw,ref - y_true,ref); valid only when factory sensitivity slope is fixed.",
+      "Two-Point Calibration (zero + span): solving slope S = (y2 - y1)/(x2 - x1) and intercept y0 from certified low & high standards.",
+      "Multi-Point Calibration (N >= 5): Ordinary Least-Squares regression, % non-linearity residuals, and ascending/descending hysteresis loops.",
+      "Threshold, dead-band, and repeatability."
     ],
     difficultConcepts: [
-      "Separating temperature-induced zero drift from temperature-induced span drift in bridge sensors.",
-      "Calculating maximum % hysteresis relative to Full-Scale Output (FSO)."
+      "Why Single-Point zero adjustment fails completely to detect or fix Sensitivity (span) drift at elevated operating ranges.",
+      "Computing least-squares OLS slope and peak % non-linearity relative to Full-Scale Output (FSO) from multi-point deadweight calibration data."
     ],
     misconceptions: [
-      "Confusing precision with accuracy: a meter can produce identical repeatable readings that are completely inaccurate."
+      "Confusing precision with accuracy, or assuming that passing a single 0 °C ice-bath test proves a thermometer is accurate at 300 °C."
     ],
     examQuestions: [
-      "Define static sensitivity and show how zero drift and sensitivity drift affect an instrument calibration line.",
-      "Explain the phenomenon of hysteresis in mechanical sensors and calculate % hysteresis from given calibration data."
+      "Compare Single-Point, Two-Point, and Multi-Point calibration methods with respect to drift compensation, non-linearity detection, and real engineering examples.",
+      "A 0–100 bar transducer tested on a deadweight calibrator reads 1.45 V at 10 bar and 8.65 V at 90 bar. Find actual sensitivity, zero intercept, and calibrated pressure at 6.85 V."
     ]
   },
   {

@@ -9,142 +9,143 @@ export const SVG_FIGURES_UNIT3: Record<string, SvgAsset> = {
     description:
       'Detailed schematic of metallic foil strain gauge geometry and analytical breakdown of dimensional changes versus piezoresistive resistivity modulation.',
     svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
-  <!-- Pure White Background -->
+  <defs>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626" />
+    </marker>
+  </defs>
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
 
   <!-- Header Banner -->
-  <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, -apple-system, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
-    Figure 3.1: Strain Gauge Anatomy, Dimensional Strain &amp; Gauge Factor (GF)
+  <rect x="45" y="40" width="1510" height="72" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+  <text x="70" y="86" font-family="system-ui, -apple-system, sans-serif" font-size="30" font-weight="700" fill="#0f172a">
+    Figure 3.1: Strain Gauge Anatomy &amp; Gauge Factor (GF)
   </text>
-  <text x="1250" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#2563eb">
+  <text x="1530" y="85" font-family="monospace" font-size="22" font-weight="700" fill="#1d4ed8" text-anchor="end">
     Unit III · Section 3.1
   </text>
 
   <!-- Left: Physical Strain Gauge Anatomy -->
-  <rect x="50" y="140" width="720" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="80" y="180" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#1e293b">
-    Physical Anatomy of a Metal Foil Strain Gauge
+  <rect x="45" y="130" width="730" height="730" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="75" y="172" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="700" fill="#0f172a">
+    Physical Anatomy of Metal Foil Strain Gauge
   </text>
 
   <!-- Substrate / Polyimide Backing -->
-  <rect x="130" y="210" width="560" height="420" rx="14" fill="#fef9c3" stroke="#ca8a04" stroke-width="2" stroke-dasharray="6,4" />
-  <text x="150" y="245" font-family="system-ui, -apple-system, sans-serif" font-size="19" font-weight="600" fill="#854d0e">
-    Polyimide / Epoxy Carrier Matrix (Backing: 25 μm thick)
+  <rect x="115" y="198" width="560" height="405" rx="14" fill="#fef9c3" stroke="#ca8a04" stroke-width="2" stroke-dasharray="6,4" />
+  <text x="395" y="232" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" fill="#854d0e" text-anchor="middle">
+    Polyimide Carrier Backing (25 μm thick)
   </text>
 
   <!-- Solder Tabs -->
-  <rect x="160" y="300" width="100" height="60" rx="6" fill="#94a3b8" stroke="#475569" stroke-width="2" />
-  <text x="180" y="337" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">Tab A</text>
-  <rect x="160" y="480" width="100" height="60" rx="6" fill="#94a3b8" stroke="#475569" stroke-width="2" />
-  <text x="180" y="517" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">Tab B</text>
+  <rect x="145" y="285" width="105" height="60" rx="6" fill="#cbd5e1" stroke="#475569" stroke-width="2" />
+  <text x="197" y="323" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">Tab A</text>
+  <rect x="145" y="470" width="105" height="60" rx="6" fill="#cbd5e1" stroke="#475569" stroke-width="2" />
+  <text x="197" y="508" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">Tab B</text>
 
   <!-- Lead wire connections -->
-  <path d="M 100 330 L 160 330" stroke="#dc2626" stroke-width="5" stroke-linecap="round" />
-  <path d="M 100 510 L 160 510" stroke="#2563eb" stroke-width="5" stroke-linecap="round" />
-  <circle cx="100" cy="330" r="7" fill="#dc2626" />
-  <circle cx="100" cy="510" r="7" fill="#2563eb" />
-  <text x="75" y="315" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="#dc2626">+Lead</text>
-  <text x="75" y="540" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="#2563eb">-Lead</text>
+  <path d="M 90 315 L 145 315" stroke="#dc2626" stroke-width="5" stroke-linecap="round" />
+  <path d="M 90 500 L 145 500" stroke="#2563eb" stroke-width="5" stroke-linecap="round" />
+  <circle cx="90" cy="315" r="7" fill="#dc2626" />
+  <circle cx="90" cy="500" r="7" fill="#2563eb" />
+  <text x="58" y="295" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#dc2626">+Lead</text>
+  <text x="58" y="542" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1d4ed8">-Lead</text>
 
-  <!-- Grid Loops (Constantan / Karma foil alloy) -->
+  <!-- Grid Loops -->
   <path d="
-    M 260 330 L 590 330
-    A 25 25 0 0 1 590 380
-    L 300 380
-    A 25 25 0 0 0 300 430
-    L 590 430
-    A 25 25 0 0 1 590 480
-    L 300 480
-    A 25 25 0 0 0 300 530
-    L 590 530
-    A 25 25 0 0 1 590 580
-    L 300 580
-    L 260 510
+    M 250 315 L 580 315
+    A 25 25 0 0 1 580 365
+    L 290 365
+    A 25 25 0 0 0 290 415
+    L 580 415
+    A 25 25 0 0 1 580 465
+    L 290 465
+    A 25 25 0 0 0 290 515
+    L 580 515
+    A 25 25 0 0 1 580 565
+    L 290 565
+    L 250 500
   " fill="none" stroke="#b45309" stroke-width="6.5" stroke-linejoin="round" />
 
   <!-- Dimension line for active gauge length -->
-  <line x1="300" y1="650" x2="590" y2="650" stroke="#0f172a" stroke-width="2" />
-  <line x1="300" y1="640" x2="300" y2="660" stroke="#0f172a" stroke-width="2" />
-  <line x1="590" y1="640" x2="590" y2="660" stroke="#0f172a" stroke-width="2" />
-  <text x="360" y="680" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a">
-    Active Gauge Length L₀ (1 mm – 30 mm)
+  <line x1="290" y1="628" x2="580" y2="628" stroke="#0f172a" stroke-width="2.5" />
+  <line x1="290" y1="616" x2="290" y2="640" stroke="#0f172a" stroke-width="2.5" />
+  <line x1="580" y1="616" x2="580" y2="640" stroke="#0f172a" stroke-width="2.5" />
+  <text x="435" y="666" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#0f172a" text-anchor="middle">
+    Active Gauge Length L₀ (1–30 mm)
   </text>
 
   <!-- Strain Direction Indicator -->
-  <g transform="translate(680, 420)">
-    <line x1="0" y1="0" x2="60" y2="0" stroke="#dc2626" stroke-width="4" marker-end="url(#arrowRed)" />
-    <text x="-5" y="-15" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#dc2626">Tension ε</text>
+  <g transform="translate(650, 415)">
+    <line x1="0" y1="0" x2="85" y2="0" stroke="#dc2626" stroke-width="4.5" marker-end="url(#arrowRed)" />
+    <text x="42" y="-16" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#dc2626" text-anchor="middle">Tension ε</text>
   </g>
 
   <!-- Annotations / Specs Box -->
-  <rect x="80" y="710" width="660" height="120" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.2" />
-  <text x="100" y="745" font-family="system-ui, sans-serif" font-size="19" font-weight="700" fill="#0f172a">
-    Typical Nominal Resistance R₀:
+  <rect x="65" y="688" width="690" height="154" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="85" y="724" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a">
+    Nominal Resistance R₀: <tspan font-family="monospace" fill="#1d4ed8">120 Ω, 350 Ω, 1000 Ω (±0.2%)</tspan>
   </text>
-  <text x="390" y="745" font-family="monospace" font-size="19" font-weight="700" fill="#2563eb">
-    120 Ω, 350 Ω, 1000 Ω (±0.2%)
+  <text x="85" y="762" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • Grid foil: Constantan (55Cu-45Ni) or Karma (5 μm)
   </text>
-  <text x="100" y="780" font-family="system-ui, sans-serif" font-size="18" fill="#334155">
-    • Grid material: Constantan (55% Cu, 45% Ni) or Karma alloy foil (5 μm thickness)
-  </text>
-  <text x="100" y="810" font-family="system-ui, sans-serif" font-size="18" fill="#334155">
-    • End loops thickened to minimize unwanted transverse sensitivity (&lt; 1%)
+  <text x="85" y="800" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • Thick end loops cut transverse sensitivity (&lt; 1%)
   </text>
 
   <!-- Right: Mathematical Gauge Factor Derivation & Physics -->
-  <rect x="800" y="140" width="750" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="830" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">
+  <rect x="795" y="130" width="760" height="730" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="825" y="172" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#0f172a">
     Gauge Factor (GF) Mathematical Derivation
   </text>
 
-  <!-- Card 1: Resistance formula and logarithmic differentiation -->
-  <rect x="830" y="205" width="690" height="190" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.2" />
-  <text x="850" y="235" font-family="system-ui, sans-serif" font-size="19" font-weight="700" fill="#1e3a8a">
+  <!-- Card 1 -->
+  <rect x="820" y="196" width="710" height="196" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
+  <text x="840" y="232" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#1e3a8a">
     1. Cylindrical Conductor Resistance Model:
   </text>
-  <text x="870" y="275" font-family="monospace" font-size="22" font-weight="700" fill="#1d4ed8">
+  <text x="860" y="272" font-family="monospace" font-size="22" font-weight="700" fill="#1d4ed8">
     R = ρ · (L / A) = ρ · L / (π r²)
   </text>
-  <text x="850" y="315" font-family="system-ui, sans-serif" font-size="18" fill="#1e293b">
-    Taking natural logarithms and differentiating completely:
+  <text x="840" y="314" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    Taking logs and differentiating completely:
   </text>
-  <text x="870" y="355" font-family="monospace" font-size="21" font-weight="700" fill="#0f172a">
-    ln(R) = ln(ρ) + ln(L) - 2 ln(r)  ⟹  (dR / R) = (dρ / ρ) + (dL / L) - 2 (dr / r)
-  </text>
-
-  <!-- Card 2: Poisson ratio substitution -->
-  <rect x="830" y="410" width="690" height="190" rx="8" fill="#fdf4ff" stroke="#f0abfc" stroke-width="1.2" />
-  <text x="850" y="440" font-family="system-ui, sans-serif" font-size="19" font-weight="700" fill="#701a75">
-    2. Poisson's Ratio (ν) and Dimensional Contraction:
-  </text>
-  <text x="870" y="480" font-family="system-ui, sans-serif" font-size="19" fill="#334155">
-    Axial strain: <tspan font-family="monospace" font-weight="700" fill="#0f172a">ε = dL / L</tspan> · Lateral strain: <tspan font-family="monospace" font-weight="700" fill="#0f172a">dr / r = -ν · ε</tspan>
-  </text>
-  <text x="850" y="520" font-family="system-ui, sans-serif" font-size="19" fill="#1e293b">
-    Substituting back into the total differential:
-  </text>
-  <text x="870" y="565" font-family="monospace" font-size="22" font-weight="700" fill="#86198f">
-    (dR / R) = (dL / L) + 2 ν (dL / L) + (dρ / ρ) = [ 1 + 2ν + (dρ/ρ)/ε ] · ε
+  <text x="860" y="358" font-family="monospace" font-size="21" font-weight="700" fill="#0f172a">
+    dR/R = dρ/ρ + dL/L - 2(dr/r)
   </text>
 
-  <!-- Card 3: Final Gauge Factor Definition -->
-  <rect x="830" y="615" width="690" height="225" rx="8" fill="#ecfdf5" stroke="#a7f3d0" stroke-width="1.5" />
-  <text x="850" y="650" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#065f46">
-    3. Fundamental Definition of Gauge Factor:
+  <!-- Card 2 -->
+  <rect x="820" y="408" width="710" height="196" rx="8" fill="#fdf4ff" stroke="#f0abfc" stroke-width="1.5" />
+  <text x="840" y="444" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#701a75">
+    2. Poisson's Ratio (ν) &amp; Contraction:
   </text>
-  <text x="870" y="700" font-family="monospace" font-size="26" font-weight="800" fill="#047857">
-    GF = (ΔR / R₀) / ε = 1 + 2ν + (Δρ / ρ₀) / ε
+  <text x="860" y="484" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    Axial: <tspan font-family="monospace" font-weight="700" fill="#0f172a">ε = dL/L</tspan> · Lateral: <tspan font-family="monospace" font-weight="700" fill="#0f172a">dr/r = -ν · ε</tspan>
   </text>
-  <text x="850" y="745" font-family="system-ui, sans-serif" font-size="18" fill="#1e293b">
-    • <tspan font-weight="700" fill="#047857">1 + 2ν (Geometric effect):</tspan> For metals (ν ≈ 0.3), yields ≈ 1.6.
+  <text x="840" y="526" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    Substituting back into total differential:
   </text>
-  <text x="850" y="775" font-family="system-ui, sans-serif" font-size="18" fill="#1e293b">
-    • <tspan font-weight="700" fill="#047857">Piezoresistive effect (Δρ/ρ)/ε:</tspan> Metal foils (GF ≈ 2.0 – 2.2); Semiconductors (GF ≈ +100 to +150).
+  <text x="860" y="570" font-family="monospace" font-size="21" font-weight="700" fill="#86198f">
+    dR/R = [ 1 + 2ν + (dρ/ρ)/ε ] · ε
   </text>
-  <text x="850" y="805" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="#b91c1c">
-    Critical Significance: GF converts minute microstrains (με = 10⁻⁶) into measurable electrical ΔR.
+
+  <!-- Card 3 -->
+  <rect x="820" y="620" width="710" height="222" rx="8" fill="#ecfdf5" stroke="#86efac" stroke-width="1.5" />
+  <text x="840" y="656" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#065f46">
+    3. Fundamental Gauge Factor Definition:
+  </text>
+  <text x="860" y="704" font-family="monospace" font-size="24" font-weight="800" fill="#047857">
+    GF = (ΔR / R₀) / ε = 1 + 2ν + (Δρ/ρ₀)/ε
+  </text>
+  <text x="840" y="748" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • <tspan font-weight="700" fill="#047857">1 + 2ν (Geometry):</tspan> Metals (ν ≈ 0.3) yield ≈ 1.6.
+  </text>
+  <text x="840" y="782" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • <tspan font-weight="700" fill="#047857">Piezoresistive:</tspan> Foils GF ≈ 2.0; Semicond. +120.
+  </text>
+  <text x="840" y="818" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#b91c1c">
+    Converts microstrain (με) into measurable ΔR.
   </text>
 </svg>`
   },
@@ -157,164 +158,156 @@ export const SVG_FIGURES_UNIT3: Record<string, SvgAsset> = {
     description:
       'Comparative engineering structural cross-section showing bonded foil on substrate versus unbonded suspended filament flexure mechanism.',
     svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
-  <!-- Pure White Background -->
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
 
   <!-- Header -->
-  <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
-    Figure 3.2: Structural Comparison — Bonded Foil vs. Unbonded Wire Strain Gauges
+  <rect x="45" y="40" width="1510" height="72" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+  <text x="70" y="86" font-family="system-ui, sans-serif" font-size="30" font-weight="700" fill="#0f172a">
+    Figure 3.2: Bonded Foil vs. Unbonded Wire Strain Gauges
   </text>
-  <text x="1250" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#2563eb">
+  <text x="1530" y="85" font-family="monospace" font-size="22" font-weight="700" fill="#1d4ed8" text-anchor="end">
     Unit III · Section 3.2
   </text>
 
   <!-- Left Column: Bonded Strain Gauge -->
-  <rect x="50" y="140" width="720" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <rect x="70" y="155" width="680" height="42" rx="6" fill="#eff6ff" />
-  <text x="85" y="184" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e40af">
-    A. Bonded Metal Foil Strain Gauge (Surface Mount)
+  <rect x="45" y="130" width="735" height="730" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="65" y="148" width="695" height="48" rx="6" fill="#eff6ff" />
+  <text x="85" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e40af">
+    A. Bonded Metal Foil Gauge (Surface Mount)
   </text>
 
   <!-- Specimen Block -->
-  <rect x="100" y="440" width="620" height="120" fill="#cbd5e1" stroke="#64748b" stroke-width="2" />
-  <text x="250" y="510" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">
+  <rect x="95" y="438" width="635" height="115" fill="#cbd5e1" stroke="#475569" stroke-width="2" />
+  <text x="412" y="504" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#0f172a" text-anchor="middle">
     Structural Test Specimen (Steel / Aluminum)
   </text>
 
   <!-- Adhesive Layer -->
-  <rect x="150" y="410" width="520" height="30" fill="#fde047" stroke="#ca8a04" stroke-width="1.5" />
-  <text x="260" y="432" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#854d0e">
-    Adhesive Matrix (Cyanoacrylate / Epoxy: 10–15 μm)
+  <rect x="145" y="404" width="535" height="34" fill="#fde047" stroke="#ca8a04" stroke-width="1.5" />
+  <text x="412" y="428" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#713f12" text-anchor="middle">
+    Adhesive Matrix (Epoxy: 10–15 μm)
   </text>
 
   <!-- Carrier Backing -->
-  <rect x="170" y="375" width="480" height="35" fill="#fed7aa" stroke="#ea580c" stroke-width="1.5" />
-  <text x="280" y="400" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#9a3412">
+  <rect x="165" y="366" width="495" height="38" fill="#fed7aa" stroke="#ea580c" stroke-width="1.5" />
+  <text x="412" y="393" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#9a3412" text-anchor="middle">
     Polyimide Backing Film (25 μm)
   </text>
 
   <!-- Etched Metal Foil -->
-  <rect x="210" y="340" width="400" height="35" fill="#dc2626" stroke="#991b1b" stroke-width="2" />
-  <text x="290" y="365" font-family="system-ui, sans-serif" font-size="19" font-weight="700" fill="#ffffff">
+  <rect x="195" y="328" width="435" height="38" fill="#dc2626" stroke="#991b1b" stroke-width="2" />
+  <text x="412" y="355" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#ffffff" text-anchor="middle">
     Photo-Etched Metal Foil Grid (5 μm)
   </text>
 
   <!-- Protective Coating -->
-  <rect x="180" y="315" width="460" height="25" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4,3" />
-  <text x="310" y="333" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#0369a1">
+  <rect x="165" y="294" width="495" height="34" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="4,3" />
+  <text x="412" y="319" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0369a1" text-anchor="middle">
     Protective Polyurethane Seal
   </text>
 
   <!-- Shear Strain Transmission Arrows -->
-  <g stroke="#2563eb" stroke-width="3" fill="#2563eb">
-    <path d="M 120 425 L 145 425 M 145 425 L 135 420 M 145 425 L 135 430" />
-    <path d="M 700 425 L 675 425 M 675 425 L 685 420 M 675 425 L 685 430" />
+  <g stroke="#1d4ed8" stroke-width="3.5" fill="#1d4ed8">
+    <path d="M 105 421 L 140 421 M 140 421 L 128 415 M 140 421 L 128 427" />
+    <path d="M 720 421 L 685 421 M 685 421 L 697 415 M 685 421 L 697 427" />
   </g>
-  <text x="240" y="270" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="#2563eb">
-    Shear transfer: Specimen Strain ⟹ Adhesive ⟹ Foil Grid
+  <text x="412" y="254" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1d4ed8" text-anchor="middle">
+    Shear Transfer: Specimen ⟹ Adhesive ⟹ Foil Grid
   </text>
 
   <!-- Bonded Specs Table -->
-  <rect x="80" y="585" width="660" height="250" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
-  <text x="100" y="618" font-family="system-ui, sans-serif" font-size="19" font-weight="700" fill="#0f172a">
+  <rect x="65" y="575" width="695" height="268" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="85" y="610" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#0f172a">
     Key Bonded Characteristics:
   </text>
-  <text x="100" y="652" font-family="system-ui, sans-serif" font-size="18" fill="#334155">
-    • Directly glued to test structure; measures surface strain field.
+  <text x="85" y="648" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • Glued to structure; measures surface strain field.
   </text>
-  <text x="100" y="685" font-family="system-ui, sans-serif" font-size="18" fill="#334155">
-    • High strain limit: Up to 3% to 5% (30,000 to 50,000 με).
+  <text x="85" y="684" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • Strain limit: up to 3–5% (30,000–50,000 με).
   </text>
-  <text x="100" y="718" font-family="system-ui, sans-serif" font-size="18" fill="#334155">
-    • Excellent frequency response: Up to &gt;100 kHz for dynamic impact shock.
+  <text x="85" y="720" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • Bandwidth &gt;100 kHz for dynamic impact shock.
   </text>
-  <text x="100" y="751" font-family="system-ui, sans-serif" font-size="18" fill="#334155">
-    • Vulnerable to adhesive creep, thermal mismatch, and moisture ingress.
+  <text x="85" y="756" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • Sensitive to adhesive creep &amp; moisture ingress.
   </text>
-  <text x="100" y="788" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#16a34a">
-    Primary Applications: Aerospace airframes, bridges, strain load cells, torque shafts.
+  <text x="85" y="800" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#15803d">
+    Uses: Airframes, bridges, load cells, torque shafts.
   </text>
 
   <!-- Right Column: Unbonded Strain Gauge -->
-  <rect x="800" y="140" width="750" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <rect x="820" y="155" width="710" height="42" rx="6" fill="#fef2f2" />
-  <text x="835" y="184" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#991b1b">
-    B. Unbonded Fine-Wire Strain Gauge (Flexure Mechanism)
+  <rect x="800" y="130" width="755" height="730" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="820" y="148" width="715" height="48" rx="6" fill="#fef2f2" />
+  <text x="840" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#991b1b">
+    B. Unbonded Wire Gauge (Flexure Mechanism)
   </text>
 
-  <!-- Frame Graphic -->
   <!-- Fixed Outer Frame -->
-  <path d="M 860 230 L 1480 230 L 1480 540 L 860 540 Z M 920 280 L 1420 280 L 1420 490 L 920 490 Z" fill="#e2e8f0" stroke="#475569" stroke-width="2" />
-  <text x="1060" y="260" font-family="system-ui, sans-serif" font-size="19" font-weight="700" fill="#334155">
+  <path d="M 860 220 L 1495 220 L 1495 520 L 860 520 Z M 920 272 L 1435 272 L 1435 468 L 920 468 Z" fill="#e2e8f0" stroke="#475569" stroke-width="2" />
+  <text x="1177" y="254" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1e293b" text-anchor="middle">
     Fixed Stator Frame (Anchor)
   </text>
 
   <!-- Movable Armature -->
-  <rect x="1100" y="320" width="140" height="130" rx="8" fill="#cbd5e1" stroke="#0f172a" stroke-width="2.5" />
-  <text x="1120" y="380" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">
+  <rect x="1107" y="305" width="140" height="130" rx="8" fill="#cbd5e1" stroke="#0f172a" stroke-width="2.5" />
+  <text x="1177" y="362" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">
     Movable
   </text>
-  <text x="1120" y="405" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">
+  <text x="1177" y="390" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">
     Armature
   </text>
 
   <!-- Motion Rod -->
-  <line x1="1170" y1="450" x2="1170" y2="570" stroke="#0f172a" stroke-width="5" />
-  <circle cx="1170" cy="570" r="8" fill="#dc2626" />
-  <text x="1190" y="565" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#dc2626">
-    Displacement x(t) Input
+  <line x1="1177" y1="435" x2="1177" y2="550" stroke="#0f172a" stroke-width="5" />
+  <circle cx="1177" cy="550" r="8" fill="#dc2626" />
+  <text x="1198" y="556" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#dc2626">
+    Displacement x(t)
   </text>
 
-  <!-- Insulated Pins & Suspended Filaments -->
-  <!-- Stator Pin 1 & 2 -->
-  <circle cx="960" cy="350" r="8" fill="#f59e0b" stroke="#78350f" stroke-width="2" />
-  <circle cx="960" cy="420" r="8" fill="#f59e0b" stroke="#78350f" stroke-width="2" />
-  <!-- Armature Pins -->
-  <circle cx="1110" cy="350" r="8" fill="#f59e0b" stroke="#78350f" stroke-width="2" />
-  <circle cx="1110" cy="420" r="8" fill="#f59e0b" stroke="#78350f" stroke-width="2" />
-  <!-- Stator Pin 3 & 4 -->
-  <circle cx="1380" cy="350" r="8" fill="#f59e0b" stroke="#78350f" stroke-width="2" />
-  <circle cx="1380" cy="420" r="8" fill="#f59e0b" stroke="#78350f" stroke-width="2" />
-  <!-- Armature Right Pins -->
-  <circle cx="1230" cy="350" r="8" fill="#f59e0b" stroke="#78350f" stroke-width="2" />
-  <circle cx="1230" cy="420" r="8" fill="#f59e0b" stroke="#78350f" stroke-width="2" />
+  <!-- Pins -->
+  <circle cx="960" cy="338" r="8" fill="#f59e0b" stroke="#78350f" stroke-width="2" />
+  <circle cx="960" cy="408" r="8" fill="#f59e0b" stroke="#78350f" stroke-width="2" />
+  <circle cx="1115" cy="338" r="8" fill="#f59e0b" stroke="#78350f" stroke-width="2" />
+  <circle cx="1115" cy="408" r="8" fill="#f59e0b" stroke="#78350f" stroke-width="2" />
+  <circle cx="1395" cy="338" r="8" fill="#f59e0b" stroke="#78350f" stroke-width="2" />
+  <circle cx="1395" cy="408" r="8" fill="#f59e0b" stroke="#78350f" stroke-width="2" />
+  <circle cx="1240" cy="338" r="8" fill="#f59e0b" stroke="#78350f" stroke-width="2" />
+  <circle cx="1240" cy="408" r="8" fill="#f59e0b" stroke="#78350f" stroke-width="2" />
 
-  <!-- Suspended Wire 1 (Tension Increases) -->
-  <line x1="960" y1="350" x2="1110" y2="350" stroke="#dc2626" stroke-width="3" stroke-dasharray="2,1" />
-  <text x="1005" y="340" font-family="monospace" font-size="16" font-weight="700" fill="#dc2626">R₁ (+ΔR)</text>
+  <!-- Suspended Wires -->
+  <line x1="960" y1="338" x2="1115" y2="338" stroke="#dc2626" stroke-width="3.5" stroke-dasharray="3,2" />
+  <text x="1037" y="324" font-family="monospace" font-size="20" font-weight="700" fill="#dc2626" text-anchor="middle">R₁ (+ΔR)</text>
 
-  <!-- Suspended Wire 2 (Tension Decreases) -->
-  <line x1="960" y1="420" x2="1110" y2="420" stroke="#2563eb" stroke-width="3" stroke-dasharray="2,1" />
-  <text x="1005" y="445" font-family="monospace" font-size="16" font-weight="700" fill="#2563eb">R₂ (-ΔR)</text>
+  <line x1="960" y1="408" x2="1115" y2="408" stroke="#1d4ed8" stroke-width="3.5" stroke-dasharray="3,2" />
+  <text x="1037" y="440" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8" text-anchor="middle">R₂ (-ΔR)</text>
 
-  <!-- Suspended Wire 3 & 4 -->
-  <line x1="1230" y1="350" x2="1380" y2="350" stroke="#2563eb" stroke-width="3" stroke-dasharray="2,1" />
-  <text x="1280" y="340" font-family="monospace" font-size="16" font-weight="700" fill="#2563eb">R₃ (-ΔR)</text>
+  <line x1="1240" y1="338" x2="1395" y2="338" stroke="#1d4ed8" stroke-width="3.5" stroke-dasharray="3,2" />
+  <text x="1317" y="324" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8" text-anchor="middle">R₃ (-ΔR)</text>
 
-  <line x1="1230" y1="420" x2="1380" y2="420" stroke="#dc2626" stroke-width="3" stroke-dasharray="2,1" />
-  <text x="1280" y="445" font-family="monospace" font-size="16" font-weight="700" fill="#dc2626">R₄ (+ΔR)</text>
+  <line x1="1240" y1="408" x2="1395" y2="408" stroke="#dc2626" stroke-width="3.5" stroke-dasharray="3,2" />
+  <text x="1317" y="440" font-family="monospace" font-size="20" font-weight="700" fill="#dc2626" text-anchor="middle">R₄ (+ΔR)</text>
 
   <!-- Unbonded Specs Table -->
-  <rect x="830" y="585" width="690" height="250" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
-  <text x="850" y="618" font-family="system-ui, sans-serif" font-size="19" font-weight="700" fill="#0f172a">
+  <rect x="820" y="575" width="715" height="268" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="840" y="610" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#0f172a">
     Key Unbonded Characteristics:
   </text>
-  <text x="850" y="652" font-family="system-ui, sans-serif" font-size="18" fill="#334155">
-    • Free-standing resistance wire (0.025 mm diam.) suspended across insulating posts.
+  <text x="840" y="648" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • Free-standing 25 μm wire on insulating posts.
   </text>
-  <text x="850" y="685" font-family="system-ui, sans-serif" font-size="18" fill="#334155">
-    • Eliminates adhesive shear lag and organic adhesive degradation over time.
+  <text x="840" y="684" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • Zero adhesive shear lag or organic bond aging.
   </text>
-  <text x="850" y="718" font-family="system-ui, sans-serif" font-size="18" fill="#334155">
-    • Extremely high sensitivity to microscopic mechanical displacements (down to 10 μm).
+  <text x="840" y="720" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • High sensitivity down to 10 μm displacement.
   </text>
-  <text x="850" y="751" font-family="system-ui, sans-serif" font-size="18" fill="#334155">
-    • Delicate mechanism; restricted to low-shock internal transducer enclosures.
+  <text x="840" y="756" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • Delicate; restricted to sealed transducer housings.
   </text>
-  <text x="850" y="788" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#991b1b">
-    Primary Applications: Seismic accelerometers, differential pressure diaphragms.
+  <text x="840" y="800" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#991b1b">
+    Uses: Seismic accelerometers, pressure diaphragms.
   </text>
 </svg>`
   },
@@ -327,134 +320,136 @@ export const SVG_FIGURES_UNIT3: Record<string, SvgAsset> = {
     description:
       'Circuit diagram of the ballast/potentiometric strain circuit with AC coupling capacitor, transfer equations, and optimal sensitivity curve at Rb = Rg.',
     svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
-  <!-- Pure White Background -->
+  <defs>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#2563eb" />
+    </marker>
+  </defs>
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
 
   <!-- Header -->
-  <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
-    Figure 3.3: Ballast (Potentiometer) Circuit — Schematic, Transfer Function &amp; Sensitivity Peak
+  <rect x="45" y="40" width="1510" height="72" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+  <text x="70" y="86" font-family="system-ui, sans-serif" font-size="30" font-weight="700" fill="#0f172a">
+    Figure 3.3: Ballast Circuit · Topology &amp; Sensitivity Peak
   </text>
-  <text x="1250" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#2563eb">
+  <text x="1530" y="85" font-family="monospace" font-size="22" font-weight="700" fill="#1d4ed8" text-anchor="end">
     Unit III · Section 3.3.1
   </text>
 
   <!-- Left: Circuit Schematic -->
-  <rect x="50" y="140" width="700" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="80" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">
-    Ballast Circuit Topology
+  <rect x="45" y="130" width="705" height="730" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="75" y="172" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#0f172a">
+    Ballast (Potentiometer) Circuit Topology
   </text>
 
   <!-- DC Supply Eb -->
-  <line x1="160" y1="240" x2="160" y2="400" stroke="#0f172a" stroke-width="3" />
-  <circle cx="160" cy="240" r="6" fill="#0f172a" />
-  <text x="100" y="245" font-family="monospace" font-size="24" font-weight="700" fill="#2563eb">+Eb</text>
-  <text x="90" y="275" font-family="system-ui, sans-serif" font-size="16" fill="#64748b">(DC Source)</text>
+  <line x1="155" y1="225" x2="155" y2="395" stroke="#0f172a" stroke-width="3" />
+  <circle cx="155" cy="225" r="7" fill="#0f172a" />
+  <text x="70" y="232" font-family="monospace" font-size="24" font-weight="700" fill="#1d4ed8">+Eb</text>
+  <text x="65" y="264" font-family="system-ui, sans-serif" font-size="20" fill="#334155">(DC Source)</text>
 
   <!-- Wire to Ballast Resistor -->
-  <line x1="160" y1="240" x2="300" y2="240" stroke="#0f172a" stroke-width="3" />
-  <line x1="300" y1="240" x2="300" y2="290" stroke="#0f172a" stroke-width="3" />
+  <line x1="155" y1="225" x2="295" y2="225" stroke="#0f172a" stroke-width="3" />
+  <line x1="295" y1="225" x2="295" y2="275" stroke="#0f172a" stroke-width="3" />
 
   <!-- Ballast Resistor Rb -->
-  <rect x="275" y="290" width="50" height="100" fill="#f8fafc" stroke="#0f172a" stroke-width="3" />
-  <text x="340" y="345" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#0f172a">Rb</text>
-  <text x="340" y="375" font-family="system-ui, sans-serif" font-size="16" fill="#64748b">(Ballast Resistor)</text>
+  <rect x="270" y="275" width="50" height="95" fill="#f8fafc" stroke="#0f172a" stroke-width="3" />
+  <text x="335" y="322" font-family="system-ui, sans-serif" font-size="23" font-weight="700" fill="#0f172a">Rb</text>
+  <text x="335" y="352" font-family="system-ui, sans-serif" font-size="20" fill="#334155">(Ballast Resistor)</text>
 
-  <!-- Intermediate Node (Output pick-off) -->
-  <line x1="300" y1="390" x2="300" y2="460" stroke="#0f172a" stroke-width="3" />
-  <circle cx="300" cy="460" r="7" fill="#dc2626" />
-  <text x="245" y="450" font-family="monospace" font-size="20" font-weight="700" fill="#dc2626">Node A</text>
+  <!-- Intermediate Node -->
+  <line x1="295" y1="370" x2="295" y2="435" stroke="#0f172a" stroke-width="3" />
+  <circle cx="295" cy="435" r="8" fill="#dc2626" />
+  <text x="200" y="425" font-family="monospace" font-size="20" font-weight="700" fill="#dc2626">Node A</text>
 
   <!-- Strain Gauge Rg -->
-  <line x1="300" y1="460" x2="300" y2="520" stroke="#0f172a" stroke-width="3" />
-  <rect x="275" y="520" width="50" height="100" fill="#eff6ff" stroke="#2563eb" stroke-width="3" />
-  <line x1="260" y1="630" x2="340" y2="510" stroke="#2563eb" stroke-width="2" marker-end="url(#arrowBlue)" />
-  <text x="340" y="575" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#2563eb">Rg(t)</text>
-  <text x="340" y="605" font-family="monospace" font-size="18" fill="#1e40af">= R₀ + ΔR(t)</text>
+  <line x1="295" y1="435" x2="295" y2="490" stroke="#0f172a" stroke-width="3" />
+  <rect x="270" y="490" width="50" height="95" fill="#eff6ff" stroke="#2563eb" stroke-width="3" />
+  <line x1="255" y1="595" x2="335" y2="480" stroke="#2563eb" stroke-width="2.5" marker-end="url(#arrowBlue)" />
+  <text x="340" y="538" font-family="system-ui, sans-serif" font-size="23" font-weight="700" fill="#1d4ed8">Rg(t)</text>
+  <text x="340" y="568" font-family="monospace" font-size="20" font-weight="700" fill="#1e40af">= R₀ + ΔR(t)</text>
 
   <!-- Ground Connection -->
-  <line x1="300" y1="620" x2="300" y2="690" stroke="#0f172a" stroke-width="3" />
-  <line x1="270" y1="690" x2="330" y2="690" stroke="#0f172a" stroke-width="3" />
-  <line x1="280" y1="700" x2="320" y2="700" stroke="#0f172a" stroke-width="3" />
-  <line x1="290" y1="710" x2="310" y2="710" stroke="#0f172a" stroke-width="3" />
-  <text x="330" y="715" font-family="system-ui, sans-serif" font-size="16" fill="#64748b">GND</text>
+  <line x1="295" y1="585" x2="295" y2="635" stroke="#0f172a" stroke-width="3" />
+  <line x1="265" y1="635" x2="325" y2="635" stroke="#0f172a" stroke-width="3" />
+  <line x1="275" y1="645" x2="315" y2="645" stroke="#0f172a" stroke-width="3" />
+  <line x1="285" y1="655" x2="305" y2="655" stroke="#0f172a" stroke-width="3" />
+  <text x="335" y="652" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#334155">GND</text>
 
   <!-- AC Coupling Branch -->
-  <line x1="300" y1="460" x2="450" y2="460" stroke="#0f172a" stroke-width="3" />
-  <!-- Capacitor C -->
-  <line x1="450" y1="435" x2="450" y2="485" stroke="#0f172a" stroke-width="4" />
-  <line x1="465" y1="435" x2="465" y2="485" stroke="#0f172a" stroke-width="4" />
-  <text x="445" y="420" font-family="monospace" font-size="20" font-weight="700" fill="#0f172a">C</text>
-  <text x="410" y="510" font-family="system-ui, sans-serif" font-size="15" fill="#64748b">(Blocks large DC bias)</text>
+  <line x1="295" y1="435" x2="435" y2="435" stroke="#0f172a" stroke-width="3" />
+  <line x1="435" y1="410" x2="435" y2="460" stroke="#0f172a" stroke-width="4" />
+  <line x1="450" y1="410" x2="450" y2="460" stroke="#0f172a" stroke-width="4" />
+  <text x="442" y="395" font-family="monospace" font-size="22" font-weight="700" fill="#0f172a" text-anchor="middle">C</text>
+  <text x="442" y="492" font-family="system-ui, sans-serif" font-size="20" fill="#334155" text-anchor="middle">(Blocks DC)</text>
 
-  <line x1="465" y1="460" x2="600" y2="460" stroke="#0f172a" stroke-width="3" />
-  <circle cx="600" cy="460" r="6" fill="#0f172a" />
-  <text x="615" y="468" font-family="monospace" font-size="22" font-weight="700" fill="#dc2626">+ eₒ(t)</text>
-  <text x="615" y="495" font-family="system-ui, sans-serif" font-size="16" fill="#64748b">(Dynamic Output)</text>
+  <line x1="450" y1="435" x2="575" y2="435" stroke="#0f172a" stroke-width="3" />
+  <circle cx="575" cy="435" r="7" fill="#0f172a" />
+  <text x="592" y="442" font-family="monospace" font-size="23" font-weight="700" fill="#dc2626">+ eₒ(t)</text>
+  <text x="592" y="472" font-family="system-ui, sans-serif" font-size="20" fill="#334155">(AC Out)</text>
 
   <!-- DC Total Output note -->
-  <rect x="80" y="740" width="640" height="95" rx="8" fill="#fef2f2" stroke="#fecaca" stroke-width="1.2" />
-  <text x="100" y="770" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#991b1b">
+  <rect x="70" y="685" width="655" height="152" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" />
+  <text x="90" y="720" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#991b1b">
     Critical Limitation of Ballast Circuit:
   </text>
-  <text x="100" y="805" font-family="system-ui, sans-serif" font-size="17" fill="#7f1d1d">
-    Output has a massive DC pedestal voltage <tspan font-family="monospace" font-weight="700">E_DC = Eb · Rg / (Rb + Rg)</tspan>. Cannot measure static strain (DC) without complex offset subtraction!
+  <text x="90" y="756" font-family="system-ui, sans-serif" font-size="20" fill="#7f1d1d">
+    Huge DC pedestal <tspan font-family="monospace" font-weight="700">E_DC = Eb·Rg/(Rb+Rg)</tspan> masks small Δeₒ.
+  </text>
+  <text x="90" y="792" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="#7f1d1d">
+    Cannot measure static (DC) strain without offset drift.
   </text>
 
   <!-- Right: Mathematical Equations & Sensitivity Plot -->
-  <rect x="780" y="140" width="770" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="810" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">
+  <rect x="770" y="130" width="785" height="730" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="800" y="172" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#0f172a">
     Transfer Function &amp; Sensitivity Optimization
   </text>
 
   <!-- Mathematical Card -->
-  <rect x="810" y="205" width="710" height="210" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.2" />
-  <text x="830" y="235" font-family="system-ui, sans-serif" font-size="19" font-weight="700" fill="#1e3a8a">
+  <rect x="795" y="196" width="735" height="225" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
+  <text x="815" y="232" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#1e3a8a">
     Mathematical Formulations:
   </text>
-  <text x="850" y="275" font-family="monospace" font-size="22" font-weight="700" fill="#1d4ed8">
+  <text x="835" y="272" font-family="monospace" font-size="21" font-weight="700" fill="#1d4ed8">
     eₒ = Eb · [ (R₀ + ΔR) / (Rb + R₀ + ΔR) ]
   </text>
-  <text x="850" y="315" font-family="system-ui, sans-serif" font-size="18" fill="#1e293b">
-    Let resistance ratio <tspan font-family="monospace" font-weight="700">m = Rb / R₀</tspan>. Small-signal dynamic output:
+  <text x="815" y="314" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    With resistance ratio <tspan font-family="monospace" font-weight="700">m = Rb / R₀</tspan>, small-signal Δeₒ:
   </text>
-  <text x="850" y="355" font-family="monospace" font-size="22" font-weight="700" fill="#0f172a">
-    Δeₒ = Eb · [ m / (1 + m)² ] · (ΔR / R₀) = Eb · [ m / (1 + m)² ] · GF · ε
+  <text x="835" y="356" font-family="monospace" font-size="21" font-weight="700" fill="#0f172a">
+    Δeₒ = Eb · [ m / (1 + m)² ] · GF · ε
   </text>
-  <text x="850" y="395" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="#047857">
-    Circuit Sensitivity: <tspan font-family="monospace">S_c = deₒ / dε = Eb · GF · [ m / (1 + m)² ]</tspan>
-  </text>
-
-  <!-- Sensitivity Plot (m vs Normalized Sensitivity) -->
-  <rect x="810" y="430" width="710" height="400" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
-  <text x="830" y="460" font-family="system-ui, sans-serif" font-size="19" font-weight="700" fill="#0f172a">
-    Plot: Circuit Sensitivity Factor η = m / (1 + m)² vs. Resistance Ratio m
+  <text x="815" y="398" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#047857">
+    Sensitivity: <tspan font-family="monospace">S_c = Eb · GF · m / (1 + m)²</tspan>
   </text>
 
-  <!-- Coordinate Axes -->
-  <line x1="880" y1="760" x2="1460" y2="760" stroke="#0f172a" stroke-width="2.5" />
-  <line x1="880" y1="760" x2="880" y2="490" stroke="#0f172a" stroke-width="2.5" />
-  <text x="1460" y="795" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">m = Rb / R₀</text>
-  <text x="820" y="500" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">η(m)</text>
+  <!-- Sensitivity Plot -->
+  <rect x="795" y="438" width="735" height="400" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="815" y="472" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#0f172a">
+    Plot: Sensitivity Factor η = m/(1+m)² vs. Ratio m
+  </text>
 
-  <!-- Curve: m/(1+m)^2 -->
-  <!-- Peak at m=1, η=0.25 (scaled) -->
+  <line x1="880" y1="760" x2="1465" y2="760" stroke="#0f172a" stroke-width="2.5" />
+  <line x1="880" y1="760" x2="880" y2="505" stroke="#0f172a" stroke-width="2.5" />
+  <text x="1480" y="795" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="end">m = Rb / R₀</text>
+  <text x="820" y="518" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a">η(m)</text>
+
   <path d="
     M 880 760
-    C 940 700, 1000 580, 1080 540
-    C 1140 540, 1260 620, 1440 710
+    C 940 700, 1000 585, 1080 545
+    C 1140 545, 1260 625, 1445 712
   " fill="none" stroke="#2563eb" stroke-width="4.5" />
 
-  <!-- Dotted peak indicator at m = 1 -->
-  <line x1="1080" y1="540" x2="1080" y2="760" stroke="#dc2626" stroke-width="2" stroke-dasharray="6,4" />
-  <line x1="880" y1="540" x2="1080" y2="540" stroke="#dc2626" stroke-width="2" stroke-dasharray="6,4" />
-  <circle cx="1080" cy="540" r="7" fill="#dc2626" />
+  <line x1="1080" y1="545" x2="1080" y2="760" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6,4" />
+  <line x1="880" y1="545" x2="1080" y2="545" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6,4" />
+  <circle cx="1080" cy="545" r="8" fill="#dc2626" />
 
-  <text x="1055" y="790" font-family="monospace" font-size="20" font-weight="700" fill="#dc2626">m = 1.0 (Rb = R₀)</text>
-  <text x="830" y="545" font-family="monospace" font-size="20" font-weight="700" fill="#dc2626">0.25</text>
-  <text x="1100" y="530" font-family="system-ui, sans-serif" font-size="19" font-weight="700" fill="#dc2626">
-    GLOBAL MAXIMUM: S_c,max = (1/4) · Eb · GF
+  <text x="1080" y="795" font-family="monospace" font-size="20" font-weight="700" fill="#dc2626" text-anchor="middle">m = 1 (Rb = R₀)</text>
+  <text x="868" y="552" font-family="monospace" font-size="20" font-weight="700" fill="#dc2626" text-anchor="end">0.25</text>
+  <text x="1105" y="534" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#dc2626">
+    MAX PEAK: S_c,max = ¼ · Eb · GF
   </text>
 </svg>`
   },
@@ -467,202 +462,187 @@ export const SVG_FIGURES_UNIT3: Record<string, SvgAsset> = {
     description:
       'Comprehensive comparative topology of Quarter-Bridge, Half-Bridge bending, and Full-Bridge cantilever with algebraic sensitivity factors (1x, 2x, 4x).',
     svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
-  <!-- Pure White Background -->
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
 
   <!-- Header -->
-  <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
-    Figure 3.4: Wheatstone Bridge Architectures — Quarter, Half &amp; Full Bridge Operations
+  <rect x="45" y="40" width="1510" height="72" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+  <text x="70" y="86" font-family="system-ui, sans-serif" font-size="30" font-weight="700" fill="#0f172a">
+    Figure 3.4: Wheatstone Bridge — Quarter, Half &amp; Full Bridge
   </text>
-  <text x="1250" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#2563eb">
+  <text x="1530" y="85" font-family="monospace" font-size="22" font-weight="700" fill="#1d4ed8" text-anchor="end">
     Unit III · Section 3.3.2
   </text>
 
-  <!-- 3 Columns for Quarter, Half, and Full Bridge -->
-
-  <!-- COLUMN 1: QUARTER BRIDGE (1 Active Gauge) -->
-  <rect x="50" y="140" width="480" height="720" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-  <rect x="65" y="155" width="450" height="40" rx="6" fill="#eff6ff" />
-  <text x="85" y="182" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1d4ed8">
+  <!-- COLUMN 1: QUARTER BRIDGE -->
+  <rect x="45" y="130" width="490" height="730" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="60" y="146" width="460" height="46" rx="6" fill="#eff6ff" />
+  <text x="290" y="177" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e40af" text-anchor="middle">
     1. Quarter Bridge (1 Active)
   </text>
 
   <!-- Diamond Bridge 1 -->
-  <g transform="translate(290, 310)">
-    <!-- Bridge Lines -->
+  <g transform="translate(290, 315)">
     <path d="M 0 -80 L 80 0 L 0 80 L -80 0 Z" fill="none" stroke="#64748b" stroke-width="3" />
-    <!-- Arms -->
-    <!-- R1 Active -->
-    <rect x="-60" y="-60" width="40" height="20" rx="3" fill="#dc2626" stroke="#991b1b" stroke-width="1.5" transform="rotate(-45 -40 -50)" />
-    <text x="-95" y="-55" font-family="monospace" font-size="18" font-weight="700" fill="#dc2626">R₁ (Active)</text>
+    <rect x="-58" y="-58" width="38" height="20" rx="3" fill="#dc2626" stroke="#991b1b" stroke-width="1.5" transform="rotate(-45 -39 -48)" />
+    <text x="-72" y="-52" font-family="monospace" font-size="20" font-weight="700" fill="#dc2626" text-anchor="end">R₁ (+ε)</text>
 
-    <!-- R2 Dummy/Fixed -->
-    <rect x="20" y="-60" width="40" height="20" rx="3" fill="#94a3b8" stroke="#475569" stroke-width="1.5" transform="rotate(45 40 -50)" />
-    <text x="45" y="-55" font-family="monospace" font-size="18" font-weight="700" fill="#475569">R₂ (Fixed)</text>
+    <rect x="20" y="-58" width="38" height="20" rx="3" fill="#94a3b8" stroke="#475569" stroke-width="1.5" transform="rotate(45 39 -48)" />
+    <text x="72" y="-52" font-family="monospace" font-size="20" font-weight="700" fill="#334155">R₂ (Fix)</text>
 
-    <!-- R4 Fixed -->
-    <rect x="-60" y="40" width="40" height="20" rx="3" fill="#94a3b8" stroke="#475569" stroke-width="1.5" transform="rotate(45 -40 50)" />
-    <text x="-95" y="65" font-family="monospace" font-size="18" font-weight="700" fill="#475569">R₄ (Fixed)</text>
+    <rect x="-58" y="38" width="38" height="20" rx="3" fill="#94a3b8" stroke="#475569" stroke-width="1.5" transform="rotate(45 -39 48)" />
+    <text x="-72" y="64" font-family="monospace" font-size="20" font-weight="700" fill="#334155" text-anchor="end">R₄ (Fix)</text>
 
-    <!-- R3 Fixed -->
-    <rect x="20" y="40" width="40" height="20" rx="3" fill="#94a3b8" stroke="#475569" stroke-width="1.5" transform="rotate(-45 40 50)" />
-    <text x="45" y="65" font-family="monospace" font-size="18" font-weight="700" fill="#475569">R₃ (Fixed)</text>
+    <rect x="20" y="38" width="38" height="20" rx="3" fill="#94a3b8" stroke="#475569" stroke-width="1.5" transform="rotate(-45 39 48)" />
+    <text x="72" y="64" font-family="monospace" font-size="20" font-weight="700" fill="#334155">R₃ (Fix)</text>
 
-    <!-- Excitation & Output Nodes -->
     <circle cx="0" cy="-80" r="6" fill="#2563eb" />
-    <text x="-15" y="-95" font-family="monospace" font-size="18" font-weight="700" fill="#2563eb">+E</text>
+    <text x="0" y="-95" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8" text-anchor="middle">+E</text>
     <circle cx="0" cy="80" r="6" fill="#2563eb" />
-    <text x="-15" y="105" font-family="monospace" font-size="18" font-weight="700" fill="#2563eb">GND</text>
+    <text x="0" y="106" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8" text-anchor="middle">GND</text>
     <circle cx="-80" cy="0" r="6" fill="#dc2626" />
     <circle cx="80" cy="0" r="6" fill="#dc2626" />
-    <text x="-12" y="5" font-family="monospace" font-size="20" font-weight="700" fill="#dc2626">Vₒ</text>
+    <text x="0" y="8" font-family="monospace" font-size="22" font-weight="700" fill="#dc2626" text-anchor="middle">Vₒ</text>
   </g>
 
-  <!-- Output Formulation Card 1 -->
-  <rect x="70" y="440" width="440" height="395" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="90" y="475" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">
-    Output Transfer Equation:
+  <rect x="65" y="445" width="450" height="395" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="85" y="482" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#0f172a">
+    Transfer Equation:
   </text>
-  <text x="90" y="515" font-family="monospace" font-size="21" font-weight="700" fill="#1d4ed8">
+  <text x="85" y="520" font-family="monospace" font-size="21" font-weight="700" fill="#1e40af">
     Vₒ = (E / 4) · (ΔR₁ / R₀)
   </text>
-  <text x="90" y="555" font-family="monospace" font-size="22" font-weight="700" fill="#2563eb">
-    Vₒ = (1 / 4) · E · GF · ε
+  <text x="85" y="558" font-family="monospace" font-size="22" font-weight="700" fill="#1d4ed8">
+    Vₒ = (1/4) · E · GF · ε
   </text>
-  <text x="90" y="605" font-family="system-ui, sans-serif" font-size="17" font-weight="600" fill="#0f172a">
-    Relative Sensitivity Factor:
+  <text x="85" y="605" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a">
+    Sensitivity Factor:
   </text>
-  <text x="90" y="640" font-family="monospace" font-size="24" font-weight="800" fill="#2563eb">
+  <text x="85" y="640" font-family="monospace" font-size="24" font-weight="800" fill="#1d4ed8">
     1× Base Sensitivity
   </text>
-  <text x="90" y="685" font-family="system-ui, sans-serif" font-size="16" fill="#334155">
+  <text x="85" y="688" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
     • Measures axial or bending strain.
   </text>
-  <text x="90" y="715" font-family="system-ui, sans-serif" font-size="16" fill="#334155">
-    • Has slight non-linearity error at large strains: ΔR/R₀ / (2 + ΔR/R₀).
+  <text x="85" y="724" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • Non-linear at high strain levels.
   </text>
-  <text x="90" y="750" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#b91c1c">
-    • Requires 3-wire lead circuit to suppress lead resistance shifts!
+  <text x="85" y="764" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#b91c1c">
+    • Needs 3-wire circuit for lead drop!
   </text>
 
-  <!-- COLUMN 2: HALF BRIDGE (2 Active Gauges in Bending) -->
-  <rect x="560" y="140" width="480" height="720" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-  <rect x="575" y="155" width="450" height="40" rx="6" fill="#fdf4ff" />
-  <text x="595" y="182" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#86198f">
+  <!-- COLUMN 2: HALF BRIDGE -->
+  <rect x="555" y="130" width="490" height="730" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="570" y="146" width="460" height="46" rx="6" fill="#fdf4ff" />
+  <text x="800" y="177" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#86198f" text-anchor="middle">
     2. Half Bridge (2 Active: Bending)
   </text>
 
   <!-- Diamond Bridge 2 -->
-  <g transform="translate(800, 310)">
+  <g transform="translate(800, 315)">
     <path d="M 0 -80 L 80 0 L 0 80 L -80 0 Z" fill="none" stroke="#64748b" stroke-width="3" />
-    <!-- R1 Active Tension -->
-    <rect x="-60" y="-60" width="40" height="20" rx="3" fill="#dc2626" stroke="#991b1b" stroke-width="1.5" transform="rotate(-45 -40 -50)" />
-    <text x="-120" y="-55" font-family="monospace" font-size="17" font-weight="700" fill="#dc2626">R₁ (+ε Tension)</text>
+    <rect x="-58" y="-58" width="38" height="20" rx="3" fill="#dc2626" stroke="#991b1b" stroke-width="1.5" transform="rotate(-45 -39 -48)" />
+    <text x="-72" y="-52" font-family="monospace" font-size="20" font-weight="700" fill="#dc2626" text-anchor="end">R₁ (+ε)</text>
 
-    <!-- R2 Active Compression -->
-    <rect x="-60" y="40" width="40" height="20" rx="3" fill="#2563eb" stroke="#1d4ed8" stroke-width="1.5" transform="rotate(45 -40 50)" />
-    <text x="-135" y="65" font-family="monospace" font-size="17" font-weight="700" fill="#2563eb">R₄ (-ε Comp.)</text>
+    <rect x="-58" y="38" width="38" height="20" rx="3" fill="#2563eb" stroke="#1d4ed8" stroke-width="1.5" transform="rotate(45 -39 48)" />
+    <text x="-72" y="64" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8" text-anchor="end">R₄ (-ε)</text>
 
-    <!-- R2 Fixed -->
-    <rect x="20" y="-60" width="40" height="20" rx="3" fill="#94a3b8" stroke="#475569" stroke-width="1.5" transform="rotate(45 40 -50)" />
-    <text x="45" y="-55" font-family="monospace" font-size="17" font-weight="700" fill="#475569">R₂ (Fixed)</text>
-    <!-- R3 Fixed -->
-    <rect x="20" y="40" width="40" height="20" rx="3" fill="#94a3b8" stroke="#475569" stroke-width="1.5" transform="rotate(-45 40 50)" />
-    <text x="45" y="65" font-family="monospace" font-size="17" font-weight="700" fill="#475569">R₃ (Fixed)</text>
+    <rect x="20" y="-58" width="38" height="20" rx="3" fill="#94a3b8" stroke="#475569" stroke-width="1.5" transform="rotate(45 39 -48)" />
+    <text x="72" y="-52" font-family="monospace" font-size="20" font-weight="700" fill="#334155">R₂ (Fix)</text>
 
-    <!-- Nodes -->
+    <rect x="20" y="38" width="38" height="20" rx="3" fill="#94a3b8" stroke="#475569" stroke-width="1.5" transform="rotate(-45 39 48)" />
+    <text x="72" y="64" font-family="monospace" font-size="20" font-weight="700" fill="#334155">R₃ (Fix)</text>
+
     <circle cx="0" cy="-80" r="6" fill="#2563eb" />
+    <text x="0" y="-95" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8" text-anchor="middle">+E</text>
     <circle cx="0" cy="80" r="6" fill="#2563eb" />
+    <text x="0" y="106" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8" text-anchor="middle">GND</text>
     <circle cx="-80" cy="0" r="6" fill="#dc2626" />
     <circle cx="80" cy="0" r="6" fill="#dc2626" />
-    <text x="-12" y="5" font-family="monospace" font-size="20" font-weight="700" fill="#dc2626">Vₒ</text>
+    <text x="0" y="8" font-family="monospace" font-size="22" font-weight="700" fill="#dc2626" text-anchor="middle">Vₒ</text>
   </g>
 
-  <!-- Output Formulation Card 2 -->
-  <rect x="580" y="440" width="440" height="395" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="600" y="475" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">
-    Output Transfer Equation:
+  <rect x="575" y="445" width="450" height="395" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="595" y="482" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#0f172a">
+    Transfer Equation:
   </text>
-  <text x="600" y="515" font-family="monospace" font-size="21" font-weight="700" fill="#86198f">
-    Vₒ = (E / 4) · [ (ΔR₁/R₀) - (ΔR₄/R₀) ]
+  <text x="595" y="520" font-family="monospace" font-size="20" font-weight="700" fill="#86198f">
+    Vₒ = (E/4)·[(ΔR₁ - ΔR₄)/R₀]
   </text>
-  <text x="600" y="555" font-family="monospace" font-size="22" font-weight="700" fill="#86198f">
-    Vₒ = (1 / 2) · E · GF · ε
+  <text x="595" y="558" font-family="monospace" font-size="22" font-weight="700" fill="#86198f">
+    Vₒ = (1/2) · E · GF · ε
   </text>
-  <text x="600" y="605" font-family="system-ui, sans-serif" font-size="17" font-weight="600" fill="#0f172a">
-    Relative Sensitivity Factor:
+  <text x="595" y="605" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a">
+    Sensitivity Factor:
   </text>
-  <text x="600" y="640" font-family="monospace" font-size="24" font-weight="800" fill="#86198f">
-    2× Sensitivity (Doubled!)
+  <text x="595" y="640" font-family="monospace" font-size="24" font-weight="800" fill="#86198f">
+    2× Sensitivity (Doubled)
   </text>
-  <text x="600" y="685" font-family="system-ui, sans-serif" font-size="16" fill="#334155">
-    • Gauges on opposite beam faces (top in tension, bottom in compression).
+  <text x="595" y="688" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • Top (+ε) &amp; bottom (-ε) beam faces.
   </text>
-  <text x="600" y="715" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#059669">
-    • AUTOMATIC TEMPERATURE COMPENSATION! Temperature shifts cancel out.
+  <text x="595" y="724" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#047857">
+    • Auto thermal drift cancellation!
   </text>
-  <text x="600" y="750" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#059669">
-    • Rejects unwanted axial tension thrust completely.
+  <text x="595" y="764" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#047857">
+    • Rejects unwanted axial thrust load.
   </text>
 
-  <!-- COLUMN 3: FULL BRIDGE (4 Active Gauges in Bending) -->
-  <rect x="1070" y="140" width="480" height="720" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-  <rect x="1085" y="155" width="450" height="40" rx="6" fill="#ecfdf5" />
-  <text x="1105" y="182" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#047857">
-    3. Full Bridge (4 Active: Max Sensitivity)
+  <!-- COLUMN 3: FULL BRIDGE -->
+  <rect x="1065" y="130" width="490" height="730" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <rect x="1080" y="146" width="460" height="46" rx="6" fill="#ecfdf5" />
+  <text x="1310" y="177" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#047857" text-anchor="middle">
+    3. Full Bridge (4 Active: Max Gain)
   </text>
 
   <!-- Diamond Bridge 3 -->
-  <g transform="translate(1310, 310)">
+  <g transform="translate(1310, 315)">
     <path d="M 0 -80 L 80 0 L 0 80 L -80 0 Z" fill="none" stroke="#64748b" stroke-width="3" />
-    <!-- All 4 Active -->
-    <rect x="-60" y="-60" width="40" height="20" rx="3" fill="#dc2626" stroke="#991b1b" stroke-width="1.5" transform="rotate(-45 -40 -50)" />
-    <text x="-120" y="-55" font-family="monospace" font-size="17" font-weight="700" fill="#dc2626">R₁ (+ε)</text>
+    <rect x="-58" y="-58" width="38" height="20" rx="3" fill="#dc2626" stroke="#991b1b" stroke-width="1.5" transform="rotate(-45 -39 -48)" />
+    <text x="-72" y="-52" font-family="monospace" font-size="20" font-weight="700" fill="#dc2626" text-anchor="end">R₁ (+ε)</text>
 
-    <rect x="20" y="-60" width="40" height="20" rx="3" fill="#2563eb" stroke="#1d4ed8" stroke-width="1.5" transform="rotate(45 40 -50)" />
-    <text x="45" y="-55" font-family="monospace" font-size="17" font-weight="700" fill="#2563eb">R₂ (-ε)</text>
+    <rect x="20" y="-58" width="38" height="20" rx="3" fill="#2563eb" stroke="#1d4ed8" stroke-width="1.5" transform="rotate(45 39 -48)" />
+    <text x="72" y="-52" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8">R₂ (-ε)</text>
 
-    <rect x="-60" y="40" width="40" height="20" rx="3" fill="#2563eb" stroke="#1d4ed8" stroke-width="1.5" transform="rotate(45 -40 50)" />
-    <text x="-120" y="65" font-family="monospace" font-size="17" font-weight="700" fill="#2563eb">R₄ (-ε)</text>
+    <rect x="-58" y="38" width="38" height="20" rx="3" fill="#2563eb" stroke="#1d4ed8" stroke-width="1.5" transform="rotate(45 -39 48)" />
+    <text x="-72" y="64" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8" text-anchor="end">R₄ (-ε)</text>
 
-    <rect x="20" y="40" width="40" height="20" rx="3" fill="#dc2626" stroke="#991b1b" stroke-width="1.5" transform="rotate(-45 40 50)" />
-    <text x="45" y="65" font-family="monospace" font-size="17" font-weight="700" fill="#dc2626">R₃ (+ε)</text>
+    <rect x="20" y="38" width="38" height="20" rx="3" fill="#dc2626" stroke="#991b1b" stroke-width="1.5" transform="rotate(-45 39 48)" />
+    <text x="72" y="64" font-family="monospace" font-size="20" font-weight="700" fill="#dc2626">R₃ (+ε)</text>
 
-    <!-- Nodes -->
     <circle cx="0" cy="-80" r="6" fill="#2563eb" />
+    <text x="0" y="-95" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8" text-anchor="middle">+E</text>
     <circle cx="0" cy="80" r="6" fill="#2563eb" />
+    <text x="0" y="106" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8" text-anchor="middle">GND</text>
     <circle cx="-80" cy="0" r="6" fill="#dc2626" />
     <circle cx="80" cy="0" r="6" fill="#dc2626" />
-    <text x="-12" y="5" font-family="monospace" font-size="20" font-weight="700" fill="#dc2626">Vₒ</text>
+    <text x="0" y="8" font-family="monospace" font-size="22" font-weight="700" fill="#dc2626" text-anchor="middle">Vₒ</text>
   </g>
 
-  <!-- Output Formulation Card 3 -->
-  <rect x="1090" y="440" width="440" height="395" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="1110" y="475" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">
-    Output Transfer Equation:
+  <rect x="1085" y="445" width="450" height="395" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="1105" y="482" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#0f172a">
+    Transfer Equation:
   </text>
-  <text x="1110" y="515" font-family="monospace" font-size="20" font-weight="700" fill="#047857">
-    Vₒ = (E/4)·[(ΔR₁-ΔR₂+ΔR₃-ΔR₄)/R₀]
+  <text x="1105" y="520" font-family="monospace" font-size="20" font-weight="700" fill="#047857">
+    Vₒ = (E/4)[(ΔR₁-ΔR₂+ΔR₃-ΔR₄)/R₀]
   </text>
-  <text x="1110" y="555" font-family="monospace" font-size="24" font-weight="800" fill="#047857">
+  <text x="1105" y="558" font-family="monospace" font-size="24" font-weight="800" fill="#047857">
     Vₒ = E · GF · ε
   </text>
-  <text x="1110" y="605" font-family="system-ui, sans-serif" font-size="17" font-weight="600" fill="#0f172a">
-    Relative Sensitivity Factor:
+  <text x="1105" y="605" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a">
+    Sensitivity Factor:
   </text>
-  <text x="1110" y="640" font-family="monospace" font-size="24" font-weight="800" fill="#047857">
-    4× Maximum Sensitivity!
+  <text x="1105" y="640" font-family="monospace" font-size="24" font-weight="800" fill="#047857">
+    4× Max Sensitivity!
   </text>
-  <text x="1110" y="685" font-family="system-ui, sans-serif" font-size="16" fill="#334155">
-    • Two top surface tension gauges + two bottom compression gauges.
+  <text x="1105" y="688" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • 2 top (+ε) + 2 bottom (-ε) gauges.
   </text>
-  <text x="1110" y="715" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#059669">
-    • Exact mathematical linearity (zero second-order non-linear terms).
+  <text x="1105" y="724" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#047857">
+    • Exact linearity (zero 2nd-order error).
   </text>
-  <text x="1110" y="750" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#059669">
-    • Full rejection of temperature drift and axial axial loads.
+  <text x="1105" y="764" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#047857">
+    • Full thermal &amp; axial load rejection.
   </text>
 </svg>`
   },
@@ -675,168 +655,164 @@ export const SVG_FIGURES_UNIT3: Record<string, SvgAsset> = {
     description:
       'Circuit topology with precision current source Is, strain gauge Rg, and 4-wire Kelvin lead connections guaranteeing zero non-linearity error and lead-wire immunity.',
     svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
-  <!-- Pure White Background -->
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
 
   <!-- Header -->
-  <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
-    Figure 3.5: Constant Current Circuit — Precision 4-Wire Kelvin Architecture &amp; Perfect Linearity
+  <rect x="45" y="40" width="1510" height="72" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+  <text x="70" y="86" font-family="system-ui, sans-serif" font-size="30" font-weight="700" fill="#0f172a">
+    Figure 3.5: Constant Current 4-Wire Kelvin Circuit
   </text>
-  <text x="1250" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#2563eb">
+  <text x="1530" y="85" font-family="monospace" font-size="22" font-weight="700" fill="#1d4ed8" text-anchor="end">
     Unit III · Section 3.3.3
   </text>
 
   <!-- Left: Circuit Diagram -->
-  <rect x="50" y="140" width="760" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="80" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">
-    4-Wire Kelvin Constant Current Circuit
+  <rect x="45" y="130" width="765" height="730" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="75" y="172" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#0f172a">
+    4-Wire Kelvin Constant Current Topology
   </text>
 
   <!-- Current Source Symbol -->
-  <g transform="translate(180, 360)">
-    <circle cx="0" cy="0" r="45" fill="#eff6ff" stroke="#2563eb" stroke-width="3" />
-    <path d="M 0 -25 L 0 25 M 0 25 L -10 10 M 0 25 L 10 10" stroke="#2563eb" stroke-width="3" fill="none" />
-    <text x="-90" y="5" font-family="monospace" font-size="24" font-weight="700" fill="#2563eb">Is</text>
-    <text x="-120" y="35" font-family="system-ui, sans-serif" font-size="16" fill="#64748b">(Constant Current)</text>
+  <g transform="translate(155, 365)">
+    <circle cx="0" cy="0" r="42" fill="#eff6ff" stroke="#1d4ed8" stroke-width="3" />
+    <path d="M 0 -22 L 0 22 M 0 22 L -10 8 M 0 22 L 10 8" stroke="#1d4ed8" stroke-width="3" fill="none" />
+    <text x="-60" y="-8" font-family="monospace" font-size="24" font-weight="700" fill="#1d4ed8" text-anchor="end">Is</text>
+    <text x="-52" y="26" font-family="system-ui, sans-serif" font-size="20" fill="#334155" text-anchor="end">Source</text>
   </g>
 
-  <!-- Wire Line 1 (Force +) with lead resistance r_L1 -->
-  <line x1="180" y1="315" x2="180" y2="240" stroke="#0f172a" stroke-width="3" />
-  <line x1="180" y1="240" x2="350" y2="240" stroke="#0f172a" stroke-width="3" />
-  <!-- Lead Resistor r_L1 -->
-  <rect x="350" y="225" width="45" height="30" fill="#f1f5f9" stroke="#64748b" stroke-width="2" />
-  <text x="355" y="215" font-family="monospace" font-size="16" font-weight="600" fill="#475569">r_L1</text>
-  <line x1="395" y1="240" x2="520" y2="240" stroke="#0f172a" stroke-width="3" />
+  <!-- Wire Line 1 (Force +) -->
+  <line x1="155" y1="323" x2="155" y2="230" stroke="#0f172a" stroke-width="3" />
+  <line x1="155" y1="230" x2="340" y2="230" stroke="#0f172a" stroke-width="3" />
+  <rect x="340" y="214" width="60" height="32" fill="#f1f5f9" stroke="#475569" stroke-width="2" />
+  <text x="370" y="204" font-family="monospace" font-size="20" font-weight="700" fill="#334155" text-anchor="middle">r_L1</text>
+  <line x1="400" y1="230" x2="540" y2="230" stroke="#0f172a" stroke-width="3" />
 
-  <!-- Wire Line 4 (Force -) with lead resistance r_L4 -->
-  <line x1="180" y1="405" x2="180" y2="480" stroke="#0f172a" stroke-width="3" />
-  <line x1="180" y1="480" x2="350" y2="480" stroke="#0f172a" stroke-width="3" />
-  <rect x="350" y="465" width="45" height="30" fill="#f1f5f9" stroke="#64748b" stroke-width="2" />
-  <text x="355" y="515" font-family="monospace" font-size="16" font-weight="600" fill="#475569">r_L4</text>
-  <line x1="395" y1="480" x2="520" y2="480" stroke="#0f172a" stroke-width="3" />
+  <!-- Wire Line 4 (Force -) -->
+  <line x1="155" y1="407" x2="155" y2="500" stroke="#0f172a" stroke-width="3" />
+  <line x1="155" y1="500" x2="340" y2="500" stroke="#0f172a" stroke-width="3" />
+  <rect x="340" y="484" width="60" height="32" fill="#f1f5f9" stroke="#475569" stroke-width="2" />
+  <text x="370" y="542" font-family="monospace" font-size="20" font-weight="700" fill="#334155" text-anchor="middle">r_L4</text>
+  <line x1="400" y1="500" x2="540" y2="500" stroke="#0f172a" stroke-width="3" />
 
-  <!-- Remote Strain Gauge at the specimen -->
-  <rect x="520" y="190" width="180" height="340" rx="10" fill="#fef9c3" stroke="#ca8a04" stroke-width="2" stroke-dasharray="6,4" />
-  <text x="540" y="220" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#854d0e">
-    Remote Specimen Zone
+  <!-- Remote Strain Gauge Zone -->
+  <rect x="520" y="190" width="265" height="350" rx="10" fill="#fef9c3" stroke="#ca8a04" stroke-width="2" stroke-dasharray="6,4" />
+  <text x="652" y="220" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#854d0e" text-anchor="middle">
+    Remote Specimen
   </text>
 
   <!-- Gauge Resistor Rg -->
-  <line x1="610" y1="240" x2="610" y2="300" stroke="#0f172a" stroke-width="3" />
-  <rect x="585" y="300" width="50" height="120" fill="#ffffff" stroke="#dc2626" stroke-width="3" />
-  <text x="645" y="350" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#dc2626">Rg</text>
-  <text x="645" y="380" font-family="monospace" font-size="17" fill="#b91c1c">= R₀ + ΔR</text>
-  <line x1="610" y1="420" x2="610" y2="480" stroke="#0f172a" stroke-width="3" />
+  <line x1="595" y1="230" x2="595" y2="305" stroke="#0f172a" stroke-width="3" />
+  <rect x="570" y="305" width="50" height="120" fill="#ffffff" stroke="#dc2626" stroke-width="3" />
+  <text x="635" y="355" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#dc2626">Rg</text>
+  <text x="635" y="390" font-family="monospace" font-size="20" font-weight="700" fill="#991b1b">= R₀ + ΔR</text>
+  <line x1="595" y1="425" x2="595" y2="500" stroke="#0f172a" stroke-width="3" />
 
-  <!-- 4-Wire Sense Connections (Sense + and Sense -) -->
-  <circle cx="610" cy="270" r="6" fill="#2563eb" />
-  <line x1="610" y1="270" x2="420" y2="270" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="4,2" />
-  <!-- Lead r_L2 -->
-  <rect x="375" y="258" width="45" height="24" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5" />
-  <text x="382" y="275" font-family="monospace" font-size="14" font-weight="600" fill="#2563eb">r_L2</text>
-  <line x1="375" y1="270" x2="280" y2="270" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="4,2" />
+  <!-- 4-Wire Sense Connections -->
+  <circle cx="595" cy="272" r="6" fill="#2563eb" />
+  <line x1="595" y1="272" x2="430" y2="272" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="5,3" />
+  <rect x="355" y="256" width="75" height="32" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5" />
+  <text x="392" y="279" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8" text-anchor="middle">r_L2</text>
+  <line x1="355" y1="272" x2="265" y2="272" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="5,3" />
+  <line x1="265" y1="272" x2="265" y2="342" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="5,3" />
 
-  <circle cx="610" cy="450" r="6" fill="#2563eb" />
-  <line x1="610" y1="450" x2="420" y2="450" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="4,2" />
-  <!-- Lead r_L3 -->
-  <rect x="375" y="438" width="45" height="24" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5" />
-  <text x="382" y="455" font-family="monospace" font-size="14" font-weight="600" fill="#2563eb">r_L3</text>
-  <line x1="375" y1="450" x2="280" y2="450" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="4,2" />
+  <circle cx="595" cy="458" r="6" fill="#2563eb" />
+  <line x1="595" y1="458" x2="430" y2="458" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="5,3" />
+  <rect x="355" y="442" width="75" height="32" fill="#eff6ff" stroke="#2563eb" stroke-width="1.5" />
+  <text x="392" y="465" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8" text-anchor="middle">r_L3</text>
+  <line x1="355" y1="458" x2="265" y2="458" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="5,3" />
+  <line x1="265" y1="458" x2="265" y2="388" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="5,3" />
 
-  <!-- High-Impedance Instrumentation Amplifier -->
-  <g transform="translate(240, 360)">
-    <polygon points="0,-60 60,0 0,60" fill="#f8fafc" stroke="#0f172a" stroke-width="2.5" />
-    <text x="12" y="-15" font-family="monospace" font-size="20" font-weight="700" fill="#0f172a">+</text>
-    <text x="15" y="25" font-family="monospace" font-size="22" font-weight="700" fill="#0f172a">-</text>
-    <line x1="60" y1="0" x2="110" y2="0" stroke="#0f172a" stroke-width="3" />
-    <circle cx="110" cy="0" r="6" fill="#dc2626" />
-    <text x="120" y="8" font-family="monospace" font-size="22" font-weight="700" fill="#dc2626">V_out</text>
+  <!-- High-Z InAmp -->
+  <g transform="translate(265, 365)">
+    <polygon points="0,-52 65,0 0,52" fill="#f8fafc" stroke="#0f172a" stroke-width="2.5" />
+    <text x="12" y="-12" font-family="monospace" font-size="22" font-weight="700" fill="#0f172a">+</text>
+    <text x="15" y="28" font-family="monospace" font-size="22" font-weight="700" fill="#0f172a">-</text>
+    <line x1="65" y1="0" x2="115" y2="0" stroke="#0f172a" stroke-width="3" />
+    <circle cx="115" cy="0" r="6" fill="#dc2626" />
+    <text x="126" y="8" font-family="monospace" font-size="22" font-weight="700" fill="#dc2626">V_out</text>
   </g>
-  <text x="190" y="445" font-family="system-ui, sans-serif" font-size="15" font-weight="600" fill="#0284c7">
-    High Input Impedance (Z_in &gt; 10 GΩ, I_sense ≈ 0)
+  <text x="395" y="578" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0369a1" text-anchor="middle">
+    High Z_in (&gt;10 GΩ): Sense Current I_sense ≈ 0
   </text>
 
   <!-- Mechanism Explanation Box -->
-  <rect x="80" y="600" width="700" height="235" rx="8" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.2" />
-  <text x="100" y="635" font-family="system-ui, sans-serif" font-size="19" font-weight="700" fill="#166534">
-    Why the 4-Wire Kelvin Method Eliminates Lead Wire Error:
+  <rect x="65" y="600" width="725" height="242" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+  <text x="85" y="636" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#166534">
+    How 4-Wire Kelvin Eliminates Lead Wire Error:
   </text>
-  <text x="100" y="670" font-family="system-ui, sans-serif" font-size="17" fill="#1e293b">
-    • <tspan font-weight="700">Force Leads (L1 &amp; L4):</tspan> Carry the full excitation current <tspan font-family="monospace">Is</tspan> from source to gauge.
+  <text x="85" y="676" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • <tspan font-weight="700">Force Leads (L1, L4):</tspan> Carry full current <tspan font-family="monospace">Is</tspan> to gauge.
   </text>
-  <text x="100" y="705" font-family="system-ui, sans-serif" font-size="17" fill="#1e293b">
-    • <tspan font-weight="700">Sense Leads (L2 &amp; L3):</tspan> Connect strictly across gauge terminals to an op-amp with &gt;10 GΩ input impedance.
+  <text x="85" y="714" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • <tspan font-weight="700">Sense Leads (L2, L3):</tspan> Tap gauge via &gt;10 GΩ op-amp.
   </text>
-  <text x="100" y="740" font-family="system-ui, sans-serif" font-size="17" fill="#1e293b">
-    • <tspan font-weight="700">Zero Current Drop:</tspan> Since <tspan font-family="monospace">I_sense ≈ 0</tspan>, voltage drop <tspan font-family="monospace">V_drop = I_sense · r_L = 0</tspan>.
+  <text x="85" y="752" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • <tspan font-weight="700">Zero Drop:</tspan> <tspan font-family="monospace">I_sense ≈ 0 ⟹ V_drop = I_sense·r_L = 0</tspan>.
   </text>
-  <text x="100" y="775" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#15803d">
-    Result: Long cables (100+ meters) introduce zero resistance offset or thermal drift!
+  <text x="85" y="794" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#15803d">
+    Long 100+ m cables cause ZERO offset or drift!
   </text>
 
-  <!-- Right: Mathematical Comparison vs Wheatstone Bridge -->
-  <rect x="840" y="140" width="710" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="870" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">
-    Mathematical Transfer Analysis &amp; Linearity
+  <!-- Right: Mathematical Comparison -->
+  <rect x="830" y="130" width="725" height="730" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="860" y="172" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#0f172a">
+    Transfer Analysis &amp; Bridge Comparison
   </text>
 
   <!-- Card: Constant Current Transfer -->
-  <rect x="870" y="210" width="650" height="230" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.2" />
-  <text x="890" y="245" font-family="system-ui, sans-serif" font-size="19" font-weight="700" fill="#1e3a8a">
+  <rect x="855" y="196" width="675" height="236" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
+  <text x="875" y="232" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#1e3a8a">
     Constant Current Transfer Equation:
   </text>
-  <text x="910" y="290" font-family="monospace" font-size="24" font-weight="700" fill="#1d4ed8">
+  <text x="895" y="276" font-family="monospace" font-size="23" font-weight="700" fill="#1d4ed8">
     V_sense = Is · Rg = Is · (R₀ + ΔR)
   </text>
-  <text x="890" y="335" font-family="system-ui, sans-serif" font-size="18" fill="#1e293b">
-    Subtracting the initial baseline voltage <tspan font-family="monospace" font-weight="700">V₀ = Is · R₀</tspan>:
+  <text x="875" y="318" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    Subtracting baseline <tspan font-family="monospace" font-weight="700">V₀ = Is · R₀</tspan>:
   </text>
-  <text x="910" y="380" font-family="monospace" font-size="24" font-weight="800" fill="#0f172a">
+  <text x="895" y="362" font-family="monospace" font-size="24" font-weight="800" fill="#0f172a">
     ΔV_out = Is · ΔR = Is · R₀ · GF · ε
   </text>
-  <text x="890" y="420" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#16a34a">
-    PERFECT INTRINSIC LINEARITY: Output is 100% linear with zero non-linear denominator!
+  <text x="875" y="406" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#15803d">
+    100% LINEAR: Zero non-linear denominator!
   </text>
 
   <!-- Comparison Table -->
-  <rect x="870" y="465" width="650" height="370" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
-  <text x="890" y="500" font-family="system-ui, sans-serif" font-size="19" font-weight="700" fill="#0f172a">
-    Comparison: Constant Current vs. Constant Voltage Bridge
+  <rect x="855" y="452" width="675" height="390" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="875" y="488" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#0f172a">
+    Constant Current vs. Wheatstone Bridge
   </text>
 
-  <g transform="translate(890, 520)">
-    <!-- Header -->
-    <rect x="0" y="0" width="610" height="40" fill="#e2e8f0" rx="4" />
-    <text x="15" y="26" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#0f172a">Feature</text>
-    <text x="180" y="26" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#0f172a">Wheatstone Bridge (V_exc)</text>
-    <text x="420" y="26" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#0f172a">Constant Current (I_s)</text>
+  <g transform="translate(875, 510)">
+    <rect x="0" y="0" width="635" height="44" fill="#e2e8f0" rx="4" />
+    <text x="12" y="29" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a">Feature</text>
+    <text x="195" y="29" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a">Bridge (V_exc)</text>
+    <text x="415" y="29" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a">Current (Is)</text>
 
-    <!-- Row 1 -->
-    <text x="15" y="75" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#334155">Non-Linearity</text>
-    <text x="180" y="75" font-family="system-ui, sans-serif" font-size="16" fill="#b91c1c">ΔR/(2R₀+ΔR) non-linear</text>
-    <text x="420" y="75" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#16a34a">0.00% (Strictly Linear)</text>
+    <text x="12" y="84" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="#334155">Linearity</text>
+    <text x="195" y="84" font-family="system-ui, sans-serif" font-size="20" fill="#b91c1c">Non-linear ΔR</text>
+    <text x="415" y="84" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#15803d">0% Error (Linear)</text>
 
-    <!-- Row 2 -->
-    <text x="15" y="125" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#334155">Sensitivity S</text>
-    <text x="180" y="125" font-family="system-ui, sans-serif" font-size="16" fill="#334155">S = (1/4)·E·GF (Quarter)</text>
-    <text x="420" y="125" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#2563eb">S = Is·R₀·GF (Double!)</text>
+    <line x1="0" y1="106" x2="635" y2="106" stroke="#e2e8f0" stroke-width="1" />
+    <text x="12" y="142" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="#334155">Sensitivity</text>
+    <text x="195" y="142" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">¼ · E · GF</text>
+    <text x="415" y="142" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1d4ed8">Is·R₀·GF (2×)</text>
 
-    <!-- Row 3 -->
-    <text x="15" y="175" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#334155">Lead Wire Drop</text>
-    <text x="180" y="175" font-family="system-ui, sans-serif" font-size="16" fill="#b91c1c">Attenuates V_exc across wire</text>
-    <text x="420" y="175" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#16a34a">Eliminated via 4-wire Kelvin</text>
+    <line x1="0" y1="164" x2="635" y2="164" stroke="#e2e8f0" stroke-width="1" />
+    <text x="12" y="200" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="#334155">Lead Drop</text>
+    <text x="195" y="200" font-family="system-ui, sans-serif" font-size="20" fill="#b91c1c">Attenuates V_exc</text>
+    <text x="415" y="200" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#15803d">Zero (4-Wire)</text>
 
-    <!-- Row 4 -->
-    <text x="15" y="225" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#334155">Self-Heating</text>
-    <text x="180" y="225" font-family="system-ui, sans-serif" font-size="16" fill="#334155">P = V_g² / R₀ (varies with R)</text>
-    <text x="420" y="225" font-family="system-ui, sans-serif" font-size="16" fill="#334155">P = Is² · R₀ (strictly stable)</text>
+    <line x1="0" y1="222" x2="635" y2="222" stroke="#e2e8f0" stroke-width="1" />
+    <text x="12" y="258" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="#334155">Self-Heat</text>
+    <text x="195" y="258" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">V²/R (Varies)</text>
+    <text x="415" y="258" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">Is²·R (Stable)</text>
 
-    <!-- Row 5 -->
-    <text x="15" y="275" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#334155">Circuit Cost</text>
-    <text x="180" y="275" font-family="system-ui, sans-serif" font-size="16" fill="#16a34a">Simple DC voltage reg.</text>
-    <text x="420" y="275" font-family="system-ui, sans-serif" font-size="16" fill="#334155">Precision current ref. required</text>
+    <line x1="0" y1="280" x2="635" y2="280" stroke="#e2e8f0" stroke-width="1" />
+    <text x="12" y="314" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="#334155">Source</text>
+    <text x="195" y="314" font-family="system-ui, sans-serif" font-size="20" fill="#15803d">Simple DC Reg.</text>
+    <text x="415" y="314" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">Precision I-Ref</text>
   </g>
 </svg>`
   },
@@ -849,147 +825,134 @@ export const SVG_FIGURES_UNIT3: Record<string, SvgAsset> = {
     description:
       'Schematic and mechanical layout of dummy gauge temperature compensation showing adjacent arm mathematical subtraction that cancels thermal drift.',
     svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
-  <!-- Pure White Background -->
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
 
   <!-- Header -->
-  <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
-    Figure 3.6: Adjacent Arm Balancing — Dummy Gauge Temperature Compensation
+  <rect x="45" y="40" width="1510" height="72" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+  <text x="70" y="86" font-family="system-ui, sans-serif" font-size="30" font-weight="700" fill="#0f172a">
+    Figure 3.6: Adjacent Arm Dummy Gauge Compensation
   </text>
-  <text x="1250" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#2563eb">
+  <text x="1530" y="85" font-family="monospace" font-size="22" font-weight="700" fill="#1d4ed8" text-anchor="end">
     Unit III · Section 3.4.1
   </text>
 
   <!-- Left: Physical Mechanical Setup -->
-  <rect x="50" y="140" width="700" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="80" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">
-    Physical Installation: Active Gauge vs. Dummy Gauge
+  <rect x="45" y="130" width="715" height="730" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="75" y="172" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#0f172a">
+    Installation: Active vs. Dummy Gauge
   </text>
 
-  <!-- Specimen 1: Active Member under Tension P -->
-  <rect x="100" y="230" width="280" height="300" rx="8" fill="#e2e8f0" stroke="#64748b" stroke-width="2" />
-  <text x="130" y="265" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">
+  <!-- Specimen 1 -->
+  <rect x="80" y="232" width="305" height="270" rx="8" fill="#e2e8f0" stroke="#64748b" stroke-width="2" />
+  <text x="232" y="268" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">
     Loaded Test Specimen
   </text>
 
-  <!-- Active Gauge R1 on Specimen 1 -->
-  <rect x="150" y="320" width="180" height="110" rx="6" fill="#fef08a" stroke="#ca8a04" stroke-width="2" />
-  <path d="M 180 345 L 300 345 M 300 375 L 180 375 M 180 405 L 300 405" stroke="#b45309" stroke-width="4" stroke-linecap="round" />
-  <text x="180" y="335" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#991b1b">Active Gauge (R₁)</text>
-  <text x="160" y="445" font-family="monospace" font-size="16" font-weight="700" fill="#b91c1c">ΔR₁ = ΔR_strain + ΔR_temp</text>
+  <rect x="122" y="295" width="220" height="115" rx="6" fill="#fef08a" stroke="#ca8a04" stroke-width="2" />
+  <text x="232" y="324" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#991b1b" text-anchor="middle">Active Gauge (R₁)</text>
+  <path d="M 155 348 L 310 348 M 310 374 L 155 374 M 155 400 L 310 400" stroke="#b45309" stroke-width="4" stroke-linecap="round" />
+  <text x="232" y="450" font-family="monospace" font-size="20" font-weight="700" fill="#b91c1c" text-anchor="middle">ΔR₁ = ΔR_ε + ΔR_T</text>
 
-  <!-- Load Arrows -->
   <g stroke="#dc2626" stroke-width="4" fill="#dc2626">
-    <path d="M 240 200 L 240 220 M 240 200 L 230 210 M 240 200 L 250 210" />
-    <path d="M 240 560 L 240 540 M 240 560 L 230 550 M 240 560 L 250 550" />
-    <text x="210" y="185" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#dc2626">Load P</text>
+    <path d="M 232 200 L 232 224 M 232 200 L 222 212 M 232 200 L 242 212" />
+    <path d="M 232 534 L 232 510 M 232 534 L 222 522 M 232 534 L 242 522" />
+    <text x="255" y="216" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#dc2626">Load P</text>
   </g>
 
-  <!-- Specimen 2: Unstressed Dummy Block (Identical Material, Same Temp T) -->
-  <rect x="440" y="280" width="260" height="200" rx="8" fill="#e2e8f0" stroke="#64748b" stroke-width="2" />
-  <text x="460" y="315" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">
+  <!-- Specimen 2 -->
+  <rect x="425" y="258" width="305" height="225" rx="8" fill="#e2e8f0" stroke="#64748b" stroke-width="2" />
+  <text x="577" y="294" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">
     Unstressed Dummy Block
   </text>
 
-  <!-- Dummy Gauge R2 -->
-  <rect x="480" y="340" width="180" height="110" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
-  <path d="M 510 365 L 630 365 M 630 395 L 510 395 M 510 425 L 630 425" stroke="#15803d" stroke-width="4" stroke-linecap="round" />
-  <text x="510" y="355" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#166534">Dummy Gauge (R₂)</text>
-  <text x="500" y="465" font-family="monospace" font-size="16" font-weight="700" fill="#15803d">ΔR₂ = 0 + ΔR_temp</text>
+  <rect x="467" y="316" width="220" height="115" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2" />
+  <text x="577" y="345" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#166534" text-anchor="middle">Dummy Gauge (R₂)</text>
+  <path d="M 500 368 L 655 368 M 655 394 L 500 394 M 500 420 L 655 420" stroke="#15803d" stroke-width="4" stroke-linecap="round" />
+  <text x="577" y="466" font-family="monospace" font-size="20" font-weight="700" fill="#15803d" text-anchor="middle">ΔR₂ = 0 + ΔR_T</text>
 
-  <!-- Thermal Bath Envelope (Both experience same temperature T) -->
-  <rect x="80" y="580" width="640" height="90" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" />
-  <text x="100" y="615" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#b91c1c">
+  <!-- Thermal Environment -->
+  <rect x="70" y="548" width="665" height="118" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" />
+  <text x="90" y="584" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#b91c1c">
     Thermal Environment Condition:
   </text>
-  <text x="100" y="648" font-family="system-ui, sans-serif" font-size="17" fill="#7f1d1d">
-    Both specimens are thermally bonded so <tspan font-family="monospace" font-weight="700">T₁ = T₂</tspan>. Dummy block is free of mechanical strain (<tspan font-family="monospace">ε_dummy = 0</tspan>).
+  <text x="90" y="618" font-family="system-ui, sans-serif" font-size="20" fill="#7f1d1d">
+    Same material &amp; temp (<tspan font-family="monospace" font-weight="700">T₁ = T₂</tspan>), dummy unloaded (<tspan font-family="monospace" font-weight="700">ε = 0</tspan>).
   </text>
 
-  <!-- Key Rule Callout -->
-  <rect x="80" y="690" width="640" height="145" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.2" />
-  <text x="100" y="725" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#1e3a8a">
-    Golden Bridge Rule for Adjacent Arm Cancellation:
+  <!-- Golden Rule Callout -->
+  <rect x="70" y="684" width="665" height="158" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
+  <text x="90" y="720" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#1e3a8a">
+    Golden Adjacent-Arm Bridge Rule:
   </text>
-  <text x="100" y="760" font-family="system-ui, sans-serif" font-size="17" fill="#1e293b">
-    In any Wheatstone bridge:
-  </text>
-  <text x="120" y="795" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8">
+  <text x="90" y="762" font-family="monospace" font-size="22" font-weight="700" fill="#1d4ed8">
     ΔVₒ = (E / 4) · [ (ΔR₁ / R₀) - (ΔR₂ / R₀) ]
   </text>
-  <text x="100" y="825" font-family="system-ui, sans-serif" font-size="16" font-weight="600" fill="#15803d">
-    Identical temperature resistance increments in adjacent arms SUBTRACT TO EXACT ZERO!
+  <text x="90" y="806" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#15803d">
+    Identical thermal shifts in R₁ &amp; R₂ subtract to ZERO!
   </text>
 
-  <!-- Right: Wheatstone Bridge Circuit & Exact Proof -->
-  <rect x="780" y="140" width="770" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="810" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">
-    Bridge Wiring &amp; Mathematical Cancellation Proof
+  <!-- Right: Bridge Circuit & Algebraic Proof -->
+  <rect x="780" y="130" width="775" height="730" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="810" y="172" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#0f172a">
+    Bridge Wiring &amp; Thermal Cancellation Proof
   </text>
 
   <!-- Bridge Diamond -->
-  <g transform="translate(1000, 320)">
-    <path d="M 0 -90 L 90 0 L 0 90 L -90 0 Z" fill="none" stroke="#64748b" stroke-width="3" />
+  <g transform="translate(1165, 315)">
+    <path d="M 0 -85 L 85 0 L 0 85 L -85 0 Z" fill="none" stroke="#64748b" stroke-width="3" />
+    <rect x="-62" y="-62" width="42" height="22" rx="3" fill="#fef08a" stroke="#ca8a04" stroke-width="2" transform="rotate(-45 -41 -51)" />
+    <text x="-85" y="-54" font-family="monospace" font-size="20" font-weight="700" fill="#b91c1c" text-anchor="end">R₁ (Active)</text>
 
-    <!-- Arm 1: Active Gauge R1 -->
-    <rect x="-65" y="-65" width="45" height="22" rx="3" fill="#fef08a" stroke="#ca8a04" stroke-width="2" transform="rotate(-45 -42 -54)" />
-    <text x="-140" y="-60" font-family="monospace" font-size="18" font-weight="700" fill="#b91c1c">R₁ (Active)</text>
+    <rect x="20" y="-62" width="42" height="22" rx="3" fill="#dcfce7" stroke="#16a34a" stroke-width="2" transform="rotate(45 41 -51)" />
+    <text x="85" y="-54" font-family="monospace" font-size="20" font-weight="700" fill="#15803d">R₂ (Dummy)</text>
 
-    <!-- Arm 2: Adjacent Dummy Gauge R2 -->
-    <rect x="20" y="-65" width="45" height="22" rx="3" fill="#dcfce7" stroke="#16a34a" stroke-width="2" transform="rotate(45 42 -54)" />
-    <text x="50" y="-60" font-family="monospace" font-size="18" font-weight="700" fill="#15803d">R₂ (Dummy)</text>
+    <rect x="-62" y="40" width="42" height="22" rx="3" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5" transform="rotate(45 -41 51)" />
+    <text x="-85" y="64" font-family="monospace" font-size="20" font-weight="700" fill="#334155" text-anchor="end">R₄ (Fixed)</text>
 
-    <!-- Arm 4: Fixed Resistor R4 -->
-    <rect x="-65" y="45" width="45" height="22" rx="3" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5" transform="rotate(45 -42 54)" />
-    <text x="-120" y="70" font-family="monospace" font-size="18" font-weight="700" fill="#475569">R₄ (Fixed)</text>
+    <rect x="20" y="40" width="42" height="22" rx="3" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5" transform="rotate(-45 41 51)" />
+    <text x="85" y="64" font-family="monospace" font-size="20" font-weight="700" fill="#334155">R₃ (Fixed)</text>
 
-    <!-- Arm 3: Fixed Resistor R3 -->
-    <rect x="20" y="45" width="45" height="22" rx="3" fill="#e2e8f0" stroke="#64748b" stroke-width="1.5" transform="rotate(-45 42 54)" />
-    <text x="50" y="70" font-family="monospace" font-size="18" font-weight="700" fill="#475569">R₃ (Fixed)</text>
-
-    <!-- Excitation & Output Nodes -->
-    <circle cx="0" cy="-90" r="7" fill="#2563eb" />
-    <text x="-15" y="-105" font-family="monospace" font-size="20" font-weight="700" fill="#2563eb">+E</text>
-    <circle cx="0" cy="90" r="7" fill="#2563eb" />
-    <text x="-15" y="115" font-family="monospace" font-size="20" font-weight="700" fill="#2563eb">GND</text>
-    <circle cx="-90" cy="0" r="7" fill="#dc2626" />
-    <circle cx="90" cy="0" r="7" fill="#dc2626" />
-    <text x="-15" y="5" font-family="monospace" font-size="24" font-weight="700" fill="#dc2626">Vₒ</text>
+    <circle cx="0" cy="-85" r="7" fill="#2563eb" />
+    <text x="0" y="-100" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8" text-anchor="middle">+E</text>
+    <circle cx="0" cy="85" r="7" fill="#2563eb" />
+    <text x="0" y="112" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8" text-anchor="middle">GND</text>
+    <circle cx="-85" cy="0" r="7" fill="#dc2626" />
+    <circle cx="85" cy="0" r="7" fill="#dc2626" />
+    <text x="0" y="8" font-family="monospace" font-size="24" font-weight="700" fill="#dc2626" text-anchor="middle">Vₒ</text>
   </g>
 
-  <!-- Step by Step Math Card -->
-  <rect x="810" y="460" width="710" height="375" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
-  <text x="830" y="495" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a">
+  <!-- Algebraic Proof Card -->
+  <rect x="805" y="455" width="725" height="387" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="825" y="492" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#0f172a">
     Step-by-Step Algebraic Proof:
   </text>
 
-  <text x="830" y="535" font-family="system-ui, sans-serif" font-size="18" fill="#334155">
-    1. Active gauge change with strain <tspan font-family="monospace">ε</tspan> and temperature change <tspan font-family="monospace">ΔT</tspan>:
+  <text x="825" y="532" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    1. Active gauge (strain <tspan font-family="monospace">ε</tspan> + temp shift <tspan font-family="monospace">ΔT</tspan>):
   </text>
-  <text x="850" y="570" font-family="monospace" font-size="20" font-weight="700" fill="#b91c1c">
-    ΔR₁ = R₀ · GF · ε + R₀ · (β + GF·(α_s - α_g)) · ΔT
-  </text>
-
-  <text x="830" y="615" font-family="system-ui, sans-serif" font-size="18" fill="#334155">
-    2. Dummy gauge change (zero mechanical strain <tspan font-family="monospace">ε = 0</tspan>, same <tspan font-family="monospace">ΔT</tspan>):
-  </text>
-  <text x="850" y="650" font-family="monospace" font-size="20" font-weight="700" fill="#15803d">
-    ΔR₂ = 0 + R₀ · (β + GF·(α_s - α_g)) · ΔT
+  <text x="845" y="570" font-family="monospace" font-size="21" font-weight="700" fill="#b91c1c">
+    ΔR₁ = R₀·GF·ε + R₀·(β + GF·(α_s - α_g))·ΔT
   </text>
 
-  <text x="830" y="695" font-family="system-ui, sans-serif" font-size="18" fill="#334155">
-    3. Substituting into adjacent-arm bridge transfer equation:
+  <text x="825" y="618" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    2. Dummy gauge (<tspan font-family="monospace">ε = 0</tspan>, identical <tspan font-family="monospace">ΔT</tspan>):
   </text>
-  <text x="850" y="735" font-family="monospace" font-size="21" font-weight="700" fill="#1d4ed8">
-    Vₒ = (E / 4) · [ (ΔR₁ / R₀) - (ΔR₂ / R₀) ]
+  <text x="845" y="656" font-family="monospace" font-size="21" font-weight="700" fill="#15803d">
+    ΔR₂ = 0 + R₀·(β + GF·(α_s - α_g))·ΔT
   </text>
-  <text x="850" y="775" font-family="monospace" font-size="23" font-weight="800" fill="#047857">
-    Vₒ = (E / 4) · [ GF · ε + (ΔR_T / R₀) - (ΔR_T / R₀) ] = (1 / 4) · E · GF · ε
+
+  <text x="825" y="704" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    3. Substituting into adjacent-arm bridge formula:
   </text>
-  <text x="830" y="815" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#15803d">
-    Conclusion: Thermal terms cancel out 100% analytically, leaving pure strain response!
+  <text x="845" y="742" font-family="monospace" font-size="21" font-weight="700" fill="#1d4ed8">
+    Vₒ = (E/4)·[GF·ε + ΔR_T/R₀ - ΔR_T/R₀]
+  </text>
+  <text x="845" y="782" font-family="monospace" font-size="23" font-weight="800" fill="#047857">
+    ⟹ Vₒ = (1 / 4) · E · GF · ε
+  </text>
+  <text x="825" y="822" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#15803d">
+    Thermal terms cancel 100%, leaving pure strain!
   </text>
 </svg>`
   },
@@ -1002,125 +965,120 @@ export const SVG_FIGURES_UNIT3: Record<string, SvgAsset> = {
     description:
       'Operating principle of STC strain gauges matching alloy temperature coefficient of resistance (TCR) against specimen thermal expansion (CTE) over temperature curves.',
     svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
-  <!-- Pure White Background -->
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
 
   <!-- Header -->
-  <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
-    Figure 3.7: Self-Temperature Compensated (STC) Gauges — Metallurgical Matching
+  <rect x="45" y="40" width="1510" height="72" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+  <text x="70" y="86" font-family="system-ui, sans-serif" font-size="30" font-weight="700" fill="#0f172a">
+    Figure 3.7: Self-Temperature Compensated (STC) Gauges
   </text>
-  <text x="1250" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#2563eb">
+  <text x="1530" y="85" font-family="monospace" font-size="22" font-weight="700" fill="#1d4ed8" text-anchor="end">
     Unit III · Section 3.4.2
   </text>
 
   <!-- Left: Physical Matching Principle -->
-  <rect x="50" y="140" width="700" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="80" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">
+  <rect x="45" y="130" width="715" height="730" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="75" y="172" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#0f172a">
     Physical Origin of Thermal Apparent Strain
   </text>
 
-  <!-- Specimen Expands with Temp ΔT -->
-  <rect x="80" y="220" width="640" height="160" rx="8" fill="#e2e8f0" stroke="#64748b" stroke-width="2" />
-  <text x="100" y="255" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">
-    Specimen Thermal Expansion: α_s (e.g. Steel = 11 ppm/°C, Aluminum = 23 ppm/°C)
+  <!-- Specimen Expands -->
+  <rect x="70" y="196" width="665" height="162" rx="8" fill="#e2e8f0" stroke="#64748b" stroke-width="2" />
+  <text x="90" y="232" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a">
+    Specimen CTE α_s: Steel 11 ppm/°C, Al 23 ppm/°C
+  </text>
+  <rect x="105" y="260" width="595" height="76" rx="6" fill="#fef08a" stroke="#ca8a04" stroke-width="2" />
+  <text x="402" y="294" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#854d0e" text-anchor="middle">
+    Foil Expansion α_g &amp; Temp Coefficient β
+  </text>
+  <text x="402" y="324" font-family="monospace" font-size="20" font-weight="700" fill="#713f12" text-anchor="middle">
+    β = (1 / R₀) · (dR / dT)
   </text>
 
-  <!-- Gauge Foil Bonded on top -->
-  <rect x="140" y="290" width="520" height="60" rx="6" fill="#fef08a" stroke="#ca8a04" stroke-width="2" />
-  <text x="160" y="325" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#854d0e">
-    Foil Alloy Expansion: α_g &amp; Resistance Temp Coeff: β = (1/R₀)(dR/dT)
+  <!-- Opposing mechanisms -->
+  <rect x="70" y="376" width="665" height="248" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" />
+  <text x="90" y="412" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#1e3a8a">
+    Two Opposing Thermal Mechanisms:
   </text>
-
-  <!-- Two competing physical mechanisms -->
-  <rect x="80" y="410" width="640" height="230" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.2" />
-  <text x="100" y="445" font-family="system-ui, sans-serif" font-size="19" font-weight="700" fill="#1e3a8a">
-    Two Opposing Physical Thermal Effects:
+  <text x="90" y="452" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    1. <tspan font-weight="700" fill="#1d4ed8">Differential Expansion:</tspan> Substrate stretches foil:
   </text>
-
-  <text x="100" y="485" font-family="system-ui, sans-serif" font-size="18" fill="#1e293b">
-    1. <tspan font-weight="700" fill="#2563eb">Differential Thermal Expansion:</tspan> The specimen expands faster than the foil, stretching it mechanically by:
-  </text>
-  <text x="120" y="525" font-family="monospace" font-size="21" font-weight="700" fill="#2563eb">
+  <text x="115" y="490" font-family="monospace" font-size="21" font-weight="700" fill="#1d4ed8">
     ε_thermal = (α_specimen - α_gauge) · ΔT
   </text>
-
-  <text x="100" y="570" font-family="system-ui, sans-serif" font-size="18" fill="#1e293b">
-    2. <tspan font-weight="700" fill="#b91c1c">Thermal Coefficient of Resistivity (TCR):</tspan> The alloy's electrical resistivity changes intrinsically with temperature:
+  <text x="90" y="542" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    2. <tspan font-weight="700" fill="#b91c1c">Alloy Resistivity (TCR):</tspan> Resistance shifts with T:
   </text>
-  <text x="120" y="610" font-family="monospace" font-size="21" font-weight="700" fill="#b91c1c">
+  <text x="115" y="580" font-family="monospace" font-size="21" font-weight="700" fill="#b91c1c">
     (ΔR / R₀)_resistivity = β · ΔT
   </text>
 
   <!-- STC Condition Box -->
-  <rect x="80" y="660" width="640" height="175" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
-  <text x="100" y="695" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#166534">
-    The STC Metallurgical Balance Condition:
+  <rect x="70" y="642" width="665" height="200" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
+  <text x="90" y="678" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#166534">
+    STC Metallurgical Balance Condition:
   </text>
-  <text x="100" y="735" font-family="monospace" font-size="22" font-weight="800" fill="#15803d">
+  <text x="90" y="722" font-family="monospace" font-size="22" font-weight="800" fill="#15803d">
     β + GF · (α_specimen - α_gauge) = 0
   </text>
-  <text x="100" y="775" font-family="system-ui, sans-serif" font-size="17" fill="#1e293b">
-    By precise metallurgical cold-working and heat-treatment of Constantan or Karma foil, manufacturers deliberately tune <tspan font-family="monospace" font-weight="700">β</tspan> to exactly counter <tspan font-family="monospace">GF · (α_s - α_g)</tspan>!
+  <text x="90" y="766" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    Cold-worked foil tunes <tspan font-family="monospace" font-weight="700">β</tspan> to cancel expansion mismatch.
   </text>
-  <text x="100" y="810" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#166534">
-    Single gauge in Quarter Bridge requires NO dummy gauge over working range!
+  <text x="90" y="804" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#166534">
+    Single Quarter-Bridge gauge needs NO dummy gauge!
   </text>
 
-  <!-- Right: Apparent Strain vs. Temperature Curve -->
-  <rect x="780" y="140" width="770" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="810" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">
-    Thermal Apparent Strain vs. Temperature Characteristics
+  <!-- Right: Curve -->
+  <rect x="780" y="130" width="775" height="730" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="810" y="172" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#0f172a">
+    Apparent Strain vs. Temperature Curves
   </text>
 
   <!-- Graph Container -->
-  <rect x="810" y="210" width="710" height="420" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
+  <rect x="805" y="196" width="725" height="420" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
 
-  <!-- Coordinates -->
-  <line x1="880" y1="420" x2="1470" y2="420" stroke="#64748b" stroke-width="2" />
-  <line x1="1170" y1="240" x2="1170" y2="600" stroke="#64748b" stroke-width="2" />
+  <line x1="875" y1="415" x2="1485" y2="415" stroke="#475569" stroke-width="2" />
+  <line x1="1180" y1="240" x2="1180" y2="590" stroke="#475569" stroke-width="2" />
 
-  <text x="1460" y="450" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#0f172a">Temp (°C)</text>
-  <text x="825" y="260" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#0f172a">Apparent Strain ε_app (με)</text>
+  <text x="1485" y="452" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="end">Temp (°C)</text>
+  <text x="825" y="234" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0f172a">Apparent Strain ε_app (με)</text>
 
-  <!-- Tick Labels -->
-  <text x="880" y="445" font-family="monospace" font-size="15" fill="#64748b">-50°</text>
-  <text x="1020" y="445" font-family="monospace" font-size="15" fill="#64748b">0°</text>
-  <text x="1160" y="445" font-family="monospace" font-size="16" font-weight="700" fill="#0f172a">24°C (Ref)</text>
-  <text x="1310" y="445" font-family="monospace" font-size="15" fill="#64748b">100°</text>
-  <text x="1440" y="445" font-family="monospace" font-size="15" fill="#64748b">150°</text>
+  <text x="885" y="446" font-family="monospace" font-size="20" fill="#334155">-50°</text>
+  <text x="1020" y="446" font-family="monospace" font-size="20" fill="#334155">0°</text>
+  <text x="1180" y="446" font-family="monospace" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">24°C Ref</text>
+  <text x="1325" y="446" font-family="monospace" font-size="20" fill="#334155">100°</text>
 
-  <!-- Uncompensated Regular Gauge (Steep Slanted Line) -->
-  <path d="M 900 580 L 1450 250" stroke="#dc2626" stroke-width="3" stroke-dasharray="6,4" fill="none" />
-  <text x="1350" y="270" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#dc2626">
-    Uncompensated Gauge (drifts &gt; 500 με)
+  <!-- Uncompensated Regular Gauge -->
+  <path d="M 900 570 L 1460 250" stroke="#dc2626" stroke-width="3.5" stroke-dasharray="7,4" fill="none" />
+  <text x="1450" y="236" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#dc2626" text-anchor="end">
+    Uncompensated (&gt; 500 με drift)
   </text>
 
-  <!-- Self-Temperature Compensated (Flat U-Shaped Polynomial Curve near zero) -->
+  <!-- STC Gauge Curve -->
   <path d="
-    M 900 480
-    C 1050 435, 1120 415, 1170 420
-    C 1220 425, 1340 410, 1450 490
-  " stroke="#16a34a" stroke-width="4.5" fill="none" />
-  <circle cx="1170" cy="420" r="7" fill="#16a34a" />
-  <text x="1040" y="390" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#16a34a">
-    STC Gauge: Near-Zero Drift (±10 με over -20°C to +120°C)
+    M 900 475
+    C 1050 432, 1125 410, 1180 415
+    C 1235 420, 1345 405, 1460 485
+  " stroke="#16a34a" stroke-width="5" fill="none" />
+  <circle cx="1180" cy="415" r="8" fill="#16a34a" />
+  <text x="1180" y="380" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#15803d" text-anchor="middle">
+    STC Gauge: ±10 με (-20°C to +120°C)
   </text>
 
   <!-- STC Code Reference Callout -->
-  <rect x="810" y="650" width="710" height="185" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
-  <text x="830" y="685" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">
-    Standard Commercial STC Number Designation:
+  <rect x="805" y="636" width="725" height="206" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+  <text x="825" y="672" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#0f172a">
+    Standard Commercial STC Number Codes:
   </text>
-  <text x="830" y="720" font-family="system-ui, sans-serif" font-size="17" fill="#334155">
-    • <tspan font-family="monospace" font-weight="700" fill="#2563eb">STC-13:</tspan> Matched to mild &amp; structural steel (<tspan font-family="monospace">α_s ≈ 11 to 13 ppm/°C</tspan>).
+  <text x="825" y="714" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • <tspan font-family="monospace" font-weight="700" fill="#1d4ed8">STC-13:</tspan> Mild &amp; structural steel (11–13 ppm/°C).
   </text>
-  <text x="830" y="755" font-family="system-ui, sans-serif" font-size="17" fill="#334155">
-    • <tspan font-family="monospace" font-weight="700" fill="#2563eb">STC-23:</tspan> Matched to 2024 / 7075 aluminum alloys (<tspan font-family="monospace">α_s ≈ 23 ppm/°C</tspan>).
+  <text x="825" y="754" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • <tspan font-family="monospace" font-weight="700" fill="#1d4ed8">STC-23:</tspan> Aluminum alloys 2024/7075 (23 ppm/°C).
   </text>
-  <text x="830" y="790" font-family="system-ui, sans-serif" font-size="17" fill="#334155">
-    • <tspan font-family="monospace" font-weight="700" fill="#2563eb">STC-06:</tspan> Matched to titanium &amp; stainless austenitic steel (<tspan font-family="monospace">α_s ≈ 6 to 9 ppm/°C</tspan>).
+  <text x="825" y="794" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">
+    • <tspan font-family="monospace" font-weight="700" fill="#1d4ed8">STC-06:</tspan> Titanium &amp; stainless steel (6–9 ppm/°C).
   </text>
 </svg>`
   },
@@ -1134,87 +1092,81 @@ export const SVG_FIGURES_UNIT3: Record<string, SvgAsset> = {
     svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-  <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
-    Figure 3.8: Physical Transformation · Applied Tensile Force ⟹ Microscopic Deformation
+  <rect x="45" y="40" width="1510" height="72" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+  <text x="70" y="86" font-family="system-ui, sans-serif" font-size="30" font-weight="700" fill="#0f172a">
+    Figure 3.8: Applied Tensile Force ⟹ Microscopic Strain
   </text>
-  <text x="1250" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#147d8b">
+  <text x="1530" y="85" font-family="monospace" font-size="22" font-weight="700" fill="#0f766e" text-anchor="end">
     Unit III · Section 3.1
   </text>
 
-  <!-- Panel 1: Original Unstressed Specimen -->
-  <g transform="translate(60, 150)">
-    <rect width="450" height="680" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-    <rect width="450" height="45" rx="8" fill="#eff6ff" />
-    <text x="25" y="30" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1e40af">
+  <!-- Panel 1: Original Specimen -->
+  <g transform="translate(45, 135)">
+    <rect width="480" height="715" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="480" height="52" rx="8" fill="#eff6ff" />
+    <text x="24" y="34" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e40af">
       1. Original Specimen (F = 0 N)
     </text>
-    
-    <!-- Specimen Bar -->
-    <rect x="75" y="100" width="300" height="200" rx="6" fill="#e2e8f0" stroke="#64748b" stroke-width="2" />
-    <text x="145" y="205" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#334155">Steel Rod (L₀, A₀)</text>
-    <line x1="75" y1="330" x2="375" y2="330" stroke="#0f172a" stroke-width="2.5" />
-    <line x1="75" y1="320" x2="75" y2="340" stroke="#0f172a" stroke-width="2.5" />
-    <line x1="375" y1="320" x2="375" y2="340" stroke="#0f172a" stroke-width="2.5" />
-    <text x="175" y="360" font-family="monospace" font-size="22" font-weight="700" fill="#0f172a">Length L₀</text>
 
-    <!-- Bonded Grid Rest State -->
-    <rect x="100" y="420" width="250" height="120" rx="6" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.5" />
-    <text x="120" y="450" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#854d0e">Foil Grid Resistance R₀</text>
-    <text x="120" y="490" font-family="monospace" font-size="24" font-weight="800" fill="#0f172a">R = 120.000 Ω</text>
-    <text x="120" y="525" font-family="system-ui, sans-serif" font-size="15" fill="#475569">Strain: ε = 0.000 με</text>
+    <rect x="90" y="105" width="300" height="200" rx="6" fill="#e2e8f0" stroke="#64748b" stroke-width="2" />
+    <text x="240" y="212" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b" text-anchor="middle">Steel Rod (L₀, A₀)</text>
+    <line x1="90" y1="335" x2="390" y2="335" stroke="#0f172a" stroke-width="2.5" />
+    <line x1="90" y1="324" x2="90" y2="346" stroke="#0f172a" stroke-width="2.5" />
+    <line x1="390" y1="324" x2="390" y2="346" stroke="#0f172a" stroke-width="2.5" />
+    <text x="240" y="372" font-family="monospace" font-size="23" font-weight="700" fill="#0f172a" text-anchor="middle">Length L₀</text>
+
+    <rect x="55" y="425" width="370" height="170" rx="8" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.5" />
+    <text x="240" y="468" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#854d0e" text-anchor="middle">Foil Grid Rest Resistance</text>
+    <text x="240" y="518" font-family="monospace" font-size="28" font-weight="800" fill="#0f172a" text-anchor="middle">R = 120.000 Ω</text>
+    <text x="240" y="562" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="#334155" text-anchor="middle">Strain: ε = 0.000 με</text>
   </g>
 
-  <!-- Panel 2: Applied Force Vectors -->
-  <g transform="translate(560, 150)">
-    <rect width="460" height="680" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-    <rect width="460" height="45" rx="8" fill="#fff7ed" />
-    <text x="25" y="30" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#c2410c">
+  <!-- Panel 2: Applied Force -->
+  <g transform="translate(560, 135)">
+    <rect width="480" height="715" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="480" height="52" rx="8" fill="#fff7ed" />
+    <text x="24" y="34" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#c2410c">
       2. Applied Tensile Force (+F)
     </text>
 
-    <!-- Force Arrows -->
-    <path d="M 30 200 L 90 200 M 90 200 L 70 190 M 90 200 L 70 210" stroke="#dc2626" stroke-width="5" stroke-linecap="round" fill="none" />
-    <path d="M 430 200 L 370 200 M 370 200 L 390 190 M 370 200 L 390 210" stroke="#dc2626" stroke-width="5" stroke-linecap="round" fill="none" />
-    
-    <text x="35" y="170" font-family="system-ui, sans-serif" font-size="22" font-weight="800" fill="#dc2626">← Force F</text>
-    <text x="330" y="170" font-family="system-ui, sans-serif" font-size="22" font-weight="800" fill="#dc2626">Force F →</text>
+    <path d="M 24 205 L 88 205 M 88 205 L 68 194 M 88 205 L 68 216" stroke="#dc2626" stroke-width="5" stroke-linecap="round" fill="none" />
+    <path d="M 456 205 L 392 205 M 392 205 L 412 194 M 392 205 L 412 216" stroke="#dc2626" stroke-width="5" stroke-linecap="round" fill="none" />
 
-    <rect x="90" y="110" width="280" height="180" rx="6" fill="#fed7aa" stroke="#ea580c" stroke-width="2" />
-    <text x="140" y="205" font-family="system-ui, sans-serif" font-size="19" font-weight="700" fill="#9a3412">Internal Stress σ = F/A</text>
+    <text x="24" y="168" font-family="system-ui, sans-serif" font-size="22" font-weight="800" fill="#dc2626">← Force F</text>
+    <text x="456" y="168" font-family="system-ui, sans-serif" font-size="22" font-weight="800" fill="#dc2626" text-anchor="end">Force F →</text>
 
-    <!-- Physical Explanation Card -->
-    <rect x="30" y="320" width="400" height="320" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
-    <text x="50" y="360" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">Mechanical Chain of Events:</text>
-    <text x="50" y="405" font-family="system-ui, sans-serif" font-size="17" fill="#334155">1. Tensile force pulls atomic lattice apart.</text>
-    <text x="50" y="445" font-family="system-ui, sans-serif" font-size="17" fill="#334155">2. Rod elongates axially by <tspan font-weight="700" fill="#2563eb">+ΔL</tspan>.</text>
-    <text x="50" y="485" font-family="system-ui, sans-serif" font-size="17" fill="#334155">3. Poisson effect contracts width by <tspan font-weight="700" fill="#dc2626">-ΔW</tspan>.</text>
-    <text x="50" y="525" font-family="system-ui, sans-serif" font-size="17" fill="#334155">4. Adhesive layer transfers strain to foil.</text>
-    <text x="50" y="565" font-family="monospace" font-size="18" font-weight="700" fill="#147d8b">Strain: ε = ΔL / L₀</text>
+    <rect x="96" y="115" width="288" height="180" rx="6" fill="#fed7aa" stroke="#ea580c" stroke-width="2" />
+    <text x="240" y="212" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#9a3412" text-anchor="middle">Stress σ = F / A</text>
+
+    <rect x="28" y="330" width="424" height="350" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="48" y="372" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#0f172a">Mechanical Sequence:</text>
+    <text x="48" y="424" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">1. Force pulls atomic lattice apart.</text>
+    <text x="48" y="476" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">2. Rod elongates axially by <tspan font-weight="700" fill="#1d4ed8">+ΔL</tspan>.</text>
+    <text x="48" y="528" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">3. Poisson effect shrinks width <tspan font-weight="700" fill="#dc2626">-ΔW</tspan>.</text>
+    <text x="48" y="580" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">4. Epoxy bonds transfer strain to foil.</text>
+    <text x="48" y="638" font-family="monospace" font-size="22" font-weight="700" fill="#0f766e">Strain: ε = ΔL / L₀</text>
   </g>
 
-  <!-- Panel 3: Deformed Strained State -->
-  <g transform="translate(1070, 150)">
-    <rect width="470" height="680" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-    <rect width="470" height="45" rx="8" fill="#f0fdf4" />
-    <text x="25" y="30" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#166534">
+  <!-- Panel 3: Strained State -->
+  <g transform="translate(1075, 135)">
+    <rect width="480" height="715" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="480" height="52" rx="8" fill="#f0fdf4" />
+    <text x="24" y="34" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#166534">
       3. Strained Specimen (L₀ + ΔL)
     </text>
 
-    <!-- Elongated & Thinned Specimen Bar -->
-    <rect x="40" y="115" width="390" height="170" rx="6" fill="#bbf7d0" stroke="#16a34a" stroke-width="2" />
-    <text x="140" y="205" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#14532d">Elongated Rod (L₀ + ΔL)</text>
-    <line x1="40" y1="330" x2="430" y2="330" stroke="#15803d" stroke-width="2.5" />
-    <line x1="40" y1="320" x2="40" y2="340" stroke="#15803d" stroke-width="2.5" />
-    <line x1="430" y1="320" x2="430" y2="340" stroke="#15803d" stroke-width="2.5" />
-    <text x="170" y="360" font-family="monospace" font-size="22" font-weight="700" fill="#15803d">L₀ + ΔL (Stretched)</text>
+    <rect x="42" y="120" width="396" height="170" rx="6" fill="#bbf7d0" stroke="#16a34a" stroke-width="2" />
+    <text x="240" y="212" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#14532d" text-anchor="middle">Elongated Rod (L₀ + ΔL)</text>
+    <line x1="42" y1="335" x2="438" y2="335" stroke="#15803d" stroke-width="2.5" />
+    <line x1="42" y1="324" x2="42" y2="346" stroke="#15803d" stroke-width="2.5" />
+    <line x1="438" y1="324" x2="438" y2="346" stroke="#15803d" stroke-width="2.5" />
+    <text x="240" y="372" font-family="monospace" font-size="23" font-weight="700" fill="#15803d" text-anchor="middle">L₀ + ΔL (Stretched)</text>
 
-    <!-- Gauge Grid Stretched -->
-    <rect x="60" y="420" width="350" height="180" rx="6" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.5" />
-    <text x="80" y="455" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#854d0e">Electrical Resistance Increases:</text>
-    <text x="80" y="500" font-family="monospace" font-size="26" font-weight="800" fill="#dc2626">R = 120.240 Ω</text>
-    <text x="80" y="540" font-family="monospace" font-size="18" font-weight="700" fill="#15803d">ΔR = +0.240 Ω (+0.20%)</text>
-    <text x="80" y="575" font-family="system-ui, sans-serif" font-size="15" fill="#475569">For ε = 1000 με, GF = 2.00</text>
+    <rect x="45" y="425" width="390" height="190" rx="8" fill="#fef9c3" stroke="#ca8a04" stroke-width="1.5" />
+    <text x="240" y="468" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#854d0e" text-anchor="middle">Resistance Increases:</text>
+    <text x="240" y="518" font-family="monospace" font-size="28" font-weight="800" fill="#dc2626" text-anchor="middle">R = 120.240 Ω</text>
+    <text x="240" y="562" font-family="monospace" font-size="21" font-weight="700" fill="#15803d" text-anchor="middle">ΔR = +0.240 Ω (+0.20%)</text>
+    <text x="240" y="596" font-family="system-ui, sans-serif" font-size="20" font-weight="600" fill="#334155" text-anchor="middle">For ε = 1000 με, GF = 2.0</text>
   </g>
 </svg>`
   },
@@ -1228,108 +1180,100 @@ export const SVG_FIGURES_UNIT3: Record<string, SvgAsset> = {
     svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-  <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
-    Figure 3.9: Complete Strain Measurement Signal Chain — From Mechanical Force to Digital Readout
+  <rect x="45" y="40" width="1510" height="72" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+  <text x="70" y="86" font-family="system-ui, sans-serif" font-size="30" font-weight="700" fill="#0f172a">
+    Figure 3.9: End-to-End Strain Measurement Signal Chain
   </text>
-  <text x="1250" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#147d8b">
+  <text x="1530" y="85" font-family="monospace" font-size="22" font-weight="700" fill="#0f766e" text-anchor="end">
     Unit III · Section 3.3
   </text>
 
-  <!-- Stage 1: Mechanical Force -->
-  <g transform="translate(60, 200)">
-    <rect width="210" height="520" rx="10" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
-    <text x="20" y="40" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#1e3a8a">1. Physical Force</text>
-    <rect x="25" y="80" width="160" height="120" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
-    <text x="45" y="130" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#dc2626">Mechanical Load</text>
-    <text x="60" y="165" font-family="monospace" font-size="20" font-weight="800" fill="#0f172a">F = 15 kN</text>
-    <text x="25" y="240" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Applied stress σ</text>
-    <text x="25" y="275" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Machine casing</text>
-    <text x="25" y="310" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Aircraft wing root</text>
-    <rect x="20" y="420" width="170" height="70" rx="6" fill="#dbeafe" />
-    <text x="35" y="450" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#1e40af">Measurand:</text>
-    <text x="35" y="475" font-family="monospace" font-size="16" font-weight="700" fill="#1e40af">Stress σ (MPa)</text>
+  <!-- Row 1: Stages 1 -> 2 -> 3 -->
+  <!-- Stage 1 -->
+  <g transform="translate(55, 138)">
+    <rect width="465" height="330" rx="12" fill="#eff6ff" stroke="#93c5fd" stroke-width="2" />
+    <text x="24" y="42" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#1e3a8a">1. Applied Physical Force</text>
+    <rect x="24" y="64" width="417" height="96" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="232" y="102" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#dc2626" text-anchor="middle">Mechanical Load Input</text>
+    <text x="232" y="140" font-family="monospace" font-size="26" font-weight="800" fill="#0f172a" text-anchor="middle">F = 15.0 kN</text>
+    <text x="24" y="198" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Applied structural stress σ (MPa)</text>
+    <text x="24" y="232" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Pressurized casing or wing root</text>
+    <rect x="24" y="256" width="417" height="54" rx="6" fill="#dbeafe" />
+    <text x="232" y="290" font-family="monospace" font-size="20" font-weight="700" fill="#1e40af" text-anchor="middle">Measurand: Stress σ = F / A</text>
   </g>
-  <path d="M 275 460 L 305 460 M 305 460 L 295 450 M 305 460 L 295 470" stroke="#0f172a" stroke-width="3" stroke-linecap="round" fill="none" />
+  <path d="M 526 303 L 558 303 M 558 303 L 544 292 M 558 303 L 544 314" stroke="#0f172a" stroke-width="4" stroke-linecap="round" fill="none" />
 
-  <!-- Stage 2: Specimen Strain -->
-  <g transform="translate(310, 200)">
-    <rect width="210" height="520" rx="10" fill="#fefce8" stroke="#fde047" stroke-width="1.5" />
-    <text x="20" y="40" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#854d0e">2. Deformation</text>
-    <rect x="25" y="80" width="160" height="120" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
-    <text x="40" y="130" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#ca8a04">Elastic Strain</text>
-    <text x="45" y="165" font-family="monospace" font-size="20" font-weight="800" fill="#0f172a">ε = +800 με</text>
-    <text x="25" y="240" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• ε = ΔL / L₀</text>
-    <text x="25" y="275" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Sub-micrometer</text>
-    <text x="25" y="310" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Invisible to eye</text>
-    <rect x="20" y="420" width="170" height="70" rx="6" fill="#fef08a" />
-    <text x="35" y="450" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#713f12">Constitutive:</text>
-    <text x="35" y="475" font-family="monospace" font-size="16" font-weight="700" fill="#713f12">ε = σ / E</text>
+  <!-- Stage 2 -->
+  <g transform="translate(568, 138)">
+    <rect width="465" height="330" rx="12" fill="#fefce8" stroke="#fde047" stroke-width="2" />
+    <text x="24" y="42" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#854d0e">2. Elastic Deformation</text>
+    <rect x="24" y="64" width="417" height="96" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="232" y="102" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#b45309" text-anchor="middle">Specimen Micro-Strain</text>
+    <text x="232" y="140" font-family="monospace" font-size="26" font-weight="800" fill="#0f172a" text-anchor="middle">ε = +800 με</text>
+    <text x="24" y="198" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Relative elongation ε = ΔL / L₀</text>
+    <text x="24" y="232" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Sub-micrometer lattice stretch</text>
+    <rect x="24" y="256" width="417" height="54" rx="6" fill="#fef08a" />
+    <text x="232" y="290" font-family="monospace" font-size="20" font-weight="700" fill="#713f12" text-anchor="middle">Hooke's Law: ε = σ / E</text>
   </g>
-  <path d="M 525 460 L 555 460 M 555 460 L 545 450 M 555 460 L 545 470" stroke="#0f172a" stroke-width="3" stroke-linecap="round" fill="none" />
+  <path d="M 1039 303 L 1071 303 M 1071 303 L 1057 292 M 1071 303 L 1057 314" stroke="#0f172a" stroke-width="4" stroke-linecap="round" fill="none" />
 
-  <!-- Stage 3: Strain Gauge Resistance -->
-  <g transform="translate(560, 200)">
-    <rect width="210" height="520" rx="10" fill="#fff7ed" stroke="#fdba74" stroke-width="1.5" />
-    <text x="20" y="40" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#9a3412">3. Strain Gauge</text>
-    <rect x="25" y="80" width="160" height="120" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
-    <text x="45" y="130" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#ea580c">Resistance ΔR</text>
-    <text x="40" y="165" font-family="monospace" font-size="19" font-weight="800" fill="#0f172a">+0.1968 Ω</text>
-    <text x="25" y="240" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• GF = 2.05</text>
-    <text x="25" y="275" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• ΔR = R₀ · GF · ε</text>
-    <text x="25" y="310" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Very tiny change!</text>
-    <rect x="20" y="420" width="170" height="70" rx="6" fill="#fed7aa" />
-    <text x="35" y="450" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#7c2d12">Transduction:</text>
-    <text x="35" y="475" font-family="monospace" font-size="16" font-weight="700" fill="#7c2d12">ΔR / R₀ = GF·ε</text>
+  <!-- Stage 3 -->
+  <g transform="translate(1080, 138)">
+    <rect width="465" height="330" rx="12" fill="#fff7ed" stroke="#fdba74" stroke-width="2" />
+    <text x="24" y="42" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#9a3412">3. Strain Gauge ΔR</text>
+    <rect x="24" y="64" width="417" height="96" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="232" y="102" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#c2410c" text-anchor="middle">Resistance Modulation</text>
+    <text x="232" y="140" font-family="monospace" font-size="26" font-weight="800" fill="#0f172a" text-anchor="middle">ΔR = +0.1968 Ω</text>
+    <text x="24" y="198" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• R₀ = 120 Ω, GF = 2.05 foil</text>
+    <text x="24" y="232" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Tiny ΔR/R₀ ≈ 0.164% change</text>
+    <rect x="24" y="256" width="417" height="54" rx="6" fill="#fed7aa" />
+    <text x="232" y="290" font-family="monospace" font-size="20" font-weight="700" fill="#7c2d12" text-anchor="middle">Transduction: ΔR = R₀·GF·ε</text>
   </g>
-  <path d="M 775 460 L 805 460 M 805 460 L 795 450 M 805 460 L 795 470" stroke="#0f172a" stroke-width="3" stroke-linecap="round" fill="none" />
 
-  <!-- Stage 4: Wheatstone Bridge -->
-  <g transform="translate(810, 200)">
-    <rect width="220" height="520" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5" />
-    <text x="20" y="40" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#14532d">4. Bridge Circuit</text>
-    <rect x="25" y="80" width="170" height="120" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
-    <text x="40" y="130" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#16a34a">Bridge Output</text>
-    <text x="50" y="165" font-family="monospace" font-size="20" font-weight="800" fill="#0f172a">V₀ = 4.10 mV</text>
-    <text x="25" y="240" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Quarter / Full</text>
-    <text x="25" y="275" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Zero DC baseline</text>
-    <text x="25" y="310" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Temp compensated</text>
-    <rect x="20" y="420" width="180" height="70" rx="6" fill="#bbf7d0" />
-    <text x="35" y="450" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#14532d">Signal Level:</text>
-    <text x="35" y="475" font-family="monospace" font-size="16" font-weight="700" fill="#14532d">V₀ ≈ (V_EX/4)GF·ε</text>
+  <!-- Step-down Flow Connector from Stage 3 to Stage 4 -->
+  <path d="M 1312 472 L 1312 496 L 287 496 L 287 518 M 287 518 L 276 504 M 287 518 L 298 504" stroke="#0f172a" stroke-width="3.5" stroke-linejoin="round" fill="none" />
+
+  <!-- Row 2: Stages 4 -> 5 -> 6 -->
+  <!-- Stage 4 -->
+  <g transform="translate(55, 524)">
+    <rect width="465" height="330" rx="12" fill="#f0fdf4" stroke="#86efac" stroke-width="2" />
+    <text x="24" y="42" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#14532d">4. Wheatstone Bridge</text>
+    <rect x="24" y="64" width="417" height="96" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="232" y="102" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#15803d" text-anchor="middle">Differential Voltage V₀</text>
+    <text x="232" y="140" font-family="monospace" font-size="26" font-weight="800" fill="#0f172a" text-anchor="middle">V₀ = 4.10 mV</text>
+    <text x="24" y="198" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Zero DC baseline at balanced zero</text>
+    <text x="24" y="232" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Temperature drift compensated</text>
+    <rect x="24" y="256" width="417" height="54" rx="6" fill="#bbf7d0" />
+    <text x="232" y="290" font-family="monospace" font-size="20" font-weight="700" fill="#14532d" text-anchor="middle">V₀ ≈ (V_EX / 4) · GF · ε</text>
   </g>
-  <path d="M 1035 460 L 1065 460 M 1065 460 L 1055 450 M 1065 460 L 1055 470" stroke="#0f172a" stroke-width="3" stroke-linecap="round" fill="none" />
+  <path d="M 526 689 L 558 689 M 558 689 L 544 678 M 558 689 L 544 700" stroke="#0f172a" stroke-width="4" stroke-linecap="round" fill="none" />
 
-  <!-- Stage 5: Conditioning & ADC -->
-  <g transform="translate(1070, 200)">
-    <rect width="220" height="520" rx="10" fill="#fdf4ff" stroke="#f0abfc" stroke-width="1.5" />
-    <text x="20" y="40" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#701a75">5. Amplifier &amp; ADC</text>
-    <rect x="25" y="80" width="170" height="120" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1" />
-    <text x="45" y="130" font-family="system-ui, sans-serif" font-size="17" font-weight="700" fill="#c026d3">InAmp + ADC</text>
-    <text x="40" y="165" font-family="monospace" font-size="20" font-weight="800" fill="#0f172a">Gain = 1000×</text>
-    <text x="25" y="240" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• InAmp: 4.1 mV → 4.1 V</text>
-    <text x="25" y="275" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Anti-aliasing filter</text>
-    <text x="25" y="310" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• 16-bit ADC sampling</text>
-    <rect x="20" y="420" width="180" height="70" rx="6" fill="#f5d0fe" />
-    <text x="35" y="450" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#701a75">Conditioned Output:</text>
-    <text x="35" y="475" font-family="monospace" font-size="16" font-weight="700" fill="#701a75">V_amp = 4.100 V</text>
+  <!-- Stage 5 -->
+  <g transform="translate(568, 524)">
+    <rect width="465" height="330" rx="12" fill="#fdf4ff" stroke="#f0abfc" stroke-width="2" />
+    <text x="24" y="42" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#701a75">5. InAmp &amp; 16-Bit ADC</text>
+    <rect x="24" y="64" width="417" height="96" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <text x="232" y="102" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#a21caf" text-anchor="middle">Amplification + Digitization</text>
+    <text x="232" y="140" font-family="monospace" font-size="26" font-weight="800" fill="#0f172a" text-anchor="middle">Gain = 1000×</text>
+    <text x="24" y="198" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Boosts 4.10 mV → 4.10 V clean</text>
+    <text x="24" y="232" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Anti-aliasing LPF + 16-bit ADC</text>
+    <rect x="24" y="256" width="417" height="54" rx="6" fill="#f5d0fe" />
+    <text x="232" y="290" font-family="monospace" font-size="20" font-weight="700" fill="#701a75" text-anchor="middle">Conditioned: V_amp = 4.100 V</text>
   </g>
-  <path d="M 1295 460 L 1325 460 M 1325 460 L 1315 450 M 1325 460 L 1315 470" stroke="#0f172a" stroke-width="3" stroke-linecap="round" fill="none" />
+  <path d="M 1039 689 L 1071 689 M 1071 689 L 1057 678 M 1071 689 L 1057 700" stroke="#0f172a" stroke-width="4" stroke-linecap="round" fill="none" />
 
-  <!-- Stage 6: Computer Display & DAQ -->
-  <g transform="translate(1330, 200)">
-    <rect width="210" height="520" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.5" />
-    <text x="20" y="40" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">6. User Display</text>
-    <rect x="25" y="80" width="160" height="120" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" />
-    <text x="40" y="125" font-family="monospace" font-size="13" font-weight="700" fill="#22c55e">LIVE READOUT:</text>
-    <text x="35" y="160" font-family="monospace" font-size="20" font-weight="800" fill="#ffffff">800.0 με</text>
-    <text x="40" y="185" font-family="monospace" font-size="13" font-weight="700" fill="#38bdf8">σ = 160.0 MPa</text>
-    <text x="25" y="240" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Real-time logging</text>
-    <text x="25" y="275" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• Structural alarms</text>
-    <text x="25" y="310" font-family="system-ui, sans-serif" font-size="15" fill="#334155">• ISO certification</text>
-    <rect x="20" y="420" width="170" height="70" rx="6" fill="#e2e8f0" />
-    <text x="35" y="450" font-family="system-ui, sans-serif" font-size="14" font-weight="700" fill="#0f172a">Actionable Data:</text>
-    <text x="35" y="475" font-family="monospace" font-size="16" font-weight="700" fill="#0f172a">Safety Margin OK</text>
+  <!-- Stage 6 -->
+  <g transform="translate(1080, 524)">
+    <rect width="465" height="330" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" />
+    <text x="24" y="42" font-family="system-ui, sans-serif" font-size="24" font-weight="700" fill="#0f172a">6. DAQ Display &amp; HMI</text>
+    <rect x="24" y="64" width="417" height="96" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1.5" />
+    <text x="44" y="96" font-family="monospace" font-size="20" font-weight="700" fill="#4ade80">LIVE READOUT:</text>
+    <text x="44" y="138" font-family="monospace" font-size="25" font-weight="800" fill="#ffffff">800.0 με</text>
+    <text x="422" y="138" font-family="monospace" font-size="21" font-weight="700" fill="#38bdf8" text-anchor="end">160.0 MPa</text>
+    <text x="24" y="198" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Real-time stress logging &amp; alarms</text>
+    <text x="24" y="232" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Fatigue cycle &amp; ISO compliance</text>
+    <rect x="24" y="256" width="417" height="54" rx="6" fill="#e2e8f0" />
+    <text x="232" y="290" font-family="monospace" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">Status: Safety Margin OK</text>
   </g>
 </svg>`
   },
@@ -1343,87 +1287,87 @@ export const SVG_FIGURES_UNIT3: Record<string, SvgAsset> = {
     svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-  <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
-    Figure 3.10: Real-World Industrial Applications of Electrical Resistance Strain Gauges
+  <rect x="45" y="40" width="1510" height="72" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" />
+  <text x="70" y="86" font-family="system-ui, sans-serif" font-size="30" font-weight="700" fill="#0f172a">
+    Figure 3.10: Industrial Applications of Strain Gauges
   </text>
-  <text x="1250" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#147d8b">
+  <text x="1530" y="85" font-family="monospace" font-size="22" font-weight="700" fill="#0f766e" text-anchor="end">
     Unit III · Section 3.4
   </text>
 
   <!-- App 1: Industrial Load Cells -->
-  <g transform="translate(60, 140)">
-    <rect width="700" height="340" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-    <rect width="700" height="45" rx="8" fill="#eff6ff" />
-    <text x="25" y="30" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1e40af">
-      1. Industrial Load Cells &amp; Electronic Weighing Systems
+  <g transform="translate(45, 132)">
+    <rect width="740" height="352" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="740" height="50" rx="8" fill="#eff6ff" />
+    <text x="24" y="34" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e40af">
+      1. Industrial Load Cells &amp; Weighing
     </text>
-    <rect x="30" y="65" width="280" height="250" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
-    <text x="50" y="110" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#2563eb">S-Beam &amp; Canister</text>
-    <rect x="70" y="140" width="200" height="120" rx="6" fill="#cbd5e1" stroke="#64748b" stroke-width="2" />
-    <text x="110" y="205" font-family="monospace" font-size="20" font-weight="800" fill="#0f172a">LOAD CELL</text>
-    <circle cx="170" cy="160" r="12" fill="#ef4444" />
-    <circle cx="170" cy="235" r="12" fill="#ef4444" />
-    <text x="340" y="100" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">Architecture &amp; Features:</text>
-    <text x="340" y="140" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Full Wheatstone bridge arrangement (4 active arms).</text>
-    <text x="340" y="180" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Hermetically sealed stainless steel body (IP68).</text>
-    <text x="340" y="220" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Rated capacities from 500 g up to 500 tonnes.</text>
-    <text x="340" y="260" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Certified legal-for-trade truck scales &amp; silo weighing.</text>
+    <rect x="22" y="68" width="235" height="260" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
+    <text x="140" y="106" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1d4ed8" text-anchor="middle">S-Beam Cell</text>
+    <rect x="48" y="138" width="184" height="118" rx="6" fill="#cbd5e1" stroke="#475569" stroke-width="2" />
+    <text x="140" y="205" font-family="monospace" font-size="22" font-weight="800" fill="#0f172a" text-anchor="middle">LOAD CELL</text>
+    <circle cx="140" cy="156" r="10" fill="#ef4444" />
+    <circle cx="140" cy="236" r="10" fill="#ef4444" />
+    <text x="278" y="102" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#0f172a">Architecture &amp; Features:</text>
+    <text x="278" y="148" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Full Wheatstone bridge (4 active arms).</text>
+    <text x="278" y="196" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Hermetic IP68 stainless housing.</text>
+    <text x="278" y="244" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Rated capacity: 500 g to 500 tonnes.</text>
+    <text x="278" y="292" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Legal-for-trade truck &amp; silo scales.</text>
   </g>
 
   <!-- App 2: Structural Health Monitoring -->
-  <g transform="translate(840, 140)">
-    <rect width="700" height="340" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-    <rect width="700" height="45" rx="8" fill="#f0fdf4" />
-    <text x="25" y="30" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#166534">
-      2. Structural Health Monitoring (Bridges, Dams &amp; Airframes)
+  <g transform="translate(815, 132)">
+    <rect width="740" height="352" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="740" height="50" rx="8" fill="#f0fdf4" />
+    <text x="24" y="34" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#166534">
+      2. Structural Health Monitoring (SHM)
     </text>
-    <rect x="30" y="65" width="280" height="250" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
-    <text x="60" y="110" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#16a34a">Civil Infrastructure</text>
-    <path d="M 50 250 L 170 140 L 290 250 Z M 110 250 L 170 140 L 230 250 Z" fill="none" stroke="#64748b" stroke-width="4" />
-    <circle cx="170" cy="180" r="10" fill="#16a34a" />
-    <text x="340" y="100" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">Architecture &amp; Features:</text>
-    <text x="340" y="140" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Continuous fatigue cycle counting (Rainflow algorithm).</text>
-    <text x="340" y="180" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Weldment stress concentration monitoring.</text>
-    <text x="340" y="220" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Automated seismic damage detection.</text>
-    <text x="340" y="260" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Wireless solar-powered telemetry nodes on cable bridges.</text>
+    <rect x="22" y="68" width="235" height="260" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
+    <text x="140" y="106" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#15803d" text-anchor="middle">Bridge Truss</text>
+    <path d="M 38 258 L 140 144 L 242 258 Z M 88 258 L 140 144 L 192 258 Z" fill="none" stroke="#475569" stroke-width="4" />
+    <circle cx="140" cy="186" r="10" fill="#16a34a" />
+    <text x="278" y="102" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#0f172a">Architecture &amp; Features:</text>
+    <text x="278" y="148" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Continuous Rainflow fatigue tracking.</text>
+    <text x="278" y="196" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Weldment stress hotspot sensors.</text>
+    <text x="278" y="244" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Automated seismic event detection.</text>
+    <text x="278" y="292" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Solar wireless bridge telemetry nodes.</text>
   </g>
 
   <!-- App 3: Automobile & Powertrain Testing -->
-  <g transform="translate(60, 510)">
-    <rect width="700" height="340" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-    <rect width="700" height="45" rx="8" fill="#fff7ed" />
-    <text x="25" y="30" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#c2410c">
-      3. Automobile Testing &amp; Rotating Shaft Torque Telemetry
+  <g transform="translate(45, 504)">
+    <rect width="740" height="352" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="740" height="50" rx="8" fill="#fff7ed" />
+    <text x="24" y="34" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#c2410c">
+      3. Automotive Shaft Torque Telemetry
     </text>
-    <rect x="30" y="65" width="280" height="250" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
-    <text x="50" y="110" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#ea580c">Rotating Torque Shaft</text>
-    <rect x="50" y="170" width="240" height="60" rx="4" fill="#cbd5e1" stroke="#475569" stroke-width="2" />
-    <line x1="140" y1="170" x2="200" y2="230" stroke="#dc2626" stroke-width="3" />
-    <line x1="200" y1="170" x2="140" y2="230" stroke="#2563eb" stroke-width="3" />
-    <text x="340" y="100" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">Architecture &amp; Features:</text>
-    <text x="340" y="140" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• 45° torque rosette gauges mounted directly on drive shafts.</text>
-    <text x="340" y="180" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Resolves pure torsional shear while rejecting bending &amp; thrust.</text>
-    <text x="340" y="220" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Non-contact wireless RF telemetry up to 15,000 RPM.</text>
-    <text x="340" y="260" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Suspension multi-axis road load data acquisition (RLDA).</text>
+    <rect x="22" y="68" width="235" height="260" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
+    <text x="140" y="106" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#c2410c" text-anchor="middle">Torque Shaft</text>
+    <rect x="38" y="172" width="204" height="60" rx="4" fill="#cbd5e1" stroke="#475569" stroke-width="2" />
+    <line x1="112" y1="172" x2="168" y2="232" stroke="#dc2626" stroke-width="4" />
+    <line x1="168" y1="172" x2="112" y2="232" stroke="#2563eb" stroke-width="4" />
+    <text x="278" y="102" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#0f172a">Architecture &amp; Features:</text>
+    <text x="278" y="148" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• ±45° rosette gauges on drive shafts.</text>
+    <text x="278" y="196" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Isolates torsion; rejects bending.</text>
+    <text x="278" y="244" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Wireless RF telemetry to 15k RPM.</text>
+    <text x="278" y="292" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Multi-axis road load acquisition.</text>
   </g>
 
   <!-- App 4: Material Testing UTM -->
-  <g transform="translate(840, 510)">
-    <rect width="700" height="340" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
-    <rect width="700" height="45" rx="8" fill="#fdf4ff" />
-    <text x="25" y="30" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#a21caf">
-      4. Material Testing &amp; Extensometer Verification (UTM)
+  <g transform="translate(815, 504)">
+    <rect width="740" height="352" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect width="740" height="50" rx="8" fill="#fdf4ff" />
+    <text x="24" y="34" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#86198f">
+      4. Material Testing &amp; UTM Verification
     </text>
-    <rect x="30" y="65" width="280" height="250" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" />
-    <text x="60" y="110" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#c026d3">Universal Testing Machine</text>
-    <rect x="90" y="140" width="160" height="130" fill="none" stroke="#64748b" stroke-width="3" />
-    <line x1="170" y1="140" x2="170" y2="270" stroke="#dc2626" stroke-width="4" />
-    <text x="340" y="100" font-family="system-ui, sans-serif" font-size="18" font-weight="700" fill="#0f172a">Architecture &amp; Features:</text>
-    <text x="340" y="140" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Stress-strain curve derivation: Young's modulus E &amp; yield σ_y.</text>
-    <text x="340" y="180" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Poisson's ratio ν determination using biaxial T-rosettes.</text>
-    <text x="340" y="220" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• High-temperature ceramic cement bonding up to 800°C.</text>
-    <text x="340" y="260" font-family="system-ui, sans-serif" font-size="17" fill="#334155">• Fracture mechanics testing &amp; crack propagation tracking.</text>
+    <rect x="22" y="68" width="235" height="260" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2" />
+    <text x="140" y="106" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#86198f" text-anchor="middle">UTM Frame</text>
+    <rect x="65" y="142" width="150" height="128" fill="none" stroke="#475569" stroke-width="3.5" />
+    <line x1="140" y1="142" x2="140" y2="270" stroke="#dc2626" stroke-width="5" />
+    <text x="278" y="102" font-family="system-ui, sans-serif" font-size="21" font-weight="700" fill="#0f172a">Architecture &amp; Features:</text>
+    <text x="278" y="148" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Stress-strain curves: E &amp; yield σ_y.</text>
+    <text x="278" y="196" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Poisson's ratio ν via T-rosettes.</text>
+    <text x="278" y="244" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Ceramic cement bonds up to 800°C.</text>
+    <text x="278" y="292" font-family="system-ui, sans-serif" font-size="20" fill="#1e293b">• Fracture crack propagation tests.</text>
   </g>
 </svg>`
   }

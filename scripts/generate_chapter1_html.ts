@@ -6,6 +6,7 @@
 import fs from 'fs';
 import path from 'path';
 import { SLIDES_DATA } from '../src/data/lectureContent';
+import { SVG_FIGURES } from '../src/data/svgAssets';
 import { SlideData } from '../src/types/chapterDeck';
 
 function escapeHtml(text: string): string {
@@ -142,52 +143,182 @@ function generateHtml(): string {
     } else {
       let contentSection = '';
 
-      if (s.equation) {
+      if (s.type === 'figure' || s.figureKey || s.figureSvg) {
+        const rawSvg = (s.figureKey && SVG_FIGURES[s.figureKey]?.svgContent) || s.figureSvg || '';
+        if (rawSvg) {
+          contentSection += `
+            <div class="card-box" style="padding: 10px; margin-bottom: 12px; align-items: center;">
+              <div style="width: 100%; max-height: 410px; display: flex; justify-content: center;">
+                ${rawSvg.replace('<svg ', '<svg style="max-height: 400px; width: 100%; height: auto;" ')}
+              </div>
+            </div>
+          `;
+        } else if (s.imageUrl) {
+          const imgSrc = s.imageUrl.startsWith('/') ? s.imageUrl.slice(1) : s.imageUrl;
+          contentSection += `
+            <div class="card-box" style="padding: 10px; margin-bottom: 12px; align-items: center;">
+              <img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(s.imageCaption || s.title)}" style="max-height: 390px; max-width: 100%; border-radius: 8px; object-fit: contain;" />
+              ${s.imageCaption ? `<p style="font-size: 12px; color: #64748b; margin-top: 6px;">${escapeHtml(s.imageCaption)}</p>` : ''}
+            </div>
+          `;
+        }
+      }
+
+      const eqLatex = s.formulaBlock?.equation || s.equation;
+      if (eqLatex) {
         contentSection += `
           <div class="math-banner">
-            $${s.equation}$
+            ${s.formulaBlock?.label ? `<div style="font-size: 11px; font-weight: 700; color: var(--accent-teal); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">${escapeHtml(s.formulaBlock.label)}</div>` : ''}
+            $$${eqLatex}$$
+          </div>
+        `;
+      }
+
+      if (s.formulaBlock?.symbols && s.formulaBlock.symbols.length > 0) {
+        contentSection += `
+          <div class="card-box" style="padding: 12px 16px; margin-bottom: 12px;">
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 13px;">
+              ${s.formulaBlock.symbols.map((sym) => `
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 6px 10px;">
+                  <strong style="color: var(--accent-teal);">$${sym.symbol}$</strong> — <strong>${escapeHtml(sym.name)}</strong>
+                  ${sym.unit ? `<span style="color:#64748b;">[${escapeHtml(sym.unit)}]</span>` : ''}:
+                  <span style="color:#475569;">${escapeHtml(sym.description || '')}</span>
+                </div>
+              `).join('')}
+            </div>
           </div>
         `;
       }
 
       if (s.definition) {
         contentSection += `
-          <div class="card-box" style="border-left: 4px solid var(--accent-teal); margin-bottom: 16px;">
+          <div class="card-box" style="border-left: 4px solid var(--accent-teal); margin-bottom: 12px;">
             <h3 style="color: var(--accent-teal); font-size: 20px; margin-bottom: 8px;">${escapeHtml(s.definition.term)}</h3>
-            <blockquote style="font-size: 17px; font-style: italic; color: #1e293b; border-left: 3px solid #cbd5e1; padding-left: 12px; margin: 8px 0;">
+            <blockquote style="font-size: 16px; font-style: italic; color: #1e293b; border-left: 3px solid #cbd5e1; padding-left: 12px; margin: 8px 0;">
               "${escapeHtml(s.definition.formalDefinition || s.definition.formalText || '')}"
             </blockquote>
-            ${s.definition.standardReference ? `<span style="font-size: 11px; font-mono; color: #64748b;">Ref: ${escapeHtml(s.definition.standardReference)}</span>` : ''}
+            ${s.definition.operationalMeaning ? `<p style="font-size: 14px; color: #334155; margin-top: 6px;">${escapeHtml(s.definition.operationalMeaning)}</p>` : ''}
+            ${s.definition.standardReference ? `<span style="font-size: 11px; font-family: var(--font-mono); color: #64748b; margin-top: 6px;">Ref: ${escapeHtml(s.definition.standardReference)}</span>` : ''}
+          </div>
+        `;
+      }
+
+      if (s.analogy) {
+        contentSection += `
+          <div class="card-box" style="border-left: 4px solid var(--accent-amber); margin-bottom: 12px;">
+            <h3 style="color: #b45309; font-size: 18px; margin-bottom: 10px;">Mental Model: ${escapeHtml(s.analogy.everydayConcept)}</h3>
+            <div class="content-grid-2" style="margin: 4px 0;">
+              <div style="background:#f8fafc; padding:12px; border-radius:8px; border:1px solid #e2e8f0; font-size:14px;">
+                <strong style="color:#0f172a; display:block; margin-bottom:4px;">Engineering Mapping:</strong>
+                ${escapeHtml(s.analogy.technicalMapping)}
+              </div>
+              <div style="background:#f0fdf4; padding:12px; border-radius:8px; border:1px solid #bbf7d0; font-size:14px;">
+                <strong style="color:#15803d; display:block; margin-bottom:4px;">Why It Works:</strong>
+                ${escapeHtml(s.analogy.whyItWorks)}
+              </div>
+            </div>
+            <p style="font-size: 13px; color: #b91c1c; margin-top: 8px;"><strong>Limit of Analogy:</strong> ${escapeHtml(s.analogy.limitsOfAnalogy)}</p>
+          </div>
+        `;
+      }
+
+      if (s.typesGrid && s.typesGrid.length > 0) {
+        contentSection += `
+          <div style="display: grid; grid-template-columns: repeat(${Math.min(3, s.typesGrid.length)}, 1fr); gap: 14px; margin-bottom: 12px;">
+            ${s.typesGrid.map((t) => `
+              <div class="card-box" style="justify-content: flex-start; border-top: 4px solid var(--accent-teal); padding: 16px;">
+                ${t.badge ? `<span style="font-size:10px; font-weight:700; color:var(--accent-teal); text-transform:uppercase; margin-bottom:4px;">${escapeHtml(t.badge)}</span>` : ''}
+                <h4 style="font-size: 17px; color: #0f172a; margin-bottom: 8px;">${escapeHtml(t.typeName)}</h4>
+                <p style="font-size: 13px; color: #334155; line-height: 1.45; margin-bottom: 8px;">${formatMarkdownToHtml(t.description)}</p>
+                <p style="font-size: 12px; color: #0f172a; margin-bottom: 6px;"><strong>Mechanism:</strong> ${formatMarkdownToHtml(t.keyFeature)}</p>
+                <p style="font-size: 12px; color: #64748b;"><strong>Examples:</strong> ${escapeHtml(t.example)}</p>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      if (s.prosCons) {
+        contentSection += `
+          <div class="content-grid-2" style="margin-bottom: 10px;">
+            <div class="card-box" style="border-left: 4px solid #16a34a; justify-content: flex-start;">
+              <h4 style="color:#15803d; font-size:16px; margin-bottom:8px;">✓ Advantages</h4>
+              <ul class="clean-list" style="font-size:14px;">
+                ${s.prosCons.advantages.map((a) => `<li>${formatMarkdownToHtml(a)}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="card-box" style="border-left: 4px solid #dc2626; justify-content: flex-start;">
+              <h4 style="color:#b91c1c; font-size:16px; margin-bottom:8px;">✕ Trade-offs &amp; Limitations</h4>
+              <ul class="clean-list" style="font-size:14px;">
+                ${s.prosCons.disadvantages.map((d) => `<li>${formatMarkdownToHtml(d)}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+          ${s.prosCons.engineeringVerdict ? `<div class="card-box" style="padding:10px 14px; font-size:13px; background:#eff6ff; border-color:#bfdbfe;"><strong>Engineering Verdict:</strong> ${escapeHtml(s.prosCons.engineeringVerdict)}</div>` : ''}
+        `;
+      }
+
+      if (s.quiz) {
+        contentSection += `
+          <div class="card-box" style="border-left: 4px solid #4f46e5;">
+            <p style="font-size: 17px; font-weight: 700; color: #0f172a; margin-bottom: 12px;">${formatMarkdownToHtml(s.quiz.question)}</p>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;">
+              ${s.quiz.options.map((opt, oi) => `
+                <div style="padding: 9px 14px; border-radius: 6px; border: 1px solid ${oi === s.quiz!.correctIndex ? '#16a34a' : '#cbd5e1'}; background: ${oi === s.quiz!.correctIndex ? '#ecfdf5' : '#f8fafc'}; font-size: 14px; color: #1e293b;">
+                  <strong>${String.fromCharCode(65 + oi)}.</strong> ${formatMarkdownToHtml(opt)} ${oi === s.quiz!.correctIndex ? '<strong style="color:#15803d; margin-left:8px;">✓ Correct</strong>' : ''}
+                </div>
+              `).join('')}
+            </div>
+            <div style="padding: 10px 14px; border-radius: 6px; background: #eef2ff; border: 1px solid #c7d2fe; font-size: 13px; color: #1e293b;">
+              <strong style="color:#4338ca;">Explanation:</strong> ${formatMarkdownToHtml(s.quiz.explanation)}
+            </div>
           </div>
         `;
       }
 
       if (s.bullets && s.bullets.length > 0) {
-        contentSection += `
-          <div class="card-box">
-            <ul class="clean-list" style="font-size: 16px; gap: 10px;">
-              ${s.bullets.map((b) => `<li>${formatMarkdownToHtml(b)}</li>`).join('')}
-            </ul>
-          </div>
-        `;
+        const hasSidePhoto = Boolean(s.imageUrl && s.type !== 'figure');
+        const imgSrc = s.imageUrl && s.imageUrl.startsWith('/') ? s.imageUrl.slice(1) : (s.imageUrl || '');
+        if (hasSidePhoto) {
+          contentSection += `
+            <div style="display: grid; grid-template-columns: 7fr 5fr; gap: 16px; align-items: center;">
+              <div class="card-box">
+                <ul class="clean-list" style="font-size: 15px; gap: 8px;">
+                  ${s.bullets.map((b) => `<li>${formatMarkdownToHtml(b)}</li>`).join('')}
+                </ul>
+              </div>
+              <div class="card-box" style="padding: 10px; align-items: center;">
+                <img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(s.imageCaption || s.title)}" style="max-height: 290px; width: 100%; border-radius: 8px; object-fit: cover;" />
+                ${s.imageCaption ? `<p style="font-size: 11px; color: #64748b; margin-top: 6px; text-align: center;">${escapeHtml(s.imageCaption)}</p>` : ''}
+              </div>
+            </div>
+          `;
+        } else {
+          contentSection += `
+            <div class="card-box">
+              <ul class="clean-list" style="font-size: 15.5px; gap: 9px;">
+                ${s.bullets.map((b) => `<li>${formatMarkdownToHtml(b)}</li>`).join('')}
+              </ul>
+            </div>
+          `;
+        }
       }
 
       if (s.workedExample) {
         contentSection += `
-          <div class="card-box" style="border-left: 4px solid #16a34a;">
-            <h3 style="color: #16a34a; font-size: 18px; margin-bottom: 10px;">Worked Numerical Problem</h3>
-            <p style="font-size: 15px; color: #334155; margin-bottom: 14px;"><strong>Problem:</strong> ${escapeHtml(s.workedExample.problem)}</p>
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-              ${s.workedExample.steps.slice(0, 3).map((st) => `
-                <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 10px; border-radius: 6px;">
-                  <span style="font-weight: 700; color: #1e293b;">Step ${st.stepNumber}: ${escapeHtml(st.title)}</span>
-                  ${st.math ? `<div style="font-family: monospace; color: #0284c7; margin: 4px 0;">$${st.math}$</div>` : ''}
-                  <div style="font-size: 13px; color: #475569;">${escapeHtml(st.explanation)}</div>
+          <div class="card-box" style="border-left: 4px solid #16a34a; padding: 14px 18px;">
+            <p style="font-size: 14px; color: #1e293b; margin-bottom: 10px;"><strong>Problem:</strong> ${escapeHtml(s.workedExample.problem)}</p>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+              ${s.workedExample.steps.slice(0, 4).map((st) => `
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px 10px; border-radius: 6px;">
+                  <div style="font-weight: 700; color: #0f172a; font-size: 13px;">Step ${st.stepNumber}: ${escapeHtml(st.title)}</div>
+                  ${st.math ? `<div style="color: #0369a1; margin: 4px 0; font-size: 13px;">$$${st.math}$$</div>` : ''}
+                  <div style="font-size: 12px; color: #475569;">${escapeHtml(st.explanation)}</div>
                 </div>
               `).join('')}
             </div>
-            <div style="margin-top: 12px; font-weight: 700; color: #16a34a; font-size: 15px;">
-              Final Answer: $${s.workedExample.finalAnswer}$
+            <div style="margin-top: 10px; font-weight: 700; color: #15803d; font-size: 14px; background: #ecfdf5; border: 1px solid #86efac; padding: 6px 10px; border-radius: 6px;">
+              Final Answer: ${escapeHtml(s.workedExample.finalAnswer)}
             </div>
           </div>
         `;
@@ -195,7 +326,7 @@ function generateHtml(): string {
 
       if (s.takeaway) {
         contentSection += `
-          <div style="margin-top: 14px; padding: 10px 16px; background: rgba(20, 125, 139, 0.08); border-left: 3px solid var(--accent-teal); border-radius: 4px; font-size: 14px; color: #0f172a;">
+          <div style="margin-top: 10px; padding: 8px 14px; background: rgba(20, 125, 139, 0.08); border-left: 3px solid var(--accent-teal); border-radius: 4px; font-size: 13.5px; color: #0f172a;">
             <strong>Key Takeaway:</strong> ${escapeHtml(s.takeaway)}
           </div>
         `;
@@ -235,7 +366,7 @@ function generateHtml(): string {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Unit I: Fundamentals of Measurement Systems · MEC 232 · Er. Saroj Chalise</title>
-  <meta name="description" content="Complete 94-Slide Interactive Engineering Presentation for Unit I: Fundamentals of Measurement Systems (MEC 232). Prepared by Er. Saroj Chalise, Pokhara University.">
+  <meta name="description" content="Complete ${totalSlides}-Slide Interactive Engineering Presentation for Unit I: Fundamentals of Measurement Systems (MEC 232). Prepared by Er. Saroj Chalise, Pokhara University.">
 
   <!-- Fonts & Math KaTeX -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -674,7 +805,7 @@ function generateHtml(): string {
   <!-- Slide Overview Modal -->
   <div id="overview-modal" onclick="if(event.target === this) toggleOverview()">
     <div style="max-width:1400px; margin:0 auto 20px auto; display:flex; justify-content:space-between; align-items:center;">
-      <h2 style="font-size:24px; font-weight:800; color:#ffffff;">Lecture Overview Grid · 94 Slides</h2>
+      <h2 style="font-size:24px; font-weight:800; color:#ffffff;">Lecture Overview Grid · ${totalSlides} Slides</h2>
       <button class="btn-ctrl" onclick="toggleOverview()">Close [Esc]</button>
     </div>
     <div class="overview-grid">
@@ -755,9 +886,9 @@ function generateHtml(): string {
 
     function toggleFullscreen() {
       if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(err => alert(err.message));
+        document.documentElement.requestFullscreen().catch(() => {});
       } else {
-        document.exitFullscreen();
+        document.exitFullscreen().catch(() => {});
       }
     }
 

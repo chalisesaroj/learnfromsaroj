@@ -26,6 +26,8 @@ export const SLIDES_DATA: SlideData[] = [
     subtitle: 'Methods · Analog vs. Digital · DAQ Pipeline · Calibration · Uncertainty · Intrusive Sensing · Electrical Safety',
     sectionTag: 'Unit I Overview',
     type: 'title',
+    imageUrl: '/assets/unit1/unit1_metrology_lab.jpg',
+    imageCaption: 'Precision Metrology Bench: Deadweight pressure calibrator, 6.5-digit DMM, oscilloscope & certified gauges',
     speakerNotes:
       'Good morning students. Welcome to Unit I: Fundamentals of Measurement Systems. Today we begin our journey into how engineers measure the physical world—from temperatures inside a motorcycle engine to electrical signals in factory robots. Everything in modern industry depends on trustworthy measurements.',
     takeaway: 'Before you can control or improve an engineering system, you must be able to measure it accurately.'
@@ -41,7 +43,7 @@ export const SLIDES_DATA: SlideData[] = [
         '1.1 Methods of Measurements: Direct, Deflection & Null-Balance',
         '1.2 Analog vs. Digital Instruments: Resolution, Quantization & Sampling',
         '1.3 Data Acquisition Pipeline (DAQ): From Sensor to Computer Display',
-        '1.4 Static Calibration: Sensitivity, Drift, Linearity & Hysteresis'
+        '1.4 Static Calibration: Sensitivity, Drift, Hysteresis, Single/Two/Multi-Point Methods'
       ],
       right: [
         '1.5 Measurement Errors & Uncertainty: Gross, Systematic, Random & ISO GUM',
@@ -378,6 +380,8 @@ export const SLIDES_DATA: SlideData[] = [
     subtitle: 'Continuous Physical Indication',
     sectionTag: '1.2 Analog vs Digital',
     type: 'concept',
+    imageUrl: '/assets/unit1/unit1_analog_vs_digital.jpg',
+    imageCaption: 'Mirrored-scale analog needle voltmeter alongside a 6-digit OLED digital multimeter',
     bullets: [
       'An analog instrument displays the measured value as a continuous physical movement.',
       'Examples:',
@@ -674,6 +678,8 @@ export const SLIDES_DATA: SlideData[] = [
     subtitle: 'Why Computers Cannot Read Sensors Directly',
     sectionTag: '1.3 DAQ Pipeline',
     type: 'concept',
+    imageUrl: '/assets/unit1/unit1_daq_chassis.jpg',
+    imageCaption: 'Multi-channel industrial DAQ hardware chassis with BNC and thermocouple inputs streaming to workstation',
     bullets: [
       'Problem 1: Sensors output physical changes—a thermocouple creates tiny microvolts; a strain gauge changes resistance by a fraction of an ohm.',
       'Problem 2: Industrial environments are filled with electrical noise from 50 Hz power cables, welding arcs, and large electric motors.',
@@ -809,6 +815,8 @@ export const SLIDES_DATA: SlideData[] = [
     subtitle: 'Comparing an Instrument Against a Trusted Standard',
     sectionTag: '1.4 Calibration',
     type: 'definition',
+    imageUrl: '/assets/unit1/unit1_deadweight_tester.jpg',
+    imageCaption: 'Hydraulic deadweight primary pressure calibrator verifying an industrial Bourdon gauge',
     definition: {
       term: 'Static Calibration',
       formalDefinition:
@@ -1033,8 +1041,352 @@ export const SLIDES_DATA: SlideData[] = [
   },
   {
     id: 56,
+    title: 'Three Calibration Methods: Single-Point, Two-Point & Multi-Point',
+    subtitle: 'Figure 4B · Selecting Calibration Complexity to Eliminate Drift & Non-Linearity',
+    sectionTag: '1.4 Calibration',
+    type: 'figure',
+    figureKey: 'fig_cal_methods',
+    imageUrl: '/assets/unit1/unit1_deadweight_tester.jpg',
+    imageCaption: 'Hydraulic deadweight tester applying certified mass steps across Single, Two, and Multi-Point protocols',
+    speakerNotes:
+      'Introduce the three formal industrial calibration protocols shown side-by-side in Figure 4B: Single-point checks one offset value, Two-point aligns both zero intercept and span slope, and Multi-point captures full-range curvature and non-linearity.',
+    takeaway: 'Single-point fixes zero bias; Two-point fixes zero + span slope; Multi-point captures curvature & hysteresis across the entire span.'
+  },
+  {
+    id: 57,
+    title: '1. Single-Point Calibration (Baseline Offset Trim)',
+    subtitle: 'Adjusting Zero Error When Sensitivity Slope Is Already Known',
+    sectionTag: '1.4 Calibration',
+    type: 'concept',
+    bullets: [
+      '**Core Concept:** Compare the sensor against **one single certified reference standard** $(x_{\\text{ref}}, y_{\\text{true,ref}})$ and shift every reading by that constant offset.',
+      '**When It Works:** Valid ONLY when the instrument has pure **Zero Drift** (parallel shift) and its factory **Sensitivity Slope ($S$) is already trustworthy and linear**.',
+      '**Real-World Examples:**',
+      '• **Digital Weighing Scale Tare:** Pressing ZERO/TARE with an empty pan ($0.00\\text{ kg}$) removes dead-weight container bias.',
+      '• **Ice-Water Thermometer Check:** Immersing a probe in crushed melting ice ($0.00\\,^{\\circ}\\text{C}$) to verify and trim baseline temperature offset.',
+      '• **Differential Pressure Transmitter:** Venting both pressure ports to atmosphere ($\\Delta P = 0\\text{ kPa}$) and executing a 4.00 mA zero-trim.',
+      '**Critical Limitation:** Completely blind to **span/sensitivity drift**—if the meter tilts at high readings, single-point calibration will NOT catch it!'
+    ],
+    speakerNotes:
+      'Emphasize why single-point is the fastest field check: e.g., an ice bath at 0°C or pH 7.00 neutral buffer, or pressing Tare on a scale. Warn students that it only shifts the line up/down and cannot fix a wrong slope.',
+    takeaway: 'Single-point calibration shifts out a constant zero offset in seconds, assuming the factory slope S has not drifted.'
+  },
+  {
+    id: 58,
+    title: 'Formula: Single-Point Calibration Correction',
+    subtitle: 'Constant Additive Bias Subtraction Across the Operating Range',
+    sectionTag: '1.4 Calibration',
+    type: 'formula',
+    formulaBlock: {
+      equation: '\\Delta_{\\text{offset}} = y_{\\text{raw,ref}} - y_{\\text{true,ref}} \\qquad \\Longrightarrow \\qquad y_{\\text{cal}} = y_{\\text{raw}} - \\Delta_{\\text{offset}}',
+      label: 'Equation 1.5 · Single-Point Zero Offset Model',
+      description: 'Measures the signed error at one certified reference standard and subtracts that fixed offset from all subsequent readings.',
+      symbols: [
+        { symbol: '\\Delta_{\\text{offset}}', name: 'Zero Bias / Offset Error', unit: 'Output Units', description: 'Measured deviation recorded at the single reference standard' },
+        { symbol: 'y_{\\text{raw,ref}}', name: 'Raw Indicated Reference', unit: 'Output Units', description: 'Uncorrected meter reading while exposed to the standard' },
+        { symbol: 'y_{\\text{true,ref}}', name: 'Certified True Value', unit: 'Output Units', description: 'Traceable reference standard value (e.g. 0.00 °C ice bath)' },
+        { symbol: 'y_{\\text{cal}}', name: 'Calibrated Value', unit: 'Output Units', description: 'Offset-corrected true measurement reported during operation' }
+      ]
+    },
+    bullets: [
+      'Notice the sign convention: If the meter reads $+2\\,^{\\circ}\\text{C}$ too high in an ice bath, $\\Delta_{\\text{offset}} = +2\\,^{\\circ}\\text{C}$, so you **subtract $2\\,^{\\circ}\\text{C}$** from future readings.'
+    ],
+    speakerNotes:
+      'Have students practice the sign carefully: Correction = True - Raw = -Offset. Always verify with common sense: if the thermometer reads high, the true temperature is lower!',
+    takeaway: 'Subtract positive bias (or add negative bias) measured at the single reference point across every measurement.'
+  },
+  {
+    id: 59,
+    title: 'Solved Numerical: Single-Point Thermometer Calibration',
+    subtitle: 'Hydropower Turbine Bearing Temperature Verification',
+    sectionTag: '1.4 Worked Example',
+    type: 'worked-example',
+    workedExample: {
+      problem:
+        'A digital K-type thermocouple thermometer is immersed in a stirred 0.00 °C crushed-ice reference bath and reads +1.85 °C. Later, inserted into a hydropower Pelton turbine guide-bearing oil sump, it indicates 68.40 °C. Determine: (a) the zero offset error, (b) the calibration equation, (c) the true bearing oil temperature, and (d) the percentage error avoided.',
+      given: {
+        'Certified Ice Bath (y_true,ref)': '0.00 °C',
+        'Raw Ice Bath Reading (y_raw,ref)': '+1.85 °C',
+        'Raw Oil Sump Reading (y_raw)': '68.40 °C'
+      },
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Compute Single-Point Offset Bias (Δoffset)',
+          math: '\\Delta_{\\text{offset}} = y_{\\text{raw,ref}} - y_{\\text{true,ref}} = 1.85 - 0.00 = +1.85\\,^{\\circ}\\text{C}',
+          explanation: 'The thermometer systematically over-reads by +1.85 °C at the 0.00 °C reference point.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Formulate Single-Point Calibration Equation',
+          math: 'y_{\\text{cal}} = y_{\\text{raw}} - \\Delta_{\\text{offset}} = y_{\\text{raw}} - 1.85\\,^{\\circ}\\text{C}',
+          explanation: 'Subtract the constant +1.85 °C bias from every raw meter reading.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Calculate True Turbine Bearing Oil Temperature',
+          math: 'y_{\\text{cal}} = 68.40 - 1.85 = 66.55\\,^{\\circ}\\text{C}',
+          explanation: 'Apply the offset trim to the raw oil sump measurement.'
+        },
+        {
+          stepNumber: 4,
+          title: 'Evaluate Relative Measurement Error Removed',
+          math: '\\%\\,\\text{Error} = \\frac{68.40 - 66.55}{66.55} \\times 100\\% = \\frac{1.85}{66.55} \\times 100\\% = +2.78\\%',
+          explanation: 'Single-point trim prevents a +2.78% false high-temperature trip warning.'
+        }
+      ],
+      finalAnswer: 'Offset = +1.85 °C | True Bearing Oil Temp = 66.55 °C (2.78% error fixed)',
+      practicalInsight:
+        'If the bearing alarm threshold is 68.0 °C, an uncalibrated meter reading 68.40 °C would cause a false plant shutdown—even though the true oil temperature is safely at 66.55 °C!'
+    },
+    speakerNotes:
+      'Relate this directly to hydropower turbine maintenance: false high-bearing-temperature trips cost energy generation revenue.',
+    takeaway: 'Single-point calibration takes under 2 minutes with an ice bath and eliminates false baseline alarms.'
+  },
+  {
+    id: 60,
+    title: '2. Two-Point Calibration (Zero + Span Alignment)',
+    subtitle: 'Correcting Both Baseline Offset AND Slope Sensitivity Simultaneously',
+    sectionTag: '1.4 Calibration',
+    type: 'concept',
+    bullets: [
+      '**Core Concept:** Expose the instrument to **two certified standards** near opposite ends of its range: a **Low Reference $(x_1, y_1)$** and a **High Reference $(x_2, y_2)$**.',
+      '**Why Two Points Matter:** Two distinct points uniquely define a straight line ($y = S \\cdot x + y_0$), fixing **BOTH Zero Drift (intercept $y_0$) AND Span Drift (slope $S$)**!',
+      '**Best Practice Anchor Choice:** Select $x_1 \\approx 10\\%$ (Zero/Low) and $x_2 \\approx 80\\%\\text{–}90\\%$ (Span/High) of Full Scale so extrapolation error stays tiny.',
+      '**Real-World Examples:**',
+      '• **Industrial 4–20 mA Pressure Transmitter:** Apply $0\\text{ bar}$ (trim 4.00 mA Zero) and $10\\text{ bar}$ (trim 20.00 mA Span).',
+      '• **Laboratory pH Meter:** Calibrate sequentially in **pH 7.00 neutral buffer** (Zero) and **pH 4.01 acidic buffer** (Nernst Slope).',
+      '• **Ultrasonic Tank Level Sensor:** Measure empty tank height (Low) and filled tank height (High) to align acoustic speed-of-sound slope.'
+    ],
+    speakerNotes:
+      'In industry, "Zero & Span" calibration IS Two-Point calibration. Remind students: in a pH meter, aging glass electrodes lose slope (from 59.16 mV/pH down to ~54 mV/pH)—single-point at pH 7 would miss acidic readings completely!',
+    takeaway: 'Two-point ("Zero & Span") calibration corrects both offset shift and sensitivity tilt for linear sensors.'
+  },
+  {
+    id: 61,
+    title: 'Formula: Two-Point Linear Interpolation & Gain Model',
+    subtitle: 'Computing Actual Sensitivity (S), Zero Intercept (y0), and True Input (x)',
+    sectionTag: '1.4 Calibration',
+    type: 'formula',
+    formulaBlock: {
+      equation: 'S = \\frac{y_2 - y_1}{x_2 - x_1}, \\qquad y_0 = y_1 - S \\cdot x_1 \\qquad \\Longrightarrow \\qquad x_{\\text{true}} = x_1 + \\frac{y_{\\text{raw}} - y_1}{y_2 - y_1}(x_2 - x_1)',
+      label: 'Equation 1.6 · Two-Point Zero & Span Calibration Equations',
+      description: 'Recovers the exact slope S and zero intercept y0 from two reference standards, enabling linear inverse mapping.',
+      symbols: [
+        { symbol: '(x_1, y_1)', name: 'Low Calibration Point', unit: 'In, Out Units', description: 'Lower standard input x1 and measured instrument output y1' },
+        { symbol: '(x_2, y_2)', name: 'High Calibration Point', unit: 'In, Out Units', description: 'Upper standard input x2 and measured instrument output y2' },
+        { symbol: 'S', name: 'Actual Sensitivity (Span)', unit: 'Out / In', description: 'True calibrated slope replacing drifted factory rating' },
+        { symbol: 'y_0', name: 'Zero Intercept (Offset)', unit: 'Output Units', description: 'Extrapolated sensor output when true physical input x = 0' }
+      ]
+    },
+    bullets: [
+      'Two-point calibration assumes the sensor behaves linearly between $x_1$ and $x_2$; any curved mid-range bowing remains invisible unless more intermediate points are tested.'
+    ],
+    speakerNotes:
+      'Highlight how the right-hand inverse formula lets any microcontroller PLC convert raw ADC voltage y_raw directly into calibrated physical units x_true without floating-point confusion.',
+    takeaway: 'From two reference points, engineers recover both real sensitivity S = Δy/Δx and zero intercept y0 = y1 - S·x1.'
+  },
+  {
+    id: 62,
+    title: 'Solved Numerical: Two-Point Hydraulic Pressure Calibration',
+    subtitle: 'Zero & Span Recovery Using a Deadweight Pressure Tester',
+    sectionTag: '1.4 Worked Example',
+    type: 'worked-example',
+    imageUrl: '/assets/unit1/unit1_deadweight_tester.jpg',
+    imageCaption: 'Deadweight calibrator applying certified 10 bar and 90 bar test points',
+    workedExample: {
+      problem:
+        'A 0–100 bar hydraulic pressure transducer (factory nominal 0–10 V, i.e. 0.100 V/bar) is tested on a deadweight calibrator at two reference loads: (10.0 bar, 1.45 V) and (90.0 bar, 8.65 V). In field operation, the transducer outputs 6.85 V. Calculate: (a) actual sensitivity S, (b) zero-pressure intercept y0, (c) true calibrated pressure, and (d) error avoided vs. factory nominal.',
+      given: {
+        'Point 1 (Low Standard)': 'x1 = 10.0 bar, y1 = 1.45 V',
+        'Point 2 (High Standard)': 'x2 = 90.0 bar, y2 = 8.65 V',
+        'Field Output (y_raw)': '6.85 V (nominal = 0.100 V/bar)'
+      },
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Compute Actual Calibrated Sensitivity Slope (S)',
+          math: 'S = \\frac{y_2 - y_1}{x_2 - x_1} = \\frac{8.65 - 1.45}{90.0 - 10.0} = \\frac{7.20\\text{ V}}{80.0\\text{ bar}} = 0.090\\text{ V/bar}',
+          explanation: 'Sensitivity has degraded by 10% below the factory 0.100 V/bar rating.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Calculate Zero-Pressure Intercept (y0)',
+          math: 'y_0 = y_1 - S \\cdot x_1 = 1.45 - 0.090 \\times 10.0 = 1.45 - 0.90 = +0.55\\text{ V}',
+          explanation: 'Even at 0.0 bar, the transducer outputs a +0.55 V zero offset.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Invert Line to Find True Pressure at y_raw = 6.85 V',
+          math: 'P_{\\text{true}} = \\frac{y_{\\text{raw}} - y_0}{S} = \\frac{6.85 - 0.55}{0.090} = \\frac{6.30}{0.090} = 70.0\\text{ bar}',
+          explanation: 'Correcting both intercept (+0.55 V) and slope (0.090 V/bar) recovers exact pressure.'
+        },
+        {
+          stepNumber: 4,
+          title: 'Compare Against Uncalibrated Nominal Rating',
+          math: 'P_{\\text{naive}} = \\frac{6.85\\text{ V}}{0.100\\text{ V/bar}} = 68.5\\text{ bar} \\implies \\text{Error Avoided} = 1.5\\text{ bar}',
+          explanation: 'Using factory specs without two-point calibration would under-read pressure by 1.5 bar.'
+        }
+      ],
+      finalAnswer: 'S = 0.090 V/bar | y0 = +0.55 V | P_true = 70.0 bar (1.5 bar avoided)',
+      practicalInsight:
+        'Notice that at 6.85 V the zero offset (+0.55 V) and slope loss (-10%) partially oppose each other; at 100 bar the error widens to +4.5 bar!'
+    },
+    speakerNotes:
+      'Walk students carefully through why two points fix everything for a linear transducer: we get both slope 0.090 V/bar and intercept +0.55 V.',
+    takeaway: 'Two-point calibration catches simultaneous offset shifts and sensitivity degradation across the span.'
+  },
+  {
+    id: 63,
+    title: '3. Multi-Point Calibration (Full-Range Regression)',
+    subtitle: 'Testing N ≥ 5 Standards Across Ascending & Descending Cycles',
+    sectionTag: '1.4 Calibration',
+    type: 'concept',
+    bullets: [
+      '**Core Concept:** Apply **$N \\ge 5$ evenly spaced certified inputs** (e.g. 0%, 20%, 40%, 60%, 80%, 100% of Full Scale), often in both **ascending and descending passes**.',
+      '**Why Multi-Point Is Essential:** Two points always draw a straight line—so a 2-point test is **blind to middle-of-scale bowing (non-linearity)** and **hysteresis loops**!',
+      '**Best-Fit Linearization & Polynomials:** Fits an Ordinary Least Squares (OLS) line $y = mx + c$ (or quadratic/Steinhart–Hart curve) across all points, averaging out random noise by $\\sqrt{N}$.',
+      '**Real-World Mandatory Applications:**',
+      '• **NTC Thermistors & Type-K Thermocouples:** Inherently non-linear over wide temperature ranges.',
+      '• **Orifice-Plate Flowmeters ($\\Delta P \\propto Q^2$):** Strong square-law curvature requires multi-point flow-rig testing.',
+      '• **ISO/IEC 17025 Accredited Certificates:** Load cells, torque shafts, and precision deadweight gauges require multi-point traceability.'
+    ],
+    speakerNotes:
+      'Give the classic warning: Any two points define a straight line, even on a banana! You only discover curvature and hysteresis when you measure 5 or more points.',
+    takeaway: 'Multi-point calibration (N ≥ 5 points) reveals non-linearity, measures hysteresis, and produces ISO-traceable curves.'
+  },
+  {
+    id: 64,
+    title: 'Formula: Multi-Point Least-Squares & Non-Linearity',
+    subtitle: 'Ordinary Least-Squares (OLS) Best-Fit Line and Maximum Residual Error',
+    sectionTag: '1.4 Calibration',
+    type: 'formula',
+    formulaBlock: {
+      equation: 'm = \\frac{N\\sum x_i y_i - (\\sum x_i)(\\sum y_i)}{N\\sum x_i^2 - (\\sum x_i)^2}, \\quad c = \\bar{y} - m\\bar{x}, \\quad \\%\\text{NL} = \\frac{\\max|y_i - (mx_i + c)|}{y_{\\text{FSO}}} \\times 100\\%',
+      label: 'Equation 1.7 · Multi-Point OLS Regression & Non-Linearity',
+      description: 'Computes the best-fit sensitivity slope (m), intercept (c), and worst-case residual non-linearity (% FSO) across N points.',
+      symbols: [
+        { symbol: 'm', name: 'OLS Best-Fit Sensitivity', unit: 'Out / In', description: 'Least-squares slope minimizing total squared vertical residuals' },
+        { symbol: 'c', name: 'OLS Zero Intercept', unit: 'Output Units', description: 'Zero-input intercept computed via sample means (x̄, ȳ)' },
+        { symbol: '|y_i - \\hat{y}_i|', name: 'Point Residual Error', unit: 'Output Units', description: 'Deviation between measured point and ideal best-fit line' },
+        { symbol: '\\%\\text{NL}', name: 'Independent Non-Linearity', unit: '% FSO', description: 'Peak residual normalized by Full-Scale Output span y_FSO' }
+      ]
+    },
+    bullets: [
+      'Each test point checks both agreement with the straight line and whether any single residual exceeds the manufacturer tolerance specification.'
+    ],
+    speakerNotes:
+      'Reassure students: although the OLS equation looks dense, every engineering calculator (STAT mode) and Python/Excel script computes sum(x), sum(y), sum(x^2), and sum(xy) in seconds.',
+    takeaway: 'OLS regression distributes errors evenly across all N points and quantifies % Non-Linearity from peak residuals.'
+  },
+  {
+    id: 65,
+    title: 'Solved Numerical: 5-Point Load Cell Least-Squares Calibration',
+    subtitle: 'Determining Best-Fit Equation, % Non-Linearity & Field Load',
+    sectionTag: '1.4 Worked Example',
+    type: 'worked-example',
+    workedExample: {
+      problem:
+        'A 0–8 kN strain-gauge bridge load cell yields outputs yi = [0.10, 2.04, 4.12, 5.98, 8.06] mV at certified deadweight loads xi = [0, 2, 4, 6, 8] kN (N = 5). Find: (a) best-fit sensitivity m and intercept c, (b) peak residual and % Non-Linearity (% FSO), and (c) true force if field output is 5.053 mV.',
+      given: {
+        'N = 5 Loads (xi)': '[0, 2, 4, 6, 8] kN  →  Σxi = 20, Σxi² = 120',
+        'Outputs (yi)': '[0.10, 2.04, 4.12, 5.98, 8.06] mV',
+        'Sums (Σyi, Σxiyi)': 'Σyi = 20.30 mV,  Σxiyi = 120.92 kN·mV'
+      },
+      steps: [
+        {
+          stepNumber: 1,
+          title: 'Compute Least-Squares Sensitivity Slope (m)',
+          math: 'm = \\frac{5(120.92) - (20)(20.30)}{5(120) - 20^2} = \\frac{604.60 - 406.00}{600 - 400} = \\frac{198.60}{200} = 0.993\\text{ mV/kN}',
+          explanation: 'Best-fit sensitivity across all 5 load steps is 0.993 mV/kN.'
+        },
+        {
+          stepNumber: 2,
+          title: 'Compute Best-Fit Zero Intercept (c)',
+          math: 'c = \\bar{y} - m\\bar{x} = \\frac{20.30}{5} - 0.993\\left(\\frac{20}{5}\\right) = 4.060 - 3.972 = +0.088\\text{ mV}',
+          explanation: 'Calibration model: ŷ = 0.993·x + 0.088 mV.'
+        },
+        {
+          stepNumber: 3,
+          title: 'Find Peak Residual & % Non-Linearity (at x = 6 kN)',
+          math: '\\hat{y}(6) = 0.993(6)+0.088 = 6.046\\text{ mV} \\;\\Rightarrow\\; \\%\\%\\text{NL} = \\frac{|5.980 - 6.046|}{8.06 - 0.10}\\times 100\\% = 0.83\\%\\text{ FSO}',
+          explanation: 'Predicted values [0.088, 2.074, 4.060, 6.046, 8.032] show max deviation 0.066 mV at 6 kN.'
+        },
+        {
+          stepNumber: 4,
+          title: 'Invert Calibrated Line for Field Output y = 5.053 mV',
+          math: 'x_{\\text{true}} = \\frac{y_{\\text{meas}} - c}{m} = \\frac{5.053 - 0.088}{0.993} = \\frac{4.965}{0.993} = 5.00\\text{ kN}',
+          explanation: 'Using the calibrated OLS line recovers an exact load of 5.00 kN.'
+        }
+      ],
+      finalAnswer: 'ŷ = 0.993x + 0.088 mV | %NL = 0.83% FSO | Field Load = 5.00 kN',
+      practicalInsight:
+        'A two-point fit using only 0 and 8 kN would predict a 0.095 mV residual at 4 kN; multi-point OLS balances errors evenly across the entire working range!'
+    },
+    speakerNotes:
+      'Double-check the intermediate table with students on the board: x*y values are 0, 4.08, 16.48, 35.88, 64.48 which sum cleanly to 120.92. This is a classic 8-mark university exam numerical!',
+    takeaway: 'Multi-point least squares minimizes residual variance across the full operating span and quantifies true sensor linearity.'
+  },
+  {
+    id: 66,
+    title: 'Selecting the Right Calibration Method: Comparison Matrix',
+    subtitle: 'Engineering Trade-offs Across Single-Point, Two-Point & Multi-Point Protocols',
+    sectionTag: '1.4 Calibration',
+    type: 'types',
+    typesGrid: [
+      {
+        typeName: 'Single-Point Calibration',
+        badge: 'Fast Field Check',
+        description: 'Tests 1 known reference value to compute and remove constant zero-offset shift Δ_offset.',
+        keyFeature: 'Fixes Zero Drift ONLY; assumes factory sensitivity slope S is fixed & linear.',
+        example: 'Bathroom/bench scale Tare button; 0.00 °C ice-bath thermometer check; atmospheric vent DP zeroing.'
+      },
+      {
+        typeName: 'Two-Point Calibration',
+        badge: 'Linear Zero + Span',
+        description: 'Tests 2 endpoints (typically ~10% and ~90% span) to compute true sensitivity slope S and intercept y0.',
+        keyFeature: 'Fixes BOTH Zero Offset & Span Slope drift simultaneously for linear sensors.',
+        example: '4–20 mA pressure transmitters (0 & 10 bar); pH meters (pH 7.00 & 4.01 buffers); tank level meters.'
+      },
+      {
+        typeName: 'Multi-Point Calibration',
+        badge: 'ISO 17025 Gold Standard',
+        description: 'Tests N ≥ 5 points ascending/descending using OLS regression or polynomial lookup tables.',
+        keyFeature: 'Fixes Zero, Span, Non-Linearity bowing & quantifies Hysteresis + Random scatter.',
+        example: 'Deadweight pressure calibrators; NTC thermistors; orifice flowmeters; structural load cells.'
+      }
+    ],
+    speakerNotes:
+      'Summarize clearly: Choose single-point for daily quick checks, two-point for routine linear transmitters, and multi-point for curved sensors or formal certification.',
+    takeaway: 'Match calibration effort to physics: linear daily checks need 1–2 points; non-linear or certified transducers demand ≥ 5 points.'
+  },
+  {
+    id: 67,
+    title: 'Check Your Understanding: Choosing Calibration Method',
+    subtitle: 'Concept Check 1.4B · Diagnosing Calibration Blind Spots',
+    sectionTag: '1.4 Quiz',
+    type: 'check-understanding',
+    quiz: {
+      question:
+        'A plant technician immerses an aging thermocouple probe in a 0.00 °C ice bath and performs a Single-Point zero adjustment so it reads 0.00 °C accurately. Later, on a certified 300.0 °C steam calibration oven, the same probe reads 312.0 °C. What error occurred and how must it be fixed?',
+      options: [
+        'Repeat the Single-Point ice bath test 50 more times.',
+        'The sensor has Sensitivity (Span) Drift, which Single-Point calibration cannot detect; it requires Two-Point or Multi-Point calibration.',
+        'The meter suffered from digital parallax error.',
+        'Subtract 12 °C from the 0.00 °C ice bath reading.'
+      ],
+      correctIndex: 1,
+      explanation:
+        'Correct! Reading accurately at 0.00 °C while over-reading by +12.0 °C at 300.0 °C proves the calibration line has tilted (Sensitivity / Span Drift). Only Two-Point (Zero + Span) or Multi-Point calibration measures and corrects slope error.'
+    },
+    speakerNotes:
+      'Give students 30 seconds to diagnose why 0°C matched yet 300°C drifted. This drives home the key flaw of single-point calibration.',
+    takeaway: 'Correct readings at zero never guarantee accuracy at high range—only Two-Point or Multi-Point calibration verifies slope!'
+  },
+  {
+    id: 68,
     title: 'Check Your Understanding: Calibration Metrics',
-    subtitle: 'Concept Check 1.4',
+    subtitle: 'Concept Check 1.4A',
     sectionTag: '1.4 Quiz',
     type: 'check-understanding',
     quiz: {
@@ -1048,7 +1400,7 @@ export const SLIDES_DATA: SlideData[] = [
       ],
       correctIndex: 1,
       explanation:
-        'Correct! The scale is highly precise because its readings repeat tightly within ±0.01 kg. However, it is inaccurate because every reading is offset from the true 50.00 kg standard by +3.21 kg. A simple zero-calibration adjustment will fix it!'
+        'Correct! The scale is highly precise because its readings repeat tightly within ±0.01 kg. However, it is inaccurate because every reading is offset from the true 50.00 kg standard by +3.21 kg. A simple single-point zero-calibration adjustment will fix it!'
     },
     speakerNotes:
       'Praise students who identify that high precision allows an instrument to be easily corrected by adjusting zero bias.',
@@ -1059,7 +1411,7 @@ export const SLIDES_DATA: SlideData[] = [
   // SECTION 1.5: MEASUREMENT ERRORS & UNCERTAINTY (ISO GUM)
   // =========================================================================
   {
-    id: 57,
+    id: 69,
     title: '1.5 Measurement Errors & Uncertainty',
     subtitle: 'Section 1.5 · Gross, Systematic & Random Errors · Statistics & ISO GUM Evaluation',
     sectionTag: '1.5 Errors & Uncertainty',
@@ -1069,7 +1421,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'To report a professional measurement, you must state both the measured value and its uncertainty.'
   },
   {
-    id: 58,
+    id: 70,
     title: 'Error vs. Uncertainty: What is the Difference?',
     subtitle: 'The Difference Between a Mistake and Inherent Doubt',
     sectionTag: '1.5 Errors & Uncertainty',
@@ -1085,7 +1437,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Error = Reading minus True Value; Uncertainty = The ± interval where the true value reasonably lies.'
   },
   {
-    id: 59,
+    id: 71,
     title: 'The Three Classes of Measurement Errors',
     subtitle: 'Gross, Systematic, and Random',
     sectionTag: '1.5 Errors & Uncertainty',
@@ -1101,7 +1453,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Errors are either Human Blunders (Gross), Repeatable Offsets (Systematic), or Noise (Random).'
   },
   {
-    id: 60,
+    id: 72,
     title: 'Class 1: Gross Errors (Human Blunders)',
     subtitle: 'Mistakes That Can and Must Be Avoided',
     sectionTag: '1.5 Errors & Uncertainty',
@@ -1119,7 +1471,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Gross errors are human mistakes; they cannot be treated with math—they must be prevented by care.'
   },
   {
-    id: 61,
+    id: 73,
     title: 'Class 2: Systematic (Bias) Errors',
     subtitle: 'Consistent, Repeatable Offsets in Magnitude and Sign',
     sectionTag: '1.5 Errors & Uncertainty',
@@ -1137,7 +1489,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Systematic errors are repeatable biases; they can be discovered and removed by calibration.'
   },
   {
-    id: 62,
+    id: 74,
     title: 'Class 3: Random (Stochastic) Errors',
     subtitle: 'Unpredictable Scatter Governed by Probability',
     sectionTag: '1.5 Errors & Uncertainty',
@@ -1155,7 +1507,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Random errors scatter unpredictably above and below the truth; averaging cancels them out.'
   },
   {
-    id: 63,
+    id: 75,
     title: 'Handling Random Errors: The Sample Mean',
     subtitle: 'The Average is the Best Mathematical Estimate of the True Value',
     sectionTag: '1.5 Errors & Uncertainty',
@@ -1178,7 +1530,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'The arithmetic mean (average) cancels out random positive and negative fluctuations.'
   },
   {
-    id: 64,
+    id: 76,
     title: 'Sample Standard Deviation: Measuring the Spread',
     subtitle: 'How Wildly Are the Readings Scattering Around the Average?',
     sectionTag: '1.5 Errors & Uncertainty',
@@ -1202,7 +1554,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Standard deviation (s) measures how widely your repeated readings are scattering.'
   },
   {
-    id: 65,
+    id: 77,
     title: 'Type A Standard Uncertainty: Standard Error of the Mean',
     subtitle: 'How Confident Are We in the Average Value?',
     sectionTag: '1.5 Errors & Uncertainty',
@@ -1228,7 +1580,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Taking N repeated samples reduces random uncertainty by a factor of √N.'
   },
   {
-    id: 66,
+    id: 78,
     title: 'The Averaging Fallacy: Why More Samples Cannot Fix Bias',
     subtitle: 'The Most Dangerous Mistake in Lab Testing',
     sectionTag: '1.5 Errors & Uncertainty',
@@ -1247,7 +1599,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Averaging 10,000 readings reduces random scatter, but leaves systematic bias completely untouched!'
   },
   {
-    id: 67,
+    id: 79,
     title: 'Type B Uncertainty: When You Have No Repeated Data',
     subtitle: 'Evaluating Uncertainty from Manufacturer Datasheets',
     sectionTag: '1.5 Errors & Uncertainty',
@@ -1272,7 +1624,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Type A comes from repeated data; Type B comes from datasheets and certificates (uB = a / √3).'
   },
   {
-    id: 68,
+    id: 80,
     title: 'Combined Uncertainty via Root-Sum-Square (RSS)',
     subtitle: 'How Engineers Combine Type A and Type B Uncertainties',
     sectionTag: '1.5 Errors & Uncertainty',
@@ -1298,7 +1650,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Combined uncertainty = √(uA² + uB²). Multiply by 2 for a 95% confidence interval.'
   },
   {
-    id: 69,
+    id: 81,
     title: 'Worked Example: Full Uncertainty Calculation',
     subtitle: 'Step-by-Step Solved Problem',
     sectionTag: '1.5 Worked Example',
@@ -1348,7 +1700,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Final report: Measured Mean ± Expanded Uncertainty (U = 2 · uc) with 95% confidence.'
   },
   {
-    id: 70,
+    id: 82,
     title: 'Check Your Understanding: Uncertainty Types',
     subtitle: 'Concept Check 1.5',
     sectionTag: '1.5 Quiz',
@@ -1375,7 +1727,7 @@ export const SLIDES_DATA: SlideData[] = [
   // SECTION 1.6: INTRUSIVE VS. NON-INTRUSIVE SENSING
   // =========================================================================
   {
-    id: 71,
+    id: 83,
     title: '1.6 Intrusive vs. Non-Intrusive Sensing',
     subtitle: 'Section 1.6 · Touching vs. Observing From Outside · Circuit & Flow Loading',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1385,7 +1737,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Intrusive sensors penetrate the process; non-intrusive sensors measure from outside without contact.'
   },
   {
-    id: 72,
+    id: 84,
     title: 'What is Intrusive Sensing?',
     subtitle: 'The Sensor Penetrates Directly into the Process Medium',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1403,7 +1755,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Intrusive sensing requires physical penetration into the fluid, pipe, or electrical circuit.'
   },
   {
-    id: 73,
+    id: 85,
     title: 'The Drawbacks of Intrusive Sensing',
     subtitle: 'Turbulence, Leaks, and Energy Losses',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1420,7 +1772,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Intrusive probes cause pressure drops, wear out from fluid abrasion, and create leak hazards.'
   },
   {
-    id: 74,
+    id: 86,
     title: 'The Voltmeter Loading Effect Explained',
     subtitle: 'How an Intrusive Electrical Meter Distorts Circuit Voltage',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1438,7 +1790,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Connecting a voltmeter draws current, causing the measured voltage to drop below the true value.'
   },
   {
-    id: 75,
+    id: 87,
     title: 'Formula: Voltmeter Circuit Loading',
     subtitle: 'Calculating the Measured Voltage with Meter Resistance',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1464,7 +1816,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'A voltmeter must have huge internal resistance (Rm >> Rs) to avoid dropping the circuit voltage.'
   },
   {
-    id: 76,
+    id: 88,
     title: 'Worked Example: Voltmeter Loading Error',
     subtitle: 'Step-by-Step Numerical Practice',
     sectionTag: '1.6 Worked Example',
@@ -1506,7 +1858,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Never use a low-resistance meter on a high-resistance circuit, or you will cause huge loading errors!'
   },
   {
-    id: 77,
+    id: 89,
     title: 'The Ammeter Loading Rule',
     subtitle: 'Ammeters Must Have Near-Zero Internal Resistance',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1524,7 +1876,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Voltmeter resistance must be HUGE (infinite); Ammeter resistance must be TINY (zero).'
   },
   {
-    id: 78,
+    id: 90,
     title: 'What is Non-Intrusive Sensing?',
     subtitle: 'Measuring Without Touching or Disturbing the Medium',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1541,7 +1893,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Non-intrusive sensors measure through fields (magnetic, acoustic, optical) without breaking the envelope.'
   },
   {
-    id: 79,
+    id: 91,
     title: 'Visual Comparison: Intrusive vs. Non-Intrusive',
     subtitle: 'Figure 6 · Physical Pipe Flow & Electrical Loading Comparison',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1552,7 +1904,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Figure 6 contrasts intrusive fluid turbulence against smooth, non-intrusive external measurement.'
   },
   {
-    id: 80,
+    id: 92,
     title: 'Intrusive vs. Non-Intrusive: Engineering Selection',
     subtitle: 'When to Choose Which Method',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1579,7 +1931,7 @@ export const SLIDES_DATA: SlideData[] = [
   // SECTION 1.7: ELECTRICAL SAFETY & GROUND LOOP ISOLATION
   // =========================================================================
   {
-    id: 81,
+    id: 93,
     title: '1.7 Electrical Safety & Ground Loop Isolation',
     subtitle: 'Section 1.7 · Protecting Equipment and Lives · Ground Loops · Optocouplers · IEC CAT Ratings',
     sectionTag: '1.7 Electrical Safety',
@@ -1589,7 +1941,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Safety is non-negotiable: proper grounding and galvanic isolation protect both delicate sensors and human lives.'
   },
   {
-    id: 82,
+    id: 94,
     title: 'What is Earth Ground?',
     subtitle: 'The 0-Volt Safety Anchor for Buildings and Machines',
     sectionTag: '1.7 Electrical Safety',
@@ -1605,7 +1957,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Earth ground protects human life by safely directing fault currents into the soil.'
   },
   {
-    id: 83,
+    id: 95,
     title: 'What is a Ground Loop?',
     subtitle: 'When "Zero Volts" is NOT Zero Volts Everywhere!',
     sectionTag: '1.7 Electrical Safety',
@@ -1624,7 +1976,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Ground Loop = A closed loop created when a signal cable connects two different earth ground points.'
   },
   {
-    id: 84,
+    id: 96,
     title: 'The Real-World Dangers of Ground Loops',
     subtitle: 'Loud Audio Hum, Noisy Sensor Data, and Melted Cables',
     sectionTag: '1.7 Electrical Safety',
@@ -1640,7 +1992,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Ground loops cause 50 Hz electrical hum, sensor noise, and equipment destruction.'
   },
   {
-    id: 85,
+    id: 97,
     title: 'The Solution: Galvanic Isolation',
     subtitle: 'Breaking the Continuous Metal Path',
     sectionTag: '1.7 Electrical Safety',
@@ -1657,7 +2009,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Galvanic isolation breaks the metal conductor loop, completely eliminating circulating ground currents.'
   },
   {
-    id: 86,
+    id: 98,
     title: 'How an Optical Isolator (Optocoupler) Works',
     subtitle: 'Electricity → Light → Electricity',
     sectionTag: '1.7 Electrical Safety',
@@ -1674,7 +2026,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Optocouplers transmit signals using light beams across an insulating 5 kV barrier.'
   },
   {
-    id: 87,
+    id: 99,
     title: 'Visualizing Ground Loops & Galvanic Isolation',
     subtitle: 'Figure 7 · Loop Current Hazard vs. Optical Barrier Protection',
     sectionTag: '1.7 Electrical Safety',
@@ -1685,7 +2037,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Figure 7 shows the circulating ground loop in red and the optical barrier solution in green.'
   },
   {
-    id: 88,
+    id: 100,
     title: 'IEC 61010-1 Overvoltage Categories (CAT Ratings)',
     subtitle: 'Figure 7 (Right) · Matching Tool Safety to Electrical Danger',
     sectionTag: '1.7 Electrical Safety',
@@ -1702,7 +2054,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'CAT ratings specify the transient surge energy an instrument can withstand without exploding.'
   },
   {
-    id: 89,
+    id: 101,
     title: 'The 4 IEC Overvoltage Categories Defined',
     subtitle: 'From Low-Voltage Electronics (CAT I) to Utility Power Poles (CAT IV)',
     sectionTag: '1.7 Electrical Safety',
@@ -1718,7 +2070,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'CAT I = Battery circuits; CAT II = Wall plugs; CAT III = Factory panels; CAT IV = Outdoor utility lines.'
   },
   {
-    id: 90,
+    id: 102,
     title: 'The Golden Safety Rule in the Electrical Lab',
     subtitle: 'Never Use a Low-CAT Meter on High-CAT Circuits!',
     sectionTag: '1.7 Electrical Safety',
@@ -1736,7 +2088,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Never use a CAT I or II meter on a CAT III/IV panel: an overvoltage spike will cause an explosive arc flash!'
   },
   {
-    id: 91,
+    id: 103,
     title: 'Check Your Understanding: Electrical Safety & Isolation',
     subtitle: 'Concept Check 1.7',
     sectionTag: '1.7 Quiz',
@@ -1763,7 +2115,7 @@ export const SLIDES_DATA: SlideData[] = [
   // CHAPTER SUMMARY & KEY FORMULA CHEAT SHEET
   // =========================================================================
   {
-    id: 92,
+    id: 104,
     title: 'Unit I Comprehensive Summary: The Golden Rules',
     subtitle: 'Review of Core Principles Across All 7 Sections',
     sectionTag: 'Summary Review',
@@ -1772,7 +2124,7 @@ export const SLIDES_DATA: SlideData[] = [
       '1.1 Methods: Direct is manual; Deflection is fast but causes loading; Null-Balance draws zero power at balance.',
       '1.2 Analog vs. Digital: Analog has continuous resolution but parallax error; Digital gives clean numbers with quantization steps ΔV.',
       '1.3 DAQ Pipeline: Measurand → Sensor → Conditioning (Amp, Filter, Isolate) → MUX & S/H → ADC → Display.',
-      '1.4 Calibration: Sensitivity S is the slope; Zero drift shifts the line; Hysteresis is the gap between going up and coming down.',
+      '1.4 Calibration: Single-point fixes zero bias; Two-point fixes zero + span slope; Multi-point captures curvature & hysteresis.',
       '1.5 Uncertainty: Gross = Blunder; Systematic = Bias (calibrated away); Random = Noise (reduced by √N averaging).',
       '1.6 Intrusive: Voltmeter resistance must be huge (Rm >> Rs); Ammeter resistance must be tiny (Ra << Rload).',
       '1.7 Safety: Break ground loops with optical isolation; match meter CAT ratings (CAT I to CAT IV) to the danger level.'
@@ -1782,7 +2134,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Mastering these 7 core principles gives you the foundation for all modern instrumentation engineering.'
   },
   {
-    id: 93,
+    id: 105,
     title: 'Unit I Master Formula Sheet',
     subtitle: 'Clean Open Formulas for Exam Preparation',
     sectionTag: 'Formula Sheet',
@@ -1791,17 +2143,20 @@ export const SLIDES_DATA: SlideData[] = [
       'ADC Step Resolution: $$\\Delta V = \\frac{V_{\\text{FSR}}}{2^N - 1}$$',
       'Nyquist Minimum Sampling Rate: $$f_s \\ge 2 \\cdot f_{\\text{max}}$$',
       'Static Sensitivity Slope: $$S = \\frac{\\Delta y}{\\Delta x}$$',
-      'Maximum Hysteresis Percentage: {\\%}\\text{Hysteresis} = \\frac{|y_{\\text{down}} - y_{\\text{up}}|_{\\text{max}}}{y_{\\text{FSO}}} \\times 100\\%',
+      'Single-Point Offset Trim: $$y_{\\text{cal}} = y_{\\text{raw}} - (y_{\\text{raw,ref}} - y_{\\text{true,ref}})$$',
+      'Two-Point Linear Calibration: $$x_{\\text{true}} = x_1 + \\frac{y_{\\text{raw}} - y_1}{y_2 - y_1}(x_2 - x_1)$$',
+      'Multi-Point OLS Slope: $$m = \\frac{N\\sum x_i y_i - (\\sum x_i)(\\sum y_i)}{N\\sum x_i^2 - (\\sum x_i)^2}$$',
+      'Maximum Hysteresis Percentage: $$\\%\\text{Hysteresis} = \\frac{|y_{\\text{down}} - y_{\\text{up}}|_{\\text{max}}}{y_{\\text{FSO}}} \\times 100\\%$$',
       'Type A Standard Uncertainty: $$u_A = \\frac{s}{\\sqrt{N}}$$',
       'Combined Standard Uncertainty (RSS): $$u_c = \\sqrt{u_A^2 + u_B^2}$$',
       'Voltmeter Loading Voltage: $$V_{\\text{measured}} = V_{\\text{true}} \\times \\frac{R_m}{R_s + R_m}$$'
     ],
     speakerNotes:
       'Remind students: formulas are tools to calculate physical reality. Learn the physical meaning of each symbol.',
-    takeaway: 'These 7 standard formulas form the mathematical backbone of Unit I.'
+    takeaway: 'These 10 standard formulas form the mathematical backbone of Unit I.'
   },
   {
-    id: 94,
+    id: 106,
     title: 'References & Author Information',
     subtitle: 'Recommended Textbooks & Course Materials',
     sectionTag: 'References',

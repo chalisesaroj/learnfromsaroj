@@ -1,7 +1,10 @@
 /**
- * CLI script to generate the physical PowerPoint (.pptx) file for Unit 1 and Unit 3
- * Converts all vector SVG diagrams to genuine PNG bitmap buffers via @resvg/resvg-js
- * so Microsoft PowerPoint, Apple Keynote, and Google Slides render all images perfectly.
+ * CLI script to generate physical PowerPoint (.pptx) files for Unit 1 and Unit 3
+ * Features:
+ * - High-DPI vector SVG-to-PNG rasterization at 2880px width via @resvg/resvg-js
+ * - Publication-grade LaTeX mathematical equation PNG rendering via MathJax + @resvg/resvg-js
+ * - High-resolution engineering laboratory photography embedded as base64 buffers
+ *
  * Run with: npx tsx scripts/generate_unit1_pptx.ts
  */
 
@@ -9,7 +12,8 @@ import fs from 'fs';
 import path from 'path';
 import { Resvg } from '@resvg/resvg-js';
 import { CHAPTERS } from '../src/data/chaptersData';
-import { exportChapterToPptx } from '../src/utils/pptxExport';
+import { exportChapterToPptx, MathPngResult } from '../src/utils/pptxExport';
+import { latexToSvgWithMetrics } from '../src/utils/mathSvg';
 
 function nodeImageResolver(rawPath: string): { path?: string; data?: string } {
   if (!rawPath) return {};
@@ -35,15 +39,48 @@ function nodeImageResolver(rawPath: string): { path?: string; data?: string } {
 function nodeSvgRasterizer(svg: string): string {
   try {
     const resvg = new Resvg(svg, {
-      fitTo: { mode: 'width', value: 1600 },
+      fitTo: { mode: 'width', value: 2880 }, // Ultra-sharp 3K vector rasterization
       shapeRendering: 2, // geometricPrecision
-      textRendering: 1    // optimizeLegibility
+      textRendering: 1   // optimizeLegibility
     });
     const pngBuffer = resvg.render().asPng();
     return 'data:image/png;base64,' + pngBuffer.toString('base64');
   } catch (e: any) {
     console.warn('[Node SVG Rasterizer] Error rasterizing SVG to PNG:', e?.message || e);
     return '';
+  }
+}
+
+const nodeMathCache = new Map<string, MathPngResult>();
+
+function nodeMathRasterizer(
+  rawLatex: string,
+  display = true,
+  colorHex = '#172B45'
+): MathPngResult | null {
+  const key = `${rawLatex}_${display}_${colorHex}`;
+  if (nodeMathCache.has(key)) return nodeMathCache.get(key)!;
+
+  try {
+    const metrics = latexToSvgWithMetrics(rawLatex, display, colorHex, 360);
+    if (!metrics) return null;
+
+    // Render crisp high-resolution transparent PNG via Resvg
+    const resvg = new Resvg(metrics.svg, {
+      fitTo: { mode: 'height', value: 360 },
+      shapeRendering: 2
+    });
+    const pngBuffer = resvg.render().asPng();
+    const res: MathPngResult = {
+      data: 'data:image/png;base64,' + pngBuffer.toString('base64'),
+      aspect: metrics.aspect,
+      viewBoxHeight: metrics.viewBoxHeight
+    };
+    nodeMathCache.set(key, res);
+    return res;
+  } catch (e: any) {
+    console.warn('[Node Math Rasterizer] Fallback for formula:', rawLatex.slice(0, 40), e?.message || e);
+    return null;
   }
 }
 
@@ -59,6 +96,7 @@ async function run() {
     includeNotes: true,
     resolveImage: nodeImageResolver,
     svgToPng: nodeSvgRasterizer,
+    mathToPng: nodeMathRasterizer,
     onProgress: (cur, tot, msg) => {
       if (cur % 10 === 0 || cur === tot) {
         console.log(`  [Unit 1] ${cur}/${tot}: ${msg}`);
@@ -68,10 +106,12 @@ async function run() {
 
   const unit1PublicPath = path.join(publicDir, 'Unit1_Fundamentals_of_Measurement_Systems.pptx');
   const unit1RootPath = path.resolve('Unit1_Fundamentals_of_Measurement_Systems.pptx');
-  
+
   fs.writeFileSync(unit1PublicPath, unit1Buffer);
   fs.writeFileSync(unit1RootPath, unit1Buffer);
-  console.log(`✓ Unit 1 PPTX written to:\n  - ${unit1PublicPath} (${(unit1Buffer.length / 1024).toFixed(1)} KB)\n  - ${unit1RootPath}`);
+  console.log(
+    `✓ Unit 1 PPTX written to:\n  - ${unit1PublicPath} (${(unit1Buffer.length / 1024).toFixed(1)} KB)\n  - ${unit1RootPath}`
+  );
 
   // 2. Also generate Unit 3 PPTX
   if (CHAPTERS.unit3) {
@@ -80,6 +120,7 @@ async function run() {
       includeNotes: true,
       resolveImage: nodeImageResolver,
       svgToPng: nodeSvgRasterizer,
+      mathToPng: nodeMathRasterizer,
       onProgress: (cur, tot, msg) => {
         if (cur % 5 === 0 || cur === tot) {
           console.log(`  [Unit 3] ${cur}/${tot}: ${msg}`);
@@ -91,10 +132,12 @@ async function run() {
     const unit3RootPath = path.resolve('Unit3_Strain_Gauges.pptx');
     fs.writeFileSync(unit3PublicPath, unit3Buffer);
     fs.writeFileSync(unit3RootPath, unit3Buffer);
-    console.log(`✓ Unit 3 PPTX written to:\n  - ${unit3PublicPath} (${(unit3Buffer.length / 1024).toFixed(1)} KB)\n  - ${unit3RootPath}`);
+    console.log(
+      `✓ Unit 3 PPTX written to:\n  - ${unit3PublicPath} (${(unit3Buffer.length / 1024).toFixed(1)} KB)\n  - ${unit3RootPath}`
+    );
   }
 
-  console.log('\nAll PowerPoint files generated successfully with complete SVG diagrams, formulas, and symbol tables!');
+  console.log('\nAll PowerPoint files generated successfully with crisp 3K PNG diagrams & MathJax LaTeX equations!');
 }
 
 run().catch((err) => {

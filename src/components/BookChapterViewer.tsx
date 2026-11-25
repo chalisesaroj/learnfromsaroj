@@ -34,7 +34,7 @@ export interface BookChapterViewerProps {
   onOpenPdfModal?: (initialLayout?: 'book' | 'landscape' | 'handout') => void;
 }
 
-type ReadingTheme = 'clean' | 'warm' | 'dark';
+type ReadingTheme = 'clean' | 'warm';
 type FontSize = 'sm' | 'base' | 'lg' | 'xl';
 
 export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
@@ -208,18 +208,6 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
           headingText: 'text-[#1e170c]',
           bodyText: 'text-[#2e261a]'
         };
-      case 'dark':
-        return {
-          wrapper: 'bg-slate-950 text-slate-100',
-          headerBg: 'bg-slate-900/95 border-slate-800',
-          paperBg: 'bg-slate-900/90 border-slate-800 shadow-xs',
-          sidebarBg: 'bg-slate-900/80 border-slate-800',
-          calloutBg: 'bg-slate-800/60 border-slate-700',
-          borderLine: 'border-slate-800',
-          subtleText: 'text-slate-400',
-          headingText: 'text-slate-100',
-          bodyText: 'text-slate-300'
-        };
       case 'clean':
       default:
         return {
@@ -230,8 +218,8 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
           calloutBg: 'bg-slate-50 border-slate-200',
           borderLine: 'border-slate-200',
           subtleText: 'text-slate-500',
-          headingText: 'text-slate-900 dark:text-slate-100',
-          bodyText: 'text-slate-700 dark:text-slate-300'
+          headingText: 'text-slate-900',
+          bodyText: 'text-slate-700'
         };
     }
   }, [theme]);
@@ -305,12 +293,12 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
             )}
 
             {/* Reading Theme Toggle */}
-            <div className="flex items-center p-0.5 bg-slate-100 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700 text-xs">
+            <div className="flex items-center p-0.5 bg-slate-100 rounded-lg border border-slate-200 text-xs">
               <button
                 onClick={() => setTheme('clean')}
-                className={`px-2 py-1 rounded-md font-medium transition-all ${
+                className={`px-2.5 py-1 rounded-md font-medium transition-all ${
                   theme === 'clean'
-                    ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-xs'
+                    ? 'bg-white text-slate-900 shadow-xs'
                     : 'text-slate-500 hover:text-slate-900'
                 }`}
                 title="Clean Modern Theme"
@@ -319,7 +307,7 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
               </button>
               <button
                 onClick={() => setTheme('warm')}
-                className={`px-2 py-1 rounded-md font-medium transition-all ${
+                className={`px-2.5 py-1 rounded-md font-medium transition-all ${
                   theme === 'warm'
                     ? 'bg-[#f6efe0] text-amber-950 font-bold shadow-xs'
                     : 'text-slate-500 hover:text-slate-900'
@@ -327,17 +315,6 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
                 title="Warm Paper Theme (Book-style)"
               >
                 Paper
-              </button>
-              <button
-                onClick={() => setTheme('dark')}
-                className={`px-2 py-1 rounded-md font-medium transition-all ${
-                  theme === 'dark'
-                    ? 'bg-slate-950 text-white font-bold shadow-xs'
-                    : 'text-slate-500 hover:text-slate-900'
-                }`}
-                title="Night Mode"
-              >
-                Dark
               </button>
             </div>
 
@@ -690,9 +667,9 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
                           {/* Technical Vector Diagram if referenced */}
                           {sub.figureRef && chapter.figures?.[sub.figureRef] && (
                             <div className="my-6 space-y-2">
-                              <div className="p-4 sm:p-6 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm relative group overflow-hidden">
+                              <div className="p-2 sm:p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm relative group overflow-hidden">
                                 <div
-                                  className="w-full flex items-center justify-center max-h-[380px] overflow-hidden cursor-pointer"
+                                  className="w-full aspect-[16/9] max-h-[580px] flex items-center justify-center overflow-hidden cursor-zoom-in [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain"
                                   onClick={() =>
                                     setSelectedZoomFigure({
                                       key: sub.figureRef!,
@@ -776,7 +753,7 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
                         {/* Problem Statement */}
                         <div className="space-y-1">
                           <div className="text-xs font-bold text-slate-500 uppercase tracking-wider">Problem Statement:</div>
-                          <p className="text-sm font-semibold text-slate-900 dark:text-white leading-relaxed">
+                          <p className="text-base font-semibold text-slate-900 dark:text-white leading-relaxed">
                             <FormattedMathText text={sec.workedExample.problem} />
                           </p>
                         </div>
@@ -785,14 +762,14 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
                         <div className="space-y-4 pt-2">
                           {sec.workedExample.steps.map((st, stIdx) => (
                             <div key={stIdx} className="p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 space-y-2">
-                              <div className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white flex items-center gap-2">
-                                <span className="w-5 h-5 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 text-xs flex items-center justify-center font-bold shrink-0">
+                              <div className="font-bold text-sm sm:text-base text-slate-900 dark:text-white flex items-center gap-2">
+                                <span className="w-6 h-6 rounded-full bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 text-xs flex items-center justify-center font-bold shrink-0">
                                   {st.stepNumber}
                                 </span>
                                 <span>{st.title}</span>
                               </div>
                               {st.explanation && (
-                                <p className="text-xs text-slate-600 dark:text-slate-300">
+                                <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
                                   <FormattedMathText text={st.explanation} />
                                 </p>
                               )}
@@ -806,18 +783,18 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
                         </div>
 
                         {/* Final Result Callout */}
-                        <div className="p-3.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/50 flex items-center justify-between gap-3 flex-wrap">
-                          <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300">
+                        <div className="p-4 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900/50 flex items-center justify-between gap-3 flex-wrap">
+                          <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-300">
                             Final Analytical Result:
                           </span>
-                          <span className="font-mono font-extrabold text-sm text-emerald-700 dark:text-emerald-300">
+                          <span className="font-mono font-extrabold text-base text-emerald-700 dark:text-emerald-300">
                             <FormattedMathText text={sec.workedExample.finalAnswer} />
                           </span>
                         </div>
 
                         {/* Practical Insight */}
                         {sec.workedExample.practicalInsight && (
-                          <p className="text-xs text-slate-600 dark:text-slate-400 italic pt-1">
+                          <p className="text-sm text-slate-600 dark:text-slate-400 italic pt-1">
                             <strong>Practical Workshop Insight:</strong> {sec.workedExample.practicalInsight}
                           </p>
                         )}
@@ -827,14 +804,14 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
                     {/* Board Examination & Review Questions */}
                     {sec.examQuestions && sec.examQuestions.length > 0 && (
                       <div className="mt-6 p-5 rounded-2xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-800 space-y-3">
-                        <div className="flex items-center gap-2 text-xs font-bold text-purple-700 dark:text-purple-300 uppercase tracking-wider">
+                        <div className="flex items-center gap-2 text-xs sm:text-sm font-bold text-purple-700 dark:text-purple-300 uppercase tracking-wider">
                           <CheckCircle2 className="w-4 h-4 text-purple-600" />
                           <span>Board Examination Review Questions</span>
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-2.5">
                           {sec.examQuestions.map((q, qIdx) => (
-                            <div key={qIdx} className="flex items-start gap-2.5 text-xs sm:text-sm text-slate-800 dark:text-slate-200">
-                              <span className="w-5 h-5 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                            <div key={qIdx} className="flex items-start gap-2.5 text-sm sm:text-base text-slate-800 dark:text-slate-200">
+                              <span className="w-6 h-6 rounded-full bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
                                 {qIdx + 1}
                               </span>
                               <p className="leading-relaxed"><FormattedMathText text={q} /></p>
@@ -975,9 +952,9 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
                             {/* Embedded Vector Figure */}
                             {slide.figureKey && chapter.figures?.[slide.figureKey] && (
                               <div className="my-6 space-y-2">
-                                <div className="p-4 sm:p-6 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm relative group overflow-hidden">
+                                <div className="p-2 sm:p-4 rounded-2xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 shadow-sm relative group overflow-hidden">
                                   <div
-                                    className="w-full flex items-center justify-center max-h-[380px] overflow-hidden cursor-pointer"
+                                    className="w-full aspect-[16/9] max-h-[580px] flex items-center justify-center overflow-hidden cursor-zoom-in [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain"
                                     onClick={() =>
                                       setSelectedZoomFigure({
                                         key: slide.figureKey!,
@@ -1038,10 +1015,10 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
 
       {/* Modal for Figure Zoom */}
       {selectedZoomFigure && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md animate-in fade-in">
-          <div className="relative w-full max-w-4xl bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in">
+          <div className="relative w-full max-w-[94vw] bg-white dark:bg-slate-900 rounded-3xl p-4 sm:p-6 shadow-2xl border border-slate-200 dark:border-slate-800 space-y-4">
             <div className="flex items-center justify-between border-b pb-3 border-slate-200 dark:border-slate-800">
-              <h4 className="font-bold text-slate-900 dark:text-white text-base">
+              <h4 className="font-bold text-slate-900 dark:text-white text-base sm:text-lg">
                 {selectedZoomFigure.caption}
               </h4>
               <button
@@ -1052,7 +1029,7 @@ export const BookChapterViewer: React.FC<BookChapterViewerProps> = ({
               </button>
             </div>
             <div
-              className="w-full flex items-center justify-center max-h-[70vh] overflow-auto p-4 bg-white dark:bg-slate-950 rounded-xl"
+              className="w-full aspect-[16/9] max-h-[78vh] flex items-center justify-center p-2 bg-white dark:bg-slate-950 rounded-xl [&>svg]:w-full [&>svg]:h-full [&>svg]:object-contain"
               dangerouslySetInnerHTML={{ __html: selectedZoomFigure.svgContent }}
             />
             <div className="flex items-center justify-between text-xs text-slate-500">

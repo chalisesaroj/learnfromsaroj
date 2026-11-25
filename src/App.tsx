@@ -7,6 +7,7 @@ import { SyllabusGuide } from './components/SyllabusGuide';
 import { AiTopicGenerator } from './components/AiTopicGenerator';
 import { ChapterJsonStudio } from './components/ChapterJsonStudio';
 import { BookChapterViewer } from './components/BookChapterViewer';
+import { TutorialSection } from './components/TutorialSection';
 import { PdfDownloadModal } from './components/PdfDownloadModal';
 import { InstructorPortfolio } from './components/InstructorPortfolio';
 import { CHAPTERS, ChapterConfig, ChapterId } from './data/chaptersData';
@@ -30,7 +31,8 @@ import {
   PlusCircle,
   FileDown,
   UserCheck,
-  Home
+  Home,
+  Calculator
 } from 'lucide-react';
 
 export default function App() {
@@ -38,7 +40,7 @@ export default function App() {
   const [loadedChapters, setLoadedChapters] = useState<ChapterConfig[]>(() => Object.values(CHAPTERS));
   const [currentChapterId, setCurrentChapterId] = useState<string>('unit1');
   const [activeNav, setActiveNav] = useState<
-    'home' | 'deck' | 'book' | 'code' | 'simulations' | 'figures' | 'syllabus' | 'generator' | 'json-studio'
+    'home' | 'deck' | 'book' | 'tutorial' | 'code' | 'simulations' | 'figures' | 'syllabus' | 'generator' | 'json-studio'
   >('home');
   const [toastMessage, setToastMessage] = useState<string | null>(null);
   const [isPdfModalOpen, setIsPdfModalOpen] = useState(false);
@@ -204,7 +206,7 @@ quarto render lecture*.qmd
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-indigo-500/30 selection:text-indigo-200">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-indigo-100 selection:text-indigo-900">
       {/* Hidden file input for fast upload */}
       <input
         ref={fileInputRef}
@@ -216,122 +218,133 @@ quarto render lecture*.qmd
 
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 bg-emerald-600 text-white text-xs font-semibold rounded-xl shadow-2xl animate-fade-in border border-emerald-400">
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-4 py-3 bg-emerald-600 text-white text-xs font-semibold rounded-xl shadow-xl animate-fade-in border border-emerald-500">
           <CheckCircle2 className="w-4 h-4" />
           <span>{toastMessage}</span>
         </div>
       )}
 
       {/* Top Bar / App Navigation */}
-      <header className="sticky top-0 z-50 flex items-center justify-between gap-4 px-4 sm:px-6 py-3 border-b border-slate-800 bg-slate-950/95 backdrop-blur-md">
+      <header className="sticky top-0 z-50 flex items-center justify-between gap-4 px-4 sm:px-6 py-3 border-b border-slate-200 bg-white/95 backdrop-blur-md shadow-xs">
         {/* Zone 1: Wordmark brand */}
         <button
           onClick={() => setActiveNav('home')}
           className="flex items-center gap-3 whitespace-nowrap shrink-0 text-left hover:opacity-90 transition-opacity"
         >
-          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-blue-600 to-indigo-500 flex items-center justify-center text-white font-black text-sm shadow-md shadow-indigo-600/30 font-mono border border-indigo-400/30">
+          <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-blue-600 to-indigo-500 flex items-center justify-center text-white font-black text-sm shadow-sm font-mono border border-indigo-500/30">
             SC
           </div>
           <div>
-            <span className="text-base font-bold tracking-tight text-white block leading-none">
+            <span className="text-base font-bold tracking-tight text-slate-900 block leading-none">
               Er. Saroj Chalise
             </span>
-            <span className="text-[11px] text-indigo-400 font-mono flex items-center gap-1.5 mt-0.5">
+            <span className="text-[11px] text-indigo-600 font-mono flex items-center gap-1.5 mt-0.5 font-medium">
               <span>MEC 232</span>
               <span>·</span>
-              <span className="text-slate-400">BE Mechanical, IOE</span>
+              <span className="text-slate-500">BE Mechanical, IOE</span>
             </span>
           </div>
         </button>
 
         {/* Zone 2: Navigation Links */}
-        <nav className="hidden lg:flex items-center gap-5 text-xs sm:text-sm font-medium text-slate-400">
+        <nav className="hidden lg:flex items-center gap-4 text-xs sm:text-sm font-medium text-slate-600">
           <button
             onClick={() => setActiveNav('home')}
             className={`flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
               activeNav === 'home'
-                ? 'text-white font-semibold border-b-2 border-indigo-500 pb-0.5'
-                : 'hover:text-slate-200'
+                ? 'text-indigo-700 font-semibold border-b-2 border-indigo-600 pb-0.5'
+                : 'hover:text-slate-900'
             }`}
           >
-            <Home className="w-3.5 h-3.5 text-indigo-400" />
+            <Home className="w-3.5 h-3.5 text-indigo-600" />
             <span>Home &amp; Portfolio</span>
           </button>
           <button
             onClick={() => setActiveNav('deck')}
             className={`flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
               activeNav === 'deck'
-                ? 'text-white font-semibold border-b-2 border-indigo-500 pb-0.5'
-                : 'hover:text-slate-200'
+                ? 'text-indigo-700 font-semibold border-b-2 border-indigo-600 pb-0.5'
+                : 'hover:text-slate-900'
             }`}
           >
-            <Presentation className="w-3.5 h-3.5 text-indigo-400" />
+            <Presentation className="w-3.5 h-3.5 text-indigo-600" />
             <span>Deck Simulator</span>
           </button>
           <button
             onClick={() => setActiveNav('book')}
             className={`flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
               activeNav === 'book'
-                ? 'text-white font-semibold border-b-2 border-rose-500 pb-0.5'
-                : 'hover:text-slate-200'
+                ? 'text-rose-700 font-semibold border-b-2 border-rose-600 pb-0.5'
+                : 'hover:text-slate-900'
             }`}
           >
-            <BookOpen className="w-3.5 h-3.5 text-rose-400" />
+            <BookOpen className="w-3.5 h-3.5 text-rose-600" />
             <span>Book Chapter</span>
+          </button>
+          <button
+            onClick={() => setActiveNav('tutorial')}
+            className={`flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
+              activeNav === 'tutorial'
+                ? 'text-emerald-700 font-semibold border-b-2 border-emerald-600 pb-0.5'
+                : 'hover:text-slate-900'
+            }`}
+          >
+            <Calculator className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Tutorials</span>
           </button>
           <button
             onClick={() => setActiveNav('code')}
             className={`flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
               activeNav === 'code'
-                ? 'text-white font-semibold border-b-2 border-indigo-500 pb-0.5'
-                : 'hover:text-slate-200'
+                ? 'text-indigo-700 font-semibold border-b-2 border-indigo-600 pb-0.5'
+                : 'hover:text-slate-900'
             }`}
           >
-            <FileCode2 className="w-3.5 h-3.5 text-blue-400" />
+            <FileCode2 className="w-3.5 h-3.5 text-blue-600" />
             <span>Source Code</span>
           </button>
           <button
             onClick={() => setActiveNav('simulations')}
             className={`flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
               activeNav === 'simulations'
-                ? 'text-white font-semibold border-b-2 border-indigo-500 pb-0.5'
-                : 'hover:text-slate-200'
+                ? 'text-indigo-700 font-semibold border-b-2 border-indigo-600 pb-0.5'
+                : 'hover:text-slate-900'
             }`}
           >
-            <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-400" />
+            <SlidersHorizontal className="w-3.5 h-3.5 text-emerald-600" />
             <span>Interactive Labs (7 Labs)</span>
           </button>
           <button
             onClick={() => setActiveNav('figures')}
             className={`flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
               activeNav === 'figures'
-                ? 'text-white font-semibold border-b-2 border-indigo-500 pb-0.5'
-                : 'hover:text-slate-200'
+                ? 'text-indigo-700 font-semibold border-b-2 border-indigo-600 pb-0.5'
+                : 'hover:text-slate-900'
             }`}
           >
-            <Image className="w-3.5 h-3.5 text-cyan-400" />
+            <Image className="w-3.5 h-3.5 text-cyan-600" />
             <span>Vector SVGs</span>
           </button>
           <button
             onClick={() => setActiveNav('syllabus')}
             className={`flex items-center gap-1.5 transition-colors whitespace-nowrap shrink-0 ${
               activeNav === 'syllabus'
-                ? 'text-white font-semibold border-b-2 border-indigo-500 pb-0.5'
-                : 'hover:text-slate-200'
+                ? 'text-indigo-700 font-semibold border-b-2 border-indigo-600 pb-0.5'
+                : 'hover:text-slate-900'
             }`}
           >
-            <BookOpenCheck className="w-3.5 h-3.5 text-purple-400" />
+            <BookOpenCheck className="w-3.5 h-3.5 text-purple-600" />
             <span>Syllabus Guide</span>
           </button>
           <button
             onClick={() => setActiveNav('json-studio')}
             className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md transition-all whitespace-nowrap shrink-0 ${
               activeNav === 'json-studio'
-                ? 'bg-indigo-600/20 text-indigo-300 font-semibold border border-indigo-500/40'
-                : 'bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 hover:text-white'
+                ? 'bg-indigo-50 text-indigo-700 font-semibold border border-indigo-200'
+                : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 hover:text-slate-900'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
             <span className="font-semibold">Chapter JSON Studio</span>
           </button>
         </nav>
@@ -340,25 +353,25 @@ quarto render lecture*.qmd
         <div className="flex items-center gap-2 shrink-0">
           <button
             onClick={() => setActiveNav('json-studio')}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-200 bg-slate-900 border border-slate-700 rounded-lg hover:bg-slate-800 transition-colors shadow-sm"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-100 transition-colors shadow-xs whitespace-nowrap shrink-0"
             title="Upload Chapter JSON or generate AI prompt"
           >
-            <Upload className="w-3.5 h-3.5 text-indigo-400" />
+            <Upload className="w-3.5 h-3.5 text-indigo-600" />
             <span>Upload JSON</span>
           </button>
 
           <button
             onClick={handleExportCurrentChapterJson}
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-300 bg-slate-900 border border-slate-750 rounded-lg hover:bg-slate-800 hover:text-white transition-colors"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg hover:bg-slate-100 hover:text-slate-900 transition-colors whitespace-nowrap shrink-0"
             title="Export current chapter as editable JSON"
           >
-            <FileJson className="w-3.5 h-3.5 text-cyan-400" />
+            <FileJson className="w-3.5 h-3.5 text-cyan-600" />
             <span>Export JSON</span>
           </button>
 
           <button
             onClick={() => setIsPdfModalOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-rose-600 rounded-lg hover:bg-rose-500 transition-colors whitespace-nowrap shrink-0 shadow-lg shadow-rose-600/25"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-rose-600 rounded-lg hover:bg-rose-700 transition-colors whitespace-nowrap shrink-0 shadow-sm"
             title={`Download ${chapter.unitNumber} as PDF (Presentation or Handout)`}
           >
             <FileDown className="w-3.5 h-3.5" />
@@ -367,7 +380,7 @@ quarto render lecture*.qmd
 
           <button
             onClick={() => downloadZipPackage()}
-            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 transition-colors whitespace-nowrap shrink-0 shadow-lg shadow-indigo-600/25"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors whitespace-nowrap shrink-0 shadow-sm"
             title={`Download ${chapter.unitNumber} ZIP Package`}
           >
             <Archive className="w-3.5 h-3.5" />
@@ -376,21 +389,21 @@ quarto render lecture*.qmd
 
           <button
             onClick={downloadMasterBundleZip}
-            className="hidden md:flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-slate-400 bg-slate-900 border border-slate-800 rounded-lg hover:bg-slate-800 hover:text-white transition-colors"
+            className="hidden md:flex items-center gap-1 px-2.5 py-1.5 text-xs font-semibold text-slate-600 bg-slate-100 border border-slate-200 rounded-lg hover:bg-slate-200 hover:text-slate-900 transition-colors whitespace-nowrap shrink-0"
             title="Download complete multi-chapter bundle"
           >
-            <Download className="w-3.5 h-3.5 text-slate-400" />
+            <Download className="w-3.5 h-3.5 text-slate-500" />
             <span>All Units</span>
           </button>
         </div>
       </header>
 
       {/* Mobile/Tablet Sub-Navigation */}
-      <div className="lg:hidden flex items-center gap-1.5 overflow-x-auto px-4 py-2 bg-slate-900 border-b border-slate-800 text-xs scrollbar-none">
+      <div className="lg:hidden flex items-center gap-1.5 overflow-x-auto px-4 py-2 bg-white border-b border-slate-200 text-xs scrollbar-none">
         <button
           onClick={() => setActiveNav('home')}
           className={`px-3 py-1.5 rounded whitespace-nowrap flex items-center gap-1 ${
-            activeNav === 'home' ? 'bg-indigo-600 text-white font-medium' : 'text-slate-400'
+            activeNav === 'home' ? 'bg-indigo-600 text-white font-medium' : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
           <Home className="w-3 h-3" />
@@ -399,7 +412,7 @@ quarto render lecture*.qmd
         <button
           onClick={() => setActiveNav('deck')}
           className={`px-3 py-1.5 rounded whitespace-nowrap ${
-            activeNav === 'deck' ? 'bg-indigo-600 text-white font-medium' : 'text-slate-400'
+            activeNav === 'deck' ? 'bg-indigo-600 text-white font-medium' : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
           Deck
@@ -407,16 +420,25 @@ quarto render lecture*.qmd
         <button
           onClick={() => setActiveNav('book')}
           className={`px-3 py-1.5 rounded whitespace-nowrap flex items-center gap-1 ${
-            activeNav === 'book' ? 'bg-rose-600 text-white font-semibold' : 'text-rose-400'
+            activeNav === 'book' ? 'bg-rose-600 text-white font-semibold' : 'text-rose-700 hover:bg-rose-50'
           }`}
         >
           <BookOpen className="w-3 h-3" />
           Book
         </button>
         <button
+          onClick={() => setActiveNav('tutorial')}
+          className={`px-3 py-1.5 rounded whitespace-nowrap flex items-center gap-1 ${
+            activeNav === 'tutorial' ? 'bg-emerald-600 text-white font-semibold' : 'text-emerald-700 hover:bg-emerald-50'
+          }`}
+        >
+          <Calculator className="w-3 h-3" />
+          Tutorials
+        </button>
+        <button
           onClick={() => setActiveNav('json-studio')}
           className={`px-3 py-1.5 rounded whitespace-nowrap flex items-center gap-1 ${
-            activeNav === 'json-studio' ? 'bg-amber-600 text-white font-semibold' : 'text-amber-400'
+            activeNav === 'json-studio' ? 'bg-amber-600 text-white font-semibold' : 'text-amber-700 hover:bg-amber-50'
           }`}
         >
           <Sparkles className="w-3 h-3" />
@@ -425,7 +447,7 @@ quarto render lecture*.qmd
         <button
           onClick={() => setActiveNav('code')}
           className={`px-3 py-1.5 rounded whitespace-nowrap ${
-            activeNav === 'code' ? 'bg-indigo-600 text-white font-medium' : 'text-slate-400'
+            activeNav === 'code' ? 'bg-indigo-600 text-white font-medium' : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
           Source Code
@@ -433,7 +455,7 @@ quarto render lecture*.qmd
         <button
           onClick={() => setActiveNav('simulations')}
           className={`px-3 py-1.5 rounded whitespace-nowrap ${
-            activeNav === 'simulations' ? 'bg-indigo-600 text-white font-medium' : 'text-slate-400'
+            activeNav === 'simulations' ? 'bg-indigo-600 text-white font-medium' : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
           Labs (7)
@@ -441,7 +463,7 @@ quarto render lecture*.qmd
         <button
           onClick={() => setActiveNav('figures')}
           className={`px-3 py-1.5 rounded whitespace-nowrap ${
-            activeNav === 'figures' ? 'bg-indigo-600 text-white font-medium' : 'text-slate-400'
+            activeNav === 'figures' ? 'bg-indigo-600 text-white font-medium' : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
           Figures
@@ -449,7 +471,7 @@ quarto render lecture*.qmd
         <button
           onClick={() => setActiveNav('syllabus')}
           className={`px-3 py-1.5 rounded whitespace-nowrap ${
-            activeNav === 'syllabus' ? 'bg-indigo-600 text-white font-medium' : 'text-slate-400'
+            activeNav === 'syllabus' ? 'bg-indigo-600 text-white font-medium' : 'text-slate-600 hover:bg-slate-100'
           }`}
         >
           Syllabus
@@ -460,30 +482,30 @@ quarto render lecture*.qmd
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
         {/* Course Header Banner with Chapter Switcher Carousel (Shown on study views) */}
         {activeNav !== 'home' && (
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-5 pb-6 border-b border-slate-800/80">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-5 pb-6 border-b border-slate-200">
             <div>
-              <div className="flex items-center gap-2 text-xs text-slate-400 mb-2 flex-wrap">
-                <span className="font-mono text-indigo-400 font-semibold">MEC 232 (3-1-1)</span>
+              <div className="flex items-center gap-2 text-xs text-slate-600 mb-2 flex-wrap">
+                <span className="font-mono text-indigo-600 font-semibold">MEC 232 (3-1-1)</span>
                 <span aria-hidden="true">·</span>
                 <span>BE Mechanical</span>
                 <span aria-hidden="true">·</span>
                 <span>Er. Saroj Chalise</span>
                 <span aria-hidden="true">·</span>
-                <span className="font-semibold text-white">{chapter.unitNumber} ({chapter.hours})</span>
+                <span className="font-semibold text-slate-900">{chapter.unitNumber} ({chapter.hours})</span>
                 <span aria-hidden="true">·</span>
                 <span>{chapter.slides.length} Slides</span>
               </div>
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white text-balance">
+              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 text-balance">
                 {chapter.title}
               </h1>
-              <p className="text-sm text-slate-400 mt-1 max-w-3xl leading-relaxed">
+              <p className="text-sm text-slate-600 mt-1 max-w-3xl leading-relaxed">
                 {chapter.summary}{' '}
                 {chapter.referenceUrl && (
                   <a
                     href={chapter.referenceUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-blue-400 underline hover:text-blue-300"
+                    className="text-indigo-600 underline hover:text-indigo-700"
                   >
                     {chapter.referenceUrl.replace('https://', '')}
                   </a>
@@ -491,8 +513,8 @@ quarto render lecture*.qmd
               </p>
             </div>
 
-            {/* Dynamic Chapter Switcher Pill */}
-            <div className="flex items-center gap-1.5 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800 shrink-0 shadow-lg flex-wrap max-w-full overflow-x-auto">
+            {/* Dynamic Chapter Switcher */}
+            <div className="flex items-center gap-1.5 bg-white p-1.5 rounded-xl border border-slate-200 shrink-0 shadow-xs flex-wrap max-w-full overflow-x-auto">
               {loadedChapters.map((ch) => {
                 const isSelected = currentChapterId === ch.id;
                 const isCustom = !['unit1', 'unit2', 'unit3', 'unit4', 'unit5'].includes(ch.id);
@@ -502,13 +524,13 @@ quarto render lecture*.qmd
                     onClick={() => setCurrentChapterId(ch.id)}
                     className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
                       isSelected
-                        ? 'bg-indigo-600 text-white shadow-md'
-                        : 'text-slate-400 hover:text-slate-200'
+                        ? 'bg-indigo-600 text-white shadow-sm'
+                        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
                     }`}
                   >
                     <span>{ch.unitNumber}</span>
                     {isCustom ? (
-                      <span className="text-[10px] px-1 py-0.2 rounded bg-amber-500/20 text-amber-300">Custom</span>
+                      <span className="text-[10px] px-1 py-0.2 rounded bg-amber-100 text-amber-800">Custom</span>
                     ) : (
                       <span className="text-[10px] opacity-75 hidden xl:inline">({ch.hours})</span>
                     )}
@@ -518,7 +540,7 @@ quarto render lecture*.qmd
 
               <button
                 onClick={() => setActiveNav('json-studio')}
-                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-amber-300 bg-amber-950/40 border border-amber-800/40 hover:bg-amber-900/50 transition-colors"
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium text-amber-800 bg-amber-50 border border-amber-200 hover:bg-amber-100 transition-colors"
                 title="Add a new chapter via JSON or prompt"
               >
                 <PlusCircle className="w-3.5 h-3.5" />
@@ -565,6 +587,15 @@ quarto render lecture*.qmd
               if (lyt) setPdfModalInitialLayout(lyt);
               setIsPdfModalOpen(true);
             }}
+          />
+        )}
+
+        {activeNav === 'tutorial' && (
+          <TutorialSection
+            currentChapterId={currentChapterId}
+            activeChapterConfig={chapter}
+            availableChapters={loadedChapters}
+            onChapterChange={setCurrentChapterId}
           />
         )}
 
@@ -627,20 +658,20 @@ quarto render lecture*.qmd
       />
 
       {/* Footer */}
-      <footer className="mt-auto px-6 py-5 border-t border-slate-900 bg-slate-950 text-xs text-slate-500 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <footer className="mt-auto px-6 py-5 border-t border-slate-200 bg-white text-xs text-slate-600 flex flex-col sm:flex-row items-center justify-between gap-3">
         <div className="flex items-center gap-2 flex-wrap text-center sm:text-left">
-          <span className="font-semibold text-slate-300">Er. Saroj Chalise</span>
+          <span className="font-semibold text-slate-900">Er. Saroj Chalise</span>
           <span>·</span>
           <span>Mechanical Engineer (BE 2014, ME 2019 · IOE Pulchowk Campus)</span>
           <span>·</span>
-          <span className="text-indigo-400 font-mono">MEC 232: Instrumentation &amp; Measurement (3-1-1)</span>
+          <span className="text-indigo-600 font-mono font-medium">MEC 232: Instrumentation &amp; Measurement (3-1-1)</span>
         </div>
         <div className="flex items-center gap-3 text-slate-500 flex-wrap justify-center sm:justify-end">
           <a
             href="https://chalisesaroj.github.io/slide/"
             target="_blank"
             rel="noreferrer"
-            className="text-indigo-400 hover:text-indigo-300 underline font-mono text-[11px]"
+            className="text-indigo-600 hover:text-indigo-700 underline font-mono text-[11px]"
           >
             chalisesaroj.github.io/slide
           </a>

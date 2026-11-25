@@ -134,33 +134,33 @@ Rendered output will be generated as \`${chapter.qmdFileName.replace('.qmd', '.h
   return (
     <div className="space-y-4">
       {/* Top Banner & Fast Actions */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-xl bg-slate-900 border border-slate-800">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-4 rounded-xl bg-white border border-slate-200 shadow-xs">
         <div>
-          <div className="flex items-center gap-2">
-            <Code2 className="w-5 h-5 text-indigo-400" />
-            <h3 className="text-base font-semibold text-white">
+          <div className="flex items-center gap-2 flex-wrap">
+            <Code2 className="w-5 h-5 text-indigo-600" />
+            <h3 className="text-base font-semibold text-slate-900">
               Raw Production Source Code
             </h3>
-            <span className="text-xs px-2 py-0.5 rounded bg-emerald-950/60 text-emerald-300 border border-emerald-800/40">
-              Strict Master Prompt Format
+            <span className="text-xs text-emerald-700 font-mono">
+              · Strict Master Prompt Format
             </span>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
-            Complete, verbatim code blocks for <code className="text-indigo-300">{chapter.pyFileName}</code> and <code className="text-indigo-300">{chapter.qmdFileName}</code> with zero omissions.
+          <p className="text-xs text-slate-600 mt-1">
+            Complete, verbatim code blocks for <code className="text-indigo-700 font-semibold">{chapter.pyFileName}</code> and <code className="text-indigo-700 font-semibold">{chapter.qmdFileName}</code> with zero omissions.
           </p>
         </div>
 
         {/* Chapter Switcher & Global Download */}
         <div className="flex items-center gap-3 self-stretch sm:self-auto flex-wrap">
-          <div className="flex items-center gap-1 bg-slate-950 p-1 rounded-lg border border-slate-800 flex-wrap">
+          <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg border border-slate-200 flex-wrap">
             {availableChapters.map((ch) => (
               <button
                 key={ch.id}
                 onClick={() => handleChapterSwitch(ch.id)}
                 className={`px-3 py-1.5 rounded text-xs font-semibold transition-all ${
                   activeChapterId === ch.id
-                    ? 'bg-indigo-600 text-white shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200'
+                    ? 'bg-indigo-600 text-white shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-white'
                 }`}
               >
                 {ch.unitNumber} ({ch.hours})
@@ -171,7 +171,7 @@ Rendered output will be generated as \`${chapter.qmdFileName.replace('.qmd', '.h
           {onOpenPdfModal && (
             <button
               onClick={onOpenPdfModal}
-              className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-500 text-white font-medium text-xs shadow-lg shadow-rose-600/20 transition-all"
+              className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-rose-600 hover:bg-rose-700 text-white font-medium text-xs shadow-sm transition-all"
               title={`Download ${chapter.unitNumber} as high-resolution PDF`}
             >
               <FileDown className="w-4 h-4" />
@@ -182,7 +182,7 @@ Rendered output will be generated as \`${chapter.qmdFileName.replace('.qmd', '.h
           <button
             onClick={downloadCompleteZip}
             disabled={isZipping}
-            className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs shadow-lg shadow-indigo-600/20 transition-all disabled:opacity-50"
+            className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs shadow-sm transition-all disabled:opacity-50"
           >
             <Archive className="w-4 h-4" />
             <span>{isZipping ? 'Packaging ZIP...' : `Download ${chapter.unitNumber} ZIP`}</span>
@@ -191,19 +191,19 @@ Rendered output will be generated as \`${chapter.qmdFileName.replace('.qmd', '.h
       </div>
 
       {/* Tabs and Tab Bar Actions */}
-      <div className="rounded-xl border border-slate-800 bg-slate-950 overflow-hidden shadow-2xl">
-        <div className="flex flex-wrap items-center justify-between border-b border-slate-800 bg-slate-900/90 px-4 py-2.5 gap-3">
+      <div className="rounded-xl border border-slate-200 bg-white overflow-hidden shadow-sm">
+        <div className="flex flex-wrap items-center justify-between border-b border-slate-200 bg-slate-50 px-4 py-2.5 gap-3">
           {/* File selector tabs */}
-          <div className="flex items-center gap-1.5 p-1 bg-slate-950 rounded-lg border border-slate-800/80">
+          <div className="flex items-center gap-1.5 p-1 bg-white rounded-lg border border-slate-200">
             <button
               onClick={() => setActiveTab('py')}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                 activeTab === 'py'
-                  ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-indigo-600 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
-              <FileCode className="w-3.5 h-3.5 text-cyan-400" />
+              <FileCode className={`w-3.5 h-3.5 ${activeTab === 'py' ? 'text-cyan-200' : 'text-cyan-600'}`} />
               <span>FILE 1: {chapter.pyFileName}</span>
               <span className="text-[10px] opacity-75 font-mono">({getLineCount(chapter.pySource)} lines)</span>
             </button>
@@ -212,11 +212,11 @@ Rendered output will be generated as \`${chapter.qmdFileName.replace('.qmd', '.h
               onClick={() => setActiveTab('qmd')}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                 activeTab === 'qmd'
-                  ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-indigo-600 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
-              <FileCode className="w-3.5 h-3.5 text-amber-400" />
+              <FileCode className={`w-3.5 h-3.5 ${activeTab === 'qmd' ? 'text-amber-200' : 'text-amber-600'}`} />
               <span>FILE 2: {chapter.qmdFileName}</span>
               <span className="text-[10px] opacity-75 font-mono">({getLineCount(chapter.qmdSource)} lines)</span>
             </button>
@@ -225,11 +225,11 @@ Rendered output will be generated as \`${chapter.qmdFileName.replace('.qmd', '.h
               onClick={() => setActiveTab('run')}
               className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
                 activeTab === 'run'
-                  ? 'bg-indigo-600 text-white shadow-sm'
-                  : 'text-slate-400 hover:text-slate-200'
+                  ? 'bg-indigo-600 text-white shadow-xs'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
               }`}
             >
-              <Terminal className="w-3.5 h-3.5 text-emerald-400" />
+              <Terminal className={`w-3.5 h-3.5 ${activeTab === 'run' ? 'text-emerald-200' : 'text-emerald-600'}`} />
               <span>RUN INSTRUCTIONS</span>
             </button>
           </div>
@@ -243,13 +243,13 @@ Rendered output will be generated as \`${chapter.qmdFileName.replace('.qmd', '.h
             {/* One-click copy */}
             <button
               onClick={() => copyToClipboard(getActiveCode(), activeTab)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 hover:bg-slate-700 hover:text-white border border-slate-700 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900 border border-slate-300 transition-colors"
               title="Copy complete literal file content in one click"
             >
               {copiedTab === activeTab ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="text-emerald-400 font-semibold">Copied!</span>
+                  <Check className="w-3.5 h-3.5 text-emerald-600" />
+                  <span className="text-emerald-700 font-semibold">Copied!</span>
                 </>
               ) : (
                 <>
@@ -269,7 +269,7 @@ Rendered output will be generated as \`${chapter.qmdFileName.replace('.qmd', '.h
                     'text/plain'
                   )
                 }
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 text-slate-200 hover:bg-slate-700 hover:text-white border border-slate-700 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium bg-white text-slate-700 hover:bg-slate-100 hover:text-slate-900 border border-slate-300 transition-colors"
               >
                 <Download className="w-3.5 h-3.5" />
                 <span>Save {activeTab === 'py' ? '.py' : '.qmd'}</span>
@@ -279,8 +279,8 @@ Rendered output will be generated as \`${chapter.qmdFileName.replace('.qmd', '.h
         </div>
 
         {/* Code View Area */}
-        <div className="relative p-4 font-mono text-xs overflow-x-auto max-h-[640px] leading-relaxed select-text scrollbar-thin">
-          <pre className="text-slate-300 font-mono">
+        <div className="relative p-4 font-mono text-xs overflow-x-auto max-h-[640px] leading-relaxed select-text scrollbar-thin bg-slate-50">
+          <pre className="text-slate-800 font-mono">
             <code>{getActiveCode()}</code>
           </pre>
         </div>

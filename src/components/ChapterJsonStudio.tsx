@@ -194,29 +194,29 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
   return (
     <div className="space-y-6">
       {/* Studio Header Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-4 p-5 rounded-2xl bg-slate-900 border border-slate-800">
+      <div className="flex flex-wrap items-center justify-between gap-4 p-5 rounded-2xl bg-white border border-slate-200 shadow-xs">
         <div>
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-indigo-600/20 text-indigo-400 border border-indigo-500/30">
+            <div className="p-2 rounded-lg bg-indigo-50 text-indigo-600 border border-indigo-200">
               <FileCode className="w-5 h-5" />
             </div>
-            <h2 className="text-lg font-bold text-white tracking-tight">
+            <h2 className="text-lg font-bold text-slate-900 tracking-tight">
               Chapter JSON Studio &amp; AI Prompt Generator
             </h2>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-slate-600 mt-1">
             Dynamic lecture framework: upload, export, or generate complete multi-slide chapters in standardized JSON format
           </p>
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex items-center gap-1.5 p-1 bg-slate-950 rounded-xl border border-slate-800">
+        <div className="flex items-center gap-1.5 p-1 bg-slate-100 rounded-xl border border-slate-200 flex-wrap">
           <button
             onClick={() => setActiveTab('upload')}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition-all ${
               activeTab === 'upload'
-                ? 'bg-indigo-600 text-white shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-indigo-600 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white'
             }`}
           >
             <Upload className="w-3.5 h-3.5" />
@@ -226,19 +226,19 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
             onClick={() => setActiveTab('prompt')}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition-all ${
               activeTab === 'prompt'
-                ? 'bg-indigo-600 text-white shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-indigo-600 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white'
             }`}
           >
-            <Sparkles className="w-3.5 h-3.5 text-amber-300" />
+            <Sparkles className={`w-3.5 h-3.5 ${activeTab === 'prompt' ? 'text-amber-200' : 'text-amber-500'}`} />
             AI Prompt Generator
           </button>
           <button
             onClick={() => setActiveTab('editor')}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition-all ${
               activeTab === 'editor'
-                ? 'bg-indigo-600 text-white shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-indigo-600 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white'
             }`}
           >
             <Code2 className="w-3.5 h-3.5" />
@@ -248,8 +248,8 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
             onClick={() => setActiveTab('export')}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-2 transition-all ${
               activeTab === 'export'
-                ? 'bg-indigo-600 text-white shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
+                ? 'bg-indigo-600 text-white shadow-xs'
+                : 'text-slate-600 hover:text-slate-900 hover:bg-white'
             }`}
           >
             <Download className="w-3.5 h-3.5" />
@@ -273,8 +273,8 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
               onClick={() => fileInputRef.current?.click()}
               className={`p-10 rounded-2xl border-2 border-dashed flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
                 dragActive
-                  ? 'border-indigo-500 bg-indigo-950/20 shadow-xl'
-                  : 'border-slate-800 bg-slate-900/60 hover:border-slate-700 hover:bg-slate-900'
+                  ? 'border-indigo-500 bg-indigo-50 shadow-sm'
+                  : 'border-slate-300 bg-white hover:border-indigo-400 hover:bg-slate-50/70'
               }`}
             >
               <input
@@ -284,22 +284,19 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
                 onChange={handleFileChange}
                 className="hidden"
               />
-              <div className="p-4 rounded-full bg-indigo-500/10 text-indigo-400 mb-4 border border-indigo-500/20">
+              <div className="p-4 rounded-full bg-indigo-50 text-indigo-600 mb-4 border border-indigo-200">
                 <Upload className="w-8 h-8" />
               </div>
-              <h3 className="text-base font-bold text-white mb-1">
+              <h3 className="text-base font-bold text-slate-900 mb-1">
                 Drop your Chapter JSON file here, or click to browse
               </h3>
-              <p className="text-xs text-slate-400 max-w-md mb-4 leading-relaxed">
+              <p className="text-xs text-slate-600 max-w-md mb-4 leading-relaxed">
                 Accepts any valid chapter file adhering to ChapterDeckJSON schema. Instantly loads into Presentation Viewer with figures, math, definitions, and analogies.
               </p>
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-mono px-2.5 py-1 rounded bg-slate-950 text-slate-400 border border-slate-800">
-                  .json files only
-                </span>
-                <span className="text-[11px] font-mono px-2.5 py-1 rounded bg-slate-950 text-slate-400 border border-slate-800">
-                  Schema v2.0
-                </span>
+              <div className="flex items-center gap-3 text-[11px] font-mono text-slate-500">
+                <span>.json files only</span>
+                <span>·</span>
+                <span>Schema v2.0</span>
               </div>
             </div>
 
@@ -308,14 +305,14 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
               <div
                 className={`p-4 rounded-xl border flex items-start gap-3 text-xs ${
                   uploadStatus.type === 'success'
-                    ? 'bg-emerald-950/40 border-emerald-800 text-emerald-200'
-                    : 'bg-rose-950/40 border-rose-800 text-rose-200'
+                    ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
+                    : 'bg-rose-50 border-rose-200 text-rose-900'
                 }`}
               >
                 {uploadStatus.type === 'success' ? (
-                  <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 ) : (
-                  <AlertCircle className="w-4 h-4 text-rose-400 shrink-0 mt-0.5" />
+                  <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                 )}
                 <div>
                   <p className="font-semibold">{uploadStatus.type === 'success' ? 'Import Successful' : 'Import Error'}</p>
@@ -325,16 +322,16 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
             )}
 
             {/* Fast Action: Load Sample Template */}
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+            <div className="p-4 rounded-xl bg-white border border-slate-200 flex items-center justify-between gap-3 shadow-xs">
               <div className="space-y-0.5">
-                <h4 className="text-xs font-bold text-white">Want to test right now?</h4>
-                <p className="text-[11px] text-slate-400">
+                <h4 className="text-xs font-bold text-slate-900">Want to test right now?</h4>
+                <p className="text-[11px] text-slate-600">
                   Load our full-featured sample chapter showcasing definitions, types, pros/cons, analogies &amp; worked examples.
                 </p>
               </div>
               <button
                 onClick={handleLoadSample}
-                className="px-3.5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shrink-0"
+                className="px-3.5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shrink-0"
               >
                 <Play className="w-3.5 h-3.5" />
                 Load Sample Chapter
@@ -344,12 +341,12 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
 
           {/* Loaded Chapters List */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-3">
-              <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-cyan-400" />
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 space-y-3 shadow-xs">
+              <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                <BookOpen className="w-4 h-4 text-cyan-600" />
                 Available Chapters in Memory ({loadedChapters.length})
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-600">
                 Click any chapter to activate it immediately in Presentation Mode.
               </p>
 
@@ -362,24 +359,24 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
                       onClick={() => onSelectChapter(ch.id)}
                       className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
                         isCurrent
-                          ? 'bg-indigo-950/40 border-indigo-500 text-white shadow-sm'
-                          : 'bg-slate-950 border-slate-800/80 hover:border-slate-700 text-slate-300'
+                          ? 'bg-indigo-50 border-indigo-400 text-slate-900 shadow-xs'
+                          : 'bg-slate-50 border-slate-200 hover:border-slate-300 text-slate-700'
                       }`}
                     >
                       <div className="space-y-1 min-w-0 pr-2">
                         <div className="flex items-center gap-2">
-                          <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-300 font-bold">
+                          <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-white border border-slate-200 text-slate-700 font-bold">
                             {ch.unitNumber}
                           </span>
-                          <span className="text-xs font-bold truncate">{ch.title}</span>
+                          <span className="text-xs font-bold truncate text-slate-900">{ch.title}</span>
                         </div>
-                        <p className="text-[11px] text-slate-400 truncate">
+                        <p className="text-[11px] text-slate-500 truncate">
                           {ch.slides.length} slides · {ch.hours} · {ch.instructor}
                         </p>
                       </div>
 
                       {isCurrent && (
-                        <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 shrink-0">
+                        <span className="text-[10px] font-bold text-emerald-700 shrink-0">
                           Active
                         </span>
                       )}
@@ -399,75 +396,75 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Customization Controls */}
           <div className="lg:col-span-5 space-y-4">
-            <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 space-y-4 shadow-xs">
               <div className="flex items-center gap-2">
-                <Sparkles className="w-4 h-4 text-amber-400" />
-                <h3 className="text-sm font-bold text-white">Configure Your Chapter Prompt</h3>
+                <Sparkles className="w-4 h-4 text-amber-500" />
+                <h3 className="text-sm font-bold text-slate-900">Configure Your Chapter Prompt</h3>
               </div>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-slate-600">
                 Input your course details or paste your syllabus. The AI prompt generator will craft a ready-to-run prompt that instructs Gemini or ChatGPT to output exact ChapterDeckJSON.
               </p>
 
               <div>
-                <label className="text-xs font-medium text-slate-300 block mb-1">Course Name:</label>
+                <label className="text-xs font-medium text-slate-700 block mb-1">Course Name:</label>
                 <input
                   type="text"
                   value={promptCourse}
                   onChange={(e) => setPromptCourse(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs text-slate-900 focus:outline-none focus:border-indigo-500"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-medium text-slate-300 block mb-1">Unit / Module:</label>
+                  <label className="text-xs font-medium text-slate-700 block mb-1">Unit / Module:</label>
                   <input
                     type="text"
                     value={promptUnitNumber}
                     onChange={(e) => setPromptUnitNumber(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs text-slate-900 focus:outline-none focus:border-indigo-500"
                   />
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-slate-300 block mb-1">Hours:</label>
+                  <label className="text-xs font-medium text-slate-700 block mb-1">Hours:</label>
                   <input
                     type="text"
                     value={promptHours}
                     onChange={(e) => setPromptHours(e.target.value)}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-indigo-500"
+                    className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs text-slate-900 focus:outline-none focus:border-indigo-500"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="text-xs font-medium text-slate-300 block mb-1">Chapter Title:</label>
+                <label className="text-xs font-medium text-slate-700 block mb-1">Chapter Title:</label>
                 <input
                   type="text"
                   value={promptTitle}
                   onChange={(e) => setPromptTitle(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs text-slate-900 focus:outline-none focus:border-indigo-500"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-medium text-slate-300 block mb-1">Instructor:</label>
+                <label className="text-xs font-medium text-slate-700 block mb-1">Instructor:</label>
                 <input
                   type="text"
                   value={promptInstructor}
                   onChange={(e) => setPromptInstructor(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs text-slate-900 focus:outline-none focus:border-indigo-500"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-medium text-slate-300 block mb-1">
+                <label className="text-xs font-medium text-slate-700 block mb-1">
                   Syllabus Topics to Cover (Paste from syllabus):
                 </label>
                 <textarea
                   rows={6}
                   value={promptTopics}
                   onChange={(e) => setPromptTopics(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-white font-mono leading-relaxed focus:outline-none focus:border-indigo-500"
+                  className="w-full bg-slate-50 border border-slate-200 rounded-lg p-2.5 text-xs text-slate-900 font-mono leading-relaxed focus:outline-none focus:border-indigo-500"
                 />
               </div>
             </div>
@@ -475,14 +472,14 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
 
           {/* Generated Prompt Output Box */}
           <div className="lg:col-span-7 space-y-4">
-            <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-3 flex flex-col h-full">
-              <div className="flex items-center justify-between">
+            <div className="p-5 rounded-2xl bg-white border border-slate-200 space-y-3 flex flex-col h-full shadow-xs">
+              <div className="flex items-center justify-between gap-2 flex-wrap">
                 <div>
-                  <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                    <FileText className="w-4 h-4 text-emerald-400" />
+                  <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                    <FileText className="w-4 h-4 text-emerald-600" />
                     Copy-Pasteable AI Prompt (Ready for Gemini / ChatGPT / Claude)
                   </h3>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-600">
                     Feed this prompt into any AI model. Save its output as <code>.json</code> and upload here.
                   </p>
                 </div>
@@ -491,7 +488,7 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
                   className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 transition-all ${
                     promptCopied
                       ? 'bg-emerald-600 text-white'
-                      : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-md shadow-indigo-600/30'
+                      : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs'
                   }`}
                 >
                   {promptCopied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
@@ -503,20 +500,20 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
                 <textarea
                   readOnly
                   value={generatedPrompt}
-                  className="w-full h-[520px] bg-slate-950 border border-slate-800 rounded-xl p-4 font-mono text-xs text-slate-300 leading-relaxed resize-none focus:outline-none selection:bg-indigo-500/40"
+                  className="w-full h-[520px] bg-slate-50 border border-slate-200 rounded-xl p-4 font-mono text-xs text-slate-800 leading-relaxed resize-none focus:outline-none selection:bg-indigo-100"
                 />
               </div>
 
-              {/* Instructions Pill */}
-              <div className="p-3.5 rounded-xl bg-indigo-950/30 border border-indigo-800/40 text-xs text-indigo-300 space-y-1">
-                <span className="font-bold flex items-center gap-1.5 text-indigo-200">
-                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+              {/* Instructions Box */}
+              <div className="p-3.5 rounded-xl bg-indigo-50 border border-indigo-200 text-xs text-indigo-900 space-y-1">
+                <span className="font-bold flex items-center gap-1.5 text-indigo-950">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                   Workflow Tip:
                 </span>
-                <p className="text-[11px] text-slate-300 leading-relaxed">
+                <p className="text-[11px] text-slate-700 leading-relaxed">
                   1. Click <strong>Copy Prompt</strong> above. <br />
                   2. Open <strong>Gemini</strong>, <strong>ChatGPT</strong>, or <strong>Claude</strong> and paste it. <br />
-                  3. Save the response as <code className="text-cyan-300">my_chapter.json</code>. <br />
+                  3. Save the response as <code className="text-indigo-700 font-semibold">my_chapter.json</code>. <br />
                   4. Drag and drop it into the <strong>Upload JSON</strong> tab, or paste into <strong>Live JSON Editor</strong>. It will immediately show up in the presentation view!
                 </p>
               </div>
@@ -530,14 +527,14 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
       {/* ========================================================================= */}
       {activeTab === 'editor' && (
         <div className="space-y-4">
-          <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+          <div className="p-5 rounded-2xl bg-white border border-slate-200 space-y-4 shadow-xs">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div>
-                <h3 className="text-sm font-bold text-white flex items-center gap-2">
-                  <Code2 className="w-4 h-4 text-cyan-400" />
+                <h3 className="text-sm font-bold text-slate-900 flex items-center gap-2">
+                  <Code2 className="w-4 h-4 text-cyan-600" />
                   Live JSON Code Editor &amp; Validator
                 </h3>
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-slate-600">
                   Edit slides, math, definitions, or analogies directly. Hit &quot;Validate &amp; Apply&quot; to test in real-time.
                 </p>
               </div>
@@ -545,7 +542,7 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
               <div className="flex items-center gap-2">
                 <button
                   onClick={handleValidateEditor}
-                  className="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors"
+                  className="px-3.5 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200 text-xs font-semibold transition-colors"
                 >
                   Check Syntax
                 </button>
@@ -554,7 +551,7 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
                   className={`px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-all ${
                     editorApplySuccess
                       ? 'bg-emerald-600 text-white'
-                      : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-sm'
+                      : 'bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs'
                   }`}
                 >
                   {editorApplySuccess ? <Check className="w-4 h-4" /> : <Play className="w-4 h-4" />}
@@ -568,7 +565,7 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
               rows={22}
               value={editorText}
               onChange={(e) => setEditorText(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-800 rounded-xl p-4 font-mono text-xs text-slate-200 leading-relaxed focus:outline-none focus:border-indigo-500"
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 font-mono text-xs text-slate-800 leading-relaxed focus:outline-none focus:border-indigo-500"
               spellCheck={false}
             />
 
@@ -577,18 +574,18 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
               <div
                 className={`p-3 rounded-xl border text-xs flex items-center gap-2.5 ${
                   editorValidation.valid
-                    ? 'bg-emerald-950/40 border-emerald-800 text-emerald-300'
-                    : 'bg-rose-950/40 border-rose-800 text-rose-300'
+                    ? 'bg-emerald-50 border-emerald-200 text-emerald-900'
+                    : 'bg-rose-50 border-rose-200 text-rose-900'
                 }`}
               >
                 {editorValidation.valid ? (
                   <>
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600" />
                     <span>Valid Chapter JSON! Ready to present.</span>
                   </>
                 ) : (
                   <>
-                    <AlertCircle className="w-4 h-4 text-rose-400" />
+                    <AlertCircle className="w-4 h-4 text-rose-600" />
                     <span>Validation Error: {editorValidation.error}</span>
                   </>
                 )}
@@ -604,22 +601,22 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
       {activeTab === 'export' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Card 1: Export Current Active Chapter */}
-          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 flex flex-col justify-between">
+          <div className="p-6 rounded-2xl bg-white border border-slate-200 space-y-4 flex flex-col justify-between shadow-xs">
             <div className="space-y-2">
-              <div className="p-3 rounded-xl bg-indigo-500/10 border border-indigo-500/20 w-fit text-indigo-400">
+              <div className="p-3 rounded-xl bg-indigo-50 border border-indigo-200 w-fit text-indigo-600">
                 <Download className="w-6 h-6" />
               </div>
-              <h3 className="text-base font-bold text-white">
+              <h3 className="text-base font-bold text-slate-900">
                 Export Current Chapter as JSON
               </h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <p className="text-xs text-slate-600 leading-relaxed">
                 Download the complete JSON for &quot;<strong>{currentChapter.title}</strong>&quot; ({currentChapter.slides.length} slides). You can re-upload this file on any computer or share it with students and colleagues.
               </p>
             </div>
 
             <button
               onClick={handleDownloadCurrentJSON}
-              className="w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-md shadow-indigo-600/30"
+              className="w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all shadow-xs"
             >
               <Download className="w-4 h-4" />
               Download &quot;{currentChapter.id}_deck.json&quot;
@@ -627,22 +624,22 @@ export const ChapterJsonStudio: React.FC<ChapterJsonStudioProps> = ({
           </div>
 
           {/* Card 2: Download Blank Starter Template */}
-          <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 flex flex-col justify-between">
+          <div className="p-6 rounded-2xl bg-white border border-slate-200 space-y-4 flex flex-col justify-between shadow-xs">
             <div className="space-y-2">
-              <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 w-fit text-emerald-400">
+              <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 w-fit text-emerald-600">
                 <FileCode className="w-6 h-6" />
               </div>
-              <h3 className="text-base font-bold text-white">
+              <h3 className="text-base font-bold text-slate-900">
                 Download Sample Starter Template
               </h3>
-              <p className="text-xs text-slate-400 leading-relaxed">
+              <p className="text-xs text-slate-600 leading-relaxed">
                 Download a clean, fully populated template containing definition cards, taxonomy grids, advantages/disadvantages, analogies, worked mathematical examples, and inline vector figures.
               </p>
             </div>
 
             <button
               onClick={handleDownloadSampleJSON}
-              className="w-full py-3 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300 font-bold text-xs flex items-center justify-center gap-2 transition-all border border-slate-700"
+              className="w-full py-3 px-4 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs flex items-center justify-center gap-2 transition-all border border-emerald-200"
             >
               <Download className="w-4 h-4" />
               Download &quot;sample_chapter_template.json&quot;

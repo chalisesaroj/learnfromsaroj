@@ -378,11 +378,78 @@ export const TEXTBOOK_UNIT1_CHAPTER: {
           },
           keyTakeaway:
             'Hysteresis is caused by internal molecular friction and elastic lag, creating an enclosed loop between ascending and descending calibration curves.'
+        },
+        {
+          number: '1.4.4',
+          title: 'Calibration Protocols: Single-Point, Two-Point, and Multi-Point Calibration',
+          paragraphs: [
+            'Depending on the expected linearity of the sensor and the dominant drift mode, engineers choose among three standard static calibration procedures: Single-Point, Two-Point, and Multi-Point calibration.',
+            'Single-Point Calibration is the simplest field verification technique. It compares the instrument against a single certified reference standard ($x_{\\text{ref}}, y_{\\text{true,ref}}$) and shifts all subsequent readings by the measured additive bias $\\Delta_{\\text{offset}} = y_{\\text{raw,ref}} - y_{\\text{true,ref}}$, giving $y_{\\text{cal}} = y_{\\text{raw}} - \\Delta_{\\text{offset}}$. Common workshop examples include pressing the Tare button on a digital balance with an empty pan ($0.00\\text{ kg}$), checking a clinical thermometer in a melting ice bath ($0.00\\,^{\\circ}\\text{C}$), or zeroing a differential pressure transmitter vented to atmosphere. While rapid and inexpensive, single-point calibration corrects zero drift only and cannot detect sensitivity tilt.',
+            'Two-Point Calibration (commonly called Zero and Span calibration) tests the instrument against two certified reference standards located near the lower and upper boundaries of its measurement range, $(x_1, y_1)$ and $(x_2, y_2)$. Because two distinct points uniquely determine a straight line, engineers recompute both the actual sensitivity slope $S = (y_2 - y_1)/(x_2 - x_1)$ and the zero intercept $y_0 = y_1 - S \\cdot x_1$. This procedure is standard industrial practice for linear $4\\text{–}20\\text{ mA}$ pressure transmitters and laboratory pH meters (calibrated using pH 7.00 and pH 4.01 buffer solutions).'
+          ],
+          equation: {
+            label: 'Eq. 1.7',
+            tex: 'm = \\frac{N\\sum x_i y_i - (\\sum x_i)(\\sum y_i)}{N\\sum x_i^2 - (\\sum x_i)^2}, \\qquad c = \\bar{y} - m\\bar{x}',
+            description:
+              'Multi-Point Ordinary Least-Squares (OLS) Calibration Model: Determines optimal linear sensitivity (m) and zero intercept (c) across N >= 5 certified reference points.',
+            symbols: [
+              { symbol: 'm', name: 'OLS Best-Fit Sensitivity', unit: 'output/input units', description: 'Minimizes sum of squared vertical errors across all calibration standards' },
+              { symbol: 'c', name: 'OLS Zero Intercept', unit: 'output units', description: 'Residual baseline offset at zero physical input' },
+              { symbol: 'N', name: 'Number of Calibration Points', unit: 'points', description: 'Typically N >= 5 distributed evenly across 0–100% span' }
+            ]
+          },
+          postEquationParagraphs: [
+            'Multi-Point Calibration represents the gold standard for ISO/IEC 17025 accredited metrology laboratories and is mandatory for any transducer exhibiting non-linear response curves (such as NTC thermistors, orifice flowmeters, or Bourdon gauges). By collecting $N \\ge 5$ evenly spaced points across both ascending and descending load passes, Ordinary Least-Squares regression yields optimal sensitivity and quantifies independent non-linearity ($\\text{\\%NL} = \\max|y_i - (mx_i + c)| / y_{\\text{FSO}} \\times 100\\%$) alongside mechanical hysteresis.'
+          ],
+          figureRef: 'fig_cal_methods',
+          figureCaption: 'Figure 1.4B: Comparison of Single-Point Offset Trim, Two-Point Zero & Span Alignment, and Multi-Point Full-Range Least-Squares Calibration',
+          keyTakeaway:
+            'Single-point corrects zero offset only; Two-point aligns both zero and span slope; Multi-point captures non-linearity curvature and hysteresis across the entire operating span.'
         }
       ],
+      workedExample: {
+        title: 'Worked Problem 1.2: Two-Point Deadweight Hydraulic Pressure Calibration',
+        problem:
+          'A 0–100 bar hydraulic pressure transducer (nominal factory rating 0.100 V/bar) is tested on a deadweight calibrator at two reference standards: (10.0 bar, 1.45 V) and (90.0 bar, 8.65 V). In field operation, the transducer outputs 6.85 V. Determine: (a) actual calibrated sensitivity S, (b) zero-pressure intercept y0, (c) true calibrated pressure, and (d) measurement error avoided compared to the nominal rating.',
+        given: {
+          'Low Calibration Standard (x1, y1)': '10.0 bar, 1.45 V',
+          'High Calibration Standard (x2, y2)': '90.0 bar, 8.65 V',
+          'Field Voltage Output (y_raw)': '6.85 V'
+        },
+        steps: [
+          {
+            stepNumber: 1,
+            title: 'Compute Actual Calibrated Sensitivity Slope',
+            explanation: 'Determine the slope S between the high and low reference points:',
+            math: 'S = \\frac{y_2 - y_1}{x_2 - x_1} = \\frac{8.65 - 1.45}{90.0 - 10.0} = \\frac{7.20\\text{ V}}{80.0\\text{ bar}} = 0.090\\text{ V/bar}'
+          },
+          {
+            stepNumber: 2,
+            title: 'Calculate Zero-Pressure Intercept Offset',
+            explanation: 'Solve for the extrapolated output at zero pressure:',
+            math: 'y_0 = y_1 - S \\cdot x_1 = 1.45 - 0.090 \\times 10.0 = +0.55\\text{ V}'
+          },
+          {
+            stepNumber: 3,
+            title: 'Recover True Field Pressure',
+            explanation: 'Invert the calibrated transfer equation y = S · P + y0:',
+            math: 'P_{\\text{true}} = \\frac{y_{\\text{raw}} - y_0}{S} = \\frac{6.85 - 0.55}{0.090} = \\frac{6.30}{0.090} = 70.0\\text{ bar}'
+          },
+          {
+            stepNumber: 4,
+            title: 'Evaluate Error Avoided vs. Nominal Factory Rating',
+            explanation: 'Compare against an uncalibrated reading using 0.100 V/bar:',
+            math: 'P_{\\text{naive}} = \\frac{6.85}{0.100} = 68.5\\text{ bar} \\implies \\text{Error Avoided} = 1.5\\text{ bar}'
+          }
+        ],
+        finalAnswer: 'S = 0.090 V/bar, y0 = +0.55 V, P_true = 70.0 bar (1.5 bar error avoided)',
+        practicalInsight:
+          'Single-point calibration at 0 bar would have trimmed +0.55 V while leaving the 10% slope degradation uncorrected, causing a severe 7.0 bar error near full scale.'
+      },
       examQuestions: [
         'Differentiate between zero drift and sensitivity drift with clear sketches of their respective calibration curves.',
-        'Define hysteresis in measuring instruments. Explain its physical causes in mechanical and magnetic transducers.'
+        'Compare Single-Point, Two-Point, and Multi-Point calibration methods with practical workshop examples and mathematical models.',
+        'Define hysteresis in measuring instruments and explain why Multi-Point ascending/descending testing is required to quantify it.'
       ]
     },
 

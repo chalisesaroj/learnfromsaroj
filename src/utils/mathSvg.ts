@@ -1,7 +1,7 @@
 /**
  * Pure Vector Math SVG & PNG Generator using MathJax
  * Converts any LaTeX string directly into standalone, vector SVG with embedded path glyphs,
- * and high-resolution PNG data URLs for jsPDF export.
+ * and high-resolution PNG data URLs for jsPDF and PptxGenJS export.
  * 100% self-contained: No external CSS, no web fonts, no CORS dependencies.
  */
 
@@ -30,17 +30,29 @@ function getMathJax() {
   return { htmlDoc, adaptor: adaptorInstance };
 }
 
+export interface MathSvgResult {
+  svg: string;
+  aspect: number;
+  viewBoxWidth: number;
+  viewBoxHeight: number;
+}
+
 /**
- * Converts a LaTeX equation into a pure SVG string with embedded vector paths
+ * Converts a LaTeX equation into a pure SVG string with embedded vector paths and explicit dimensions.
  */
-export function latexToSvg(rawLatex: string, display = true): string {
+export function latexToSvgWithMetrics(
+  rawLatex: string,
+  display = true,
+  colorHex = '#0f172a',
+  targetPixelHeight?: number
+): MathSvgResult | null {
   try {
     let clean = (rawLatex || '').trim();
-    if (!clean) return '';
+    if (!clean) return null;
 
     // Strip trailing punctuation outside math
-    clean = clean.replace(/[\.,;:!\)]+$/, '').trim();
-    if (clean.startsWith('(') && clean.endsWith(')')) {
+    clean = clean.replace(/[\.,;:!]+$/, '').trim();
+    if (clean.startsWith('(') && clean.endsWith(')') && !clean.includes('\\left(')) {
       clean = clean.slice(1, -1).trim();
     }
 
@@ -49,7 +61,6 @@ export function latexToSvg(rawLatex: string, display = true): string {
     if (dollarMatch) {
       clean = dollarMatch[1].trim();
     } else {
-      // If there's an embedded $...$ inside text, extract it
       const innerMatch = clean.match(/\$\$([^\$]+)\$\$/) || clean.match(/\$([^\$]+)\$/);
       if (innerMatch && innerMatch[1]) {
         clean = innerMatch[1].trim();
@@ -59,56 +70,70 @@ export function latexToSvg(rawLatex: string, display = true): string {
     // Escape unescaped % so it doesn't comment out subsequent characters in TeX
     clean = clean.replace(/(?<!\\)%/g, '\\%');
 
-    if (!clean) return '';
+    if (!clean) return null;
 
     const { htmlDoc, adaptor } = getMathJax();
     const node = htmlDoc.convert(clean, { display });
     let svgString = adaptor.innerHTML(node);
 
-    // If conversion resulted in an error or empty string, return empty
+    // Unwrap <mjx-container> if present
+    svgString = svgString.replace(/<mjx-container[^>]*>/g, '').replace(/<\/mjx-container>/g, '');
+
     if (!svgString || svgString.includes('data-mjx-error') || svgString.includes('<merror>')) {
-      return '';
+      return null;
     }
 
-    // Ensure standard SVG attributes
     if (!svgString.includes('xmlns=')) {
       svgString = svgString.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
     }
 
-    // Replace ex-based dimensions with explicit pixel dimensions for universal canvas compatibility
+    let aspect = 4;
+    let viewBoxWidth = 4000;
+    let viewBoxHeight = 1000;
     const viewBoxMatch = svgString.match(/viewBox="([^"]+)"/);
     if (viewBoxMatch) {
       const parts = viewBoxMatch[1].split(/\s+/).map(Number);
       if (parts.length === 4 && parts[2] > 0 && parts[3] > 0) {
-        const aspect = parts[2] / parts[3];
-        const heightPx = display ? 140 : 80;
-        const widthPx = Math.round(heightPx * aspect);
+        viewBoxWidth = parts[2];
+        viewBoxHeight = parts[3];
+        aspect = parts[2] / parts[3];
+        const heightPx = targetPixelHeight || (display ? 240 : 140);
+        const widthPx = Math.max(20, Math.round(heightPx * aspect));
         svgString = svgString
           .replace(/width="[^"]+"/, `width="${widthPx}"`)
           .replace(/height="[^"]+"/, `height="${heightPx}"`);
       }
     }
 
-    // Merge style without creating duplicate style attributes (which invalidates XML)
+    // Replace currentColor directly for universal SVG rasterizer compatibility (Canvas + Resvg)
+    svgString = svgString.replace(/currentColor/g, colorHex);
+
     if (svgString.includes('style="')) {
-      svgString = svgString.replace(/style="([^"]*)"/, 'style="$1; color:#0f172a; fill:#0f172a;"');
+      svgString = svgString.replace(/style="([^"]*)"/, `style="$1; color:${colorHex}; fill:${colorHex};"`);
     } else {
-      svgString = svgString.replace('<svg', '<svg style="color:#0f172a; fill:#0f172a;"');
+      svgString = svgString.replace('<svg', `<svg style="color:${colorHex}; fill:${colorHex};"`);
     }
 
-    // Inject embedded CSS to force all glyph paths, fraction rects, and text to crisp dark slate
-    const styleTag = '<style>path, text, rect, use { fill: #0f172a !important; color: #0f172a !important; stroke: none; } rect { stroke: none !important; }</style>';
+    const styleTag = `<style>path, text, rect, use { fill: ${colorHex} !important; color: ${colorHex} !important; stroke: none; } rect { stroke: none !important; }</style>`;
     svgString = svgString.replace(/<svg([^>]*)>/, `<svg$1>${styleTag}`);
 
-    return svgString;
+    return { svg: svgString, aspect, viewBoxWidth, viewBoxHeight };
   } catch (err) {
     console.warn('MathJax TeX conversion error:', err);
-    return '';
+    return null;
   }
+}
+
+/**
+ * Converts a LaTeX equation into a pure SVG string with embedded vector paths
+ */
+export function latexToSvg(rawLatex: string, display = true, colorHex = '#0f172a'): string {
+  return latexToSvgWithMetrics(rawLatex, display, colorHex)?.svg || '';
 }
 
 // In-memory cache for fast repeated formula export
 const mathPngCache = new Map<string, { dataUrl: string; widthMm: number; heightMm: number }>();
+const mathTransparentPngCache = new Map<string, { data: string; aspect: number }>();
 
 /**
  * Converts a LaTeX equation directly into a high-DPI PNG data URL using an offscreen canvas.
@@ -127,30 +152,18 @@ export async function latexToPngDataUrl(
     return mathPngCache.get(cacheKey)!;
   }
 
-  const svgString = latexToSvg(trimmed, display);
-  if (!svgString) return null;
+  const metrics = latexToSvgWithMetrics(trimmed, display, '#0f172a', display ? 200 : 120);
+  if (!metrics) return null;
 
   return new Promise((resolve) => {
     try {
-      // Parse SVG viewBox
-      const viewBoxMatch = svgString.match(/viewBox="([^"]+)"/);
-      let aspect = 4;
-      let viewBoxHeight = 1200;
-      if (viewBoxMatch) {
-        const parts = viewBoxMatch[1].split(/\s+/).map(Number);
-        if (parts.length === 4 && parts[2] > 0 && parts[3] > 0) {
-          aspect = parts[2] / parts[3];
-          viewBoxHeight = parts[3];
-        }
-      }
-
+      const { svg: svgString, aspect, viewBoxHeight } = metrics;
       const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const img = new Image();
 
       img.onload = () => {
         try {
-          // Proportional mm height in PDF calibrated to standard 8.8pt textbook typography (4.5mm - 7.8mm)
           let heightMm = Math.max(4.5, Math.min(7.8, (viewBoxHeight * 3.6) / 700));
           let widthMm = heightMm * aspect;
 
@@ -161,8 +174,6 @@ export async function latexToPngDataUrl(
             heightMm = heightMm * scale;
           }
 
-          // Sample canvas at 300 DPI for ultra-sharp vector-like rendering in PDF
-          // 1 mm = ~11.81 pixels at 300 DPI
           const canvasWidth = Math.max(100, Math.round(widthMm * 11.81));
           const canvasHeight = Math.max(40, Math.round(heightMm * 11.81));
 
@@ -192,6 +203,74 @@ export async function latexToPngDataUrl(
 
       img.onerror = (e) => {
         console.warn('Image load failed for math SVG:', e);
+        URL.revokeObjectURL(url);
+        resolve(null);
+      };
+
+      img.src = url;
+    } catch {
+      resolve(null);
+    }
+  });
+}
+
+/**
+ * Converts any LaTeX formula into a crisp transparent-background high-DPI PNG data URI
+ * in the browser for embedding into PowerPoint (.pptx) slides.
+ */
+export async function latexToTransparentPngBrowser(
+  rawLatex: string,
+  display = true,
+  colorHex = '#172B45',
+  targetHeightPx = 320
+): Promise<{ data: string; aspect: number; viewBoxHeight: number } | null> {
+  const trimmed = (rawLatex || '').trim();
+  if (!trimmed || typeof window === 'undefined') return null;
+
+  const cacheKey = `${trimmed}_${display}_${colorHex}_${targetHeightPx}`;
+  if (mathTransparentPngCache.has(cacheKey)) {
+    const cached = mathTransparentPngCache.get(cacheKey)!;
+    const metrics = latexToSvgWithMetrics(trimmed, display, colorHex, targetHeightPx);
+    return { ...cached, viewBoxHeight: metrics?.viewBoxHeight || 1200 };
+  }
+
+  const metrics = latexToSvgWithMetrics(trimmed, display, colorHex, targetHeightPx);
+  if (!metrics) return null;
+
+  return new Promise((resolve) => {
+    try {
+      const { svg: svgString, aspect, viewBoxHeight } = metrics;
+      const canvasHeight = Math.max(80, Math.min(600, Math.round(targetHeightPx)));
+      const canvasWidth = Math.max(80, Math.min(3600, Math.round(canvasHeight * aspect)));
+
+      const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const img = new Image();
+
+      img.onload = () => {
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = canvasWidth;
+          canvas.height = canvasHeight;
+          const ctx = canvas.getContext('2d');
+          if (ctx) {
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+            ctx.drawImage(img, 0, 0, canvasWidth, canvasHeight);
+            const data = canvas.toDataURL('image/png');
+            URL.revokeObjectURL(url);
+            const res = { data, aspect, viewBoxHeight };
+            mathTransparentPngCache.set(cacheKey, { data, aspect });
+            resolve(res);
+            return;
+          }
+        } catch (e) {
+          console.warn('Browser math PNG rasterization error:', e);
+        }
+        URL.revokeObjectURL(url);
+        resolve(null);
+      };
+
+      img.onerror = () => {
         URL.revokeObjectURL(url);
         resolve(null);
       };
