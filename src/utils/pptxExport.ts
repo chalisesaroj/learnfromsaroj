@@ -15,6 +15,7 @@ import pptxgen from 'pptxgenjs';
 import { ChapterConfig } from '../data/chaptersData';
 import { SlideData, FormulaSymbolItem } from '../types/chapterDeck';
 import { latexToTransparentPngBrowser } from './mathSvg';
+import { resolvePublicAssetUrl } from './assetUrl';
 
 export interface MathPngResult {
   data: string;
@@ -101,9 +102,10 @@ export async function svgToPngDataUrlBrowser(svg: string, width = 2560, height =
 async function browserImageResolver(rawPath: string): Promise<{ data?: string; path?: string }> {
   if (!rawPath) return {};
   if (rawPath.startsWith('data:')) return { data: rawPath };
+  const resolved = resolvePublicAssetUrl(rawPath);
   if (typeof window !== 'undefined') {
     try {
-      const res = await fetch(rawPath);
+      const res = await fetch(resolved);
       if (res.ok) {
         const blob = await res.blob();
         const base64 = await new Promise<string>((resolve) => {
@@ -115,10 +117,10 @@ async function browserImageResolver(rawPath: string): Promise<{ data?: string; p
         if (base64) return { data: base64 };
       }
     } catch (e) {
-      console.warn('Could not fetch browser image as base64', rawPath, e);
+      console.warn('Could not fetch browser image as base64', resolved, e);
     }
   }
-  return { path: rawPath };
+  return { path: resolved };
 }
 
 /**

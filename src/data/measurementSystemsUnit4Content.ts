@@ -557,7 +557,7 @@ Generates 7 standalone 16:9 vector SVG diagrams into figures_unit4/:
 Canvas Standards:
   - 16:9 aspect ratio (viewBox="0 0 1600 900")
   - Pure white canvas (#ffffff) with subtle border
-  - Minimum text size >= 18px for lecture projection
+  - Minimum text size >= 20px, Times New Roman for lecture projection
 ================================================================================
 """
 
@@ -568,203 +568,203 @@ OUTPUT_DIR = "figures_unit4"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 FIGURES = {
-    "u4_fig1_sensor_transducer_classification.svg": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+    "u4_fig1_sensor_transducer_classification.svg": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" font-family="'Times New Roman', Times, 'Liberation Serif', serif">
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
   <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
+  <text x="80" y="88" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="28" font-weight="700" fill="#0f172a">
     Figure 4.1: Sensor &amp; Transducer Anatomy · Active vs. Passive Classification
   </text>
-  <text x="1260" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#2563eb">Unit IV · Section 4.1</text>
+  <text x="1260" y="88" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="600" fill="#2563eb">Unit IV · Section 4.1</text>
   <rect x="50" y="140" width="730" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="80" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">A. Sensor vs. Transducer Signal Chain</text>
+  <text x="80" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">A. Sensor vs. Transducer Signal Chain</text>
   <rect x="80" y="250" width="160" height="110" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" />
-  <text x="160" y="295" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1e40af" text-anchor="middle">Physical Measurand</text>
-  <text x="160" y="325" font-family="system-ui, sans-serif" font-size="18" fill="#64748b" text-anchor="middle">Force, Pressure, Temp</text>
+  <text x="160" y="295" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e40af" text-anchor="middle">Physical Measurand</text>
+  <text x="160" y="325" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#64748b" text-anchor="middle">Force, Pressure, Temp</text>
   <polygon points="290,305 280,299 280,311" fill="#3b82f6" />
   <rect x="290" y="250" width="200" height="110" rx="8" fill="#fef3c7" stroke="#f59e0b" stroke-width="2" />
-  <text x="390" y="295" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#92400e" text-anchor="middle">Primary Sensor</text>
-  <text x="390" y="325" font-family="system-ui, sans-serif" font-size="18" fill="#b45309" text-anchor="middle">Diaphragm, Flexure</text>
+  <text x="390" y="295" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#92400e" text-anchor="middle">Primary Sensor</text>
+  <text x="390" y="325" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#b45309" text-anchor="middle">Diaphragm, Flexure</text>
   <polygon points="540,305 530,299 530,311" fill="#f59e0b" />
   <rect x="540" y="250" width="210" height="110" rx="8" fill="#ecfdf5" stroke="#10b981" stroke-width="2" />
-  <text x="645" y="295" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#065f46" text-anchor="middle">Transduction Element</text>
-  <text x="645" y="325" font-family="system-ui, sans-serif" font-size="18" fill="#059669" text-anchor="middle">Strain Gauge, Piezo</text>
+  <text x="645" y="295" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#065f46" text-anchor="middle">Transduction Element</text>
+  <text x="645" y="325" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#059669" text-anchor="middle">Strain Gauge, Piezo</text>
   <rect x="810" y="140" width="740" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="840" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">B. Classification: Active vs. Passive Transducers</text>
+  <text x="840" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">B. Classification: Active vs. Passive Transducers</text>
   <rect x="840" y="240" width="330" height="340" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" />
-  <text x="1005" y="275" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#15803d" text-anchor="middle">Active (Self-Generating)</text>
-  <text x="860" y="315" font-family="system-ui, sans-serif" font-size="18" fill="#166534">• Zero external power required</text>
-  <text x="860" y="350" font-family="system-ui, sans-serif" font-size="18" fill="#166534">• Thermocouple (Seebeck effect)</text>
-  <text x="860" y="385" font-family="system-ui, sans-serif" font-size="18" fill="#166534">• Piezoelectric crystal (Q = d·F)</text>
+  <text x="1005" y="275" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#15803d" text-anchor="middle">Active (Self-Generating)</text>
+  <text x="860" y="315" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#166534">• Zero external power required</text>
+  <text x="860" y="350" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#166534">• Thermocouple (Seebeck effect)</text>
+  <text x="860" y="385" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#166534">• Piezoelectric crystal (Q = d·F)</text>
   <rect x="1190" y="240" width="340" height="340" rx="8" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" />
-  <text x="1360" y="275" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e40af" text-anchor="middle">Passive (Externally Excited)</text>
-  <text x="1210" y="315" font-family="system-ui, sans-serif" font-size="18" fill="#1e3a8a">• Requires auxiliary DC/AC power</text>
-  <text x="1210" y="350" font-family="system-ui, sans-serif" font-size="18" fill="#1e3a8a">• Strain gauge (ΔR with strain)</text>
-  <text x="1210" y="385" font-family="system-ui, sans-serif" font-size="18" fill="#1e3a8a">• RTD PT100 (ΔR with temp)</text>
+  <text x="1360" y="275" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e40af" text-anchor="middle">Passive (Externally Excited)</text>
+  <text x="1210" y="315" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e3a8a">• Requires auxiliary DC/AC power</text>
+  <text x="1210" y="350" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e3a8a">• Strain gauge (ΔR with strain)</text>
+  <text x="1210" y="385" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e3a8a">• RTD PT100 (ΔR with temp)</text>
 </svg>""",
 
-    "u4_fig2_force_moment_torque_loadcells.svg": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+    "u4_fig2_force_moment_torque_loadcells.svg": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" font-family="'Times New Roman', Times, 'Liberation Serif', serif">
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
   <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
+  <text x="80" y="88" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="28" font-weight="700" fill="#0f172a">
     Figure 4.2: Force, Moment &amp; Torque Transducers · Load Cells &amp; Rotary Telemetry
   </text>
-  <text x="1260" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#2563eb">Unit IV · Section 4.2</text>
+  <text x="1260" y="88" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="600" fill="#2563eb">Unit IV · Section 4.2</text>
   <rect x="50" y="140" width="480" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="75" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">1. Load Cell Types (Force)</text>
+  <text x="75" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">1. Load Cell Types (Force)</text>
   <rect x="80" y="240" width="420" height="230" rx="8" fill="#f8fafc" stroke="#94a3b8" />
   <path d="M 160 270 L 320 270 L 320 310 L 220 310 L 220 370 L 320 370 L 320 440 L 160 440 L 160 400 L 260 400 L 260 340 L 160 340 Z" fill="#cbd5e1" stroke="#334155" stroke-width="2.5" />
   <circle cx="240" cy="355" r="14" fill="#fef08a" stroke="#ca8a04" stroke-width="2" />
-  <text x="240" y="361" font-family="monospace" font-size="18" font-weight="700" fill="#854d0e" text-anchor="middle">SG</text>
-  <text x="80" y="520" font-family="system-ui, sans-serif" font-size="18" fill="#334155">• S-Type: Symmetric tension &amp; compression</text>
-  <text x="80" y="555" font-family="system-ui, sans-serif" font-size="18" fill="#334155">• Shear Beam: Insensitive to load application point</text>
+  <text x="240" y="361" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#854d0e" text-anchor="middle">SG</text>
+  <text x="80" y="520" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155">• S-Type: Symmetric tension &amp; compression</text>
+  <text x="80" y="555" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155">• Shear Beam: Insensitive to load application point</text>
   <rect x="560" y="140" width="480" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="585" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">2. Multi-Axis 6-DOF Decoupling</text>
+  <text x="585" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">2. Multi-Axis 6-DOF Decoupling</text>
   <rect x="590" y="490" width="420" height="340" rx="8" fill="#faf5ff" stroke="#d8b4fe" />
-  <text x="610" y="530" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#7e22ce">Cross-Talk Calibration:</text>
-  <text x="610" y="570" font-family="monospace" font-size="20" font-weight="700" fill="#581c87">[F] = [C] · [V]</text>
-  <text x="610" y="610" font-family="system-ui, sans-serif" font-size="18" fill="#4c1d95">• Decouples 3 forces (Fx, Fy, Fz)</text>
-  <text x="610" y="640" font-family="system-ui, sans-serif" font-size="18" fill="#4c1d95">• Decouples 3 moments (Mx, My, Mz)</text>
+  <text x="610" y="530" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#7e22ce">Cross-Talk Calibration:</text>
+  <text x="610" y="570" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#581c87">[F] = [C] · [V]</text>
+  <text x="610" y="610" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#4c1d95">• Decouples 3 forces (Fx, Fy, Fz)</text>
+  <text x="610" y="640" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#4c1d95">• Decouples 3 moments (Mx, My, Mz)</text>
   <rect x="1070" y="140" width="480" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="1095" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">3. Torque Measurement Systems</text>
+  <text x="1095" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">3. Torque Measurement Systems</text>
   <rect x="1100" y="490" width="420" height="340" rx="8" fill="#fefce8" stroke="#fef08a" />
-  <text x="1120" y="530" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#854d0e">Shaft Torsion Mechanics:</text>
-  <text x="1120" y="570" font-family="monospace" font-size="18" fill="#713f12">τ = 16·T / (π·d³),  ε = ± τ / (2·G)</text>
-  <text x="1120" y="610" font-family="system-ui, sans-serif" font-size="18" fill="#854d0e">• ±45° principal shear rosette on shaft</text>
-  <text x="1120" y="645" font-family="system-ui, sans-serif" font-size="18" fill="#854d0e">• Contactless RF telemetry &amp; rotary transformers</text>
+  <text x="1120" y="530" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#854d0e">Shaft Torsion Mechanics:</text>
+  <text x="1120" y="570" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#713f12">τ = 16·T / (π·d³),  ε = ± τ / (2·G)</text>
+  <text x="1120" y="610" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#854d0e">• ±45° principal shear rosette on shaft</text>
+  <text x="1120" y="645" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#854d0e">• Contactless RF telemetry &amp; rotary transformers</text>
 </svg>""",
 
-    "u4_fig3_pressure_sensors_manometer_bourdon.svg": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+    "u4_fig3_pressure_sensors_manometer_bourdon.svg": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" font-family="'Times New Roman', Times, 'Liberation Serif', serif">
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
   <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
+  <text x="80" y="88" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="28" font-weight="700" fill="#0f172a">
     Figure 4.3: Pressure Measurement Instruments · Hydrostatic, Elastic &amp; MEMS
   </text>
-  <text x="1260" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#2563eb">Unit IV · Section 4.3.2</text>
+  <text x="1260" y="88" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="600" fill="#2563eb">Unit IV · Section 4.3.2</text>
   <rect x="50" y="140" width="480" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="75" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">1. U-Tube Manometer</text>
+  <text x="75" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">1. U-Tube Manometer</text>
   <rect x="80" y="540" width="420" height="290" rx="8" fill="#f0f9ff" stroke="#bae6fd" />
-  <text x="100" y="580" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#0369a1">Hydrostatic Balance:</text>
-  <text x="100" y="620" font-family="monospace" font-size="20" font-weight="700" fill="#0284c7">ΔP = ρ_m · g · Δh</text>
-  <text x="100" y="660" font-family="system-ui, sans-serif" font-size="18" fill="#0c4a6e">• Primary Standard: No calibration required</text>
+  <text x="100" y="580" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0369a1">Hydrostatic Balance:</text>
+  <text x="100" y="620" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0284c7">ΔP = ρ_m · g · Δh</text>
+  <text x="100" y="660" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#0c4a6e">• Primary Standard: No calibration required</text>
   <rect x="560" y="140" width="480" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="585" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">2. C-Type Bourdon Tube</text>
+  <text x="585" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">2. C-Type Bourdon Tube</text>
   <rect x="590" y="540" width="420" height="290" rx="8" fill="#fefce8" stroke="#fef08a" />
-  <text x="610" y="580" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#854d0e">Elastic Principle:</text>
-  <text x="610" y="620" font-family="system-ui, sans-serif" font-size="18" fill="#713f12">• Elliptical tube straightens under pressure</text>
-  <text x="610" y="655" font-family="system-ui, sans-serif" font-size="18" fill="#713f12">• Range: 100 kPa to 700 MPa (Vacuum to hydraulic)</text>
+  <text x="610" y="580" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#854d0e">Elastic Principle:</text>
+  <text x="610" y="620" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#713f12">• Elliptical tube straightens under pressure</text>
+  <text x="610" y="655" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#713f12">• Range: 100 kPa to 700 MPa (Vacuum to hydraulic)</text>
   <rect x="1070" y="140" width="480" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="1095" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">3. Digital MEMS Sensors</text>
+  <text x="1095" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">3. Digital MEMS Sensors</text>
   <rect x="1100" y="540" width="420" height="290" rx="8" fill="#fdf4ff" stroke="#f0abfc" />
-  <text x="1120" y="580" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#86198f">Micromachined Silicon:</text>
-  <text x="1120" y="620" font-family="system-ui, sans-serif" font-size="18" fill="#701a75">• Diffused piezoresistive bridge on diaphragm</text>
-  <text x="1120" y="655" font-family="system-ui, sans-serif" font-size="18" fill="#701a75">• Fast dynamic response (microsecond rise time)</text>
+  <text x="1120" y="580" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#86198f">Micromachined Silicon:</text>
+  <text x="1120" y="620" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#701a75">• Diffused piezoresistive bridge on diaphragm</text>
+  <text x="1120" y="655" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#701a75">• Fast dynamic response (microsecond rise time)</text>
 </svg>""",
 
-    "u4_fig4_flow_measurement_pitot_venturi.svg": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+    "u4_fig4_flow_measurement_pitot_venturi.svg": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" font-family="'Times New Roman', Times, 'Liberation Serif', serif">
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
   <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
+  <text x="80" y="88" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="28" font-weight="700" fill="#0f172a">
     Figure 4.4: Flow Velocity &amp; Discharge Measurement · Pitot-Static Tube &amp; Venturi
   </text>
-  <text x="1260" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#2563eb">Unit IV · Section 4.3.1</text>
+  <text x="1260" y="88" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="600" fill="#2563eb">Unit IV · Section 4.3.1</text>
   <rect x="50" y="140" width="730" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="80" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">A. Pitot-Static Probe Aerodynamics</text>
+  <text x="80" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">A. Pitot-Static Probe Aerodynamics</text>
   <rect x="80" y="520" width="670" height="310" rx="8" fill="#eff6ff" stroke="#93c5fd" />
-  <text x="100" y="560" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1e40af">Bernoulli Velocity Formula:</text>
-  <text x="100" y="605" font-family="monospace" font-size="22" font-weight="700" fill="#dc2626">v = C_p · sqrt( 2 · (P_total - P_static) / ρ )</text>
-  <text x="100" y="650" font-family="system-ui, sans-serif" font-size="18" fill="#1e3a8a">• Stagnation tip port measures total pressure P_t</text>
-  <text x="100" y="685" font-family="system-ui, sans-serif" font-size="18" fill="#1e3a8a">• Circumferential ports measure undisturbed static pressure P_s</text>
+  <text x="100" y="560" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e40af">Bernoulli Velocity Formula:</text>
+  <text x="100" y="605" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#dc2626">v = C_p · sqrt( 2 · (P_total - P_static) / ρ )</text>
+  <text x="100" y="650" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e3a8a">• Stagnation tip port measures total pressure P_t</text>
+  <text x="100" y="685" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e3a8a">• Circumferential ports measure undisturbed static pressure P_s</text>
   <rect x="810" y="140" width="740" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="840" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">B. Venturi &amp; Obstruction Flow Meters</text>
+  <text x="840" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">B. Venturi &amp; Obstruction Flow Meters</text>
   <rect x="840" y="520" width="680" height="310" rx="8" fill="#f0fdf4" stroke="#86efac" />
-  <text x="860" y="560" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#166534">Volumetric Discharge Rate Q:</text>
-  <text x="860" y="605" font-family="monospace" font-size="20" font-weight="700" fill="#15803d">Q = C_d · A₂ · sqrt( 2 · ΔP / [ ρ · (1 - β⁴) ] )</text>
-  <text x="860" y="650" font-family="system-ui, sans-serif" font-size="18" fill="#14532d">• Venturi Tube: C_d ≈ 0.98 (Only 10-15% permanent head loss)</text>
-  <text x="860" y="685" font-family="system-ui, sans-serif" font-size="18" fill="#14532d">• Orifice Plate: C_d ≈ 0.60-0.62 (Low cost, high head loss)</text>
+  <text x="860" y="560" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#166534">Volumetric Discharge Rate Q:</text>
+  <text x="860" y="605" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#15803d">Q = C_d · A₂ · sqrt( 2 · ΔP / [ ρ · (1 - β⁴) ] )</text>
+  <text x="860" y="650" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#14532d">• Venturi Tube: C_d ≈ 0.98 (Only 10-15% permanent head loss)</text>
+  <text x="860" y="685" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#14532d">• Orifice Plate: C_d ≈ 0.60-0.62 (Low cost, high head loss)</text>
 </svg>""",
 
-    "u4_fig5_flow_visualization_piv_schlieren_bos.svg": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+    "u4_fig5_flow_visualization_piv_schlieren_bos.svg": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" font-family="'Times New Roman', Times, 'Liberation Serif', serif">
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
   <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
+  <text x="80" y="88" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="28" font-weight="700" fill="#0f172a">
     Figure 4.5: Optical Flow Visualization · PIV, Z-Type Schlieren &amp; BOS
   </text>
-  <text x="1260" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#2563eb">Unit IV · Section 4.3.3</text>
+  <text x="1260" y="88" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="600" fill="#2563eb">Unit IV · Section 4.3.3</text>
   <rect x="50" y="140" width="730" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="80" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">A. Particle Image Velocimetry (PIV)</text>
+  <text x="80" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">A. Particle Image Velocimetry (PIV)</text>
   <rect x="80" y="530" width="670" height="300" rx="8" fill="#f0fdf4" stroke="#86efac" />
-  <text x="100" y="570" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#166534">PIV Cross-Correlation:</text>
-  <text x="100" y="610" font-family="monospace" font-size="20" font-weight="700" fill="#15803d">v = Δs / Δt</text>
-  <text x="100" y="650" font-family="system-ui, sans-serif" font-size="18" fill="#14532d">• Pulsed Nd:YAG laser sheet illuminates 1-5 μm seeding particles</text>
-  <text x="100" y="685" font-family="system-ui, sans-serif" font-size="18" fill="#14532d">• Yields non-intrusive full-field 2D velocity vectors</text>
+  <text x="100" y="570" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#166534">PIV Cross-Correlation:</text>
+  <text x="100" y="610" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#15803d">v = Δs / Δt</text>
+  <text x="100" y="650" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#14532d">• Pulsed Nd:YAG laser sheet illuminates 1-5 μm seeding particles</text>
+  <text x="100" y="685" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#14532d">• Yields non-intrusive full-field 2D velocity vectors</text>
   <rect x="810" y="140" width="740" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="840" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">B. Schlieren Imaging &amp; BOS</text>
+  <text x="840" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">B. Schlieren Imaging &amp; BOS</text>
   <rect x="840" y="530" width="680" height="300" rx="8" fill="#fefce8" stroke="#fef08a" />
-  <text x="860" y="570" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#854d0e">Gladstone-Dale Physics:</text>
-  <text x="860" y="610" font-family="monospace" font-size="18" fill="#713f12">n - 1 = K_GD · ρ,   Deflection: ε_y ∝ ∫ (∂ρ/∂y) dz</text>
-  <text x="860" y="650" font-family="system-ui, sans-serif" font-size="18" fill="#854d0e">• Knife edge blocks deflected rays, visualizing shock waves</text>
-  <text x="860" y="685" font-family="system-ui, sans-serif" font-size="18" fill="#854d0e">• BOS uses background dot displacement (no mirrors required)</text>
+  <text x="860" y="570" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#854d0e">Gladstone-Dale Physics:</text>
+  <text x="860" y="610" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#713f12">n - 1 = K_GD · ρ,   Deflection: ε_y ∝ ∫ (∂ρ/∂y) dz</text>
+  <text x="860" y="650" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#854d0e">• Knife edge blocks deflected rays, visualizing shock waves</text>
+  <text x="860" y="685" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#854d0e">• BOS uses background dot displacement (no mirrors required)</text>
 </svg>""",
 
-    "u4_fig6_temperature_rtd_thermocouple.svg": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+    "u4_fig6_temperature_rtd_thermocouple.svg": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" font-family="'Times New Roman', Times, 'Liberation Serif', serif">
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
   <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
+  <text x="80" y="88" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="28" font-weight="700" fill="#0f172a">
     Figure 4.6: Temperature Instrumentation · RTD (PT100) &amp; Thermocouple (CJC)
   </text>
-  <text x="1260" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#2563eb">Unit IV · Section 4.4</text>
+  <text x="1260" y="88" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="600" fill="#2563eb">Unit IV · Section 4.4</text>
   <rect x="50" y="140" width="730" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="80" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">A. RTD PT100 Resistance Thermometer</text>
+  <text x="80" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">A. RTD PT100 Resistance Thermometer</text>
   <rect x="80" y="520" width="670" height="310" rx="8" fill="#eff6ff" stroke="#93c5fd" />
-  <text x="100" y="560" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1e40af">Callendar-Van Dusen Equation:</text>
-  <text x="100" y="600" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8">R(T) = R₀ · [ 1 + A·T + B·T² ]</text>
-  <text x="100" y="640" font-family="system-ui, sans-serif" font-size="18" fill="#1e3a8a">• PT100 Standard: R₀ = 100.00 Ω at 0 °C, α = 0.00385 Ω/Ω/°C</text>
-  <text x="100" y="675" font-family="system-ui, sans-serif" font-size="18" fill="#1e3a8a">• 3-wire bridge circuit cancels ambient lead wire resistance r_L</text>
+  <text x="100" y="560" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e40af">Callendar-Van Dusen Equation:</text>
+  <text x="100" y="600" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1d4ed8">R(T) = R₀ · [ 1 + A·T + B·T² ]</text>
+  <text x="100" y="640" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e3a8a">• PT100 Standard: R₀ = 100.00 Ω at 0 °C, α = 0.00385 Ω/Ω/°C</text>
+  <text x="100" y="675" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e3a8a">• 3-wire bridge circuit cancels ambient lead wire resistance r_L</text>
   <rect x="810" y="140" width="740" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="840" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">B. Thermocouple &amp; CJC Compensation</text>
+  <text x="840" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">B. Thermocouple &amp; CJC Compensation</text>
   <rect x="840" y="520" width="680" height="310" rx="8" fill="#fefce8" stroke="#fef08a" />
-  <text x="860" y="560" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#854d0e">Seebeck Effect &amp; CJC:</text>
-  <text x="860" y="600" font-family="monospace" font-size="18" fill="#713f12">V_net ≈ S_AB · (T_hot - T_ref)</text>
-  <text x="860" y="640" font-family="system-ui, sans-serif" font-size="18" fill="#854d0e">• Voltmeter measures temperature difference (T_hot - T_ref)</text>
-  <text x="860" y="675" font-family="system-ui, sans-serif" font-size="18" fill="#854d0e">• CJC measures reference block to compute absolute temperature</text>
-  <text x="860" y="710" font-family="system-ui, sans-serif" font-size="18" fill="#854d0e">• Type K: 41 μV/°C, -200 °C to +1250 °C (Standard industrial)</text>
+  <text x="860" y="560" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#854d0e">Seebeck Effect &amp; CJC:</text>
+  <text x="860" y="600" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#713f12">V_net ≈ S_AB · (T_hot - T_ref)</text>
+  <text x="860" y="640" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#854d0e">• Voltmeter measures temperature difference (T_hot - T_ref)</text>
+  <text x="860" y="675" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#854d0e">• CJC measures reference block to compute absolute temperature</text>
+  <text x="860" y="710" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#854d0e">• Type K: 41 μV/°C, -200 °C to +1250 °C (Standard industrial)</text>
 </svg>""",
 
-    "u4_fig7_pyrometry_speed_distance.svg": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%">
+    "u4_fig7_pyrometry_speed_distance.svg": """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" font-family="'Times New Roman', Times, 'Liberation Serif', serif">
   <rect width="1600" height="900" fill="#ffffff" />
   <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
   <rect x="50" y="45" width="1500" height="70" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2" />
-  <text x="80" y="88" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="#0f172a">
+  <text x="80" y="88" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="28" font-weight="700" fill="#0f172a">
     Figure 4.7: Non-Contact Pyrometry, Ultrasonic TOF Ranging &amp; Accelerometers
   </text>
-  <text x="1260" y="88" font-family="monospace" font-size="20" font-weight="600" fill="#2563eb">Unit IV · Section 4.5 &amp; 4.6</text>
+  <text x="1260" y="88" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="600" fill="#2563eb">Unit IV · Section 4.5 &amp; 4.6</text>
   <rect x="50" y="140" width="480" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="75" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">1. Radiation Pyrometry</text>
+  <text x="75" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">1. Radiation Pyrometry</text>
   <rect x="80" y="490" width="420" height="340" rx="8" fill="#fef2f2" stroke="#fca5a5" />
-  <text x="100" y="530" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#991b1b">Stefan-Boltzmann Law:</text>
-  <text x="100" y="570" font-family="monospace" font-size="20" font-weight="700" fill="#b91c1c">E = ε · σ · T⁴</text>
-  <text x="100" y="610" font-family="system-ui, sans-serif" font-size="18" fill="#7f1d1d">• σ = 5.6703 × 10⁻⁸ W/(m²·K⁴)</text>
-  <text x="100" y="645" font-family="system-ui, sans-serif" font-size="18" fill="#7f1d1d">• Emissivity ε: Surface radiation efficiency</text>
+  <text x="100" y="530" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#991b1b">Stefan-Boltzmann Law:</text>
+  <text x="100" y="570" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#b91c1c">E = ε · σ · T⁴</text>
+  <text x="100" y="610" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#7f1d1d">• σ = 5.6703 × 10⁻⁸ W/(m²·K⁴)</text>
+  <text x="100" y="645" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#7f1d1d">• Emissivity ε: Surface radiation efficiency</text>
   <rect x="560" y="140" width="480" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="585" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">2. Ultrasonic Distance &amp; Speed</text>
+  <text x="585" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">2. Ultrasonic Distance &amp; Speed</text>
   <rect x="590" y="490" width="420" height="340" rx="8" fill="#eff6ff" stroke="#bfdbfe" />
-  <text x="610" y="530" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#1e40af">Time-of-Flight Physics:</text>
-  <text x="610" y="570" font-family="monospace" font-size="20" font-weight="700" fill="#1d4ed8">d = ( c_air · Δt ) / 2</text>
-  <text x="610" y="610" font-family="system-ui, sans-serif" font-size="18" fill="#1e3a8a">• c_air ≈ 331.3 + 0.606·T(°C) m/s</text>
-  <text x="610" y="645" font-family="system-ui, sans-serif" font-size="18" fill="#1e3a8a">• Doppler speed: f_d = (2·v·f₀·cos θ)/c</text>
+  <text x="610" y="530" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e40af">Time-of-Flight Physics:</text>
+  <text x="610" y="570" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1d4ed8">d = ( c_air · Δt ) / 2</text>
+  <text x="610" y="610" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e3a8a">• c_air ≈ 331.3 + 0.606·T(°C) m/s</text>
+  <text x="610" y="645" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e3a8a">• Doppler speed: f_d = (2·v·f₀·cos θ)/c</text>
   <rect x="1070" y="140" width="480" height="720" rx="10" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" />
-  <text x="1095" y="180" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#1e293b">3. Vibration Accelerometers</text>
+  <text x="1095" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e293b">3. Vibration Accelerometers</text>
   <rect x="1100" y="490" width="420" height="340" rx="8" fill="#faf5ff" stroke="#d8b4fe" />
-  <text x="1120" y="530" font-family="system-ui, sans-serif" font-size="20" font-weight="700" fill="#7e22ce">Seismic Mass Mechanics:</text>
-  <text x="1120" y="570" font-family="monospace" font-size="20" font-weight="700" fill="#6b21a8">F = m · a,   q = d₃₃ · (m · a)</text>
-  <text x="1120" y="610" font-family="system-ui, sans-serif" font-size="18" fill="#581c87">• Charge is directly proportional to acceleration a</text>
-  <text x="1120" y="645" font-family="system-ui, sans-serif" font-size="18" fill="#581c87">• IEPE built-in preamplifier outputs low-Z voltage</text>
+  <text x="1120" y="530" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#7e22ce">Seismic Mass Mechanics:</text>
+  <text x="1120" y="570" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#6b21a8">F = m · a,   q = d₃₃ · (m · a)</text>
+  <text x="1120" y="610" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#581c87">• Charge is directly proportional to acceleration a</text>
+  <text x="1120" y="645" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#581c87">• IEPE built-in preamplifier outputs low-Z voltage</text>
 </svg>"""
 }
 

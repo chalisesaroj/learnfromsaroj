@@ -309,21 +309,21 @@ export const SAMPLE_CHAPTER_JSON_TEMPLATE: ChapterDeckJSON = {
       subtitle: 'Vector SVG Embedded Illustration with Real-Time Scaling',
       sectionTag: 'Visual Diagrams',
       type: 'figure',
-      figureSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="100%" height="100%">
+      figureSvg: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="100%" height="100%" font-family="'Times New Roman', Times, 'Liberation Serif', serif">
   <rect width="1200" height="600" fill="#ffffff" />
   <rect x="20" y="20" width="1160" height="560" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
   <rect x="40" y="40" width="1120" height="60" rx="8" fill="#f8fafc" stroke="#e2e8f0" />
-  <text x="60" y="78" font-family="system-ui, sans-serif" font-size="22" font-weight="700" fill="#0f172a">
+  <text x="60" y="78" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="24" font-weight="700" fill="#0f172a">
     Sample Diagram: Second-Order Sensor Step Response &amp; Error Corridor
   </text>
   <!-- Axes -->
   <line x1="100" y1="480" x2="1100" y2="480" stroke="#334155" stroke-width="2.5" />
   <line x1="100" y1="480" x2="100" y2="140" stroke="#334155" stroke-width="2.5" />
-  <text x="1100" y="515" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#334155" text-anchor="end">Time t (s) →</text>
-  <text x="80" y="145" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#334155">y(t)</text>
+  <text x="1100" y="518" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#334155" text-anchor="end">Time t (s) →</text>
+  <text x="80" y="145" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#334155">y(t)</text>
   <!-- Steady state line -->
   <line x1="100" y1="300" x2="1080" y2="300" stroke="#059669" stroke-width="2" stroke-dasharray="8,4" />
-  <text x="1080" y="295" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#059669" text-anchor="end">y_ss = 1.0 (Target)</text>
+  <text x="1080" y="290" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#059669" text-anchor="end">y_ss = 1.0 (Target)</text>
   <!-- Error corridor -->
   <rect x="100" y="292" width="980" height="16" fill="#dcfce7" opacity="0.6" />
   <!-- Underdamped curve -->
@@ -331,8 +331,8 @@ export const SAMPLE_CHAPTER_JSON_TEMPLATE: ChapterDeckJSON = {
   <!-- Peak annotation -->
   <circle cx="240" cy="190" r="7" fill="#dc2626" />
   <line x1="240" y1="190" x2="240" y2="480" stroke="#dc2626" stroke-dasharray="4,4" />
-  <text x="240" y="165" font-family="system-ui, sans-serif" font-size="16" font-weight="700" fill="#dc2626" text-anchor="middle">Peak Overshoot Mp (16.3%)</text>
-  <text x="240" y="510" font-family="system-ui, sans-serif" font-size="14" font-weight="600" fill="#dc2626" text-anchor="middle">tp</text>
+  <text x="240" y="165" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#dc2626" text-anchor="middle">Peak Overshoot Mp (16.3%)</text>
+  <text x="240" y="514" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="600" fill="#dc2626" text-anchor="middle">tp</text>
 </svg>`,
       figureCaption: 'Vector step response illustrating damped ringing and ±2% settling corridor.',
       speakerNotes: 'Point out how vector SVGs maintain crisp lines at any projection scale or monitor resolution.',
@@ -442,7 +442,7 @@ Do NOT produce generic, superficial bullets. The output must be mathematically r
    - Debunk common student myths and exam pitfalls.
 
 9. INLINE VECTOR FIGURES (type: "figure"):
-   - Include standalone, valid SVG string in 'figureSvg' with viewBox="0 0 1200 600", pure white background (#ffffff), text elements with font-size >= 16, clean colors (#2563eb, #dc2626, #059669, #334155).
+   - Include standalone, valid SVG string in 'figureSvg' with viewBox="0 0 1200 600", pure white background (#ffffff), text elements with font-family="'Times New Roman', Times, serif" and font-size >= 20, clean colors (#2563eb, #dc2626, #059669, #334155).
 
 10. SPEAKER NOTES & TAKEAWAYS:
     - EVERY slide MUST contain substantive, private speakerNotes (for the professor) and a crisp takeaway summary.

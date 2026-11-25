@@ -713,7 +713,7 @@ export const InteractiveSimulations: React.FC = () => {
 
               {/* Waveform SVG Plot */}
               <div className="h-64 w-full bg-slate-50 rounded-lg p-2 border border-slate-200 relative">
-                <svg viewBox="0 0 500 220" className="w-full h-full">
+                <svg viewBox="0 0 500 220" className="w-full h-full" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   {/* Grid Lines */}
                   <line x1="40" y1="20" x2="40" y2="180" stroke="#94a3b8" strokeWidth="1" />
                   <line x1="40" y1="180" x2="480" y2="180" stroke="#94a3b8" strokeWidth="1" />
@@ -756,18 +756,18 @@ export const InteractiveSimulations: React.FC = () => {
                     stroke="#e11d48"
                     strokeWidth="1.2"
                   />
-                  <text x="45" y="198" fill="#be123c" fontSize="12" fontWeight="700" fontFamily="monospace">
+                  <text x="45" y="198" fill="#be123c" fontSize="12" fontWeight="700" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                     eq(t) = ±0.5 LSB
                   </text>
 
                   {/* Y-Axis Labels */}
-                  <text x="38" y="32" fill="#334155" fontSize="12" fontWeight="600" textAnchor="end" fontFamily="monospace">
+                  <text x="38" y="32" fill="#334155" fontSize="12" fontWeight="600" textAnchor="end" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                     {adcFsr.toFixed(1)}V
                   </text>
-                  <text x="38" y="106" fill="#334155" fontSize="12" fontWeight="600" textAnchor="end" fontFamily="monospace">
+                  <text x="38" y="106" fill="#334155" fontSize="12" fontWeight="600" textAnchor="end" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                     {(adcFsr / 2).toFixed(1)}V
                   </text>
-                  <text x="38" y="180" fill="#334155" fontSize="12" fontWeight="600" textAnchor="end" fontFamily="monospace">
+                  <text x="38" y="180" fill="#334155" fontSize="12" fontWeight="600" textAnchor="end" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                     0V
                   </text>
                 </svg>
@@ -890,7 +890,7 @@ export const InteractiveSimulations: React.FC = () => {
 
               {/* Curve SVG */}
               <div className="h-64 w-full bg-slate-50 rounded-lg p-2 border border-slate-200 relative">
-                <svg viewBox="0 0 500 220" className="w-full h-full">
+                <svg viewBox="0 0 500 220" className="w-full h-full" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   <line x1="50" y1="20" x2="50" y2="180" stroke="#94a3b8" strokeWidth="1" />
                   <line x1="50" y1="180" x2="480" y2="180" stroke="#94a3b8" strokeWidth="1" />
 
@@ -942,7 +942,7 @@ export const InteractiveSimulations: React.FC = () => {
                       />
                       <circle cx="265" cy={180 - (calCalculations.curvePoints[10].asc / 200) * 160} r="3" fill="#059669" />
                       <circle cx="265" cy={180 - (calCalculations.curvePoints[10].desc / 200) * 160} r="3" fill="#e11d48" />
-                      <text x="275" y="100" fill="#b45309" fontSize="13" fontWeight="700" fontFamily="monospace">
+                      <text x="275" y="100" fill="#b45309" fontSize="13" fontWeight="700" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                         Δy_hyst = {calCalculations.maxHystError.toFixed(2)}V
                       </text>
                     </g>
@@ -1092,17 +1092,17 @@ export const InteractiveSimulations: React.FC = () => {
 
             {/* Circuit Diagram SVG */}
             <div className="p-4 rounded-lg bg-slate-50 border border-slate-200">
-              <svg viewBox="0 0 500 150" className="w-full h-36">
+              <svg viewBox="0 0 500 150" className="w-full h-36" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                 {/* Circuit loop */}
                 <rect x="40" y="25" width="200" height="100" fill="none" stroke="#64748b" strokeWidth="2" />
                 
                 {/* Voltage source Vs */}
                 <circle cx="40" cy="75" r="18" fill="#ffffff" stroke="#0284c7" strokeWidth="2" />
-                <text x="40" y="80" fill="#0369a1" fontSize="14" fontWeight="700" textAnchor="middle" fontFamily="monospace">Vs</text>
+                <text x="40" y="80" fill="#0369a1" fontSize="14" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">Vs</text>
 
                 {/* Rs resistor */}
                 <rect x="115" y="13" width="54" height="24" fill="#fffbeb" stroke="#d97706" strokeWidth="2" />
-                <text x="142" y="54" fill="#b45309" fontSize="14" fontWeight="700" textAnchor="middle" fontFamily="monospace">Rs</text>
+                <text x="142" y="54" fill="#b45309" fontSize="14" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">Rs</text>
 
                 {/* Measurement nodes */}
                 <circle cx="240" cy="25" r="4" fill="#0f172a" />
@@ -1114,11 +1114,11 @@ export const InteractiveSimulations: React.FC = () => {
 
                 {/* Meter Vm */}
                 <circle cx="350" cy="75" r="24" fill="#ffffff" stroke="#e11d48" strokeWidth="2" />
-                <text x="350" y="80" fill="#be123c" fontSize="15" textAnchor="middle" fontFamily="monospace" fontWeight="bold">Vm</text>
+                <text x="350" y="80" fill="#be123c" fontSize="15" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif" fontWeight="bold">Vm</text>
                 <line x1="350" y1="25" x2="350" y2="51" stroke="#e11d48" strokeWidth="2" />
                 <line x1="350" y1="99" x2="350" y2="125" stroke="#e11d48" strokeWidth="2" />
 
-                <text x="392" y="80" fill="#1e293b" fontSize="14" fontWeight="700" fontFamily="monospace">
+                <text x="392" y="80" fill="#1e293b" fontSize="14" fontWeight="700" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   Rm = {loadRmPreset === 'analog' ? '200 kΩ' : loadRmPreset === 'dmm' ? '10 MΩ' : '1 TΩ'}
                 </text>
               </svg>
@@ -1259,7 +1259,7 @@ export const InteractiveSimulations: React.FC = () => {
 
             {/* Gaussian Bell Curve */}
             <div className="h-56 w-full bg-slate-50 rounded-lg p-2 border border-slate-200 relative">
-              <svg viewBox="0 0 500 180" className="w-full h-full">
+              <svg viewBox="0 0 500 180" className="w-full h-full" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                 {/* Horizontal baseline */}
                 <line x1="30" y1="160" x2="470" y2="160" stroke="#94a3b8" strokeWidth="1" />
                 <line x1="250" y1="20" x2="250" y2="160" stroke="#94a3b8" strokeDasharray="3,3" />
@@ -1288,7 +1288,7 @@ export const InteractiveSimulations: React.FC = () => {
                 />
 
                 {/* Mean marker */}
-                <text x="250" y="176" fill="#0f172a" fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="monospace">
+                <text x="250" y="176" fill="#0f172a" fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   Nominal Mean μ = 10.000
                 </text>
 
@@ -1296,7 +1296,7 @@ export const InteractiveSimulations: React.FC = () => {
                 <line x1="180" y1="100" x2="320" y2="100" stroke="#059669" strokeWidth="2" />
                 <circle cx="180" cy="100" r="3" fill="#059669" />
                 <circle cx="320" cy="100" r="3" fill="#059669" />
-                <text x="250" y="88" fill="#047857" fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="monospace">
+                <text x="250" y="88" fill="#047857" fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   ±U = ±{uncCalculations.expandedU.toFixed(4)} ({uncCalculations.confidenceLabel})
                 </text>
               </svg>
@@ -1568,28 +1568,28 @@ export const InteractiveSimulations: React.FC = () => {
                 </span>
               </div>
 
-              <svg viewBox="0 0 600 360" className="w-full h-auto bg-slate-50 rounded-lg border border-slate-200">
+              <svg viewBox="0 0 600 360" className="w-full h-auto bg-slate-50 rounded-lg border border-slate-200" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                 {/* Excitation Node A (Top, +VEX) */}
                 <circle cx="300" cy="42" r="8" fill="#059669" />
-                <text x="300" y="26" fill="#047857" fontSize="14" fontWeight="700" textAnchor="middle" fontFamily="monospace">
+                <text x="300" y="26" fill="#047857" fontSize="14" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   Node A (+{bridgeVex.toFixed(1)}V DC)
                 </text>
 
                 {/* Ground Node C (Bottom, 0V) */}
                 <circle cx="300" cy="318" r="8" fill="#475569" />
-                <text x="300" y="346" fill="#334155" fontSize="14" fontWeight="700" textAnchor="middle" fontFamily="monospace">
+                <text x="300" y="346" fill="#334155" fontSize="14" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   Node C (0.000V GND)
                 </text>
 
                 {/* Left Node B */}
                 <circle cx="120" cy="180" r="8" fill="#d97706" />
-                <text x="55" y="185" fill="#b45309" fontSize="14" fontWeight="700" textAnchor="middle" fontFamily="monospace">
+                <text x="55" y="185" fill="#b45309" fontSize="14" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   Node B
                 </text>
 
                 {/* Right Node D */}
                 <circle cx="480" cy="180" r="8" fill="#0284c7" />
-                <text x="545" y="185" fill="#0369a1" fontSize="14" fontWeight="700" textAnchor="middle" fontFamily="monospace">
+                <text x="545" y="185" fill="#0369a1" fontSize="14" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   Node D
                 </text>
 
@@ -1597,20 +1597,20 @@ export const InteractiveSimulations: React.FC = () => {
                 {/* Arm 1: Top-Left (Node A to Node B) -> R1 */}
                 <line x1="300" y1="42" x2="120" y2="180" stroke="#d97706" strokeWidth="3" />
                 <rect x="162" y="84" width="120" height="46" rx="6" fill="#ffffff" stroke="#d97706" strokeWidth="2" />
-                <text x="222" y="103" fill="#b45309" fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="monospace">
+                <text x="222" y="103" fill="#b45309" fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   R1: Active
                 </text>
-                <text x="222" y="122" fill="#0f172a" fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="monospace">
+                <text x="222" y="122" fill="#0f172a" fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   {(120 + strainBridgeCalculations.deltaR_mech + strainBridgeCalculations.deltaR_thermal).toFixed(3)} Ω
                 </text>
 
                 {/* Arm 2: Bottom-Left (Node B to Node C) -> R2 */}
                 <line x1="120" y1="180" x2="300" y2="318" stroke={bridgeCompensation === 'adjacent_dummy' ? '#059669' : bridgeTopology !== 'quarter' ? '#d97706' : '#64748b'} strokeWidth="3" />
                 <rect x="162" y="230" width="120" height="46" rx="6" fill="#ffffff" stroke={bridgeCompensation === 'adjacent_dummy' ? '#059669' : bridgeTopology !== 'quarter' ? '#d97706' : '#64748b'} strokeWidth="2" />
-                <text x="222" y="249" fill={bridgeCompensation === 'adjacent_dummy' ? '#047857' : bridgeTopology !== 'quarter' ? '#b45309' : '#334155'} fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="monospace">
+                <text x="222" y="249" fill={bridgeCompensation === 'adjacent_dummy' ? '#047857' : bridgeTopology !== 'quarter' ? '#b45309' : '#334155'} fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   {bridgeCompensation === 'adjacent_dummy' ? 'R2: Dummy' : bridgeTopology !== 'quarter' ? 'R2: Act (-ε)' : 'R2: Fixed'}
                 </text>
-                <text x="222" y="268" fill="#0f172a" fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="monospace">
+                <text x="222" y="268" fill="#0f172a" fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   {bridgeCompensation === 'adjacent_dummy'
                     ? (120 + strainBridgeCalculations.deltaR_thermal).toFixed(3)
                     : bridgeTopology !== 'quarter'
@@ -1621,20 +1621,20 @@ export const InteractiveSimulations: React.FC = () => {
                 {/* Arm 4: Top-Right (Node A to Node D) -> R4 */}
                 <line x1="300" y1="42" x2="480" y2="180" stroke={bridgeTopology === 'full' ? '#d97706' : '#64748b'} strokeWidth="3" />
                 <rect x="318" y="84" width="120" height="46" rx="6" fill="#ffffff" stroke={bridgeTopology === 'full' ? '#d97706' : '#64748b'} strokeWidth="2" />
-                <text x="378" y="103" fill={bridgeTopology === 'full' ? '#b45309' : '#334155'} fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="monospace">
+                <text x="378" y="103" fill={bridgeTopology === 'full' ? '#b45309' : '#334155'} fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   {bridgeTopology === 'full' ? 'R4: Act (-ε)' : 'R4: Fixed'}
                 </text>
-                <text x="378" y="122" fill="#0f172a" fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="monospace">
+                <text x="378" y="122" fill="#0f172a" fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   {bridgeTopology === 'full' ? (120 - strainBridgeCalculations.deltaR_mech + strainBridgeCalculations.deltaR_thermal).toFixed(3) : '120.000'} Ω
                 </text>
 
                 {/* Arm 3: Bottom-Right (Node D to Node C) -> R3 */}
                 <line x1="480" y1="180" x2="300" y2="318" stroke={bridgeTopology === 'full' ? '#d97706' : '#64748b'} strokeWidth="3" />
                 <rect x="318" y="230" width="120" height="46" rx="6" fill="#ffffff" stroke={bridgeTopology === 'full' ? '#d97706' : '#64748b'} strokeWidth="2" />
-                <text x="378" y="249" fill={bridgeTopology === 'full' ? '#b45309' : '#334155'} fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="monospace">
+                <text x="378" y="249" fill={bridgeTopology === 'full' ? '#b45309' : '#334155'} fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   {bridgeTopology === 'full' ? 'R3: Act (+ε)' : 'R3: Fixed'}
                 </text>
-                <text x="378" y="268" fill="#0f172a" fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="monospace">
+                <text x="378" y="268" fill="#0f172a" fontSize="13" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   {bridgeTopology === 'full' ? (120 + strainBridgeCalculations.deltaR_mech + strainBridgeCalculations.deltaR_thermal).toFixed(3) : '120.000'} Ω
                 </text>
 
@@ -1642,10 +1642,10 @@ export const InteractiveSimulations: React.FC = () => {
                 <line x1="120" y1="180" x2="250" y2="180" stroke="#94a3b8" strokeWidth="2" strokeDasharray="4,4" />
                 <line x1="350" y1="180" x2="480" y2="180" stroke="#94a3b8" strokeWidth="2" strokeDasharray="4,4" />
                 <circle cx="300" cy="180" r="46" fill="#eef2ff" stroke="#4f46e5" strokeWidth="2.5" />
-                <text x="300" y="170" fill="#4338ca" fontSize="12" fontWeight="700" textAnchor="middle" fontFamily="system-ui">
+                <text x="300" y="170" fill="#4338ca" fontSize="12" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   ΔV0 Output
                 </text>
-                <text x="300" y="193" fill="#1e1b4b" fontSize="15" fontWeight="700" textAnchor="middle" fontFamily="monospace">
+                <text x="300" y="193" fill="#1e1b4b" fontSize="15" fontWeight="700" textAnchor="middle" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   {strainBridgeCalculations.vOutExactMv.toFixed(3)} mV
                 </text>
               </svg>
@@ -1908,7 +1908,7 @@ export const InteractiveSimulations: React.FC = () => {
                 Simulated Transducer Physics &amp; Signal Interface
               </h4>
 
-              <svg viewBox="0 0 700 320" className="w-full h-auto bg-slate-50 rounded-lg border border-slate-200">
+              <svg viewBox="0 0 700 320" className="w-full h-auto bg-slate-50 rounded-lg border border-slate-200" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                 {/* Upper: Pitot Probe */}
                 <rect x="20" y="15" width="660" height="135" rx="6" fill="#ffffff" stroke="#cbd5e1" />
                 <text x="35" y="36" fill="#0369a1" fontSize="13" fontWeight="700">
@@ -1938,7 +1938,7 @@ export const InteractiveSimulations: React.FC = () => {
                 {/* Differential transmitter box */}
                 <rect x="390" y="42" width="275" height="82" rx="6" fill="#f8fafc" stroke="#cbd5e1" />
                 <text x="405" y="65" fill="#1e293b" fontSize="13" fontWeight="700">Differential Pressure (ΔP):</text>
-                <text x="405" y="90" fill="#0284c7" fontSize="17" fontWeight="700" fontFamily="monospace">
+                <text x="405" y="90" fill="#0284c7" fontSize="17" fontWeight="700" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   {pitotDeltaP} Pa ({ (pitotDeltaP / 1000).toFixed(2) } kPa)
                 </text>
                 <text x="405" y="110" fill="#334155" fontSize="12" fontWeight="600">
@@ -1956,7 +1956,7 @@ export const InteractiveSimulations: React.FC = () => {
                 <text x="80" y="275" fill="#be123c" fontSize="12" textAnchor="middle" fontWeight="700">
                   Hot Junction
                 </text>
-                <text x="80" y="294" fill="#b45309" fontSize="13" textAnchor="middle" fontWeight="700" fontFamily="monospace">
+                <text x="80" y="294" fill="#b45309" fontSize="13" textAnchor="middle" fontWeight="700" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   {flowThermalCalculations.hotJunctionCompensated.toFixed(1)} °C
                 </text>
 
@@ -1973,14 +1973,14 @@ export const InteractiveSimulations: React.FC = () => {
                 <text x="370" y="236" fill="#3f6212" fontSize="12" textAnchor="middle" fontWeight="700">
                   CJC Block (T_ref)
                 </text>
-                <text x="370" y="259" fill="#1a2e05" fontSize="14" textAnchor="middle" fontWeight="700" fontFamily="monospace">
+                <text x="370" y="259" fill="#1a2e05" fontSize="14" textAnchor="middle" fontWeight="700" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   {tcRefTemp} °C
                 </text>
 
                 {/* DAQ Voltmeter */}
                 <circle cx="565" cy="245" r="36" fill="#eef2ff" stroke="#4f46e5" strokeWidth="2" />
                 <text x="565" y="238" fill="#4338ca" fontSize="12" fontWeight="700" textAnchor="middle">Measured EMF</text>
-                <text x="565" y="259" fill="#1e1b4b" fontSize="15" textAnchor="middle" fontWeight="700" fontFamily="monospace">
+                <text x="565" y="259" fill="#1e1b4b" fontSize="15" textAnchor="middle" fontWeight="700" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   {tcVmeas.toFixed(2)} mV
                 </text>
                 <line x1="440" y1="230" x2="529" y2="240" stroke="#64748b" strokeWidth="1.5" />
@@ -2329,7 +2329,7 @@ export const InteractiveSimulations: React.FC = () => {
 
               {/* Dynamic Waveform SVG */}
               <div className="w-full bg-slate-50 rounded-xl p-3 border border-slate-200">
-                <svg viewBox="0 0 700 360" className="w-full h-auto">
+                <svg viewBox="0 0 700 360" className="w-full h-auto" fontFamily="'Times New Roman', Times, 'Liberation Serif', serif">
                   {/* Background grid */}
                   <line x1="60" y1="40" x2="660" y2="40" stroke="#e2e8f0" strokeWidth="1" />
                   <line x1="60" y1="110" x2="660" y2="110" stroke="#e2e8f0" strokeWidth="1" />

@@ -41,7 +41,12 @@ function nodeSvgRasterizer(svg: string): string {
     const resvg = new Resvg(svg, {
       fitTo: { mode: 'width', value: 2880 }, // Ultra-sharp 3K vector rasterization
       shapeRendering: 2, // geometricPrecision
-      textRendering: 1   // optimizeLegibility
+      textRendering: 1,  // optimizeLegibility
+      font: {
+        serifFamily: 'Liberation Serif',
+        defaultFontFamily: 'Liberation Serif',
+        loadSystemFonts: true
+      }
     });
     const pngBuffer = resvg.render().asPng();
     return 'data:image/png;base64,' + pngBuffer.toString('base64');

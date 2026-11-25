@@ -32,6 +32,7 @@ import {
 } from 'lucide-react';
 import { ChapterConfig } from '../data/chaptersData';
 import { exportChapterToPptx, svgToPngDataUrlBrowser } from '../utils/pptxExport';
+import { resolvePublicAssetUrl } from '../utils/assetUrl';
 
 export interface PresentationViewerProps {
   currentChapterId?: ChapterId | string;
@@ -184,16 +185,17 @@ function triggerBlobDownload(href: string, filename: string) {
 }
 
 async function downloadPhotoHighRes(imageUrl: string, caption?: string) {
+  const resolvedUrl = resolvePublicAssetUrl(imageUrl);
   const safeBase = (caption || 'instrumentation_photo')
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '_')
     .replace(/^_|_$/g, '')
     .slice(0, 48);
-  const ext = imageUrl.toLowerCase().includes('.png') ? 'png' : 'jpg';
+  const ext = resolvedUrl.toLowerCase().includes('.png') ? 'png' : 'jpg';
   const filename = `${safeBase || 'lab_photo'}.${ext}`;
 
   try {
-    const res = await fetch(imageUrl);
+    const res = await fetch(resolvedUrl);
     if (res.ok) {
       const blob = await res.blob();
       const objUrl = URL.createObjectURL(blob);
@@ -204,7 +206,7 @@ async function downloadPhotoHighRes(imageUrl: string, caption?: string) {
   } catch {
     // Fallback to direct anchor download
   }
-  triggerBlobDownload(imageUrl, filename);
+  triggerBlobDownload(resolvedUrl, filename);
 }
 
 const SlideImageCard: React.FC<{
@@ -214,6 +216,7 @@ const SlideImageCard: React.FC<{
   maxHeight?: string;
 }> = ({ imageUrl, imageCaption, className = '', maxHeight = 'max-h-[70vh]' }) => {
   const [isZoomed, setIsZoomed] = useState(false);
+  const resolvedUrl = resolvePublicAssetUrl(imageUrl);
 
   return (
     <>
@@ -223,7 +226,7 @@ const SlideImageCard: React.FC<{
           className={`relative group cursor-zoom-in overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 shadow-lg transition-all hover:shadow-2xl hover:border-blue-500/50 flex flex-col items-center justify-center ${maxHeight}`}
         >
           <img
-            src={imageUrl}
+            src={resolvedUrl}
             alt={imageCaption || 'Technical presentation visual'}
             className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300"
             loading="eager"
@@ -266,7 +269,7 @@ const SlideImageCard: React.FC<{
             className="relative max-w-5xl max-h-[90vh] flex flex-col items-center cursor-default"
           >
             <img
-              src={imageUrl}
+              src={resolvedUrl}
               alt={imageCaption || 'Zoomed view'}
               className="max-w-full max-h-[82vh] object-contain rounded-xl shadow-2xl border border-white/20"
             />
@@ -993,7 +996,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                       {currentSlide.imageUrl && (
                         <div className="pt-1 flex justify-center">
                           <img
-                            src={currentSlide.imageUrl}
+                            src={resolvePublicAssetUrl(currentSlide.imageUrl)}
                             alt={currentSlide.imageCaption || 'Slide visual'}
                             className="max-h-28 w-auto object-cover rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm"
                           />
