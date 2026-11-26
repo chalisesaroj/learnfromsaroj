@@ -50,19 +50,25 @@ Reference Deck: https://chalisesaroj.github.io/slide/
 3. STEP 2: GENERATE VECTOR SVG VISUAL ASSETS
    python lecture_unit2.py
 
-   Expected output:
-   - Generates u2_fig1_signal_taxonomy.svg
-   - Generates u2_fig2_sampling_and_aliasing.svg
-   - Generates u2_fig3_dsp_signal_chain.svg
-   - Generates u2_fig4_fir_vs_iir_filters.svg
-   - Generates u2_fig5_fourier_decomposition.svg
-   - Generates u2_fig6_dft_leakage_and_windowing.svg
-   - Generates u2_fig7_fft_butterfly_dit.svg
-   - Generates u2_fig8_stft_spectrogram_presentation.svg
-   - Generates u2_fig9_dewesoft_daq_architecture.svg
-   - Generates u2_fig10_sensor_conditioning_matrix.svg
-   - Generates u2_fig11_adc_bit_depth_comparison.svg
-   - Generates u2_fig12_end_to_end_case_study.svg
+   Expected output (20 vector SVGs: 15 core diagrams + 5 Workshop Motor case-study figures):
+   - Core Unit II Diagrams:
+     • u2_fig1_signal_taxonomy.svg
+     • u2_fig2_sampling_and_aliasing.svg
+     • u2_fig_quantization_bits.svg (8/12/16/24-bit resolution comparison)
+     • u2_fig_analog_filters.svg (Butterworth vs. Chebyshev vs. Bessel)
+     • u2_fig3_dsp_signal_chain.svg
+     • u2_fig_dewesoft_daq.svg (4-pillar Dewesoft DAQ architecture)
+     • u2_fig_conditioning_matrix.svg (Universal sensor conditioning matrix)
+     • u2_fig_convolution_correlation.svg (LTI convolution & cross-correlation)
+     • u2_fig4_fir_vs_iir_filters.svg
+     • u2_fig5_fourier_decomposition.svg
+     • u2_fig_dft_4pt_intuition.svg (4-pt DFT unit circle & spectrum)
+     • u2_fig6_dft_leakage_and_windowing.svg
+     • u2_fig7_fft_butterfly_dit.svg
+     • u2_fig8_stft_spectrogram_presentation.svg
+     • u2_fig_case_study.svg (Industrial 12,000 RPM gas turbine vibration DAQ)
+   - Workshop Motor End-to-End Case Study Steps:
+     • u2_case_step2_graph.svg through u2_case_step6_graph.svg
 
 4. STEP 3: RENDER THE REVEAL.JS PRESENTATION
    quarto render lecture_unit2.qmd
@@ -221,24 +227,24 @@ export const SYLLABUS_UNIT1_SECTIONS: SyllabusSection[] = [
   },
   {
     number: "1.7",
-    title: "Electrical Safety & Ground Loop Isolation",
+    title: "Safety Considerations During Instrumentation (Electrical, Hydraulic & Pneumatic)",
     hours: "0.5 Hour",
-    specificObjective: "Identify ground loop voltage sources, design galvanic isolation barriers, and apply IEC 61010-1 overvoltage CAT ratings.",
+    specificObjective: "Apply integrated electrical, hydraulic, and pneumatic safety controls including ground-loop galvanic isolation, IEC 61010-1 CAT ratings, LOTO zero-energy verification, and fluid-power pressure/manifold protection.",
     coreConcepts: [
-      "Ground loops formed by multiple earth grounding points at different potentials (ΔVG = IG · RG).",
-      "Common-mode voltage conversion to differential-mode interference noise.",
-      "Galvanic isolation techniques: optical couplers, isolation transformers, capacitive digital isolators.",
-      "IEC 61010-1 overvoltage installation categories: CAT I, CAT II, CAT III, and CAT IV."
+      "Electrical Safety: ground loops (ΔVG = IG · RG), optical/magnetic galvanic isolation, and IEC 61010-1 CAT I–IV arc-flash surge ratings.",
+      "Hydraulic Safety (70–350 bar): pinhole fluid-injection hazards, trapped accumulator energy, LOTO isolation, bleed-to-zero gauge verification, PRVs, and snubbers.",
+      "Pneumatic & ΔP Safety (2–10 bar): hose whip-check restraint cables, < 2 bar (30 psi) dead-end nozzle air-embolism limits, and 3-valve ΔP manifold EQ-first sequencing."
     ],
     difficultConcepts: [
-      "Transient surge impulse ratings: why a CAT IV 600V meter survives a 8,000V spike while a CAT II 600V meter fails catastrophically under the same transient."
+      "Transient surge impulse ratings (CAT II vs. CAT IV 8,000 V impulse) and why hydraulic accumulators remain lethal even after electrical pump power is locked out.",
+      "Why compressed air stores compressible spring energy and how improper 3-valve manifold valving ruptures differential pressure transmitter diaphragms."
     ],
     misconceptions: [
-      "Assuming 'ground' is at 0.000V everywhere across an industrial facility."
+      "Assuming 'ground' is at 0.000V everywhere across a plant, checking hydraulic pinhole leaks with bare hands, or assuming shutting off a pump depressurizes an accumulator."
     ],
     examQuestions: [
-      "Explain how a ground loop generates 50 Hz power line interference and show how optoisolators eliminate this noise.",
-      "Detail the four IEC 61010-1 overvoltage categories (CAT I to CAT IV) with their typical installation locations."
+      "Explain how a ground loop generates 50 Hz interference and show how optoisolators and IEC 61010-1 CAT ratings protect technicians and equipment.",
+      "State the mandatory Lockout/Tagout (LOTO) and depressurization steps before removing a hydraulic pressure transducer vs. a pneumatic differential pressure (ΔP) transmitter."
     ]
   }
 ];
@@ -950,7 +956,7 @@ export const CHAPTERS: Record<ChapterId, ChapterConfig> = {
     hours: '6 Hours',
     instructor: 'Er. Saroj Chalise',
     referenceUrl: 'https://chalisesaroj.github.io/slide/',
-    summary: 'Classroom lecture package formatted in Quarto Reveal.js covering methods, analog vs digital, DAQ architecture, static calibration, uncertainty (ISO GUM), intrusive sensing, and electrical safety.',
+    summary: 'Classroom lecture package formatted in Quarto Reveal.js covering measurement methods, analog vs digital, DAQ architecture, static calibration, ISO GUM uncertainty analysis, intrusive sensing, and comprehensive safety considerations (electrical, hydraulic, and pneumatic).',
     slides: SLIDES_DATA,
     figures: SVG_FIGURES,
     pySource: LECTURE_PY_SOURCE,
@@ -970,7 +976,7 @@ export const CHAPTERS: Record<ChapterId, ChapterConfig> = {
     hours: '10 Hours',
     instructor: 'Er. Saroj Chalise',
     referenceUrl: 'https://chalisesaroj.github.io/slide/',
-    summary: 'Classroom lecture package formatted in Quarto Reveal.js upgraded with Dewesoft modern DAQ architecture: signal taxonomy (2.1), acquisition & properties with 8/12/16/24-bit resolution comparison (2.2), modern 4-pillar DAQ & universal sensor conditioning matrix (2.3), processing techniques (2.4), Fourier transform (2.5), DFT (2.6), FFT (2.7), IDFT (2.8), data presentation (2.9), and a comprehensive end-to-end solved industrial gas turbine vibration DAQ case study with 12 vector SVGs.',
+    summary: 'Progressive, concept-first 88-slide interactive engineering deck covering the entire Pokhara University Unit II syllabus (10 hrs): Signal Taxonomy & Even/Odd/Energy-Power derivations (2.1), Sampling, Aliasing, Aperture Jitter & 8/12/16/24-bit Quantization (2.2), CMRR, Butterworth/Chebyshev/Bessel filters, Galvanic Isolation & Dewesoft 4-Pillar Conditioning Matrix (2.3), LTI Convolution, Correlation, FIR/IIR & Windowing (2.4), CTFT & Euler Phasor intuition (2.5), Hand-Worked 4-pt DFT, Leakage & Picket-Fence Effect (2.6), Radix-2 DIT-FFT Butterfly (2.7), IDFT & Parseval Verification (2.8), PSD/Welch & STFT Spectrograms (2.9), plus Workshop Motor and 12,000 RPM Gas Turbine Case Studies across 20 crisp Times New Roman vector SVGs.',
     slides: UNIT2_SLIDES_DATA,
     figures: SVG_FIGURES_UNIT2,
     pySource: LECTURE_PY_SOURCE_UNIT2,

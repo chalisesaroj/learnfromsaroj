@@ -118,7 +118,31 @@ async function run() {
     `✓ Unit 1 PPTX written to:\n  - ${unit1PublicPath} (${(unit1Buffer.length / 1024).toFixed(1)} KB)\n  - ${unit1RootPath}`
   );
 
-  // 2. Also generate Unit 3 PPTX
+  // 2. Generate Unit 2 PPTX
+  if (CHAPTERS.unit2) {
+    console.log(`\nGenerating PowerPoint for Unit 2: ${CHAPTERS.unit2.title}...`);
+    const unit2Buffer = (await exportChapterToPptx(CHAPTERS.unit2, {
+      includeNotes: true,
+      resolveImage: nodeImageResolver,
+      svgToPng: nodeSvgRasterizer,
+      mathToPng: nodeMathRasterizer,
+      onProgress: (cur, tot, msg) => {
+        if (cur % 10 === 0 || cur === tot) {
+          console.log(`  [Unit 2] ${cur}/${tot}: ${msg}`);
+        }
+      }
+    })) as unknown as Buffer;
+
+    const unit2PublicPath = path.join(publicDir, 'Unit2_Digital_Signal_Processing.pptx');
+    const unit2RootPath = path.resolve('Unit2_Digital_Signal_Processing.pptx');
+    fs.writeFileSync(unit2PublicPath, unit2Buffer);
+    fs.writeFileSync(unit2RootPath, unit2Buffer);
+    console.log(
+      `✓ Unit 2 PPTX written to:\n  - ${unit2PublicPath} (${(unit2Buffer.length / 1024).toFixed(1)} KB)\n  - ${unit2RootPath}`
+    );
+  }
+
+  // 3. Also generate Unit 3 PPTX
   if (CHAPTERS.unit3) {
     console.log(`\nGenerating PowerPoint for Unit 3: ${CHAPTERS.unit3.title}...`);
     const unit3Buffer = (await exportChapterToPptx(CHAPTERS.unit3, {

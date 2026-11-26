@@ -7,6 +7,7 @@ import {
 } from '../data/tutorialContent';
 import { FormattedMathText } from './FormattedMathText';
 import { MathRenderer } from './MathRenderer';
+import { exportTutorialToPdf } from '../utils/tutorialPdfExport';
 import {
   Calculator,
   CheckCircle2,
@@ -14,6 +15,7 @@ import {
   ChevronUp,
   Eye,
   EyeOff,
+  FileDown,
   KeyRound,
   Lightbulb,
   Lock,
@@ -50,6 +52,7 @@ export const TutorialSection: React.FC<TutorialSectionProps> = ({
   const [passwordInput, setPasswordInput] = useState('');
   const [showPasswordText, setShowPasswordText] = useState(false);
   const [passwordError, setPasswordError] = useState<string | null>(null);
+  const [isExportingPdf, setIsExportingPdf] = useState(false);
 
   const filteredProblems = useMemo(() => {
     if (!tutorialSheet) return [];
@@ -141,6 +144,18 @@ export const TutorialSection: React.FC<TutorialSectionProps> = ({
 
   const handlePrintSheet = () => {
     window.print();
+  };
+
+  const handleDownloadPdf = async () => {
+    if (!tutorialSheet) return;
+    try {
+      setIsExportingPdf(true);
+      await exportTutorialToPdf(tutorialSheet);
+    } catch (err) {
+      console.error('Tutorial PDF export failed:', err);
+    } finally {
+      setIsExportingPdf(false);
+    }
   };
 
   // Fallback for chapters without a tutorial sheet yet
@@ -322,9 +337,19 @@ export const TutorialSection: React.FC<TutorialSectionProps> = ({
             )}
 
             <button
+              onClick={handleDownloadPdf}
+              disabled={isExportingPdf}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white transition-colors whitespace-nowrap shrink-0 disabled:opacity-50"
+              title="Download this tutorial worksheet as PDF"
+            >
+              <FileDown className="w-3.5 h-3.5" />
+              <span>{isExportingPdf ? 'Generating PDF...' : 'Download PDF'}</span>
+            </button>
+
+            <button
               onClick={handlePrintSheet}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 transition-colors whitespace-nowrap shrink-0"
-              title="Print or save this tutorial worksheet as PDF"
+              title="Print or save this tutorial worksheet"
             >
               <Printer className="w-3.5 h-3.5 text-emerald-600" />
               <span>Print Sheet</span>

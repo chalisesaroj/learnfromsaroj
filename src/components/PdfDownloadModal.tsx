@@ -81,10 +81,16 @@ export const PdfDownloadModal: React.FC<PdfDownloadModalProps> = ({
   };
 
   const handleDownloadPptx = async () => {
-    if (targetChapter.id === 'unit1') {
+    const staticPptxFiles: Record<string, string> = {
+      unit1: 'Unit1_Fundamentals_of_Measurement_Systems.pptx',
+      unit2: 'Unit2_Digital_Signal_Processing.pptx',
+      unit3: 'Unit3_Strain_Gauges.pptx',
+    };
+    const staticFile = staticPptxFiles[targetChapter.id];
+    if (staticFile) {
       const link = document.createElement('a');
-      link.href = 'Unit1_Fundamentals_of_Measurement_Systems.pptx';
-      link.download = 'Unit1_Fundamentals_of_Measurement_Systems.pptx';
+      link.href = staticFile;
+      link.download = staticFile;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

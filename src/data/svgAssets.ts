@@ -1087,5 +1087,546 @@ export const SVG_FIGURES: Record<string, SvgAsset> = {
     </g>
   </g>
 </svg>`
+  },
+
+  fig5b: {
+    id: "fig5b",
+    filename: "fig5b_averaging_and_type_b.svg",
+    title: "Figure 5B: Type A (1/√N Decay) vs. Bias & Type B Distributions",
+    description: "Visual proof of the Averaging Fallacy (1/√N random scatter reduction vs constant systematic bias) alongside Type B Rectangular, Triangular, and Normal probability distributions.",
+    topicRef: "1.5 Measurement Errors & Uncertainty (ISO GUM)",
+    svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" font-family="'Times New Roman', Times, 'Liberation Serif', serif">
+  <defs>
+    <marker id="arr5bBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
+    </marker>
+  </defs>
+
+  <!-- Clean Canvas -->
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <rect x="28" y="28" width="1544" height="844" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <text x="64" y="82" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="31" font-weight="800" fill="#0f172a">Uncertainty Evaluation: Type A (1/√N Decay) vs. Type B Models</text>
+  <text x="64" y="118" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="500" fill="#334155">Repeated averaging shrinks random scatter (uA), leaves bias untouched, and combines with datasheet models (uB)</text>
+
+  <!-- Left Panel: The Averaging Fallacy & 1/sqrt(N) Decay -->
+  <g transform="translate(64, 148)">
+    <rect width="736" height="694" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.8"/>
+    <rect x="0" y="0" width="736" height="58" rx="14" fill="#e0f2fe"/>
+    <text x="26" y="38" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="24" font-weight="800" fill="#0369a1">1. Type A Decay &amp; The Averaging Fallacy</text>
+
+    <!-- Plot Axes -->
+    <line x1="92" y1="454" x2="690" y2="454" stroke="#0f172a" stroke-width="2.5"/>
+    <line x1="92" y1="96" x2="92" y2="454" stroke="#0f172a" stroke-width="2.5"/>
+    <text x="390" y="502" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#1e293b" text-anchor="middle">Number of Repeated Samples (N) →</text>
+    <text x="42" y="275" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#1e293b" transform="rotate(-90 42 275)" text-anchor="middle">Error / Uncertainty</text>
+
+    <!-- Y-axis grid & labels -->
+    <line x1="92" y1="138" x2="680" y2="138" stroke="#e2e8f0" stroke-width="1.5"/>
+    <text x="80" y="145" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#334155" text-anchor="end">1.0s</text>
+
+    <line x1="92" y1="296" x2="680" y2="296" stroke="#e2e8f0" stroke-width="1.5"/>
+    <text x="80" y="303" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#334155" text-anchor="end">0.5s</text>
+
+    <line x1="92" y1="392" x2="680" y2="392" stroke="#e2e8f0" stroke-width="1.5"/>
+    <text x="80" y="399" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#334155" text-anchor="end">0.2s</text>
+
+    <!-- X-axis sample ticks -->
+    <text x="128" y="478" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#334155" text-anchor="middle">N=1</text>
+    <text x="238" y="478" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#334155" text-anchor="middle">N=4</text>
+    <text x="358" y="478" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#334155" text-anchor="middle">N=9</text>
+    <text x="488" y="478" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#334155" text-anchor="middle">N=25</text>
+    <text x="640" y="478" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#334155" text-anchor="middle">N=100</text>
+
+    <!-- Constant Systematic Bias Line (Flat Red Dashed) -->
+    <line x1="120" y1="224" x2="668" y2="224" stroke="#dc2626" stroke-width="4" stroke-dasharray="10,7"/>
+    <text x="435" y="206" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="800" fill="#dc2626" text-anchor="middle">Systematic Bias (Unchanged by N!)</text>
+
+    <!-- 1/sqrt(N) Decay Curve (Blue Solid) -->
+    <path d="M 128 138 Q 178 242, 238 296 T 358 348 T 488 392 L 640 422"
+          fill="none" stroke="#0284c7" stroke-width="5"/>
+    <circle cx="128" cy="138" r="8" fill="#0284c7" stroke="#ffffff" stroke-width="2"/>
+    <circle cx="238" cy="296" r="8" fill="#0284c7" stroke="#ffffff" stroke-width="2"/>
+    <circle cx="358" cy="348" r="8" fill="#0284c7" stroke="#ffffff" stroke-width="2"/>
+    <circle cx="488" cy="392" r="8" fill="#0284c7" stroke="#ffffff" stroke-width="2"/>
+    <circle cx="640" cy="422" r="8" fill="#0284c7" stroke="#ffffff" stroke-width="2"/>
+    <text x="276" y="136" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="800" fill="#0369a1">Type A: uA = s / √N</text>
+    <text x="530" y="366" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0369a1">10× reduction</text>
+    <text x="530" y="390" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0369a1">needs N = 100</text>
+
+    <!-- Key Takeaway Box -->
+    <rect x="28" y="534" width="680" height="134" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+    <text x="48" y="572" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#b91c1c">The Averaging Fallacy:</text>
+    <text x="48" y="608" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">• Taking 100 readings cuts random noise uA by 10× (√100).</text>
+    <text x="48" y="642" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#dc2626">• Averaging NEVER fixes zero offset — calibrate to remove bias!</text>
+  </g>
+
+  <!-- Right Panel: Type B Probability Models -->
+  <g transform="translate(824, 148)">
+    <rect width="712" height="694" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.8"/>
+    <rect x="0" y="0" width="712" height="58" rx="14" fill="#fef3c7"/>
+    <text x="26" y="38" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="24" font-weight="800" fill="#b45309">2. Type B Non-Statistical Uncertainty Models</text>
+
+    <!-- Card A: Rectangular / Uniform -->
+    <g transform="translate(26, 78)">
+      <rect width="660" height="182" rx="10" fill="#f8fafc" stroke="#0284c7" stroke-width="1.8"/>
+      <!-- Mini Uniform Shape -->
+      <line x1="34" y1="138" x2="214" y2="138" stroke="#0f172a" stroke-width="2"/>
+      <rect x="64" y="48" width="120" height="90" fill="#bae6fd" stroke="#0284c7" stroke-width="3"/>
+      <line x1="124" y1="36" x2="124" y2="146" stroke="#0369a1" stroke-width="1.5" stroke-dasharray="4,4"/>
+      <text x="64" y="164" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e293b" text-anchor="middle">-a</text>
+      <text x="124" y="164" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e293b" text-anchor="middle">0</text>
+      <text x="184" y="164" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e293b" text-anchor="middle">+a</text>
+
+      <text x="242" y="42" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#0369a1">Rectangular (Uniform) ±a</text>
+      <text x="242" y="80" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#0f172a">Formula: uB = a / √3 ≈ 0.577·a</text>
+      <text x="242" y="116" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155">Equal probability anywhere inside ±a.</text>
+      <text x="242" y="148" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0369a1">Use: Datasheet limits, digital resolution</text>
+    </g>
+
+    <!-- Card B: Triangular -->
+    <g transform="translate(26, 280)">
+      <rect width="660" height="182" rx="10" fill="#f8fafc" stroke="#d97706" stroke-width="1.8"/>
+      <!-- Mini Triangle Shape -->
+      <line x1="34" y1="138" x2="214" y2="138" stroke="#0f172a" stroke-width="2"/>
+      <polygon points="60,138 124,42 188,138" fill="#fde68a" stroke="#d97706" stroke-width="3"/>
+      <line x1="124" y1="36" x2="124" y2="146" stroke="#b45309" stroke-width="1.5" stroke-dasharray="4,4"/>
+      <text x="60" y="164" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e293b" text-anchor="middle">-a</text>
+      <text x="124" y="164" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e293b" text-anchor="middle">0</text>
+      <text x="188" y="164" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e293b" text-anchor="middle">+a</text>
+
+      <text x="242" y="42" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#b45309">Triangular Distribution ±a</text>
+      <text x="242" y="80" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#0f172a">Formula: uB = a / √6 ≈ 0.408·a</text>
+      <text x="242" y="116" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155">Values cluster closer to center than edges.</text>
+      <text x="242" y="148" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#b45309">Use: Dual-gauge reading bounds, flasks</text>
+    </g>
+
+    <!-- Card C: Normal / Calibration Certificate -->
+    <g transform="translate(26, 482)">
+      <rect width="660" height="186" rx="10" fill="#f8fafc" stroke="#16a34a" stroke-width="1.8"/>
+      <!-- Mini Bell Curve -->
+      <line x1="34" y1="138" x2="214" y2="138" stroke="#0f172a" stroke-width="2"/>
+      <path d="M 46 138 Q 84 132, 102 82 Q 124 30, 146 82 Q 164 132, 202 138 Z" fill="#bbf7d0" stroke="#16a34a" stroke-width="3"/>
+      <line x1="124" y1="36" x2="124" y2="146" stroke="#15803d" stroke-width="1.5" stroke-dasharray="4,4"/>
+      <text x="64" y="164" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e293b" text-anchor="middle">-U</text>
+      <text x="124" y="164" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e293b" text-anchor="middle">0</text>
+      <text x="184" y="164" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e293b" text-anchor="middle">+U</text>
+
+      <text x="242" y="42" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#15803d">Normal Certificate (Expanded ±U)</text>
+      <text x="242" y="80" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#0f172a">Formula: uB = U / k   (usually k = 2)</text>
+      <text x="242" y="116" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155">Stated at 95% confidence (k = 2).</text>
+      <text x="242" y="148" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#15803d">Use: ISO/IEC 17025 lab certificates</text>
+    </g>
+  </g>
+</svg>`
+  },
+
+  fig5c: {
+    id: "fig5c",
+    filename: "fig5c_iso_gum_propagation.svg",
+    title: "Figure 5C: ISO GUM Uncertainty Budget & 95% Confidence Bands",
+    description: "End-to-end ISO GUM flow from Type A and Type B standard uncertainties through Root-Sum-Square (RSS) combination to 1σ (68.3%), 2σ (95.4%), and 3σ (99.7%) confidence intervals.",
+    topicRef: "1.5 Measurement Errors & Uncertainty (ISO GUM)",
+    svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" font-family="'Times New Roman', Times, 'Liberation Serif', serif">
+  <defs>
+    <marker id="arr5cTeal" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0f766e"/>
+    </marker>
+  </defs>
+
+  <!-- Clean Canvas -->
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <rect x="28" y="28" width="1544" height="844" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <text x="64" y="82" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="31" font-weight="800" fill="#0f172a">ISO GUM Framework: Combining Uncertainties &amp; Confidence Levels</text>
+  <text x="64" y="118" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="500" fill="#334155">Step-by-step uncertainty budget using Root-Sum-Square (RSS) and coverage factor k</text>
+
+  <!-- Left Panel: Uncertainty Budget Flowchart -->
+  <g transform="translate(64, 148)">
+    <rect width="712" height="694" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.8"/>
+    <rect x="0" y="0" width="712" height="58" rx="14" fill="#f0fdfa"/>
+    <text x="26" y="38" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="24" font-weight="800" fill="#0f766e">1. ISO GUM Combination Pipeline (Furnace Example)</text>
+
+    <!-- Top Left Input: Type A -->
+    <rect x="28" y="84" width="312" height="156" rx="10" fill="#f0f9ff" stroke="#0284c7" stroke-width="2"/>
+    <text x="184" y="120" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#0369a1" text-anchor="middle">Type A (Statistical)</text>
+    <text x="184" y="158" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#0f172a" text-anchor="middle">uA = s / √N</text>
+    <text x="184" y="196" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155" text-anchor="middle">0.60 / √9 = 0.200 °C</text>
+
+    <!-- Top Right Input: Type B -->
+    <rect x="372" y="84" width="312" height="156" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+    <text x="528" y="120" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#b45309" text-anchor="middle">Type B (Datasheet)</text>
+    <text x="528" y="158" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#0f172a" text-anchor="middle">uB = a / √3</text>
+    <text x="528" y="196" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155" text-anchor="middle">0.30 / 1.732 = 0.173 °C</text>
+
+    <!-- Converging Arrows -->
+    <line x1="184" y1="240" x2="290" y2="294" stroke="#0f766e" stroke-width="3.5" marker-end="url(#arr5cTeal)"/>
+    <line x1="528" y1="240" x2="422" y2="294" stroke="#0f766e" stroke-width="3.5" marker-end="url(#arr5cTeal)"/>
+
+    <!-- Middle Box: RSS Combination -->
+    <rect x="76" y="302" width="560" height="162" rx="12" fill="#f8fafc" stroke="#0f766e" stroke-width="2.5"/>
+    <text x="356" y="340" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="23" font-weight="800" fill="#0f766e" text-anchor="middle">Combined Standard Uncertainty (RSS)</text>
+    <text x="356" y="384" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="23" font-weight="800" fill="#0f172a" text-anchor="middle">uc = √( uA² + uB² )  =  √Σ (ci · ui)²</text>
+    <text x="356" y="428" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#334155" text-anchor="middle">√(0.200² + 0.173²) = 0.265 °C  (1-Sigma)</text>
+
+    <!-- Down Arrow -->
+    <line x1="356" y1="464" x2="356" y2="512" stroke="#0f766e" stroke-width="4" marker-end="url(#arr5cTeal)"/>
+
+    <!-- Bottom Box: Expanded Uncertainty -->
+    <rect x="44" y="520" width="624" height="148" rx="12" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="356" y="558" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="23" font-weight="800" fill="#15803d" text-anchor="middle">Expanded Uncertainty (k = 2 → 95% Confidence)</text>
+    <text x="356" y="598" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#0f172a" text-anchor="middle">U = k · uc = 2 × 0.265 °C = 0.53 °C</text>
+    <text x="356" y="640" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#15803d" text-anchor="middle">Report: 150.00 ± 0.53 °C (k = 2)</text>
+  </g>
+
+  <!-- Right Panel: Gaussian Confidence Zones -->
+  <g transform="translate(800, 148)">
+    <rect width="736" height="694" rx="14" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.8"/>
+    <rect x="0" y="0" width="736" height="58" rx="14" fill="#e0e7ff"/>
+    <text x="26" y="38" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="24" font-weight="800" fill="#3730a3">2. Normal Confidence Bands Around Sample Mean</text>
+
+    <!-- Shaded Confidence Bands under Bell -->
+    <!-- 3 sigma outer band -->
+    <rect x="92" y="128" width="552" height="320" rx="8" fill="#fef2f2" opacity="0.55"/>
+    <!-- 2 sigma middle band -->
+    <rect x="184" y="128" width="368" height="320" fill="#dcfce7" opacity="0.65"/>
+    <!-- 1 sigma inner band -->
+    <rect x="276" y="128" width="184" height="320" fill="#bae6fd" opacity="0.7"/>
+
+    <!-- Bell Curve -->
+    <path d="M 62 448 C 148 448, 210 385, 258 272 C 304 162, 336 138, 368 138 C 400 138, 432 162, 478 272 C 526 385, 588 448, 674 448"
+          fill="none" stroke="#1e293b" stroke-width="4.5"/>
+
+    <!-- Vertical boundary markers -->
+    <line x1="368" y1="112" x2="368" y2="454" stroke="#0f172a" stroke-width="2.5" stroke-dasharray="6,5"/>
+    <line x1="276" y1="128" x2="276" y2="454" stroke="#0284c7" stroke-width="2"/>
+    <line x1="460" y1="128" x2="460" y2="454" stroke="#0284c7" stroke-width="2"/>
+    <line x1="184" y1="128" x2="184" y2="454" stroke="#16a34a" stroke-width="2.5"/>
+    <line x1="552" y1="128" x2="552" y2="454" stroke="#16a34a" stroke-width="2.5"/>
+    <line x1="92" y1="128" x2="92" y2="454" stroke="#dc2626" stroke-width="2"/>
+    <line x1="644" y1="128" x2="644" y2="454" stroke="#dc2626" stroke-width="2"/>
+
+    <!-- Axis & Value Labels -->
+    <line x1="48" y1="448" x2="688" y2="448" stroke="#0f172a" stroke-width="2.5"/>
+    <text x="368" y="102" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="800" fill="#0f172a" text-anchor="middle">Mean x̄ = 150.00 °C</text>
+
+    <text x="92" y="478" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#b91c1c" text-anchor="middle">-3uc</text>
+    <text x="184" y="478" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#15803d" text-anchor="middle">-2uc</text>
+    <text x="276" y="478" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0369a1" text-anchor="middle">-1uc</text>
+    <text x="368" y="478" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">x̄</text>
+    <text x="460" y="478" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0369a1" text-anchor="middle">+1uc</text>
+    <text x="552" y="478" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#15803d" text-anchor="middle">+2uc</text>
+    <text x="644" y="478" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#b91c1c" text-anchor="middle">+3uc</text>
+
+    <!-- Percentage Callout Labels -->
+    <text x="368" y="346" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="800" fill="#0369a1" text-anchor="middle">68.3% (k=1)</text>
+    <text x="368" y="390" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#15803d" text-anchor="middle">95.4% (k=2 Standard)</text>
+    <text x="368" y="430" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#b91c1c" text-anchor="middle">99.7% (k=3 Safety-Critical)</text>
+
+    <!-- Bottom Legend Cards -->
+    <rect x="28" y="514" width="680" height="154" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+    <text x="48" y="550" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#0f172a">How to Report Experimental Results (ISO GUM):</text>
+    <text x="48" y="586" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">1. State Mean ± Expanded Uncertainty with units (150.00 ± 0.53 °C).</text>
+    <text x="48" y="620" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">2. Always include coverage factor (k = 2) and confidence (~95%).</text>
+    <text x="48" y="654" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#15803d">True furnace temperature lies in [149.47 °C, 150.53 °C] with 95% confidence.</text>
+  </g>
+</svg>`
+  },
+
+  fig7b: {
+    id: "fig7b",
+    filename: "fig7b_hydraulic_pneumatic_safety.svg",
+    title: "Figure 7B: Hydraulic & Pneumatic Instrumentation Safety Controls",
+    description: "Safe instrumentation practices for pressurized fluid systems: hydraulic bleed-down valves, PRVs, fluid-injection prevention, pneumatic hose whip-check restraints, and 3-valve ΔP manifold equalization.",
+    topicRef: "1.7 Safety Considerations During Instrumentation",
+    svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" font-family="'Times New Roman', Times, 'Liberation Serif', serif">
+  <defs>
+    <marker id="arr7bFlow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
+    </marker>
+    <marker id="arr7bRed" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626"/>
+    </marker>
+  </defs>
+
+  <!-- Clean Canvas -->
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <rect x="28" y="28" width="1544" height="844" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <text x="64" y="82" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="31" font-weight="800" fill="#0f172a">Fluid Power Safety: Hydraulic &amp; Pneumatic Instrumentation</text>
+  <text x="64" y="118" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="500" fill="#334155">Preventing high-pressure fluid injection, trapped accumulator energy, hose whip, and ΔP rupture</text>
+
+  <!-- LEFT PANEL: HYDRAULIC SAFETY -->
+  <g transform="translate(64, 148)">
+    <rect width="718" height="694" rx="14" fill="#ffffff" stroke="#dc2626" stroke-width="2"/>
+    <rect x="0" y="0" width="718" height="58" rx="14" fill="#fee2e2"/>
+    <text x="26" y="38" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="24" font-weight="800" fill="#b91c1c">1. Hydraulic Safety (High Pressure: 70–350 bar)</text>
+
+    <!-- Hydraulic Schematic Box -->
+    <rect x="28" y="78" width="662" height="304" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+
+    <!-- Pump & Isolation LOTO Valve -->
+    <rect x="48" y="146" width="128" height="74" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+    <text x="112" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#0369a1" text-anchor="middle">Hydraulic</text>
+    <text x="112" y="206" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0369a1" text-anchor="middle">Line / Pump</text>
+
+    <line x1="176" y1="183" x2="232" y2="183" stroke="#0f172a" stroke-width="4"/>
+    <rect x="232" y="153" width="112" height="60" rx="8" fill="#fffbeb" stroke="#d97706" stroke-width="2.5"/>
+    <text x="288" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#b45309" text-anchor="middle">LOTO</text>
+    <text x="288" y="204" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#b45309" text-anchor="middle">Shutoff</text>
+
+    <line x1="344" y1="183" x2="438" y2="183" stroke="#0f172a" stroke-width="4"/>
+
+    <!-- Snubber + Zero-Verified Gauge -->
+    <line x1="410" y1="183" x2="410" y2="132" stroke="#0f172a" stroke-width="3"/>
+    <circle cx="410" cy="112" r="22" fill="#dcfce7" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="410" y="119" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#15803d" text-anchor="middle">0</text>
+    <text x="444" y="112" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#15803d">Gauge + Snubber</text>
+    <text x="444" y="136" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155">(Verify 0 bar!)</text>
+
+    <!-- Pressure Sensor Under Service -->
+    <rect x="438" y="153" width="150" height="60" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+    <text x="513" y="180" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#15803d" text-anchor="middle">Pressure</text>
+    <text x="513" y="204" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#15803d" text-anchor="middle">Transducer</text>
+
+    <!-- Bleed Valve + PRV to Tank -->
+    <line x1="392" y1="183" x2="392" y2="274" stroke="#0284c7" stroke-width="3.5" marker-end="url(#arr7bFlow)"/>
+    <rect x="292" y="278" width="204" height="58" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+    <text x="394" y="304" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#0369a1" text-anchor="middle">Bleed Valve &amp; PRV</text>
+    <text x="394" y="328" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b" text-anchor="middle">Drain safely to tank</text>
+
+    <!-- Accumulator Danger Callout -->
+    <rect x="48" y="258" width="218" height="104" rx="8" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+    <text x="157" y="288" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#dc2626" text-anchor="middle">Accumulator Trap!</text>
+    <text x="157" y="316" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b" text-anchor="middle">Holds energy even</text>
+    <text x="157" y="342" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b" text-anchor="middle">with pump OFF</text>
+
+    <!-- Hydraulic Rules List -->
+    <rect x="28" y="402" width="662" height="266" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5"/>
+    <text x="48" y="438" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#b91c1c">Mandatory Hydraulic Safety Rules:</text>
+    <text x="48" y="476" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">1. <tspan font-weight="700" fill="#dc2626">Fluid Injection Hazard:</tspan> Pinhole jets (&gt;70 bar) pierce skin.</text>
+    <text x="70" y="504" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155">Inspect leaks with cardboard or wood — NEVER bare hands!</text>
+    <text x="48" y="544" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">2. <tspan font-weight="700">Depressurize &amp; LOTO:</tspan> Bleed accumulators &amp; confirm 0 bar</text>
+    <text x="70" y="572" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155">on a working gauge before loosening any sensor fitting.</text>
+    <text x="48" y="612" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">3. <tspan font-weight="700">Snubbers &amp; PPE:</tspan> Fit snubbers for water-hammer spikes;</text>
+    <text x="70" y="640" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155">wear safety glasses &amp; gloves against hot hydraulic oil.</text>
+  </g>
+
+  <!-- RIGHT PANEL: PNEUMATIC & MANIFOLD SAFETY -->
+  <g transform="translate(814, 148)">
+    <rect width="722" height="694" rx="14" fill="#ffffff" stroke="#0284c7" stroke-width="2"/>
+    <rect x="0" y="0" width="722" height="58" rx="14" fill="#e0f2fe"/>
+    <text x="26" y="38" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="24" font-weight="800" fill="#0369a1">2. Pneumatic &amp; ΔP Manifold Safety (2–10 bar)</text>
+
+    <!-- Pneumatic Schematic Box -->
+    <rect x="28" y="78" width="666" height="304" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+
+    <!-- FRL + Lockout Dump Valve -->
+    <rect x="46" y="138" width="166" height="84" rx="8" fill="#f0fdf4" stroke="#16a34a" stroke-width="2"/>
+    <text x="129" y="172" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#15803d" text-anchor="middle">FRL + Lockout</text>
+    <text x="129" y="200" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#15803d" text-anchor="middle">Dump Valve</text>
+
+    <!-- Air Hose & Whip-Check Restraint -->
+    <line x1="212" y1="180" x2="366" y2="180" stroke="#0284c7" stroke-width="5"/>
+    <!-- Whip-check safety cable loop -->
+    <path d="M 228 180 C 242 128, 336 128, 350 180" fill="none" stroke="#d97706" stroke-width="3.5" stroke-dasharray="6,4"/>
+    <text x="289" y="114" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#b45309" text-anchor="middle">Whip-Check Cable</text>
+    <text x="289" y="218" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155" text-anchor="middle">Hose Coupling</text>
+
+    <!-- 3-Valve Manifold + DP Transmitter -->
+    <rect x="366" y="106" width="306" height="162" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+    <text x="519" y="138" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="800" fill="#b45309" text-anchor="middle">3-Valve ΔP Manifold</text>
+    <rect x="390" y="156" width="84" height="44" rx="6" fill="#ffffff" stroke="#0f172a" stroke-width="1.8"/>
+    <text x="432" y="185" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">HP</text>
+    <rect x="486" y="156" width="84" height="44" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <text x="528" y="185" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#15803d" text-anchor="middle">EQ</text>
+    <rect x="582" y="156" width="76" height="44" rx="6" fill="#ffffff" stroke="#0f172a" stroke-width="1.8"/>
+    <text x="620" y="185" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">LP</text>
+    <text x="519" y="232" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#15803d" text-anchor="middle">Open EQ first to protect</text>
+    <text x="519" y="256" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155" text-anchor="middle">sensitive ΔP diaphragm!</text>
+
+    <!-- Venting Warning Note -->
+    <rect x="46" y="286" width="626" height="74" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5"/>
+    <text x="359" y="318" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#0369a1" text-anchor="middle">Compressed Air = Stored Spring Energy (Expands Violently)</text>
+    <text x="359" y="346" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b" text-anchor="middle">Always close supply and vent downstream lines before uncoupling.</text>
+
+    <!-- Pneumatic Rules List -->
+    <rect x="28" y="402" width="666" height="266" rx="10" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1.5"/>
+    <text x="48" y="438" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#0369a1">Mandatory Pneumatic Safety Rules:</text>
+    <text x="48" y="476" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">1. <tspan font-weight="700" fill="#b45309">Hose Whip Restraint:</tspan> Secure couplings with steel whip-checks</text>
+    <text x="70" y="504" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155">so a failed fitting cannot flail across the laboratory.</text>
+    <text x="48" y="544" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">2. <tspan font-weight="700" fill="#dc2626">Air Embolism &amp; Eye Limit:</tspan> Never direct compressed air onto</text>
+    <text x="70" y="572" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155">skin or clean clothes; keep nozzles &lt; 2 bar (30 psi) dead-ended.</text>
+    <text x="48" y="612" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">3. <tspan font-weight="700">ΔP Manifold Sequencing &amp; Hearing PPE:</tspan> Equalize manifold</text>
+    <text x="70" y="640" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155">valves before isolating; wear eye + ear protection when venting.</text>
+  </g>
+</svg>`
+  },
+
+  fig6b: {
+    id: "fig6b",
+    filename: "fig6b_meter_loading_circuits.svg",
+    title: "Figure 6B: Circuit Diagrams — Voltmeter & Ammeter Loading Effects",
+    description: "Equivalent circuit schematics illustrating parallel voltmeter loading (Rm forming a voltage divider with Rs) and series ammeter insertion loading (Ra adding to Rload).",
+    topicRef: "1.6 Intrusive vs. Non-Intrusive Sensing",
+    svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" font-family="'Times New Roman', Times, 'Liberation Serif', serif">
+  <defs>
+    <marker id="arr6bRed" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#dc2626"/>
+    </marker>
+    <marker id="arr6bBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#0284c7"/>
+    </marker>
+  </defs>
+
+  <!-- Clean Canvas -->
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <rect x="28" y="28" width="1544" height="844" rx="16" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <text x="64" y="82" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="31" font-weight="800" fill="#0f172a">Electrical Loading Effect: Voltmeter &amp; Ammeter Circuit Diagrams</text>
+  <text x="64" y="118" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="500" fill="#334155">How finite parallel voltmeter resistance (Rm) and series ammeter resistance (Ra) alter circuit readings</text>
+
+  <!-- ========================================================= -->
+  <!-- LEFT PANEL: VOLTMETER LOADING EFFECT (PARALLEL Rm)         -->
+  <!-- ========================================================= -->
+  <g transform="translate(64, 148)">
+    <rect width="718" height="694" rx="14" fill="#ffffff" stroke="#0284c7" stroke-width="2"/>
+    <rect x="0" y="0" width="718" height="58" rx="14" fill="#e0f2fe"/>
+    <text x="26" y="38" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="24" font-weight="800" fill="#0369a1">1. Voltmeter Loading Effect (Parallel Meter Rm)</text>
+
+    <!-- Schematic Frame -->
+    <rect x="24" y="76" width="670" height="338" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+
+    <!-- Dashed Enclosure: Circuit Under Test (Thevenin) -->
+    <rect x="44" y="92" width="338" height="304" rx="10" fill="#ffffff" stroke="#64748b" stroke-width="2" stroke-dasharray="8,6"/>
+    <text x="213" y="118" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#334155" text-anchor="middle">Circuit Under Test (Thevenin)</text>
+
+    <!-- Dashed Enclosure: Real Voltmeter -->
+    <rect x="424" y="92" width="250" height="304" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="2" stroke-dasharray="8,6"/>
+    <text x="549" y="118" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#b45309" text-anchor="middle">Real Voltmeter</text>
+
+    <!-- Main Circuit Wires -->
+    <!-- Left Vertical Wire + DC Source Vth -->
+    <line x1="104" y1="164" x2="104" y2="212" stroke="#0f172a" stroke-width="3.2"/>
+    <line x1="104" y1="284" x2="104" y2="344" stroke="#0f172a" stroke-width="3.2"/>
+    <circle cx="104" cy="248" r="36" fill="#e0f2fe" stroke="#0284c7" stroke-width="3"/>
+    <text x="104" y="236" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#0369a1" text-anchor="middle">+</text>
+    <text x="104" y="270" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="24" font-weight="800" fill="#0369a1" text-anchor="middle">−</text>
+    <text x="104" y="376" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Vth = 10 V</text>
+
+    <!-- Top Wire into Rs -->
+    <line x1="104" y1="164" x2="188" y2="164" stroke="#0f172a" stroke-width="3.2"/>
+    <!-- Zigzag Resistor Rs (188 to 296) -->
+    <polyline points="188,164 197,148 215,180 233,148 251,180 269,148 287,180 296,164"
+              fill="none" stroke="#dc2626" stroke-width="3.5" stroke-linejoin="round"/>
+    <text x="242" y="140" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#dc2626" text-anchor="middle">Rs = 100 kΩ</text>
+
+    <!-- Wire out of Rs to Terminal (+) & Voltmeter -->
+    <line x1="296" y1="164" x2="549" y2="164" stroke="#0f172a" stroke-width="3.2"/>
+    <!-- Current Arrow Im -->
+    <line x1="330" y1="190" x2="410" y2="190" stroke="#dc2626" stroke-width="3" marker-end="url(#arr6bRed)"/>
+    <text x="370" y="216" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#dc2626" text-anchor="middle">Im</text>
+
+    <!-- Terminal Dots -->
+    <circle cx="382" cy="164" r="6" fill="#0f172a"/>
+    <circle cx="382" cy="344" r="6" fill="#0f172a"/>
+    <text x="382" y="250" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#475569" text-anchor="middle">Vm</text>
+    <text x="382" y="276" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#dc2626" text-anchor="middle">5.0 V</text>
+
+    <!-- Voltmeter Branch: Meter Circle V + Internal Resistance Rm -->
+    <line x1="484" y1="164" x2="484" y2="210" stroke="#0f172a" stroke-width="3.2"/>
+    <circle cx="484" cy="246" r="36" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+    <text x="484" y="254" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="26" font-weight="800" fill="#b45309" text-anchor="middle">V</text>
+    <line x1="484" y1="282" x2="484" y2="344" stroke="#0f172a" stroke-width="3.2"/>
+
+    <!-- Parallel Internal Resistance Rm inside Voltmeter box -->
+    <line x1="484" y1="164" x2="578" y2="164" stroke="#0f172a" stroke-width="3.2"/>
+    <line x1="578" y1="164" x2="578" y2="196" stroke="#0f172a" stroke-width="3.2"/>
+    <polyline points="578,196 564,205 592,223 564,241 592,259 564,277 592,295 578,304"
+              fill="none" stroke="#d97706" stroke-width="3.5" stroke-linejoin="round"/>
+    <line x1="578" y1="304" x2="578" y2="344" stroke="#0f172a" stroke-width="3.2"/>
+    <text x="614" y="246" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#b45309">Rm</text>
+    <text x="614" y="272" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#b45309">100 kΩ</text>
+
+    <!-- Bottom Return Wire -->
+    <line x1="104" y1="344" x2="578" y2="344" stroke="#0f172a" stroke-width="3.2"/>
+    <text x="242" y="376" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#dc2626" text-anchor="middle">Drop across Rs = Im · Rs</text>
+
+    <!-- Bottom Formula & Rule Card -->
+    <rect x="24" y="432" width="670" height="238" rx="10" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1.5"/>
+    <text x="44" y="468" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#0369a1">Voltage Divider Attenuation &amp; Golden Rule:</text>
+    <text x="44" y="506" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#0f172a">• Meter Current:  Im = Vth / (Rs + Rm)</text>
+    <text x="44" y="544" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#0f172a">• Measured Voltage:  Vm = Vth × [ Rm / (Rs + Rm) ]</text>
+    <text x="44" y="582" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#dc2626" font-weight="700">• Ex: Rs = Rm = 100 kΩ → Vm drops to 5.00 V (-50% error!)</text>
+    <text x="44" y="632" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="800" fill="#15803d">★ Design Rule: Ensure Rm ≫ Rs (Rm ≥ 100·Rs for &lt;1% error)</text>
+  </g>
+
+  <!-- ========================================================= -->
+  <!-- RIGHT PANEL: AMMETER LOADING EFFECT (SERIES Ra)           -->
+  <!-- ========================================================= -->
+  <g transform="translate(818, 148)">
+    <rect width="718" height="694" rx="14" fill="#ffffff" stroke="#d97706" stroke-width="2"/>
+    <rect x="0" y="0" width="718" height="58" rx="14" fill="#fef3c7"/>
+    <text x="26" y="38" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="24" font-weight="800" fill="#b45309">2. Ammeter Loading Effect (Series Meter Ra)</text>
+
+    <!-- Schematic Frame -->
+    <rect x="24" y="76" width="670" height="338" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+
+    <!-- Dashed Enclosure: Real Ammeter Inserted in Series -->
+    <rect x="192" y="92" width="270" height="148" rx="10" fill="#fffbeb" stroke="#d97706" stroke-width="2" stroke-dasharray="8,6"/>
+    <text x="327" y="118" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#b45309" text-anchor="middle">Ammeter (Series Insertion)</text>
+
+    <!-- DC Voltage Source Vs -->
+    <line x1="104" y1="168" x2="104" y2="212" stroke="#0f172a" stroke-width="3.2"/>
+    <line x1="104" y1="284" x2="104" y2="344" stroke="#0f172a" stroke-width="3.2"/>
+    <circle cx="104" cy="248" r="36" fill="#e0f2fe" stroke="#0284c7" stroke-width="3"/>
+    <text x="104" y="236" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#0369a1" text-anchor="middle">+</text>
+    <text x="104" y="270" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="24" font-weight="800" fill="#0369a1" text-anchor="middle">−</text>
+    <text x="104" y="376" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#0f172a" text-anchor="middle">Vs = 10 V</text>
+
+    <!-- Top Wire to Ammeter Circle A -->
+    <line x1="104" y1="168" x2="214" y2="168" stroke="#0f172a" stroke-width="3.2"/>
+    <circle cx="246" cy="168" r="32" fill="#fef3c7" stroke="#d97706" stroke-width="3"/>
+    <text x="246" y="176" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="25" font-weight="800" fill="#b45309" text-anchor="middle">A</text>
+
+    <!-- Wire between A and Shunt Resistance Ra -->
+    <line x1="278" y1="168" x2="314" y2="168" stroke="#0f172a" stroke-width="3.2"/>
+    <!-- Zigzag Resistor Ra (314 to 422) -->
+    <polyline points="314,168 323,152 341,184 359,152 377,184 395,152 413,184 422,168"
+              fill="none" stroke="#dc2626" stroke-width="3.5" stroke-linejoin="round"/>
+    <text x="368" y="216" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#dc2626" text-anchor="middle">Ra = 20 Ω</text>
+
+    <!-- Wire to Load Resistor -->
+    <line x1="422" y1="168" x2="548" y2="168" stroke="#0f172a" stroke-width="3.2"/>
+
+    <!-- Current Flow Arrow Imeas -->
+    <line x1="472" y1="142" x2="544" y2="142" stroke="#dc2626" stroke-width="3" marker-end="url(#arr6bRed)"/>
+    <text x="512" y="128" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#dc2626" text-anchor="middle">Imeas = 83.3 mA</text>
+
+    <!-- Load Resistor Branch -->
+    <line x1="548" y1="168" x2="548" y2="202" stroke="#0f172a" stroke-width="3.2"/>
+    <polyline points="548,202 532,211 564,229 532,247 564,265 532,283 564,301 548,310"
+              fill="none" stroke="#0284c7" stroke-width="3.5" stroke-linejoin="round"/>
+    <line x1="548" y1="310" x2="548" y2="344" stroke="#0f172a" stroke-width="3.2"/>
+    <text x="614" y="250" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#0369a1" text-anchor="middle">Rload</text>
+    <text x="614" y="276" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0369a1" text-anchor="middle">100 Ω</text>
+
+    <!-- Bottom Return Wire -->
+    <line x1="104" y1="344" x2="548" y2="344" stroke="#0f172a" stroke-width="3.2"/>
+    <text x="327" y="376" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#334155" text-anchor="middle">Without ammeter: Itrue = 10 V / 100 Ω = 100 mA</text>
+
+    <!-- Bottom Formula & Rule Card -->
+    <rect x="24" y="432" width="670" height="238" rx="10" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+    <text x="44" y="468" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="800" fill="#b45309">Series Insertion Loss &amp; Golden Rule:</text>
+    <text x="44" y="506" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#0f172a">• Undisturbed True Current:  Itrue = Vs / Rload</text>
+    <text x="44" y="544" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#0f172a">• Measured Current:  Imeas = Vs / (Rload + Ra)</text>
+    <text x="44" y="582" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#dc2626" font-weight="700">• Ex: Rload = 100 Ω, Ra = 20 Ω → Imeas drops to 83.3 mA (-16.7%)</text>
+    <text x="44" y="632" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="800" fill="#15803d">★ Design Rule: Ensure Ra ≪ Rload (Ra → 0 Ω ideal)</text>
+  </g>
+</svg>`
   }
 };

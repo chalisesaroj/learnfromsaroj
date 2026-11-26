@@ -350,10 +350,16 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
   const [showMobileActions, setShowMobileActions] = useState(false);
 
   const handleDownloadPptx = async () => {
-    if (chapter.id === 'unit1') {
+    const staticPptxFiles: Record<string, string> = {
+      unit1: 'Unit1_Fundamentals_of_Measurement_Systems.pptx',
+      unit2: 'Unit2_Digital_Signal_Processing.pptx',
+      unit3: 'Unit3_Strain_Gauges.pptx',
+    };
+    const staticFile = staticPptxFiles[chapter.id];
+    if (staticFile) {
       const link = document.createElement('a');
-      link.href = 'Unit1_Fundamentals_of_Measurement_Systems.pptx';
-      link.download = 'Unit1_Fundamentals_of_Measurement_Systems.pptx';
+      link.href = staticFile;
+      link.download = staticFile;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -1505,7 +1511,7 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
               {currentSlide.type === 'section-divider' && (
                 <div className="text-center my-auto space-y-4 md:space-y-6 max-w-5xl mx-auto">
                   <span className="text-sm sm:text-lg md:text-[22px] uppercase tracking-widest text-blue-600 dark:text-blue-400 font-bold block">
-                    Unit I Section Divider
+                    {chapter.unitNumber} Section Divider
                   </span>
                   <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-tight">
                     {currentSlide.title}
@@ -1986,17 +1992,17 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                             )}
                           </div>
                           <p className="text-sm sm:text-base md:text-lg text-slate-700 dark:text-slate-300 leading-relaxed">
-                            {typeItem.description}
+                            <FormattedMathText text={typeItem.description} />
                           </p>
                         </div>
                         <div className="space-y-2 md:space-y-2.5 pt-2.5 md:pt-3 border-t border-slate-200/60 dark:border-slate-800">
                           <div className="text-sm md:text-base">
                             <span className="font-semibold text-slate-900 dark:text-white">Key Mechanism: </span>
-                            <span className="text-slate-700 dark:text-slate-300">{typeItem.keyFeature}</span>
+                            <span className="text-slate-700 dark:text-slate-300"><FormattedMathText text={typeItem.keyFeature} /></span>
                           </div>
                           <div className="text-sm md:text-base">
                             <span className="font-semibold text-indigo-600 dark:text-indigo-400">Examples: </span>
-                            <span className="text-slate-700 dark:text-slate-300">{typeItem.example}</span>
+                            <span className="text-slate-700 dark:text-slate-300"><FormattedMathText text={typeItem.example} /></span>
                           </div>
                         </div>
                       </div>
@@ -2059,6 +2065,87 @@ export const PresentationViewer: React.FC<PresentationViewerProps> = ({
                     <div className="p-3.5 sm:p-4 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-sm sm:text-base md:text-lg text-slate-800 dark:text-slate-200">
                       <strong className="text-indigo-600 dark:text-indigo-400 mr-2">Engineering Verdict:</strong>
                       {currentSlide.prosCons.engineeringVerdict}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* 9B. Structured Comparison / Difference Table Slide */}
+              {(currentSlide.type === 'comparison-table' || currentSlide.comparisonTable) && currentSlide.comparisonTable && (
+                <div className="space-y-3 md:space-y-4 max-w-6xl mx-auto my-auto w-full">
+                  <h2 className="text-xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 dark:text-white border-b pb-2 md:pb-3 border-slate-200/50 dark:border-slate-800/40 tracking-tight">
+                    {currentSlide.title}
+                  </h2>
+                  <div className="overflow-x-auto rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-slate-950">
+                    <table className="w-full text-left border-collapse">
+                      <thead>
+                        <tr className="bg-slate-900 dark:bg-slate-800 text-white">
+                          {currentSlide.comparisonTable.headers.map((header, idx) => {
+                            const colCount = currentSlide.comparisonTable!.headers.length;
+                            const isFourCol = colCount === 4;
+                            const headerBg =
+                              idx === 0
+                                ? 'bg-slate-900 dark:bg-slate-800'
+                                : idx === colCount - 1
+                                ? 'bg-emerald-950/90 text-emerald-100'
+                                : idx === 1 && !isFourCol
+                                ? 'bg-rose-950/90 text-rose-100'
+                                : 'bg-indigo-950/90 text-indigo-100';
+                            const colWidth = isFourCol
+                              ? idx === 0
+                                ? 'w-[17%]'
+                                : idx === 1
+                                ? 'w-[28%]'
+                                : idx === 2
+                                ? 'w-[26%]'
+                                : 'w-[29%]'
+                              : idx === 0
+                              ? 'w-[22%]'
+                              : 'w-[39%]';
+                            return (
+                              <th
+                                key={idx}
+                                className={`px-3 py-2.5 md:px-4 md:py-3 text-xs sm:text-sm md:text-base font-extrabold tracking-wide border-b border-slate-700 ${colWidth} ${headerBg}`}
+                              >
+                                <FormattedMathText text={header} />
+                              </th>
+                            );
+                          })}
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-200 dark:divide-slate-800">
+                        {currentSlide.comparisonTable.rows.map((row, rIdx) => (
+                          <tr
+                            key={rIdx}
+                            className={
+                              rIdx % 2 === 0
+                                ? 'bg-white dark:bg-slate-950'
+                                : 'bg-slate-50/80 dark:bg-slate-900/50'
+                            }
+                          >
+                            {row.map((cell, cIdx) => (
+                              <td
+                                key={cIdx}
+                                className={`px-3 py-2 md:px-4 md:py-2.5 text-xs sm:text-sm md:text-[16px] leading-snug align-top ${
+                                  cIdx === 0
+                                    ? 'font-bold text-slate-900 dark:text-white border-r border-slate-200 dark:border-slate-800'
+                                    : cIdx < row.length - 1
+                                    ? 'text-slate-800 dark:text-slate-200 border-r border-slate-200 dark:border-slate-800'
+                                    : 'text-slate-800 dark:text-slate-200'
+                                }`}
+                              >
+                                <FormattedMathText text={cell} />
+                              </td>
+                            ))}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                  {currentSlide.comparisonTable.verdict && (
+                    <div className="p-3 sm:p-3.5 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-xs sm:text-sm md:text-base text-slate-800 dark:text-slate-200">
+                      <strong className="text-indigo-700 dark:text-indigo-400 mr-2">Selection Rule:</strong>
+                      <FormattedMathText text={currentSlide.comparisonTable.verdict} />
                     </div>
                   )}
                 </div>

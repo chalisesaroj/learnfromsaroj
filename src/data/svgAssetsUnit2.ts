@@ -2677,6 +2677,411 @@ export const SVG_FIGURES_UNIT2: Record<string, SvgAsset> = {
     </g>
   </g>
 </svg>`
+  },
+
+  u2_fig_analog_filters: {
+    id: "u2_fig_analog_filters",
+    filename: "u2_fig3c_analog_filter_comparison.svg",
+    title: "Figure 2.3C: Analog Anti-Aliasing Filters — Butterworth vs. Chebyshev vs. Bessel",
+    description: "Comparison of magnitude rolloff |H(f)| and step/pulse time-domain phase response across Butterworth, Chebyshev Type I, and Bessel analog filter families.",
+    topicRef: "2.3 Signal Conditioning",
+    svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" font-family="'Times New Roman', Times, 'Liberation Serif', serif">
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <!-- Title Banner -->
+  <rect x="35" y="40" width="1530" height="65" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2"/>
+  <text x="65" y="81" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="26" font-weight="700" fill="#0f172a">
+    Figure 2.3C: Analog Filter Families · Butterworth vs. Chebyshev vs. Bessel
+  </text>
+  <text x="1535" y="81" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#1e40af" text-anchor="end">
+    Unit II · Section 2.3
+  </text>
+
+  <!-- Left Panel: Frequency Magnitude Response |H(f)| -->
+  <g transform="translate(35, 125)">
+    <rect width="745" height="480" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <rect width="745" height="54" rx="10" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+    <text x="25" y="36" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e40af">
+      A. Magnitude Rolloff |H(f)| (Steepness vs. Passband Ripple)
+    </text>
+
+    <g transform="translate(25, 72)">
+      <rect width="695" height="385" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+      <line x1="95" y1="320" x2="660" y2="320" stroke="#0f172a" stroke-width="2.5"/>
+      <line x1="95" y1="35" x2="95" y2="320" stroke="#0f172a" stroke-width="2.5"/>
+
+      <!-- Cutoff marker fc -->
+      <line x1="285" y1="45" x2="285" y2="320" stroke="#64748b" stroke-width="1.8" stroke-dasharray="6,4"/>
+      <line x1="95" y1="85" x2="650" y2="85" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4"/>
+      <line x1="95" y1="120" x2="650" y2="120" stroke="#cbd5e1" stroke-width="1.2" stroke-dasharray="4,4"/>
+
+      <text x="84" y="92" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="end">0 dB</text>
+      <text x="84" y="128" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#b91c1c" text-anchor="end">-3 dB</text>
+      <text x="84" y="295" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="600" fill="#334155" text-anchor="end">-60 dB</text>
+      <text x="285" y="355" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#0f172a" text-anchor="middle">Cutoff fc</text>
+      <text x="580" y="355" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#0f172a" text-anchor="middle">Frequency f →</text>
+
+      <!-- Chebyshev (Red): Passband ripple + steepest drop -->
+      <path d="M 95 85 Q 130 62, 165 85 T 235 85 Q 262 64, 285 110 L 395 298 L 620 315"
+            fill="none" stroke="#dc2626" stroke-width="3.8"/>
+
+      <!-- Butterworth (Blue): Flat passband + medium steep drop -->
+      <path d="M 95 85 L 220 86 Q 268 88, 285 120 Q 350 220, 490 298 L 635 314"
+            fill="none" stroke="#2563eb" stroke-width="4"/>
+
+      <!-- Bessel (Green): Gentle gradual drop -->
+      <path d="M 95 85 Q 190 92, 285 135 Q 410 205, 635 288"
+            fill="none" stroke="#059669" stroke-width="3.8" stroke-dasharray="10,4"/>
+
+      <!-- Legend Box -->
+      <rect x="390" y="32" width="285" height="122" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+      <line x1="408" y1="60" x2="450" y2="60" stroke="#2563eb" stroke-width="4"/>
+      <text x="462" y="67" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e40af">Butterworth (Flat)</text>
+      <line x1="408" y1="96" x2="450" y2="96" stroke="#dc2626" stroke-width="4"/>
+      <text x="462" y="103" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#b91c1c">Chebyshev (Steep)</text>
+      <line x1="408" y1="132" x2="450" y2="132" stroke="#059669" stroke-width="4" stroke-dasharray="8,3"/>
+      <text x="462" y="139" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#15803d">Bessel (Gradual)</text>
+    </g>
+  </g>
+
+  <!-- Right Panel: Time-Domain Pulse/Step Response -->
+  <g transform="translate(820, 125)">
+    <rect width="745" height="480" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <rect width="745" height="54" rx="10" fill="#dcfce7" stroke="#bbf7d0" stroke-width="1"/>
+    <text x="25" y="36" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#15803d">
+      B. Step Response (Phase Linearity &amp; Pulse Ringing)
+    </text>
+
+    <g transform="translate(25, 72)">
+      <rect width="695" height="385" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+      <line x1="80" y1="315" x2="660" y2="315" stroke="#0f172a" stroke-width="2.5"/>
+      <line x1="80" y1="35" x2="80" y2="315" stroke="#0f172a" stroke-width="2.5"/>
+
+      <!-- Ideal step reference -->
+      <path d="M 80 315 L 175 315 L 175 145 L 650 145" fill="none" stroke="#94a3b8" stroke-width="2.2" stroke-dasharray="6,4"/>
+      <text x="645" y="132" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#475569" text-anchor="end">Ideal Step Input (1.0)</text>
+
+      <!-- Chebyshev: Large overshoot and persistent ringing -->
+      <path d="M 80 315 L 175 315 Q 225 50, 265 190 Q 305 90, 345 170 Q 385 120, 425 158 Q 465 135, 515 148 L 650 145"
+            fill="none" stroke="#dc2626" stroke-width="3.5"/>
+
+      <!-- Butterworth: Moderate overshoot -->
+      <path d="M 80 315 L 175 315 Q 235 98, 290 158 Q 345 136, 405 147 L 650 145"
+            fill="none" stroke="#2563eb" stroke-width="3.8"/>
+
+      <!-- Bessel: Clean, near-zero overshoot -->
+      <path d="M 80 315 L 175 315 Q 250 142, 330 145 L 650 145"
+            fill="none" stroke="#059669" stroke-width="4.2"/>
+
+      <text x="245" y="54" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#b91c1c">Chebyshev Ringing (~25%)</text>
+      <text x="355" y="218" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#15803d">Bessel: Zero Ringing (Linear Phase)</text>
+      <text x="370" y="355" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#0f172a" text-anchor="middle">Time t →</text>
+    </g>
+  </g>
+
+  <!-- Bottom Decision Matrix Cards -->
+  <g transform="translate(35, 625)">
+    <rect width="1530" height="235" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <text x="30" y="38" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="23" font-weight="700" fill="#0f172a">
+      Engineering Selection Guide: Choosing the Right Hardware Anti-Aliasing Filter
+    </text>
+
+    <g transform="translate(30, 56)">
+      <rect width="474" height="160" rx="8" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.2"/>
+      <text x="20" y="34" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#1e40af">1. Butterworth (General DAQ)</text>
+      <text x="20" y="70" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="600" fill="#0f172a">• Maximally flat 0 dB passband</text>
+      <text x="20" y="102" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155">• Best for steady FFT vibration</text>
+      <text x="20" y="136" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e40af">Default choice for AC/spectral work</text>
+    </g>
+
+    <g transform="translate(528, 56)">
+      <rect width="474" height="160" rx="8" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.2"/>
+      <text x="20" y="34" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#b91c1c">2. Chebyshev (Tight Guard Band)</text>
+      <text x="20" y="70" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="600" fill="#0f172a">• Steepest cliff near cutoff fc</text>
+      <text x="20" y="102" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155">• Trades ±0.5 dB passband ripple</text>
+      <text x="20" y="136" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#b91c1c">Avoid on sharp impact pulses</text>
+    </g>
+
+    <g transform="translate(1026, 56)">
+      <rect width="474" height="160" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.2"/>
+      <text x="20" y="34" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#15803d">3. Bessel (Transient / Pulses)</text>
+      <text x="20" y="70" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="600" fill="#0f172a">• Constant group delay (no skew)</text>
+      <text x="20" y="102" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#334155">• Preserves square edges &amp; ECG peaks</text>
+      <text x="20" y="136" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#15803d">Needs higher fs (gentle rolloff)</text>
+    </g>
+  </g>
+</svg>`
+  },
+
+  u2_fig_convolution_correlation: {
+    id: "u2_fig_convolution_correlation",
+    filename: "u2_fig4a_convolution_and_correlation.svg",
+    title: "Figure 2.4A: Time-Domain Processing — Discrete Convolution & Cross-Correlation",
+    description: "Visual step-by-step trace of discrete convolution x[n] * h[n] sliding overlap mechanics and cross-correlation R_xy[l] echo delay detection in noisy signals.",
+    topicRef: "2.4 Signal Processing Techniques",
+    svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" font-family="'Times New Roman', Times, 'Liberation Serif', serif">
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <!-- Title Banner -->
+  <rect x="35" y="40" width="1530" height="65" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2"/>
+  <text x="65" y="81" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="26" font-weight="700" fill="#0f172a">
+    Figure 2.4A: Time-Domain DSP · Discrete Convolution &amp; Cross-Correlation
+  </text>
+  <text x="1535" y="81" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#1e40af" text-anchor="end">
+    Unit II · Section 2.4
+  </text>
+
+  <!-- Left Panel: Discrete Convolution Mechanics -->
+  <g transform="translate(35, 125)">
+    <rect width="745" height="735" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <rect width="745" height="54" rx="10" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+    <text x="25" y="36" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e40af">
+      A. Convolution y[n] = x[n] * h[n] (Flip, Shift, Multiply, Add)
+    </text>
+
+    <!-- Input x[n] and Kernel h[n] -->
+    <g transform="translate(25, 72)">
+      <rect width="695" height="195" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+      <!-- x[n] = {1, 2, 3} -->
+      <text x="25" y="34" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e40af">Input Signal x[n] = {1, 2, 3}</text>
+      <line x1="45" y1="150" x2="320" y2="150" stroke="#0f172a" stroke-width="2"/>
+      <line x1="90" y1="150" x2="90" y2="122" stroke="#2563eb" stroke-width="4"/><circle cx="90" cy="122" r="6" fill="#2563eb"/>
+      <line x1="175" y1="150" x2="175" y2="94" stroke="#2563eb" stroke-width="4"/><circle cx="175" cy="94" r="6" fill="#2563eb"/>
+      <line x1="260" y1="150" x2="260" y2="66" stroke="#2563eb" stroke-width="4"/><circle cx="260" cy="66" r="6" fill="#2563eb"/>
+      <text x="90" y="176" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">1</text>
+      <text x="175" y="176" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">2</text>
+      <text x="260" y="176" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">3</text>
+
+      <!-- h[n] = {0.5, 0.5} -->
+      <text x="385" y="34" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#b45309">Filter h[n] = {0.5, 0.5}</text>
+      <line x1="400" y1="150" x2="660" y2="150" stroke="#0f172a" stroke-width="2"/>
+      <line x1="470" y1="150" x2="470" y2="105" stroke="#d97706" stroke-width="4"/><circle cx="470" cy="105" r="6" fill="#d97706"/>
+      <line x1="560" y1="150" x2="560" y2="105" stroke="#d97706" stroke-width="4"/><circle cx="560" cy="105" r="6" fill="#d97706"/>
+      <text x="470" y="176" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#b45309" text-anchor="middle">0.5</text>
+      <text x="560" y="176" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#b45309" text-anchor="middle">0.5</text>
+    </g>
+
+    <!-- Step-by-Step Sliding Overlap Output y[n] -->
+    <g transform="translate(25, 285)">
+      <rect width="695" height="260" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.2"/>
+      <text x="25" y="36" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#15803d">
+        Smoothed Output y[n] = {0.5, 1.5, 2.5, 1.5}  (Length = 3 + 2 - 1 = 4)
+      </text>
+      <line x1="85" y1="200" x2="640" y2="200" stroke="#0f172a" stroke-width="2.5"/>
+
+      <line x1="150" y1="200" x2="150" y2="174" stroke="#059669" stroke-width="5"/><circle cx="150" cy="174" r="7" fill="#059669"/>
+      <text x="150" y="156" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#15803d" text-anchor="middle">0.5</text>
+      <text x="150" y="232" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">n = 0</text>
+
+      <line x1="285" y1="200" x2="285" y2="122" stroke="#059669" stroke-width="5"/><circle cx="285" cy="122" r="7" fill="#059669"/>
+      <text x="285" y="104" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#15803d" text-anchor="middle">1.5</text>
+      <text x="285" y="232" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">n = 1</text>
+
+      <line x1="420" y1="200" x2="420" y2="70" stroke="#059669" stroke-width="5"/><circle cx="420" cy="70" r="7" fill="#059669"/>
+      <text x="420" y="56" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#15803d" text-anchor="middle">2.5</text>
+      <text x="420" y="232" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">n = 2</text>
+
+      <line x1="555" y1="200" x2="555" y2="122" stroke="#059669" stroke-width="5"/><circle cx="555" cy="122" r="7" fill="#059669"/>
+      <text x="555" y="104" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#15803d" text-anchor="middle">1.5</text>
+      <text x="555" y="232" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">n = 3</text>
+    </g>
+
+    <!-- Step Calculations Summary -->
+    <g transform="translate(25, 565)">
+      <rect width="695" height="150" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="20" y="34" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#0f172a">2-Point Moving-Average Calculation:</text>
+      <text x="20" y="70" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">• n=0: 1×0.5 = 0.5      |   n=1: 1×0.5 + 2×0.5 = 1.5</text>
+      <text x="20" y="104" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">• n=2: 2×0.5 + 3×0.5 = 2.5 |   n=3: 3×0.5 = 1.5</text>
+      <text x="20" y="136" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e40af">Time Convolution ↔ Frequency Multiplication!</text>
+    </g>
+  </g>
+
+  <!-- Right Panel: Cross-Correlation Echo Detection -->
+  <g transform="translate(820, 125)">
+    <rect width="745" height="735" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <rect width="745" height="54" rx="10" fill="#f5f3ff" stroke="#ddd6fe" stroke-width="1"/>
+    <text x="25" y="36" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#6d28d9">
+      B. Cross-Correlation R_xy[l] (Echo &amp; Delay Detection)
+    </text>
+
+    <!-- Transmitted Pulse vs Noisy Delayed Echo -->
+    <g transform="translate(25, 72)">
+      <rect width="695" height="235" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+      <text x="20" y="32" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e40af">1. Reference Chirp x[n] &amp; Noisy Echo y[n]</text>
+
+      <!-- Clean pulse at left -->
+      <line x1="40" y1="100" x2="655" y2="100" stroke="#94a3b8" stroke-width="1.5"/>
+      <path d="M 40 100 L 105 100 L 125 52 L 150 100 L 175 68 L 195 100 L 655 100" fill="none" stroke="#2563eb" stroke-width="3.2"/>
+      <text x="150" y="42" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e40af" text-anchor="middle">Tx Pulse</text>
+
+      <!-- Noisy signal with hidden delayed pulse at x=470 -->
+      <line x1="40" y1="190" x2="655" y2="190" stroke="#94a3b8" stroke-width="1.5"/>
+      <path d="M 40 190 L 70 178 L 100 202 L 140 180 L 180 198 L 220 182 L 260 200 L 300 184 L 340 196 L 380 182 L 420 195 L 440 148 L 465 204 L 490 156 L 515 196 L 550 182 L 590 202 L 630 180 L 655 190"
+            fill="none" stroke="#dc2626" stroke-width="2.5"/>
+      <text x="475" y="138" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#b91c1c" text-anchor="middle">Echo Buried in Noise</text>
+    </g>
+
+    <!-- Correlation Output Peak at Lag d -->
+    <g transform="translate(25, 325)">
+      <rect width="695" height="220" rx="8" fill="#f5f3ff" stroke="#c4b5fd" stroke-width="1.2"/>
+      <text x="20" y="34" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#6d28d9">
+        2. Cross-Correlation Peak Reveals Exact Delay Lag (l = d)
+      </text>
+
+      <line x1="65" y1="178" x2="650" y2="178" stroke="#0f172a" stroke-width="2.5"/>
+      <path d="M 65 174 L 150 170 L 240 176 L 330 168 L 400 175 L 445 55 L 490 175 L 560 172 L 645 174"
+            fill="none" stroke="#7c3aed" stroke-width="4"/>
+      <circle cx="445" cy="55" r="7" fill="#6d28d9"/>
+      <line x1="445" y1="55" x2="445" y2="178" stroke="#6d28d9" stroke-width="2" stroke-dasharray="5,4"/>
+
+      <rect x="468" y="64" width="205" height="68" rx="6" fill="#ffffff" stroke="#7c3aed" stroke-width="1.5"/>
+      <text x="570" y="94" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#6d28d9" text-anchor="middle">Sharp Peak</text>
+      <text x="570" y="122" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">Lag d → Distance</text>
+
+      <text x="445" y="206" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#6d28d9" text-anchor="middle">Delay Lag l = d</text>
+    </g>
+
+    <!-- Bottom Comparison Card -->
+    <g transform="translate(25, 565)">
+      <rect width="695" height="150" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="20" y="34" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#0f172a">Convolution vs. Correlation Key Difference:</text>
+      <text x="20" y="70" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">• Convolution FLIPS h[n] → models linear filter physics</text>
+      <text x="20" y="104" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">• Correlation DOES NOT flip → measures waveform similarity</text>
+      <text x="20" y="136" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#6d28d9">Auto-Correlation R_xx pulls hidden sine waves out of noise!</text>
+    </g>
+  </g>
+</svg>`
+  },
+
+  u2_fig_dft_4pt_intuition: {
+    id: "u2_fig_dft_4pt_intuition",
+    filename: "u2_fig6a_dft_twiddle_clock_and_bins.svg",
+    title: "Figure 2.6A: DFT Intuition — Twiddle Clock-Hand W4^k & 4-Point Spectral Bins",
+    description: "Complex unit circle phasor angles for N=4 (W4^0=+1, W4^1=-j, W4^2=-1, W4^3=+j) alongside the exact 4-point DFT magnitude spectrum of x[n] = {1, 0, 2, 1}.",
+    topicRef: "2.6 Discrete Fourier Transform",
+    svgContent: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="100%" height="100%" font-family="'Times New Roman', Times, 'Liberation Serif', serif">
+  <rect width="1600" height="900" fill="#ffffff"/>
+  <rect x="20" y="20" width="1560" height="860" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+
+  <!-- Title Banner -->
+  <rect x="35" y="40" width="1530" height="65" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.2"/>
+  <text x="65" y="81" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="26" font-weight="700" fill="#0f172a">
+    Figure 2.6A: DFT Intuition · Twiddle Clock-Hand (W4) &amp; 4-Point Spectrum
+  </text>
+  <text x="1535" y="81" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#1e40af" text-anchor="end">
+    Unit II · Section 2.6
+  </text>
+
+  <!-- Left Panel: Complex Unit Circle Clock-Hand W4 -->
+  <g transform="translate(35, 125)">
+    <rect width="745" height="735" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <rect width="745" height="54" rx="10" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+    <text x="25" y="36" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#1e40af">
+      A. Twiddle Factor W4 = exp(-j·2π/4) = -j (Clockwise Steps)
+    </text>
+
+    <g transform="translate(25, 72)">
+      <rect width="695" height="450" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+
+      <!-- Axes -->
+      <line x1="120" y1="225" x2="575" y2="225" stroke="#64748b" stroke-width="2"/>
+      <line x1="347" y1="45" x2="347" y2="405" stroke="#64748b" stroke-width="2"/>
+      <text x="582" y="232" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a">Re</text>
+      <text x="360" y="48" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a">+j Im</text>
+
+      <!-- Unit Circle -->
+      <circle cx="347" cy="225" r="145" fill="none" stroke="#2563eb" stroke-width="3" stroke-dasharray="6,4"/>
+
+      <!-- Clockwise curved arrow -->
+      <path d="M 455 115 A 155 155 0 0 1 498 205" fill="none" stroke="#d97706" stroke-width="3.5"/>
+      <polygon points="498,205 489,192 503,190" fill="#d97706"/>
+      <text x="512" y="140" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#b45309">-90° / step</text>
+
+      <!-- 4 Clock Points -->
+      <circle cx="492" cy="225" r="11" fill="#15803d"/>
+      <text x="515" y="218" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="800" fill="#15803d">W4⁰ = +1 (0°)</text>
+
+      <circle cx="347" cy="370" r="11" fill="#dc2626"/>
+      <text x="347" y="405" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="800" fill="#b91c1c" text-anchor="middle">W4¹ = -j (-90°)</text>
+
+      <circle cx="202" cy="225" r="11" fill="#1e40af"/>
+      <text x="182" y="218" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="800" fill="#1e40af" text-anchor="end">W4² = -1 (-180°)</text>
+
+      <circle cx="347" cy="80" r="11" fill="#6d28d9"/>
+      <text x="347" y="65" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="800" fill="#6d28d9" text-anchor="middle">W4³ = +j (-270°)</text>
+    </g>
+
+    <g transform="translate(25, 540)">
+      <rect width="695" height="175" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="20" y="34" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#0f172a">Why the Twiddle Factor Makes DFT Easy:</text>
+      <text x="20" y="70" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">• Bin k = 0 (DC): W4^(0·n) = 1 → simply adds all samples!</text>
+      <text x="20" y="106" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">• Bin k = 1: rotates 1 quadrant clockwise per sample step</text>
+      <text x="20" y="142" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#1e40af">• Bin k = 2 (Nyquist): alternates +1, -1, +1, -1</text>
+    </g>
+  </g>
+
+  <!-- Right Panel: Input Signal & 4-Point Magnitude Spectrum -->
+  <g transform="translate(820, 125)">
+    <rect width="745" height="735" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <rect width="745" height="54" rx="10" fill="#dcfce7" stroke="#bbf7d0" stroke-width="1"/>
+    <text x="25" y="36" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="22" font-weight="700" fill="#15803d">
+      B. Example: x[n] = {1, 0, 2, 1} → 4-Point DFT Bins
+    </text>
+
+    <!-- Time Input Plot -->
+    <g transform="translate(25, 72)">
+      <rect width="695" height="205" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+      <text x="20" y="34" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#1e40af">Time Sequence x[n] = {1, 0, 2, 1}</text>
+      <line x1="70" y1="152" x2="630" y2="152" stroke="#0f172a" stroke-width="2"/>
+      <line x1="160" y1="152" x2="160" y2="106" stroke="#2563eb" stroke-width="5"/><circle cx="160" cy="106" r="7" fill="#2563eb"/>
+      <line x1="300" y1="152" x2="300" y2="152" stroke="#2563eb" stroke-width="5"/><circle cx="300" cy="152" r="7" fill="#2563eb"/>
+      <line x1="440" y1="152" x2="440" y2="60" stroke="#2563eb" stroke-width="5"/><circle cx="440" cy="60" r="7" fill="#2563eb"/>
+      <line x1="580" y1="152" x2="580" y2="106" stroke="#2563eb" stroke-width="5"/><circle cx="580" cy="106" r="7" fill="#2563eb"/>
+      <text x="160" y="182" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">x[0] = 1</text>
+      <text x="300" y="182" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">x[1] = 0</text>
+      <text x="440" y="182" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">x[2] = 2</text>
+      <text x="580" y="182" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">x[3] = 1</text>
+    </g>
+
+    <!-- DFT Magnitude Spectrum Plot -->
+    <g transform="translate(25, 295)">
+      <rect width="695" height="230" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.2"/>
+      <text x="20" y="34" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#15803d">DFT Magnitude |X[k]| (4 Frequency Bins)</text>
+      <line x1="70" y1="178" x2="630" y2="178" stroke="#0f172a" stroke-width="2.5"/>
+
+      <!-- Bin 0: 4.0 -->
+      <line x1="160" y1="178" x2="160" y2="62" stroke="#059669" stroke-width="6"/><circle cx="160" cy="62" r="7" fill="#059669"/>
+      <text x="160" y="50" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#15803d" text-anchor="middle">|X[0]| = 4</text>
+      <text x="160" y="208" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">k = 0 (DC)</text>
+
+      <!-- Bin 1: sqrt(2) = 1.414 -->
+      <line x1="300" y1="178" x2="300" y2="137" stroke="#059669" stroke-width="6"/><circle cx="300" cy="137" r="7" fill="#059669"/>
+      <text x="300" y="122" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#15803d" text-anchor="middle">1.414</text>
+      <text x="300" y="208" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">k = 1</text>
+
+      <!-- Bin 2: 2.0 -->
+      <line x1="440" y1="178" x2="440" y2="120" stroke="#059669" stroke-width="6"/><circle cx="440" cy="120" r="7" fill="#059669"/>
+      <text x="440" y="105" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#15803d" text-anchor="middle">|X[2]| = 2</text>
+      <text x="440" y="208" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#0f172a" text-anchor="middle">k = 2 (Nyq)</text>
+
+      <!-- Bin 3: sqrt(2) = 1.414 -->
+      <line x1="580" y1="178" x2="580" y2="137" stroke="#7c3aed" stroke-width="6"/><circle cx="580" cy="137" r="7" fill="#7c3aed"/>
+      <text x="580" y="122" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="800" fill="#6d28d9" text-anchor="middle">1.414</text>
+      <text x="580" y="208" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#6d28d9" text-anchor="middle">k = 3 (Conj)</text>
+    </g>
+
+    <g transform="translate(25, 540)">
+      <rect width="695" height="175" rx="8" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+      <text x="20" y="34" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="21" font-weight="700" fill="#0f172a">Conjugate Symmetry for Real Signals:</text>
+      <text x="20" y="70" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">• X[1] = -1 + j   and   X[3] = -1 - j  (Exact conjugate pair!)</text>
+      <text x="20" y="106" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" fill="#1e293b">• Only bins k = 0 to N/2 carry unique frequency info</text>
+      <text x="20" y="142" font-family="'Times New Roman', Times, 'Liberation Serif', serif" font-size="20" font-weight="700" fill="#15803d">• Parseval Check: 1²+0²+2²+1² = 6 = (16+2+4+2)/4 ✓</text>
+    </g>
+  </g>
+</svg>`
   }
 };
+
 

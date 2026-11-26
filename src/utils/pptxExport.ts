@@ -200,14 +200,19 @@ export function formatMathFormula(latex: string): string {
   let out = latex
     .replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, '($1)/($2)')
     .replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, '($1)/($2)')
+    .replace(/\\frac\{([^{}]+)\}\{([^{}]+)\}/g, '($1)/($2)')
     .replace(/\\sqrt\{([^{}]+)\}/g, '√($1)')
     .replace(/\\bar\{([^{}]+)\}/g, '$1̄')
     .replace(/\\hat\{([^{}]+)\}/g, '$1̂')
     .replace(/\\partial/g, '∂')
+    .replace(/\\int_\{([^}]+)\}\^\{([^}]+)\}/g, '∫($1 to $2)')
+    .replace(/\\int/g, '∫')
     .replace(/\\sum_\{([^}]+)\}\^\{([^}]+)\}/g, '∑($1 to $2)')
     .replace(/\\sum_\{([^}]+)\}/g, '∑($1)')
     .replace(/\\sum/g, '∑')
+    .replace(/\\lim_\{([^}]+)\}/g, 'lim($1)')
     .replace(/\\Delta/g, 'Δ')
+    .replace(/\\delta/g, 'δ')
     .replace(/\\mu\\epsilon/g, 'με')
     .replace(/\\epsilon/g, 'ε')
     .replace(/\\mu/g, 'μ')
@@ -219,8 +224,11 @@ export function formatMathFormula(latex: string): string {
     .replace(/\\beta/g, 'β')
     .replace(/\\theta/g, 'θ')
     .replace(/\\omega/g, 'ω')
+    .replace(/\\Omega/g, 'Ω')
     .replace(/\\pi/g, 'π')
     .replace(/\\phi/g, 'ϕ')
+    .replace(/\\ell/g, 'ℓ')
+    .replace(/\\angle/g, '∠')
     .replace(/\^\\circ/g, '°')
     .replace(/\\circ/g, '°')
     .replace(/\\left\(/g, '(')
@@ -231,18 +239,26 @@ export function formatMathFormula(latex: string): string {
     .replace(/\\right\|/g, '|')
     .replace(/\\times/g, '×')
     .replace(/\\cdot/g, '·')
+    .replace(/\\ast/g, '*')
     .replace(/\\pm/g, '±')
     .replace(/\\approx/g, '≈')
     .replace(/\\le/g, '≤')
     .replace(/\\ge/g, '≥')
+    .replace(/\\neq/g, '≠')
     .replace(/\\ne/g, '≠')
     .replace(/\\infty/g, '∞')
+    .replace(/\\to/g, '→')
+    .replace(/\\rightarrow/g, '→')
+    .replace(/\\leftrightarrow/g, '↔')
     .replace(/\\implies/g, '  ⇒  ')
     .replace(/\\Longleftrightarrow/g, '  ⟺  ')
+    .replace(/\\iff/g, '  ⟺  ')
     .replace(/\\xrightarrow\{([^}]+)\}/g, '  ──[$1]──>  ')
     .replace(/\\text\{([^}]+)\}/g, '$1')
     .replace(/\\mathbf\{([^}]+)\}/g, '$1')
     .replace(/\\mathrm\{([^}]+)\}/g, '$1')
+    .replace(/\\mathcal\{([^}]+)\}/g, '$1')
+    .replace(/\\operatorname\{([^}]+)\}/g, '$1')
     .replace(/\\quad/g, '   ')
     .replace(/\\qquad/g, '    ')
     .replace(/\\;/g, ' ')
@@ -1021,9 +1037,9 @@ export async function exportChapterToPptx(
         bold: true
       });
 
-      const formulaRows = s.bullets.slice(0, 10);
-      const startY = 1.18;
-      const availH = 3.92;
+      const formulaRows = s.bullets.slice(0, 12);
+      const startY = 1.15;
+      const availH = 3.96;
       const rowH = Math.min(0.52, availH / formulaRows.length);
 
       for (let r = 0; r < formulaRows.length; r++) {
@@ -1034,8 +1050,8 @@ export async function exportChapterToPptx(
         let latex = '';
         const colonIdx = rawLine.indexOf(':');
         if (colonIdx !== -1) {
-          label = cleanText(rawLine.slice(0, colonIdx));
-          latex = rawLine.slice(colonIdx + 1).trim();
+          label = cleanText(rawLine.slice(0, colonIdx).replace(/\*\*/g, ''));
+          latex = rawLine.slice(colonIdx + 1).replace(/^\*\*+\s*/, '').trim();
         } else {
           label = `Equation ${r + 1}`;
           latex = rawLine.trim();
@@ -1043,9 +1059,9 @@ export async function exportChapterToPptx(
 
         slide.addShape(pptx.ShapeType.roundRect, {
           x: 0.8,
-          y: yPos + 0.02,
+          y: yPos + 0.015,
           w: 8.4,
-          h: rowH - 0.05,
+          h: rowH - 0.04,
           fill: { color: C_WHITE },
           line: { color: C_BORDER, width: 0.75 },
           rectRadius: 0.05
@@ -1053,10 +1069,10 @@ export async function exportChapterToPptx(
 
         slide.addText(label, {
           x: 0.95,
-          y: yPos + 0.05,
+          y: yPos + 0.03,
           w: 3.1,
-          h: rowH - 0.1,
-          fontSize: 9.5,
+          h: rowH - 0.06,
+          fontSize: formulaRows.length > 9 ? 8.8 : 9.5,
           fontFace: 'Arial',
           bold: true,
           color: C_NAVY,
@@ -1386,6 +1402,57 @@ export async function exportChapterToPptx(
         );
 
         contentTop += 1.45;
+
+        if (s.definition.operationalMeaning) {
+          slide.addShape(pptx.ShapeType.roundRect, {
+            x: 0.8,
+            y: contentTop,
+            w: textW,
+            h: 1.22,
+            fill: { color: 'F8FAFC' },
+            line: { color: C_BORDER, width: 1 },
+            rectRadius: 0.06
+          });
+          slide.addText(
+            [
+              { text: 'Operational Meaning:\n', options: { bold: true, fontSize: 9.5, color: C_NAVY } },
+              { text: cleanText(s.definition.operationalMeaning), options: { fontSize: 9, color: C_SLATE } }
+            ],
+            {
+              x: 0.95,
+              y: contentTop + 0.06,
+              w: textW - 0.3,
+              h: 1.1,
+              fontFace: 'Arial'
+            }
+          );
+          contentTop += 1.3;
+        }
+
+        if (s.definition.keyImplication && contentTop < 4.55) {
+          slide.addShape(pptx.ShapeType.roundRect, {
+            x: 0.8,
+            y: 4.55,
+            w: textW,
+            h: 0.5,
+            fill: { color: 'F1F5F9' },
+            line: { color: C_TEAL, width: 1 },
+            rectRadius: 0.06
+          });
+          slide.addText(
+            [
+              { text: 'Key Intuition: ', options: { bold: true, color: C_TEAL, fontSize: 9 } },
+              { text: cleanText(s.definition.keyImplication), options: { color: C_NAVY, fontSize: 9 } }
+            ],
+            {
+              x: 0.95,
+              y: 4.58,
+              w: textW - 0.3,
+              h: 0.42,
+              fontFace: 'Arial'
+            }
+          );
+        }
       }
 
       // Types Grid (supports 2, 3 side-by-side, or 2x2 grid)
@@ -1416,10 +1483,10 @@ export async function exportChapterToPptx(
           slide.addText(
             [
               ...(t.badge ? [{ text: `[${cleanText(t.badge)}]\n`, options: { bold: true, color: C_AMBER, fontSize: 8 } }] : []),
-              { text: `${cleanText(t.typeName)}\n\n`, options: { bold: true, color: C_TEAL, fontSize: cols === 3 ? 10.5 : 11 } },
-              { text: `${cleanText(t.description)}\n\n`, options: { color: C_SLATE, fontSize: cols === 3 ? 8.5 : 9 } },
-              ...(t.keyFeature ? [{ text: `Mechanism: ${cleanText(t.keyFeature)}\n`, options: { bold: true, color: C_NAVY, fontSize: 8 } }] : []),
-              { text: `Ex: ${cleanText(t.example)}`, options: { italic: true, color: C_MUTED, fontSize: 8 } }
+              { text: `${formatMathFormula(cleanText(t.typeName))}\n\n`, options: { bold: true, color: C_TEAL, fontSize: cols === 3 ? 10.5 : 11 } },
+              { text: `${formatMathFormula(cleanText(t.description))}\n\n`, options: { color: C_SLATE, fontSize: cols === 3 ? 8.5 : 9 } },
+              ...(t.keyFeature ? [{ text: `Mechanism: ${formatMathFormula(cleanText(t.keyFeature))}\n`, options: { bold: true, color: C_NAVY, fontSize: 8 } }] : []),
+              { text: `Ex: ${formatMathFormula(cleanText(t.example))}`, options: { italic: true, color: C_MUTED, fontSize: 8 } }
             ],
             {
               x: cx + 0.1,
@@ -1512,6 +1579,82 @@ export async function exportChapterToPptx(
           { x: 0.95 + colW + 0.25, y: contentTop + 0.1, w: colW - 0.3, h: colH - 0.2, fontFace: 'Arial' }
         );
         contentTop += colH + 0.1;
+      }
+
+      // Structured Comparison / Difference Table
+      if (s.comparisonTable) {
+        const headers = s.comparisonTable.headers;
+        const isFourCol = headers.length === 4;
+        const rows: any[] = [
+          headers.map((h, hIdx) => ({
+            text: formatMathFormula(cleanText(h)),
+            options: {
+              bold: true,
+              fill: {
+                color:
+                  hIdx === 0
+                    ? '0F172A'
+                    : hIdx === headers.length - 1
+                    ? '065F46'
+                    : hIdx === 1 && !isFourCol
+                    ? '9F1239'
+                    : '1E3A8A'
+              },
+              color: 'FFFFFF',
+              fontSize: 9.2,
+              valign: 'middle'
+            }
+          })),
+          ...s.comparisonTable.rows.map((r, rIdx) =>
+            r.map((cell, cIdx) => ({
+              text: formatMathFormula(cleanText(cell)),
+              options: {
+                bold: cIdx === 0,
+                fill: { color: rIdx % 2 === 0 ? 'FFFFFF' : 'F8FAFC' },
+                color: cIdx === 0 ? C_NAVY : C_SLATE,
+                fontSize: isFourCol ? 8.3 : 8.6,
+                valign: 'middle'
+              }
+            }))
+          )
+        ];
+
+        const colW =
+          headers.length === 3
+            ? [1.85, 3.275, 3.275]
+            : headers.length === 4
+            ? [1.50, 2.30, 2.30, 2.30]
+            : headers.map(() => textW / headers.length);
+        slide.addTable(rows, {
+          x: 0.8,
+          y: contentTop,
+          w: textW,
+          colW,
+          border: { type: 'solid', pt: 0.6, color: 'CBD5E1' }
+        });
+
+        contentTop += s.comparisonTable.rows.length <= 4 ? 2.65 : 3.05;
+        if (s.comparisonTable.verdict) {
+          slide.addShape(pptx.ShapeType.roundRect, {
+            x: 0.8,
+            y: Math.min(contentTop, 4.5),
+            w: textW,
+            h: 0.44,
+            fill: { color: 'EEF2FF' },
+            line: { color: '6366F1', width: 1 },
+            rectRadius: 0.06
+          });
+          slide.addText(`Key Rule: ${formatMathFormula(cleanText(s.comparisonTable.verdict))}`, {
+            x: 0.95,
+            y: Math.min(contentTop, 4.5) + 0.06,
+            w: textW - 0.3,
+            h: 0.32,
+            fontSize: 8.4,
+            bold: true,
+            color: '312E81',
+            fontFace: 'Arial'
+          });
+        }
       }
 
       // Quiz Slide

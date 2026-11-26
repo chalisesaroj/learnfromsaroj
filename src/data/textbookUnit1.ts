@@ -477,7 +477,9 @@ export const TEXTBOOK_UNIT1_CHAPTER: {
             'Random errors (also called indeterminate errors) are unavoidable, unpredictable variations that fluctuate symmetrically in both magnitude and direction from one reading to the next. They stem from microscopic, uncontrollable physical phenomena such as thermal Johnson noise in electronic resistors, Brownian motion of air molecules colliding with delicate balance pans, and transient floor vibrations. Unlike systematic errors, random errors cannot be corrected by an offset value; however, because they follow a Gaussian (normal) probability distribution, their influence on the final result can be minimized by taking multiple independent readings and calculating the statistical arithmetic mean.'
           ],
           keyTakeaway:
-            'Gross errors are human mistakes to be eliminated; systematic errors are repeatable directional biases removed via calibration; random errors are Gaussian fluctuations minimized by statistical averaging.'
+            'Gross errors are human mistakes to be eliminated; systematic errors are repeatable directional biases removed via calibration; random errors are Gaussian fluctuations minimized by statistical averaging.',
+          figureRef: 'fig5',
+          figureCaption: 'Figure 1.5: Systematic bias shifts the sample mean away from the true value, while random error widens the Gaussian scatter; higher Signal-to-Noise Ratio (SNR) separates true signal peaks from background noise.'
         },
         {
           number: '1.5.2',
@@ -501,7 +503,9 @@ export const TEXTBOOK_UNIT1_CHAPTER: {
             'While the sample standard deviation $s$ quantifies the scatter of individual observations, the uncertainty of the calculated mean itself decreases as more readings are averaged. The standard error of the mean (also known as the experimental standard deviation of the mean) is given by $s_{\\bar{x}} = \\frac{s}{\\sqrt{n}}$. Quadrupling the number of experimental observations cuts the random uncertainty of the mean in half.'
           ],
           keyTakeaway:
-            'The sample mean provides the best estimate of the measurand, and its random statistical uncertainty decreases inversely with the square root of the sample size.'
+            'The sample mean provides the best estimate of the measurand, and its random statistical uncertainty decreases inversely with the square root of the sample size.',
+          figureRef: 'fig5b',
+          figureCaption: 'Figure 1.6: Type A 1/√N random-uncertainty decay versus constant systematic bias (the Averaging Fallacy), alongside Type B rectangular (a/√3), triangular (a/√6), and normal certificate (U/k) models.'
         },
         {
           number: '1.5.3',
@@ -526,7 +530,9 @@ export const TEXTBOOK_UNIT1_CHAPTER: {
             'To express the final result with a high degree of confidence for industrial safety compliance, the combined uncertainty is multiplied by a numerical coverage factor $k$ to yield the expanded uncertainty: $U = k \\cdot u_c(y)$. In commercial engineering practice, a coverage factor of $k = 2$ is standard, corresponding to an approximate confidence level of $95.45\\%$ under an assumed normal distribution.'
           ],
           keyTakeaway:
-            'ISO GUM combines Type A statistical uncertainty and Type B datasheet uncertainty using variance propagation; multiplying by coverage factor k=2 establishes a 95.45% confidence interval.'
+            'ISO GUM combines Type A statistical uncertainty and Type B datasheet uncertainty using variance propagation; multiplying by coverage factor k=2 establishes a 95.45% confidence interval.',
+          figureRef: 'fig5c',
+          figureCaption: 'Figure 1.7: End-to-end ISO GUM uncertainty budget combining Type A and Type B components via Root-Sum-Square (RSS) into 1σ (68.3%), 2σ (95.4%), and 3σ (99.7%) confidence intervals.'
         }
       ],
       examQuestions: [
@@ -569,10 +575,13 @@ export const TEXTBOOK_UNIT1_CHAPTER: {
             ]
           },
           postEquationParagraphs: [
-            'To keep the voltmeter loading error below $1.0\\%$, the voltmeter resistance must be at least one hundred times larger than the source resistance: $R_m \\ge 100 \\cdot R_s$. While modern digital multimeters boast an input resistance of $10.0\\text{ M}\\Omega$ (which introduces negligible loading when probing low-impedance automotive battery circuits where $R_s < 1\\,\\Omega$), severe loading errors occur when probing high-impedance biomedical electrodes or piezoelectric sensors where source impedance can reach several megaohms. In such applications, an active buffer amplifier with gigohm input impedance must precede the meter.'
+            'To keep the voltmeter loading error below $1.0\\%$, the voltmeter resistance must be at least one hundred times larger than the source resistance: $R_m \\ge 100 \\cdot R_s$. While modern digital multimeters boast an input resistance of $10.0\\text{ M}\\Omega$ (which introduces negligible loading when probing low-impedance automotive battery circuits where $R_s < 1\\,\\Omega$), severe loading errors occur when probing high-impedance biomedical electrodes or piezoelectric sensors where source impedance can reach several megaohms. In such applications, an active buffer amplifier with gigohm input impedance must precede the meter.',
+            'Conversely, an ammeter is inserted in series with the circuit load ($R_{load}$), adding its internal shunt resistance ($R_a$) directly to the total loop resistance so the measured current drops to $I_m = \\frac{V_s}{R_{load} + R_a}$. Consequently, whereas a voltmeter must exhibit near-infinite input resistance ($R_m \\gg R_s$), an ammeter must present near-zero series resistance ($R_a \\ll R_{load}$) to prevent current attenuation.'
           ],
           keyTakeaway:
-            'Voltmeter loading error is governed by the ratio of source resistance to meter resistance; to guarantee less than 1% loading error, ensure Rm >= 100 Rs.'
+            'Voltmeter loading requires Rm >= 100 Rs to minimize parallel current draw, whereas ammeter loading requires Ra << Rload so series insertion does not throttle circuit current.',
+          figureRef: 'fig6b',
+          figureCaption: 'Figure 1.7B: Equivalent circuit schematics demonstrating parallel voltmeter loading (Rm forming a voltage divider with Rs) and series ammeter insertion loading (Ra adding to Rload).'
         },
         {
           number: '1.6.2',
@@ -592,25 +601,25 @@ export const TEXTBOOK_UNIT1_CHAPTER: {
     },
 
     // =========================================================================
-    // SECTION 1.7: ELECTRICAL SAFETY & GROUND LOOPS
+    // SECTION 1.7: SAFETY CONSIDERATIONS DURING INSTRUMENTATION
     // =========================================================================
     {
       number: '1.7',
-      title: 'Electrical Safety, Ground Loops & Galvanic Isolation',
+      title: 'Safety Considerations During Instrumentation (Electrical, Hydraulic & Pneumatic)',
       hours: '0.5 Hour',
       abstract:
-        'This section details the physical mechanism of ground loop noise injection, the design of optical and magnetic galvanic isolation barriers, and the application of IEC 61010-1 overvoltage installation categories (CAT I through CAT IV).',
+        'This section establishes comprehensive safety engineering practices across electrical, hydraulic, and pneumatic instrumentation systems: ground-loop mitigation, galvanic isolation, IEC 61010-1 overvoltage categories, hydraulic fluid-injection and accumulator depressurization (ISO 4413), pneumatic hose whip restraints, and three-valve manifold sequencing (ISO 4414).',
       paragraphs: [
-        'In industrial manufacturing facilities and electrical power substations, measurement systems operate in harsh electromagnetic environments characterized by large electric motors, high-power switching drives, and lightning surge potentials. Under these conditions, an instrumentation engineer must address two vital challenges: protecting delicate measurement signals from ground loop noise corruption, and protecting human operators and equipment from lethal electrical flashovers.',
-        'Many young engineers hold the dangerous misconception that electrical "ground" is at exactly zero volts ($0.000\\text{ V}$) everywhere across a factory floor. In reality, because copper grounding conductors possess finite resistance and heavy industrial machinery dumps large return currents into the earth, physical ground points separated by merely twenty meters frequently differ in potential by several volts.'
+        'Industrial instrumentation connects delicate electronic analyzers directly to high-energy plant processes carrying lethal electrical potentials, high-pressure hydraulic oils, and stored compressed air. Consequently, safety considerations during instrumentation span three coupled energy domains—electrical, hydraulic, and pneumatic—governed universally by Lockout/Tagout (LOTO) and zero-energy verification before any probe, fitting, or terminal is opened.',
+        'In electrical measurement environments, engineers must eliminate stray ground-loop currents and match test equipment to transient arc-flash energy via IEC 61010-1 CAT ratings. Simultaneously, in fluid-power instrumentation loops, engineers must neutralize trapped hydraulic pressure capable of subcutaneous fluid injection and restrain stored pneumatic spring energy capable of violent hose whip and overpressure diaphragm rupture.'
       ],
       subsections: [
         {
           number: '1.7.1',
-          title: 'Physics of Ground Loops and 50 Hz Common-Mode Hum',
+          title: 'Electrical Safety: Physics of Ground Loops and 50 Hz Common-Mode Hum',
           paragraphs: [
             'A ground loop is formed whenever an instrumentation signal circuit has multiple electrical connections to earth ground at physically separated locations. Consider a thermocouple mounted on an industrial furnace that is grounded to the building structure, connected via a shielded cable to a computer DAQ system grounded in a distant control room.',
-            'Because the furnace ground and the control room ground are at different electrical potentials, an alternating ground potential difference $\\Delta V_G$ exists between them. This potential difference drives a circulating ground current ($I_G$) through the outer shield and return conductor of the instrumentation cable. As this circulating current flows through the finite resistance of the cable return wire ($R_{cable}$), it produces an unwanted noise voltage drop: $V_{noise} = I_G \\cdot R_{cable}$. This 50 Hz power-frequency noise voltage adds directly in series with the tiny millivolt sensor signal, completely swamping the measurement with 50 Hz hum.'
+            'Because copper grounding conductors possess finite resistance and heavy motors return large currents into the plant earth grid, separated earth points differ in potential by an alternating ground potential difference $\\Delta V_G$. This potential difference drives a circulating ground current ($I_G$) through the outer shield and return conductor of the instrumentation cable, generating an interfering series noise voltage $V_{noise} = I_G \\cdot R_g$ that corrupts sensitive millivolt signals with 50 Hz mains hum.'
           ],
           equation: {
             label: 'Eq. 1.10',
@@ -628,33 +637,58 @@ export const TEXTBOOK_UNIT1_CHAPTER: {
             'To eliminate ground loops, engineers enforce a strict single-point grounding rule: an instrumentation circuit must be connected to earth ground at exactly one physical point. Alternatively, when multiple ground connections are unavoidable, galvanic isolation must be inserted into the signal path.'
           ],
           keyTakeaway:
-            'Ground loops occur when separate earth connections drive circulating currents through signal return wires, injecting 50 Hz power hum into sensitive sensor data.'
+            'Ground loops occur when separate earth connections drive circulating currents through signal return wires, injecting 50 Hz power hum and surge hazards into sensor data.'
         },
         {
           number: '1.7.2',
           title: 'Galvanic Isolation: Optocouplers and Isolation Transformers',
           paragraphs: [
             'Galvanic isolation is the electrical design technique of transmitting signals between two circuits without permitting direct conductive electron flow between them. By breaking the ohmic copper path, the circulating ground loop current is interrupted ($I_G = 0$), completely eliminating ground loop hum.',
-            'Galvanic isolation is achieved using three primary physical media: optical, magnetic, or capacitive. An optical isolator (optocoupler) converts electrical voltage into light using an infrared light-emitting diode (LED), transmits the light across a transparent dielectric insulation barrier, and reconverts the light into an electrical signal using an internal photodiode. Modern optical isolators withstand electrical potential differences exceeding $5,000\\text{ V}$ across their isolation barrier, protecting low-voltage computer boards from high-voltage motor spikes.'
+            'Galvanic isolation is achieved using optical, magnetic, or capacitive barriers. An optical isolator (optocoupler) converts electrical voltage into infrared light via an LED, transmits the beam across a transparent dielectric insulation gap, and reconverts it via a phototransistor. Modern optical isolators withstand potential differences exceeding $5,000\\text{ V}$, protecting low-voltage DAQ computers and human operators from high-voltage motor surges.'
           ],
           keyTakeaway:
-            'Galvanic isolation breaks the physical copper conductive path using light or magnetic fields, eliminating ground loops and isolating high-voltage transients.'
+            'Galvanic isolation breaks the physical copper conductive path using light or magnetic fields, eliminating ground loops and isolating high-voltage transients.',
+          figureRef: 'fig7',
+          figureCaption: 'Figure 1.8: Electrical safety diagram showing circulating ground-loop interference across distant earth points, optical galvanic isolation breaking the copper path, and IEC 61010-1 CAT I–IV danger zones.'
         },
         {
           number: '1.7.3',
           title: 'IEC 61010-1 Overvoltage Installation Categories (CAT I through CAT IV)',
           paragraphs: [
-            'When choosing test instruments such as digital multimeters for electrical work, an engineer must respect the overvoltage installation categories defined by the International Electrotechnical Commission in standard IEC 61010-1. These categories—CAT I, CAT II, CAT III, and CAT IV—are defined not by continuous working voltage, but by the magnitude of destructive transient voltage impulses that can occur at different points within an electrical power distribution system.',
-            'CAT I covers secondary electronic circuits and battery-operated equipment protected against transient surges (such as personal computers, audio amplifiers, and low-voltage PCB boards). CAT II covers local residential appliances and portable tools plugged into standard single-phase wall outlets (such as laboratory power supplies and domestic drill machines).',
-            'CAT III covers three-phase industrial distribution systems, distribution panelboards, feeder busbars, industrial motor control centers, and junction boxes permanently connected to the electrical installation. Here, transient voltage impulses caused by switching large inductive motors can reach thousands of volts. Finally, CAT IV covers the highest hazard origin of installation: utility service entrances, electricity utility meters, outdoor service drops, and overhead transmission lines exposed to direct lightning strikes. A CAT IV 600V meter is engineered to survive an 8,000-volt transient impulse, whereas using a CAT II meter in a CAT IV utility panel can result in an explosive arc flash that vaporizes the meter and severely injures the technician.'
+            'When selecting portable test instruments such as digital multimeters, an engineer must match the instrument to the overvoltage installation categories defined by IEC 61010-1. These categories—CAT I, CAT II, CAT III, and CAT IV—are governed not merely by continuous RMS voltage, but by the transient lightning or switching impulse energy present near the utility source.',
+            'CAT I covers secondary low-voltage electronics protected against surges. CAT II covers local single-phase wall receptacles and portable appliances. CAT III covers fixed three-phase building distribution panels, busbars, and industrial motor control centers. CAT IV covers utility service entrances and overhead power lines exposed to direct lightning strikes (up to $8,000\\text{ V}$ impulse). Using a CAT II meter on a CAT III or CAT IV panel can trigger an explosive arc flash when a motor switches.'
           ],
           keyTakeaway:
-            'IEC 61010-1 CAT ratings define transient impulse withstand capability; CAT IV equipment survives 8,000V impulses at utility entrances, preventing catastrophic arc flash explosions.'
+            'IEC 61010-1 CAT ratings define transient impulse withstand capability; matching CAT III/IV ratings to distribution panels prevents catastrophic arc flash explosions.'
+        },
+        {
+          number: '1.7.4',
+          title: 'Hydraulic Instrumentation Safety: Fluid Injection, Accumulators & Zero-Energy LOTO',
+          paragraphs: [
+            'Hydraulic measurement loops commonly operate at pressures between $70\\text{ bar}$ ($1,000\\text{ psi}$) and $350\\text{ bar}$ ($5,000\\text{ psi}$) using nearly incompressible mineral oil or phosphate-ester fluids (ISO 4413). At these pressures, a microscopic pinhole leak in a pressure transducer fitting or braided hose ejects a razor-thin fluid jet exceeding $150\\text{ m/s}$ that easily penetrates leather gloves and human skin. High-pressure hydraulic fluid injection is a surgical emergency causing deep tissue necrosis and potential amputation; technicians must inspect suspected leaks strictly with cardboard or wood strips, never bare hands.',
+            'Equally critical is trapped energy inside nitrogen-charged hydraulic accumulators. Merely switching off and locking out (LOTO) the hydraulic pump motor does NOT depressurize an accumulator branch. Before unthreading any pressure sensor, flow turbine, or manifold plug, technicians must isolate the pump with LOTO, open the manual bleed valve to drain pressurized oil back to the reservoir tank, verify $0.0\\text{ bar}$ on an independent working gauge, and fit pressure relief valves (PRVs) and pulsation snubbers to absorb water-hammer pressure spikes.'
+          ],
+          keyTakeaway:
+            'Hydraulic instrumentation safety requires checking pinhole leaks with cardboard (never hands), bleeding hydraulic accumulators to tank, and verifying 0 bar on a gauge after LOTO before loosening fittings.'
+        },
+        {
+          number: '1.7.5',
+          title: 'Pneumatic Instrumentation Safety: Hose Whip-Checks, Air Embolism & ΔP Manifolds',
+          paragraphs: [
+            'Unlike liquids, compressed gases in pneumatic instrumentation ($2\\text{ to }10\\text{ bar}$, ISO 4414) store vast amounts of compressible mechanical spring energy. If a quick-disconnect fitting or impulse tube fails under load, the pressurized air expands violently, whipping the unrestrained hose across the laboratory with lethal kinetic force. All flexible pneumatic instrument supply lines must be fitted with braided steel whip-check restraint cables anchored across every coupling.',
+            'Furthermore, compressed air must never be directed onto human skin or used to dust off clothing, as pressurized air forced into a minor cut or pore causes a fatal arterial air embolism; any dead-ended blow-off nozzle must be pressure-regulated below $2.0\\text{ bar}$ ($30\\text{ psi}$) with chip shielding and eye/hearing PPE. When commissioning or isolating differential pressure ($\\Delta P$) transmitters, technicians must follow strict three-valve manifold sequencing—opening the central Equalizing ($\\text{EQ}$) valve before closing the High-Pressure ($\\text{HP}$) and Low-Pressure ($\\text{LP}$) block valves—so asymmetric line pressure cannot slam across and rupture the delicate sensing diaphragm.'
+          ],
+          keyTakeaway:
+            'Pneumatic safety requires steel whip-checks on hoses, < 2 bar (30 psi) dead-end limits to prevent air embolism, depressurizing lines before uncoupling, and EQ-first 3-valve manifold sequencing for ΔP transmitters.',
+          figureRef: 'fig7b',
+          figureCaption: 'Figure 1.9: Hydraulic and pneumatic instrumentation safety controls: LOTO shutoff, accumulator bleed-down, zero-bar gauge verification, snubbers/PRVs, pneumatic hose whip-check cables, and 3-valve ΔP manifold equalization.'
         }
       ],
       examQuestions: [
         'Explain how a ground loop produces 50 Hz interference in low-voltage sensor circuits and show how an optocoupler eliminates this noise.',
-        'List and describe the four IEC 61010-1 overvoltage installation categories (CAT I to CAT IV), providing one installation example of each.'
+        'List and describe the four IEC 61010-1 overvoltage installation categories (CAT I to CAT IV), providing one installation example of each.',
+        'Describe the mandatory zero-energy Lockout/Tagout (LOTO) and depressurization procedure before replacing a pressure transducer on a hydraulic line containing a charged accumulator.',
+        'Explain why compressed air lines require whip-check restraints, a < 2 bar (30 psi) dead-end nozzle limit, and EQ-first sequencing on a 3-valve ΔP transmitter manifold.'
       ]
     }
   ]

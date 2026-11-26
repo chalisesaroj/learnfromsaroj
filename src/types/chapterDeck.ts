@@ -24,6 +24,7 @@ export type SlideType =
   | 'definition'
   | 'types'
   | 'pros-cons'
+  | 'comparison-table'
   | 'figure'
   | 'worked-example'
   | 'analogy'
@@ -57,6 +58,12 @@ export interface ProsConsBlock {
   advantages: string[];
   disadvantages: string[];
   engineeringVerdict?: string;
+}
+
+export interface ComparisonTableBlock {
+  headers: string[];
+  rows: string[][];
+  verdict?: string;
 }
 
 export interface AnalogyBlock {
@@ -132,6 +139,7 @@ export interface SlideData {
   definition?: DefinitionBlock;
   typesGrid?: TypeItem[];
   prosCons?: ProsConsBlock;
+  comparisonTable?: ComparisonTableBlock;
   analogy?: AnalogyBlock;
   workedExample?: WorkedExampleBlock;
   quiz?: QuizBlock;

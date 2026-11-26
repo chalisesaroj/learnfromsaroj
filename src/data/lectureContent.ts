@@ -1408,326 +1408,279 @@ export const SLIDES_DATA: SlideData[] = [
   },
 
   // =========================================================================
-  // SECTION 1.5: MEASUREMENT ERRORS & UNCERTAINTY (ISO GUM)
+  // SECTION 1.5: MEASUREMENT ERRORS & UNCERTAINTY (9-SLIDE SEQUENCE)
   // =========================================================================
   {
     id: 69,
-    title: '1.5 Measurement Errors & Uncertainty',
-    subtitle: 'Section 1.5 · Gross, Systematic & Random Errors · Statistics & ISO GUM Evaluation',
+    title: '1.5 Errors & Uncertainty in Measurement',
+    subtitle: 'Section 1.5 · Errors · Types & Differences · Rectification · Error vs. Uncertainty · Type A & Type B · Combined Uncertainty · Numerical',
     sectionTag: '1.5 Errors & Uncertainty',
     type: 'section-divider',
     speakerNotes:
-      'Now we enter Section 1.5: Measurement Errors and Uncertainty according to ISO international standards. No measurement in science is 100% exact. Every number has some doubt. Let us learn how engineers classify and calculate that doubt.',
-    takeaway: 'To report a professional measurement, you must state both the measured value and its uncertainty.'
+      'Welcome to Section 1.5: Errors and Uncertainty in Measurement. We will cover why every measurement deviates from the true value, the three error classes, how to compare and rectify them, how Error differs from Uncertainty, Type A vs. Type B uncertainty, Combined RSS uncertainty, and a full numerical problem.',
+    takeaway: 'Every real measurement contains error; engineers quantify remaining doubt as standardized uncertainty.'
   },
   {
     id: 70,
-    title: 'Error vs. Uncertainty: What is the Difference?',
-    subtitle: 'The Difference Between a Mistake and Inherent Doubt',
+    title: 'Errors in Measurement',
+    subtitle: 'Figure 5 · Deviation Between Measured Value and True Physical Value',
     sectionTag: '1.5 Errors & Uncertainty',
-    type: 'concept',
-    bullets: [
-      'In everyday speech, people confuse "error" with "uncertainty". In engineering, they mean two different things:',
-      '• Measurement Error: The difference between the measured reading and the true value ($E = x_{\\text{measured}} - x_{\\text{true}}$). Since the true value can never be known with infinite perfection, true error is never known exactly.',
-      '• Measurement Uncertainty: A realistic doubt boundary (e.g. $\\pm 0.5\\text{ mm}$) within which we are confident the true value lies.',
-      'When you see a steel shaft specified as "$50.00 \\pm 0.05\\text{ mm}$", the "$\\pm 0.05\\text{ mm}$" is the uncertainty.'
-    ],
+    type: 'figure',
+    figureKey: 'fig5',
+    formulaBlock: {
+      equation: 'E_a = x_{\\text{measured}} - x_{\\text{true}} \\qquad\\qquad \\%E = \\frac{x_{\\text{measured}} - x_{\\text{true}}}{x_{\\text{true}}} \\times 100\\% \\qquad\\qquad C = -E_a',
+      label: 'Eq. 1.7 · Absolute Error, Relative (%) Error & Applied Correction'
+    },
     speakerNotes:
-      'Make this distinction crystal clear: Error is the difference; Uncertainty is the doubt boundary (± band).',
-    takeaway: 'Error = Reading minus True Value; Uncertainty = The ± interval where the true value reasonably lies.'
+      'Explain clearly: Absolute Error Ea = x_measured - x_true. Relative (%) error scales Ea against the true magnitude. Applying Correction C = -Ea restores the true value when bias is known. Point out on Figure 5 how systematic bias shifts the sample mean off the true value, while random spread widens the bell curve around the mean.',
+    takeaway: 'Measurement error is the deviation from true value (Ea = xm − xtrue); accuracy reflects bias while precision reflects scatter.'
   },
   {
     id: 71,
-    title: 'The Three Classes of Measurement Errors',
-    subtitle: 'Gross, Systematic, and Random',
+    title: 'Types of Measurement Error (Three Core Classes)',
+    subtitle: 'Conceptual Breakdown: Gross, Systematic, and Random Errors',
     sectionTag: '1.5 Errors & Uncertainty',
-    type: 'concept',
-    bullets: [
-      'All measurement errors belong to one of three families:',
-      '1. Gross Errors: Human blunders, carelessness, or mistakes (e.g., misreading a dial, recording "25" instead of "52").',
-      '2. Systematic Errors: Predictable, repeatable biases caused by the equipment or environment (e.g., zero offset, loading effect).',
-      '3. Random Errors: Unpredictable microscopic fluctuations that scatter readings around the average (e.g., electrical noise, air drafts).'
+    type: 'types',
+    typesGrid: [
+      {
+        typeName: '1. Gross Errors',
+        badge: 'Block 1 · Human Blunders',
+        description:
+          'Large, erratic mistakes caused by operator carelessness, parallax misreading, transposed digits, or choosing the wrong meter range.',
+        keyFeature:
+          'Non-statistical outlier spikes ($|E| \\gg \\sigma$) that severely corrupt datasets and cannot be averaged out.',
+        example:
+          'Reading a 0–100 V scale on a 250 V dial; recording $52\\text{ kg}$ instead of $25\\text{ kg}$; missing unit conversion.'
+      },
+      {
+        typeName: '2. Systematic Errors (Bias)',
+        badge: 'Block 2 · Consistent Offset',
+        description:
+          'Repeatable, one-directional shift pushing every reading consistently high or low due to zero drift, wear, ambient shift, or loading.',
+        keyFeature:
+          'Degrades Accuracy (mean offset $E_{\\text{bias}}$); stays completely flat even across $N = 1{,}000$ repeated readings.',
+        example:
+          'Scale with $+1.5\\text{ kg}$ zero error; thermally expanded steel tape; voltmeter loading ($R_m \\not\\gg R_s$).'
+      },
+      {
+        typeName: '3. Random Errors (Noise)',
+        badge: 'Block 3 · Stochastic Scatter',
+        description:
+          'Unpredictable microscopic $\\pm$ fluctuations around the sample mean caused by uncontrollable thermal, electrical, or ambient noise.',
+        keyFeature:
+          'Follows a symmetric Gaussian spread ($\\bar{x}, s$); limits Precision and shrinks by $1/\\sqrt{N}$ upon averaging.',
+        example:
+          'Thermal resistor Johnson noise, air drafts moving a balance pan, mechanical floor vibration.'
+      }
     ],
     speakerNotes:
-      'Provide quick examples: Gross = human blunder; Systematic = instrument bias; Random = microscopic noise.',
-    takeaway: 'Errors are either Human Blunders (Gross), Repeatable Offsets (Systematic), or Noise (Random).'
+      'Walk cleanly through the 3 conceptual blocks left-to-right: Gross errors are human blunders; Systematic errors are repeatable directional offsets; Random errors are irreducible stochastic noise around the mean.',
+    takeaway: 'Gross = human blunder; Systematic = consistent directional bias; Random = unpredictable Gaussian scatter.'
   },
   {
     id: 72,
-    title: 'Class 1: Gross Errors (Human Blunders)',
-    subtitle: 'Mistakes That Can and Must Be Avoided',
+    title: 'Difference Between Error Types (Tabular Form)',
+    subtitle: 'Side-by-Side Comparison of Gross, Systematic, and Random Errors',
     sectionTag: '1.5 Errors & Uncertainty',
-    type: 'concept',
-    bullets: [
-      'Gross errors are caused by human carelessness or improper use of equipment:',
-      '• Reading from the wrong scale on a multi-scale dial (reading the 0–100V scale instead of the 0–250V scale).',
-      '• Writing down the wrong number in the lab notebook (transcription error).',
-      '• Connecting wires backward or using the wrong measurement units (confusing inches and centimetres).',
-      'How to eliminate gross errors:',
-      '• Take multiple independent readings, follow strict check sheets, and have a second engineer verify the data.'
-    ],
+    type: 'comparison-table',
+    comparisonTable: {
+      headers: [
+        'Comparison Basis',
+        'Gross Errors',
+        'Systematic Errors (Bias)',
+        'Random Errors (Noise)'
+      ],
+      rows: [
+        [
+          'Primary Source',
+          'Human carelessness, wrong scale, calculation slips',
+          'Calibration drift, zero offset, ambient shift, loading',
+          'Microscopic thermal agitation, noise, air turbulence'
+        ],
+        [
+          'Direction & Pattern',
+          'Erratic, isolated extreme outlier jumps',
+          'Consistent, repeatable (+ or − directional offset)',
+          'Unpredictable symmetric $\\pm$ scatter around mean'
+        ],
+        [
+          'Accuracy vs. Precision',
+          'Invalidates single reading & ruins dataset trust',
+          'Hurts Accuracy (shifts mean away from true value)',
+          'Hurts Precision (widens bell-curve spread $\\sigma$)'
+        ],
+        [
+          'Effect of Averaging ($N$)',
+          'No fix — single outlier severely skews the mean',
+          'Zero fix — constant bias stays flat for any $N$',
+          'Improves — scatter drops by $1/\\sqrt{N}$ as $N$ grows'
+        ],
+        [
+          'Detection Method',
+          'Cross-check logs, range checks, outlier tests',
+          'Calibrate against traceable reference standard',
+          'Measure sample standard deviation ($s$) across trials'
+        ]
+      ],
+      verdict:
+        'Diagnostic Rule: Tightly clustered off-target readings = Systematic Bias; wide symmetric scatter around truth = Random Noise.'
+    },
     speakerNotes:
-      'Remind students of famous space missions that failed because one team used feet and the other used meters (Mars Climate Orbiter).',
-    takeaway: 'Gross errors are human mistakes; they cannot be treated with math—they must be prevented by care.'
+      'Use this summary table to anchor exam comparisons: highlight how Systematic Bias hurts Accuracy and resists averaging, whereas Random Error hurts Precision and decays as 1/sqrt(N).',
+    takeaway: 'Averaging cures Random scatter ($1/\\sqrt{N}$) but never cures Systematic bias or Gross outliers.'
   },
   {
     id: 73,
-    title: 'Class 2: Systematic (Bias) Errors',
-    subtitle: 'Consistent, Repeatable Offsets in Magnitude and Sign',
+    title: 'Rectification of Error Based Upon Types',
+    subtitle: 'Targeted Engineering Actions to Prevent, Calibrate & Suppress Each Error Class',
     sectionTag: '1.5 Errors & Uncertainty',
     type: 'concept',
+    equation: '\\bar{x} = \\frac{1}{N}\\sum_{i=1}^N x_i \\qquad\\qquad C_{\\text{cal}} = -E_{\\text{bias}} = x_{\\text{true}} - x_{\\text{measured}}',
+    formulaBlock: {
+      equation: '\\bar{x} = \\frac{1}{N}\\sum_{i=1}^N x_i \\qquad\\qquad C_{\\text{cal}} = -E_{\\text{bias}} = x_{\\text{true}} - x_{\\text{measured}}',
+      label: 'Core Rectification Equations: Ensemble Averaging (Random) & Bias Correction (Systematic)'
+    },
     bullets: [
-      'Systematic errors are repeatable: every time you take a measurement, the reading is consistently too high or consistently too low by the same amount.',
-      'Common causes:',
-      '• Zero Error: The bathroom scale starts at +1.5 kg before anyone steps on it.',
-      '• Ambient Temperature: A steel measuring tape expands in the hot sun and reads too short.',
-      '• Circuit Loading: A low-resistance voltmeter pulls down the circuit voltage every time it is connected.',
-      'Key Property: Systematic errors CAN be discovered and corrected by recalibrating against a standard!'
+      '1. Rectifying Gross Errors (Prevention & Screening): Use strict readback checklists, mirror-backed scales (eliminate parallax) or digital displays, automated range bounds, and discard verified outliers before analysis.',
+      '2. Rectifying Systematic Errors (Calibration & Design): Perform periodic zero/span calibration against traceable standards, subtract bias mathematically ($y_{\\text{corr}} = y_{\\text{raw}} + C_{\\text{cal}}$), use differential/Wheatstone bridges for thermal cancellation, and buffer circuits ($R_m \\gg R_s$).',
+      '3. Rectifying Random Errors (Statistics & Filtering): Compute the ensemble mean $\\bar{x}$ over $N$ repeated trials (reduces uncertainty by $1/\\sqrt{N}$), and improve Signal-to-Noise Ratio (SNR) using shielded cables, low-pass filters, and vibration isolation.'
     ],
     speakerNotes:
-      'Key exam point: Systematic errors do not average out to zero! If your scale is +1 kg off, averaging 1,000 readings will still be +1 kg off.',
-    takeaway: 'Systematic errors are repeatable biases; they can be discovered and removed by calibration.'
+      'Emphasize matching the right cure to the right disease: never try to average away a zero-offset bias, and never calibrate away a random thermal noise floor.',
+    takeaway: 'Prevent Gross blunders with checklists, calibrate/compensate Systematic bias, and average/filter Random noise.'
   },
   {
     id: 74,
-    title: 'Class 3: Random (Stochastic) Errors',
-    subtitle: 'Unpredictable Scatter Governed by Probability',
+    title: 'Error vs. Uncertainty: What is the Difference?',
+    subtitle: 'Distinguishing Single Unknown Deviation from Quantified Confidence Interval',
     sectionTag: '1.5 Errors & Uncertainty',
-    type: 'concept',
-    bullets: [
-      'Even after you eliminate gross mistakes and calibrate away systematic offsets, repeated readings will still vary slightly!',
-      'Why? Because of microscopic random effects in nature:',
-      '• Thermal motion of electrons inside resistors (Johnson noise).',
-      '• Tiny air pressure drafts blowing past an analytical balance.',
-      '• Microscopic vibrations from passing road traffic.',
-      'Key Property: Random errors are equally likely to be positive or negative. Therefore, taking the average of many readings helps cancel them out!'
-    ],
+    type: 'comparison-table',
+    comparisonTable: {
+      headers: [
+        'Comparison Basis',
+        'Measurement Error ($E$)',
+        'Measurement Uncertainty ($\\pm U$)'
+      ],
+      rows: [
+        [
+          'Formal Meaning',
+          'Single difference between one reading and true value ($E = x_m - x_{\\text{true}}$)',
+          'Half-width of a verified interval around $\\bar{x}$ expected to contain truth ($\\bar{x} \\pm U$)'
+        ],
+        [
+          'Mathematical Form',
+          'Signed single number ($+0.8\\text{ V}$ or $-0.3\\,^{\\circ}\\text{C}$)',
+          'Always a non-negative $\\pm$ interval stated with confidence ($\\pm 0.53\\,^{\\circ}\\text{C},\\; 95\\%$)'
+        ],
+        [
+          'Practical Knowability',
+          'Exact error is unknowable in field tests because $x_{\\text{true}}$ is unknown',
+          'Always computable from sample spread ($u_A$) and instrument specs ($u_B$)'
+        ],
+        [
+          'After Applying Calibration',
+          'Known systematic error is corrected and subtracted out ($C = -E_{\\text{bias}}$)',
+          'Does NOT become zero — reflects remaining doubt after correction'
+        ],
+        [
+          'Standard Reporting',
+          'Used during calibration checks against a higher primary standard',
+          'Mandatory on ISO/IEC 17025 lab certificates & engineering specs'
+        ]
+      ],
+      verdict:
+        'Error is an idealized single deviation ($x_m - x_{\\text{true}}$); Uncertainty is the honest statistical margin ($\\pm U$) proving measurement quality.'
+    },
     speakerNotes:
-      'Because random errors are equally likely to be positive or negative, mathematics (averaging) is our primary defense against them.',
-    takeaway: 'Random errors scatter unpredictably above and below the truth; averaging cancels them out.'
+      'Students often treat Error and Uncertainty as synonyms. Clarify that Error is a single unknown offset (positive or negative), whereas Uncertainty is a positive ± confidence band evaluated via ISO GUM.',
+    takeaway: 'Error is an unknown single deviation; Uncertainty is a calculable ± interval stating how well you know the result.'
   },
   {
     id: 75,
-    title: 'Handling Random Errors: The Sample Mean',
-    subtitle: 'The Average is the Best Mathematical Estimate of the True Value',
+    title: 'Type A and Type B Uncertainty (ISO GUM)',
+    subtitle: 'Figure 5B · Statistical Repeated-Sample Evaluation (uA) vs. Non-Statistical Models (uB)',
     sectionTag: '1.5 Errors & Uncertainty',
-    type: 'formula',
+    type: 'figure',
+    figureKey: 'fig5b',
     formulaBlock: {
-      equation: '\\bar{x} = \\frac{1}{N} \\sum_{i=1}^N x_i = \\frac{x_1 + x_2 + \\dots + x_N}{N}',
-      label: 'Equation 1.5 · Sample Arithmetic Mean',
-      description: 'The average of N repeated independent readings under identical conditions.',
-      symbols: [
-        { symbol: '\\bar{x}', name: 'Sample Mean', unit: 'Measurement Units', description: 'Best statistical estimate of the true measured value' },
-        { symbol: 'x_i', name: 'Individual Reading', unit: 'Measurement Units', description: 'The i-th recorded observation' },
-        { symbol: 'N', name: 'Number of Observations', unit: 'count', description: 'Total number of repeated test samples' }
-      ]
+      equation: 'u_A = \\frac{s}{\\sqrt{N}} \\qquad\\quad u_B = \\frac{a}{\\sqrt{3}}\\;\\text{(Rect.)},\\quad \\frac{a}{\\sqrt{6}}\\;\\text{(Tri.)},\\quad \\frac{U}{k}\\;\\text{(Cert.)}',
+      label: 'Eq. 1.8 · Standard Uncertainties: Type A (Active Trials) & Type B (Datasheets / Certificates)'
     },
-    bullets: [
-      'By taking the sum of all readings and dividing by $N$, positive random noise cancels out negative random noise.'
-    ],
     speakerNotes:
-      'Students already know how to calculate an average from school. Point out that in instrumentation, the mean is our best estimate of truth.',
-    takeaway: 'The arithmetic mean (average) cancels out random positive and negative fluctuations.'
+      'Explain the two ISO GUM categories using Figure 5B: Type A comes from statistical analysis of N repeated readings (uA = s / sqrt(N), shrinking by 1/sqrt(N)). Type B comes from datasheets, resolution limits, or calibration certificates using Rectangular (a/sqrt(3)), Triangular (a/sqrt(6)), or Normal (U/k) probability models.',
+    takeaway: 'Type A uses repeated trials (uA = s/√N); Type B uses tolerances/certificates (uB = a/√3, a/√6, or U/k).'
   },
   {
     id: 76,
-    title: 'Sample Standard Deviation: Measuring the Spread',
-    subtitle: 'How Wildly Are the Readings Scattering Around the Average?',
+    title: 'Combined & Expanded Uncertainty (ISO GUM)',
+    subtitle: 'Figure 5C · Root-Sum-Square (RSS) Propagation (uc) & Confidence Coverage Band (U)',
     sectionTag: '1.5 Errors & Uncertainty',
-    type: 'formula',
+    type: 'figure',
+    figureKey: 'fig5c',
     formulaBlock: {
-      equation: 's = \\sqrt{\\frac{1}{N - 1} \\sum_{i=1}^N (x_i - \\bar{x})^2}',
-      label: 'Equation 1.6 · Sample Standard Deviation',
-      description: 'Quantifies the spread or dispersion of individual readings around the sample mean.',
-      symbols: [
-        { symbol: 's', name: 'Sample Standard Deviation', unit: 'Measurement Units', description: 'Spread of individual measurements' },
-        { symbol: 'x_i - \\bar{x}', name: 'Deviation from Mean', unit: 'Measurement Units', description: 'Distance of each single reading from the average' },
-        { symbol: 'N - 1', name: 'Degrees of Freedom', unit: 'count', description: 'Number of independent data points remaining' }
-      ]
+      equation: 'u_c = \\sqrt{u_A^2 + u_B^2} = \\sqrt{\\sum_{i=1}^m \\left(\\frac{\\partial f}{\\partial x_i}\\,u_i\\right)^2} \\qquad\\text{and}\\qquad U = k \\cdot u_c \\;\\;(k = 2 \\Rightarrow 95.4\\%)',
+      label: 'Eq. 1.9 · ISO GUM Combined Standard Uncertainty (uc) & Expanded Uncertainty (U)'
     },
-    bullets: [
-      'A small standard deviation $s$ means readings are tightly clustered (high precision).',
-      'A large standard deviation $s$ means readings are scattering wildly.'
-    ],
     speakerNotes:
-      'Explain that N - 1 is used instead of N for sample statistics because one degree of freedom was spent calculating the mean.',
-    takeaway: 'Standard deviation (s) measures how widely your repeated readings are scattering.'
+      'Show how independent Type A and Type B standard uncertainties are never added linearly—they combine in quadrature via Root-Sum-Square (uc). For multi-variable indirect measurements y = f(x1, x2, ...), weight each component by its sensitivity coefficient ci = df/dxi. Finally multiply uc by coverage factor k = 2 to state 95% confidence.',
+    takeaway: 'Combine independent uncertainties via RSS: uc = √(uA² + uB²); scale by k = 2 for 95% confidence (Mean ± U).'
   },
   {
     id: 77,
-    title: 'Type A Standard Uncertainty: Standard Error of the Mean',
-    subtitle: 'How Confident Are We in the Average Value?',
-    sectionTag: '1.5 Errors & Uncertainty',
-    type: 'formula',
-    formulaBlock: {
-      equation: 'u_A = \\frac{s}{\\sqrt{N}}',
-      label: 'Equation 1.7 · Type A Standard Uncertainty',
-      description: 'The standard uncertainty of the calculated average, decreasing with more samples.',
-      symbols: [
-        { symbol: 'u_A', name: 'Type A Uncertainty', unit: 'Measurement Units', description: 'Standard uncertainty of the sample mean' },
-        { symbol: 's', name: 'Sample Standard Deviation', unit: 'Measurement Units', description: 'Spread of individual observations' },
-        { symbol: '\\sqrt{N}', name: 'Square Root of Sample Count', unit: 'dimensionless', description: 'Diminishing returns divider' }
-      ]
-    },
-    bullets: [
-      'Notice the $\\sqrt{N}$ in the denominator!',
-      '• If you take $N = 4$ readings, uncertainty is cut in half: $\\sqrt{4} = 2$.',
-      '• If you take $N = 100$ readings, uncertainty is cut by a factor of 10: $\\sqrt{100} = 10$.',
-      'More repeated samples improves confidence in the average!'
-    ],
-    speakerNotes:
-      'Emphasize the square root rule: to cut random noise by 10 times, you need 100 readings, not 10.',
-    takeaway: 'Taking N repeated samples reduces random uncertainty by a factor of √N.'
-  },
-  {
-    id: 78,
-    title: 'The Averaging Fallacy: Why More Samples Cannot Fix Bias',
-    subtitle: 'The Most Dangerous Mistake in Lab Testing',
-    sectionTag: '1.5 Errors & Uncertainty',
-    type: 'concept',
-    bullets: [
-      'Students often think:',
-      '"If I take 10,000 readings, my measurement will be 100% perfect!"',
-      'This is the famous Averaging Fallacy.',
-      'Averaging reduces Random Noise ($u_A = s / \\sqrt{N}$).',
-      'Averaging DOES NOT touch Systematic Zero Error!',
-      'If a weighing scale has a zero bias of $+2.0\\text{ kg}$, averaging 1,000,000 readings still gives an answer that is $+2.0\\text{ kg}$ too high.',
-      'To fix systematic bias, you must calibrate the instrument against an independent standard.'
-    ],
-    speakerNotes:
-      'Repeat this key exam concept: Averaging reduces random error, but does NOT reduce systematic bias.',
-    takeaway: 'Averaging 10,000 readings reduces random scatter, but leaves systematic bias completely untouched!'
-  },
-  {
-    id: 79,
-    title: 'Type B Uncertainty: When You Have No Repeated Data',
-    subtitle: 'Evaluating Uncertainty from Manufacturer Datasheets',
-    sectionTag: '1.5 Errors & Uncertainty',
-    type: 'formula',
-    formulaBlock: {
-      equation: 'u_B = \\frac{a}{\\sqrt{3}}',
-      label: 'Equation 1.8 · Type B Standard Uncertainty (Rectangular Distribution)',
-      description: 'Standard uncertainty derived from manufacturer tolerance specifications.',
-      symbols: [
-        { symbol: 'u_B', name: 'Type B Standard Uncertainty', unit: 'Measurement Units', description: 'Non-statistical standard uncertainty' },
-        { symbol: 'a', name: 'Manufacturer Tolerance Bound', unit: 'Measurement Units', description: 'Stated manufacturer tolerance limit (± a)' },
-        { symbol: '\\sqrt{3}', name: 'Uniform Distribution Divisor', unit: 'constant (≈ 1.732)', description: 'Divisor converting rectangular bound into standard uncertainty' }
-      ]
-    },
-    bullets: [
-      'Type A = Derived from your own repeated experimental numbers in the lab.',
-      'Type B = Derived from external knowledge: manufacturer calibration certificate, handbook data, or resolution limits.',
-      'If a digital caliper is certified as "accurate to $\\pm 0.03\\text{ mm}$", the half-width is $a = 0.03\\text{ mm}$.'
-    ],
-    speakerNotes:
-      'Help students remember: Type A = Active experiment (mean and s). Type B = Book / Datasheet / Certificate.',
-    takeaway: 'Type A comes from repeated data; Type B comes from datasheets and certificates (uB = a / √3).'
-  },
-  {
-    id: 80,
-    title: 'Combined Uncertainty via Root-Sum-Square (RSS)',
-    subtitle: 'How Engineers Combine Type A and Type B Uncertainties',
-    sectionTag: '1.5 Errors & Uncertainty',
-    type: 'formula',
-    formulaBlock: {
-      equation: 'u_c = \\sqrt{u_A^2 + u_B^2}',
-      label: 'Equation 1.9 · ISO GUM Combined Standard Uncertainty',
-      description: 'Combining independent statistical and non-statistical standard uncertainties.',
-      symbols: [
-        { symbol: 'u_c', name: 'Combined Standard Uncertainty', unit: 'Measurement Units', description: 'Total combined 1-sigma uncertainty' },
-        { symbol: 'u_A', name: 'Type A Uncertainty', unit: 'Measurement Units', description: 'Statistical scatter from repeated tests' },
-        { symbol: 'u_B', name: 'Type B Uncertainty', unit: 'Measurement Units', description: 'Datasheet / calibration uncertainty' }
-      ]
-    },
-    bullets: [
-      'Think of Pythagoras theorem: You square each uncertainty, add them together, and take the square root!',
-      'This is called the Root-Sum-Square (RSS) method.',
-      'Expanded Uncertainty ($U$): To give a 95% confidence statement, multiply $u_c$ by coverage factor $k = 2$:',
-      '$$U = 2 \\cdot u_c$$'
-    ],
-    speakerNotes:
-      'Pythagorean combination: Just like a right triangle, c = sqrt(a^2 + b^2). At k=2, we have 95% confidence.',
-    takeaway: 'Combined uncertainty = √(uA² + uB²). Multiply by 2 for a 95% confidence interval.'
-  },
-  {
-    id: 81,
-    title: 'Worked Example: Full Uncertainty Calculation',
-    subtitle: 'Step-by-Step Solved Problem',
+    title: 'Numerical Solution: Full ISO GUM Uncertainty Calculation',
+    subtitle: 'Step-by-Step Worked Numerical Practice (Type A, Type B, Combined & Expanded)',
     sectionTag: '1.5 Worked Example',
     type: 'worked-example',
     workedExample: {
       problem:
-        'A technician measures the temperature of an industrial furnace 9 times (N = 9). The sample mean is 150.0 °C and the sample standard deviation is s = 0.60 °C. The manufacturer certificate states the thermometer tolerance is ±0.30 °C. Calculate: (1) Type A uncertainty, (2) Type B uncertainty, (3) Combined uncertainty uc, and (4) Expanded uncertainty U for 95% confidence (k = 2).',
+        'A technician measures the temperature of an industrial furnace 9 times (N = 9). The sample mean is 150.00 °C and the sample standard deviation is s = 0.60 °C. The manufacturer calibration datasheet specifies an accuracy tolerance of ±0.30 °C (rectangular distribution). Calculate: (1) Type A uncertainty uA, (2) Type B uncertainty uB, (3) Combined standard uncertainty uc, and (4) Expanded uncertainty U at 95% confidence (k = 2).',
       given: {
         'Number of Readings (N)': '9',
-        'Sample Mean': '150.0 °C',
+        'Sample Mean (x̄)': '150.00 °C',
         'Sample Std Dev (s)': '0.60 °C',
-        'Tolerance Bound (a)': '0.30 °C',
-        'Coverage Factor (k)': '2'
+        'Tolerance Half-Width (a)': '0.30 °C (Rectangular)',
+        'Coverage Factor (k)': '2 (95.4% confidence)'
       },
       steps: [
         {
           stepNumber: 1,
           title: 'Calculate Type A Uncertainty (uA)',
-          math: 'u_A = \\frac{s}{\\sqrt{N}} = \\frac{0.60\\,^{\\circ}\\text{C}}{\\sqrt{9}} = \\frac{0.60}{3} = 0.20\\,^{\\circ}\\text{C}',
-          explanation: 'Divide standard deviation by the square root of 9 (which is 3).'
+          math: 'u_A = \\frac{s}{\\sqrt{N}} = \\frac{0.60\\,^{\\circ}\\text{C}}{\\sqrt{9}} = \\frac{0.60}{3} = 0.200\\,^{\\circ}\\text{C}',
+          explanation: 'Divide sample standard deviation s by √N = √9 = 3.'
         },
         {
           stepNumber: 2,
           title: 'Calculate Type B Uncertainty (uB)',
           math: 'u_B = \\frac{a}{\\sqrt{3}} = \\frac{0.30\\,^{\\circ}\\text{C}}{1.732} = 0.173\\,^{\\circ}\\text{C}',
-          explanation: 'Divide the manufacturer tolerance 0.30 °C by the square root of 3.'
+          explanation: 'Use the Rectangular divisor √3 for manufacturer datasheet tolerance ±0.30 °C.'
         },
         {
           stepNumber: 3,
           title: 'Calculate Combined Standard Uncertainty (uc)',
-          math: 'u_c = \\sqrt{u_A^2 + u_B^2} = \\sqrt{0.20^2 + 0.173^2} = \\sqrt{0.0400 + 0.0300} = \\sqrt{0.0700} = 0.265\\,^{\\circ}\\text{C}',
-          explanation: 'Combine using the Root-Sum-Square (RSS) formula.'
+          math: 'u_c = \\sqrt{u_A^2 + u_B^2} = \\sqrt{0.200^2 + 0.173^2} = \\sqrt{0.0400 + 0.0300} = 0.265\\,^{\\circ}\\text{C}',
+          explanation: 'Combine Type A and Type B 1-sigma uncertainties in quadrature via Root-Sum-Square (RSS).'
         },
         {
           stepNumber: 4,
           title: 'Calculate Expanded Uncertainty (U = k · uc)',
           math: 'U = 2 \\times 0.265\\,^{\\circ}\\text{C} = 0.53\\,^{\\circ}\\text{C}',
-          explanation: 'Multiply combined uncertainty by coverage factor k = 2 for 95% confidence.'
+          explanation: 'Multiply combined standard uncertainty uc by coverage factor k = 2.'
         }
       ],
-      finalAnswer: 'Final Reported Value = 150.00 ± 0.53 °C (k = 2, 95% confidence)',
+      finalAnswer: 'Reported Result = 150.00 ± 0.53 °C (k = 2, 95% confidence)',
       practicalInsight:
-        'The engineering report states: We are 95% confident that the true furnace temperature lies between 149.47 °C and 150.53 °C.'
+        'Engineering Interpretation: We are 95% confident that the true furnace temperature lies between 149.47 °C and 150.53 °C.'
     },
     speakerNotes:
-      'Walk through the numbers slowly. Show students that 0.60 / 3 = 0.20. Simple arithmetic that builds confidence.',
-    takeaway: 'Final report: Measured Mean ± Expanded Uncertainty (U = 2 · uc) with 95% confidence.'
-  },
-  {
-    id: 82,
-    title: 'Check Your Understanding: Uncertainty Types',
-    subtitle: 'Concept Check 1.5',
-    sectionTag: '1.5 Quiz',
-    type: 'check-understanding',
-    quiz: {
-      question:
-        'A student reads the calibration sticker on a workshop pressure gauge which states: "Tolerance ± 0.60 bar". What type of uncertainty evaluation is this?',
-      options: [
-        'Type A uncertainty because it involves pressure.',
-        'Type B uncertainty because it comes from a calibration certificate and not from repeated statistical samples.',
-        'Gross human error.',
-        'Null-balance error.'
-      ],
-      correctIndex: 1,
-      explanation:
-        'Correct! Any uncertainty evaluated from specifications, certificates, or manufacturer handbooks without taking your own repeated experimental data is classified as Type B uncertainty ($u_B = a / \\sqrt{3} = 0.60 / \\sqrt{3} = 0.346\\text{ bar}$).'
-    },
-    speakerNotes:
-      'Reinforce: Test data = Type A. Sticker / datasheet = Type B.',
-    takeaway: 'Datasheet or calibration certificate uncertainty is always Type B.'
+      'Walk step-by-step through all 4 calculations: uA = 0.200 °C, uB = 0.173 °C, uc = 0.265 °C, and U = 0.53 °C. Notice how the numerical values directly match Figure 5C.',
+    takeaway: 'Always report final results as Sample Mean ± Expanded Uncertainty with units and coverage factor k.'
   },
 
   // =========================================================================
   // SECTION 1.6: INTRUSIVE VS. NON-INTRUSIVE SENSING
   // =========================================================================
   {
-    id: 83,
+    id: 78,
     title: '1.6 Intrusive vs. Non-Intrusive Sensing',
     subtitle: 'Section 1.6 · Touching vs. Observing From Outside · Circuit & Flow Loading',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1737,7 +1690,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Intrusive sensors penetrate the process; non-intrusive sensors measure from outside without contact.'
   },
   {
-    id: 84,
+    id: 79,
     title: 'What is Intrusive Sensing?',
     subtitle: 'The Sensor Penetrates Directly into the Process Medium',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1755,7 +1708,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Intrusive sensing requires physical penetration into the fluid, pipe, or electrical circuit.'
   },
   {
-    id: 85,
+    id: 80,
     title: 'The Drawbacks of Intrusive Sensing',
     subtitle: 'Turbulence, Leaks, and Energy Losses',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1772,7 +1725,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Intrusive probes cause pressure drops, wear out from fluid abrasion, and create leak hazards.'
   },
   {
-    id: 86,
+    id: 81,
     title: 'The Voltmeter Loading Effect Explained',
     subtitle: 'How an Intrusive Electrical Meter Distorts Circuit Voltage',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1790,7 +1743,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Connecting a voltmeter draws current, causing the measured voltage to drop below the true value.'
   },
   {
-    id: 87,
+    id: 82,
     title: 'Formula: Voltmeter Circuit Loading',
     subtitle: 'Calculating the Measured Voltage with Meter Resistance',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1816,7 +1769,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'A voltmeter must have huge internal resistance (Rm >> Rs) to avoid dropping the circuit voltage.'
   },
   {
-    id: 88,
+    id: 83,
     title: 'Worked Example: Voltmeter Loading Error',
     subtitle: 'Step-by-Step Numerical Practice',
     sectionTag: '1.6 Worked Example',
@@ -1858,7 +1811,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Never use a low-resistance meter on a high-resistance circuit, or you will cause huge loading errors!'
   },
   {
-    id: 89,
+    id: 84,
     title: 'The Ammeter Loading Rule',
     subtitle: 'Ammeters Must Have Near-Zero Internal Resistance',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1876,7 +1829,18 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Voltmeter resistance must be HUGE (infinite); Ammeter resistance must be TINY (zero).'
   },
   {
-    id: 90,
+    id: 85,
+    title: 'Circuit Diagrams: Voltmeter & Ammeter Loading Effect',
+    subtitle: 'Figure 6B · Parallel Voltmeter Divider (Rm) vs. Series Ammeter Insertion (Ra)',
+    sectionTag: '1.6 Intrusive Sensing',
+    type: 'figure',
+    figureKey: 'fig6b',
+    speakerNotes:
+      'Trace both circuits carefully on the board. On the left, connecting the voltmeter in parallel forces current Im through source resistor Rs, dropping the terminal voltage to 5.0 V. On the right, inserting the ammeter in series adds Ra = 20 Ω to Rload = 100 Ω, throttling current from 100 mA down to 83.3 mA.',
+    takeaway: 'Parallel voltmeters need Rm ≫ Rs to stop current drain; series ammeters need Ra ≪ Rload to avoid added resistance.'
+  },
+  {
+    id: 86,
     title: 'What is Non-Intrusive Sensing?',
     subtitle: 'Measuring Without Touching or Disturbing the Medium',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1893,7 +1857,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Non-intrusive sensors measure through fields (magnetic, acoustic, optical) without breaking the envelope.'
   },
   {
-    id: 91,
+    id: 87,
     title: 'Visual Comparison: Intrusive vs. Non-Intrusive',
     subtitle: 'Figure 6 · Physical Pipe Flow & Electrical Loading Comparison',
     sectionTag: '1.6 Intrusive Sensing',
@@ -1904,218 +1868,208 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'Figure 6 contrasts intrusive fluid turbulence against smooth, non-intrusive external measurement.'
   },
   {
-    id: 92,
-    title: 'Intrusive vs. Non-Intrusive: Engineering Selection',
-    subtitle: 'When to Choose Which Method',
+    id: 88,
+    title: 'Difference Between Intrusive and Extrusive Sensing',
+    subtitle: 'Intrusive (Process-Penetrating) vs. Extrusive / Non-Intrusive (External) Comparison Table',
     sectionTag: '1.6 Intrusive Sensing',
-    type: 'pros-cons',
-    prosCons: {
-      title: 'Technology Comparison Matrix',
-      advantages: [
-        'Intrusive Sensing: Simple, rugged, and low cost; highly accurate for slow, stable, non-corrosive liquids.',
-        'Non-Intrusive Sensing: Zero pressure loss; zero leak hazard; installs on live running pipes; zero circuit loading.'
+    type: 'comparison-table',
+    comparisonTable: {
+      headers: [
+        'Parameter',
+        'Intrusive Sensing',
+        'Extrusive (Non-Intrusive) Sensing'
       ],
-      disadvantages: [
-        'Intrusive Sensing: Causes pressure drop; subject to fluid erosion and chemical attack; requires plant shutdown to service.',
-        'Non-Intrusive Sensing: Higher initial equipment cost; sensitive to pipe wall thickness, rust, and surface cleanliness.'
+      rows: [
+        [
+          'Physical Contact',
+          'Probe penetrates inside the pipe, vessel, or live electrical conductor',
+          'Senses externally from outside the process wall or cable jacket'
+        ],
+        [
+          'Flow & Pressure Drop',
+          'Obstructs fluid flow, creating eddies and permanent head loss',
+          'Zero internal obstruction and zero permanent pressure drop'
+        ],
+        [
+          'Circuit Loading',
+          'Draws energy from circuit unless $R_m \\gg R_s$ or $R_a \\ll R_{\\text{load}}$',
+          'Zero electrical loading on circuit (magnetic clamp / optical pickup)'
+        ],
+        [
+          'Installation & Shutdown',
+          'Requires drilling/tapping pipe or cutting wire; needs plant shutdown',
+          'Mounts externally on live running pipelines or insulated cables'
+        ],
+        [
+          'Wear, Corrosion & Leaks',
+          'Subject to abrasion, chemical attack, and seal leak hazards',
+          'Protected from toxic, high-pressure, corrosive, or sanitary media'
+        ],
+        [
+          'Cost & Wall Sensitivity',
+          'Lower initial hardware cost; unaffected by outer pipe wall scale',
+          'Higher unit cost; sensitive to pipe thickness, rust, or emissivity'
+        ],
+        [
+          'Typical Examples',
+          'Orifice plate, immersion thermowell, series shunt ammeter',
+          'Clamp-on ultrasonic flowmeter, IR pyrometer, Hall-effect clamp'
+        ]
       ],
-      engineeringVerdict:
-        'Use Intrusive probes when fluids are clean and budgets are low. Use Non-Intrusive sensing for hazardous chemicals, high-pressure steam, sanitary food/pharmaceutical pipelines, or live electrical cables.'
+      verdict:
+        'Use Intrusive sensors for clean, low-cost, low-pressure lines; use Extrusive (Non-Intrusive) sensors for live high-pressure, hazardous, corrosive, or sanitary processes.'
     },
     speakerNotes:
-      'Point out the food and beverage industry: you cannot stick dirty metal probes into milk or beer pipes—you must use non-intrusive sanitary sensors.',
-    takeaway: 'Non-intrusive sensing is essential for hazardous, high-pressure, or sanitary pipelines.'
+      'Walk students row-by-row through the difference table between Intrusive and Extrusive (Non-Intrusive) sensing. Note that "Extrusive" in instrumentation exams refers to non-intrusive external sensors operating outside the process boundary without breaking containment.',
+    takeaway: 'Intrusive probes penetrate the process with lower cost; Extrusive sensors operate externally with zero flow or circuit loading.'
   },
 
   // =========================================================================
-  // SECTION 1.7: ELECTRICAL SAFETY & GROUND LOOP ISOLATION
+  // SECTION 1.7: SAFETY CONSIDERATIONS DURING INSTRUMENTATION
+  // Cover slide (89) + 5 core safety slides (90–94)
   // =========================================================================
   {
-    id: 93,
-    title: '1.7 Electrical Safety & Ground Loop Isolation',
-    subtitle: 'Section 1.7 · Protecting Equipment and Lives · Ground Loops · Optocouplers · IEC CAT Ratings',
-    sectionTag: '1.7 Electrical Safety',
+    id: 89,
+    title: '1.7 Safety Considerations During Instrumentation',
+    subtitle: 'Section 1.7 · LOTO Zero-Energy · Electrical (Ground Loops, Optocouplers, IEC CAT I–IV) · Hydraulic (ISO 4413) · Pneumatic (ISO 4414)',
+    sectionTag: '1.7 Instrumentation Safety',
     type: 'section-divider',
     speakerNotes:
-      'Finally, we reach Section 1.7: Electrical Safety and Ground Loop Isolation. In factory automation, high voltages and long cables can cause equipment fires or lethal electric shocks if safety rules are ignored. Let us see how to stay safe.',
-    takeaway: 'Safety is non-negotiable: proper grounding and galvanic isolation protect both delicate sensors and human lives.'
+      'Finally, we reach Section 1.7: Safety Considerations During Instrumentation. Industrial sensors connect to high-voltage panels, 70–350 bar hydraulic oil rigs, and 2–10 bar compressed air manifolds. We cover all three safety domains in 5 focused slides.',
+    takeaway: 'Instrumentation safety requires LOTO and zero-energy verification across Electrical, Hydraulic, and Pneumatic systems.'
   },
   {
-    id: 94,
-    title: 'What is Earth Ground?',
-    subtitle: 'The 0-Volt Safety Anchor for Buildings and Machines',
-    sectionTag: '1.7 Electrical Safety',
-    type: 'concept',
-    bullets: [
-      'In electrical engineering, "Ground" (or Earth) is a thick copper rod driven deep into the physical earth soil outside a building.',
-      'The metal chassis of machines, drill presses, and electrical cabinets are connected by green-yellow wires to this earth rod.',
-      'Purpose 1 (Human Safety): If a live wire shakes loose and touches the metal casing, the electric current rushes harmlessly into the earth rod, tripping the circuit breaker instead of shocking a worker.',
-      'Purpose 2 (Signal Reference): Serves as the zero-volt ($0.00\\text{ V}$) baseline reference for electronics.'
+    id: 90,
+    title: 'Three Pillars of Instrumentation Safety & Universal LOTO',
+    subtitle: 'Electrical, Hydraulic & Pneumatic Hazards and Zero-Energy Verification',
+    sectionTag: '1.7 Instrumentation Safety',
+    type: 'types',
+    typesGrid: [
+      {
+        typeName: 'Electrical Safety (IEC 61010-1)',
+        badge: 'Shock, Loops & Arc Flash',
+        description:
+          'Protects personnel via earth ground rods ($0\\text{ V}$ fault return), breaks ground loops via galvanic isolation, and prevents arc flash via CAT ratings.',
+        keyFeature:
+          'Apply electrical Lockout/Tagout (LOTO), test for $0\\text{ V}$ (Live-Dead-Live), and isolate $50/60\\text{ Hz}$ paths.',
+        example:
+          'CAT III/IV multimeters on $415\\text{ V}$ panels; isolated DAQ optocouplers; earth-bonded frames.'
+      },
+      {
+        typeName: 'Hydraulic Safety (ISO 4413)',
+        badge: '70–350 bar High-Pressure Oil',
+        description:
+          'Pinhole oil jets pierce gloves/skin (tissue necrosis); nitrogen accumulators hold lethal pressure even after the pump motor stops.',
+        keyFeature:
+          'Check leaks with cardboard/wood (never hands), bleed accumulators to tank, and verify $0.0\\text{ bar}$.',
+        example:
+          'Pressure relief valves (PRVs), pulsation snubbers, splash goggles, and LOTO bleed manifolds.'
+      },
+      {
+        typeName: 'Pneumatic Safety (ISO 4414)',
+        badge: '2–10 bar Stored Air Energy',
+        description:
+          'Compressed air acts like a coiled spring, causing violent hose whip, skin air embolism ($\\ge 2\\text{ bar}$), and $\\Delta P$ diaphragm rupture.',
+        keyFeature:
+          'Fit braided steel whip-checks, keep blow nozzles $< 2\\text{ bar}$ ($30\\text{ psi}$), and vent via FRL lockout.',
+        example:
+          '3-valve $\\Delta P$ manifold (open Equalizing $\\text{EQ}$ valve FIRST), safety glasses, and vented couplers.'
+      }
     ],
     speakerNotes:
-      'Ask students why plugs have three pins: the third longer pin is the earth ground safety pin.',
-    takeaway: 'Earth ground protects human life by safely directing fault currents into the soil.'
+      'Contrast the three plant energy domains side-by-side: Electrical capacitors hold voltage, hydraulic accumulators store pressurized oil, and pneumatic receivers store compressed air spring energy. LOTO + zero-energy verification applies to every domain.',
+    takeaway: 'Never service any sensor until power is locked out and both voltage (0 V) and fluid pressure (0 bar) are verified zero.'
   },
   {
-    id: 95,
-    title: 'What is a Ground Loop?',
-    subtitle: 'When "Zero Volts" is NOT Zero Volts Everywhere!',
-    sectionTag: '1.7 Electrical Safety',
-    type: 'concept',
-    bullets: [
-      'Beginner engineers assume: "Ground is 0.00 Volts everywhere in the factory."',
-      'In real life, this assumption is DANGEROUSLY WRONG!',
-      'Imagine Machine A in Building 1 is connected to Earth Ground A.',
-      'Machine B in Building 2 is connected to Earth Ground B 100 meters away.',
-      'Because electric currents flow through the soil from factory motors, Ground A and Ground B are at slightly different voltages (e.g. $\\Delta V_g = 5.0\\text{ Volts}$).',
-      'When you connect a shielded signal cable between the two machines, you complete a continuous metal loop!',
-      'A circulating noise current rushes through the cable shield. This is a Ground Loop.'
-    ],
+    id: 91,
+    title: 'Electrical Safety: Ground Loops, Isolation & IEC CAT I–IV',
+    subtitle: 'Breaking Circulating Ground Currents (>5 kV Optocouplers) & Matching Meter Surges',
+    sectionTag: '1.7 Instrumentation Safety',
+    type: 'comparison-table',
+    comparisonTable: {
+      headers: [
+        'IEC Rating',
+        'Circuit Zone',
+        'Typical Examples & Surge Risk',
+        'Mandatory Safety Action'
+      ],
+      rows: [
+        [
+          'CAT I',
+          'Protected Low-Voltage',
+          '$5\\text{–}24\\text{ V}$ PCBs, battery circuits; lowest transient energy',
+          'Bench meters allowed; verify earth reference integrity'
+        ],
+        [
+          'CAT II',
+          'Wall Outlets & Plug-Ins',
+          '$230\\text{ V}$ receptacles, portable tools, bench PSUs',
+          'Use fused test probes; inspect lead insulation'
+        ],
+        [
+          'CAT III',
+          'Building Distribution',
+          '$415\\text{ V}$ 3-phase motors, switchboards; high arc-flash energy',
+          'Require certified CAT III meter + PPE; never use CAT I/II'
+        ],
+        [
+          'CAT IV',
+          'Utility Service Origin',
+          'Overhead lines, service meters; up to $8\\text{ kV}$ lightning surges',
+          'Strict CAT IV gear + arc shield; full LOTO isolation'
+        ]
+      ],
+      verdict:
+        'Ground Loop Rule: Distant earths ($\\Delta V_g \\approx 5\\text{ V}$) drive $50\\text{ Hz}$ hum & fault surges—break the metal loop with $>5\\text{ kV}$ optical isolators (LED $\\rightarrow$ glass barrier $\\rightarrow$ phototransistor).'
+    },
     speakerNotes:
-      'Explain that soil has electrical resistance. When a 50 kW motor runs nearby, the ground potential rises.',
-    takeaway: 'Ground Loop = A closed loop created when a signal cable connects two different earth ground points.'
+      'Cover both core electrical topics cleanly: (1) Why distant earth grounds differ in potential (Ground A vs. Ground B), creating ground loops solved by >5 kV optocouplers; and (2) How IEC 61010-1 CAT I–IV ratings prevent catastrophic arc flash explosions.',
+    takeaway: 'Use optical isolators to break circulating ground loops and never touch CAT III/IV panels with a CAT I/II meter.'
   },
   {
-    id: 96,
-    title: 'The Real-World Dangers of Ground Loops',
-    subtitle: 'Loud Audio Hum, Noisy Sensor Data, and Melted Cables',
-    sectionTag: '1.7 Electrical Safety',
-    type: 'concept',
-    bullets: [
-      'What happens when a ground loop current flows through your instrumentation system?',
-      '1. 50 Hz / 60 Hz Mains Hum: In audio systems and sensitive sensor lines, the circulating 50 Hz power current creates an annoying buzz that drowns out small millivolt signals.',
-      '2. Inaccurate Sensor Readings: The voltage drop across the cable ground wire adds directly to your sensor reading, giving false data.',
-      '3. Equipment Destruction & Fire: During a lightning strike or factory motor fault, thousands of amperes can surge through a thin signal cable shield, melting the wire and destroying the computer!'
-    ],
-    speakerNotes:
-      'Mention that ground loops are responsible for 80% of persistent noise problems in industrial instrumentation.',
-    takeaway: 'Ground loops cause 50 Hz electrical hum, sensor noise, and equipment destruction.'
-  },
-  {
-    id: 97,
-    title: 'The Solution: Galvanic Isolation',
-    subtitle: 'Breaking the Continuous Metal Path',
-    sectionTag: '1.7 Electrical Safety',
-    type: 'concept',
-    bullets: [
-      'How do we stop ground loop currents from circulating?',
-      'We must physically BREAK the metal-to-metal connection between the sensor and the computer!',
-      'This technique of allowing signals to pass while blocking direct electrical metal contact is called Galvanic Isolation.',
-      'How can a signal pass through if there is no metal wire?',
-      'We convert the electrical signal into another form of energy (like light or magnetic flux), send it across an insulating air/glass gap, and convert it back to electricity on the other side!'
-    ],
-    speakerNotes:
-      'Galvanic isolation is like sending messages across a moat using a flashlight: the message gets across, but nobody can cross the moat.',
-    takeaway: 'Galvanic isolation breaks the metal conductor loop, completely eliminating circulating ground currents.'
-  },
-  {
-    id: 98,
-    title: 'How an Optical Isolator (Optocoupler) Works',
-    subtitle: 'Electricity → Light → Electricity',
-    sectionTag: '1.7 Electrical Safety',
-    type: 'concept',
-    bullets: [
-      'An Optical Isolator (Optocoupler) contains two tiny components sealed inside a small chip:',
-      '1. Transmitter (LED): An infrared Light Emitting Diode connected to the input sensor circuit. When sensor voltage rises, the LED shines brighter.',
-      '2. Receiver (Phototransistor): A light-sensitive transistor connected to the computer circuit. It detects the incoming light beam and turns it back into electricity.',
-      'Between the LED and phototransistor is a transparent silicone glass barrier.',
-      'There is ZERO copper wire between them. The barrier can withstand over 5,000 Volts without breaking down!'
-    ],
-    speakerNotes:
-      'Every modern industrial DAQ board uses optocouplers to protect computer motherboards from factory transients.',
-    takeaway: 'Optocouplers transmit signals using light beams across an insulating 5 kV barrier.'
-  },
-  {
-    id: 99,
-    title: 'Visualizing Ground Loops & Galvanic Isolation',
-    subtitle: 'Figure 7 · Loop Current Hazard vs. Optical Barrier Protection',
-    sectionTag: '1.7 Electrical Safety',
+    id: 92,
+    title: 'Visualizing Electrical Safety: Ground Loops, Optocouplers & CAT Zones',
+    subtitle: 'Figure 7 · Loop Current Hazard vs. >5 kV Optical Barrier & IEC 61010-1 Categories',
+    sectionTag: '1.7 Instrumentation Safety',
     type: 'figure',
     figureKey: 'fig7',
     speakerNotes:
-      'Examine Figure 7: Top panel shows the red circulating loop current flowing between Ground A and Ground B. Bottom panel shows how the optical isolator breaks the red line, stopping loop current dead.',
-    takeaway: 'Figure 7 shows the circulating ground loop in red and the optical barrier solution in green.'
+      'Walk students through Figure 7: Top-left illustrates circulating 50 Hz loop current between distant Ground A and Ground B; bottom-left shows the LED-to-phototransistor glass barrier cutting the loop; right panel stacks CAT I through CAT IV surge zones.',
+    takeaway: 'Figure 7 unites ground-loop isolation (optical gap) with IEC CAT I–IV overvoltage meter selection.'
   },
   {
-    id: 100,
-    title: 'IEC 61010-1 Overvoltage Categories (CAT Ratings)',
-    subtitle: 'Figure 7 (Right) · Matching Tool Safety to Electrical Danger',
-    sectionTag: '1.7 Electrical Safety',
+    id: 93,
+    title: 'Hydraulic (ISO 4413) & Pneumatic (ISO 4414) Safety Rules',
+    subtitle: 'Fluid Injection Prevention, Accumulator Bleed, Whip-Checks & ΔP Manifold Sequencing',
+    sectionTag: '1.7 Instrumentation Safety',
     type: 'concept',
     bullets: [
-      'Look at the front face of any professional multimeter (e.g. a Fluke meter).',
-      'You will see yellow stamped markings like "CAT III 1000V" or "CAT IV 600V".',
-      'What do these CAT markings mean?',
-      'The International Electrotechnical Commission (IEC 61010-1) created 4 Overvoltage Categories.',
-      'They define where a tool can be safely used based on how close you are to the primary electrical power source and how violent lightning or switching surges can be.'
+      '1. Hydraulic Fluid Injection ($70\\text{–}350\\text{ bar}$, ISO 4413): High-velocity pinhole oil jets pierce gloves and skin, causing severe tissue necrosis — inspect leaks strictly with cardboard or wood, NEVER bare hands.',
+      '2. Hydraulic Accumulators & Zero-Pressure LOTO: Switching off the pump leaves nitrogen accumulators pressurized; lock out power, open the manual bleed valve to tank, confirm $0.0\\text{ bar}$ on a working gauge, and protect sensors with PRVs and pulsation snubbers.',
+      '3. Pneumatic Hose Whip & Embolism ($2\\text{–}10\\text{ bar}$, ISO 4414): Compressed air expands explosively — fit braided steel whip-checks across couplings, vent lines via the FRL lockout dump valve, and keep dead-ended blow nozzles below $2\\text{ bar}$ ($30\\text{ psi}$) away from skin.',
+      '4. Three-Valve $\\Delta P$ Manifold Sequencing: Before isolating a differential pressure transmitter, always open the center Equalizing ($\\text{EQ}$) valve FIRST before closing $\\text{HP}$ and $\\text{LP}$ block valves so static line pressure never ruptures the diaphragm.'
     ],
     speakerNotes:
-      'Never grab an unrated cheap meter to test a factory 3-phase panel. It can explode in your hands from arc flash.',
-    takeaway: 'CAT ratings specify the transient surge energy an instrument can withstand without exploding.'
+      'Highlight the two classic field mistakes: checking hydraulic leaks by hand (fatal injection injury) and closing HP/LP valves on a ΔP cell without opening the center EQ valve first (instant diaphragm blowout).',
+    takeaway: 'Use cardboard for hydraulic leak checks, bleed accumulators to 0 bar, fit pneumatic whip-checks, and open EQ first on ΔP manifolds.'
   },
   {
-    id: 101,
-    title: 'The 4 IEC Overvoltage Categories Defined',
-    subtitle: 'From Low-Voltage Electronics (CAT I) to Utility Power Poles (CAT IV)',
-    sectionTag: '1.7 Electrical Safety',
-    type: 'concept',
-    bullets: [
-      'CAT I (Protected Electronics): Low-voltage DC circuits, battery-operated devices, secondary regulated power rails (e.g. 5V, 12V circuits). Lowest danger.',
-      'CAT II (Wall Sockets & Appliances): Standard 230V household wall outlets, portable power tools, bench equipment connected to local receptacles.',
-      'CAT III (Building Distribution): Industrial factory switchboards, circuit breaker panels, 3-phase electric motors, busbars. High energy arc-flash risk!',
-      'CAT IV (Utility Origin): Outdoor power lines, overhead utility wires, electricity service entrance meters. Highest lightning surge risk (transients up to 8,000 V)!'
-    ],
+    id: 94,
+    title: 'Visualizing Hydraulic & Pneumatic Safety Controls',
+    subtitle: 'Figure 7B · Accumulator Bleed Valves, Whip-Check Cables & 3-Valve ΔP Manifold Sequencing',
+    sectionTag: '1.7 Instrumentation Safety',
+    type: 'figure',
+    figureKey: 'fig7b',
     speakerNotes:
-      'The closer you are to the outdoor power lines, the higher the category must be: CAT I (safe battery) to CAT IV (power pole).',
-    takeaway: 'CAT I = Battery circuits; CAT II = Wall plugs; CAT III = Factory panels; CAT IV = Outdoor utility lines.'
-  },
-  {
-    id: 102,
-    title: 'The Golden Safety Rule in the Electrical Lab',
-    subtitle: 'Never Use a Low-CAT Meter on High-CAT Circuits!',
-    sectionTag: '1.7 Electrical Safety',
-    type: 'concept',
-    bullets: [
-      'A cheap $5 multimeter bought from an online shop is usually rated CAT I or CAT II at best.',
-      'If you take that cheap meter and touch the probes to a 415V 3-phase factory distribution panel (CAT III):',
-      'If an industrial motor switches on at that exact millisecond, a 4,000 Volt voltage spike surges into the meter.',
-      'The internal traces inside the cheap meter vaporize instantly into superheated copper gas.',
-      'An explosive Arc Flash fireball erupts in front of your face, causing severe third-degree burns or blindness!',
-      'Rule: Always verify your meter carries a certified CAT III or CAT IV rating before opening a distribution cabinet!'
-    ],
-    speakerNotes:
-      'Arc flash is a real industrial hazard. Safety begins with respecting the tool CAT rating.',
-    takeaway: 'Never use a CAT I or II meter on a CAT III/IV panel: an overvoltage spike will cause an explosive arc flash!'
-  },
-  {
-    id: 103,
-    title: 'Check Your Understanding: Electrical Safety & Isolation',
-    subtitle: 'Concept Check 1.7',
-    sectionTag: '1.7 Quiz',
-    type: 'check-understanding',
-    quiz: {
-      question:
-        'An instrumentation engineer must connect a computer data acquisition card to a vibration sensor mounted on a high-voltage 3-phase pump motor 150 meters away in another building. What should the engineer do to prevent noise hum and protect the computer?',
-      options: [
-        'Run a standard copper wire and wrap it in duct tape.',
-        'Use an optical isolation barrier (optocoupler) to break the electrical ground loop.',
-        'Remove the earth grounding rod from the building.',
-        'Paint the sensor yellow.'
-      ],
-      correctIndex: 1,
-      explanation:
-        'Correct! Long distances between buildings create ground potential differences. Inserting an optical isolation barrier breaks the continuous metal path, stopping circulating ground loop currents dead and protecting the computer from voltage spikes up to 5 kV.'
-    },
-    speakerNotes:
-      'Conclude the safety topic with this practical installation scenario.',
-    takeaway: 'Optical isolation is the standard industrial solution for long-distance ground loop noise.'
+      'Review Figure 7B side by side: Left panel details hydraulic LOTO shutoff, trapped accumulator risk, bleed valve to tank, snubber, and 0-bar gauge confirmation. Right panel shows pneumatic FRL lockout dump, steel whip-check cable, and the 3-valve HP/EQ/LP manifold.',
+    takeaway: 'Figure 7B provides the complete hardware safety checklist for pressurized hydraulic and pneumatic instrumentation.'
   },
 
   // =========================================================================
   // CHAPTER SUMMARY & KEY FORMULA CHEAT SHEET
   // =========================================================================
   {
-    id: 104,
+    id: 95,
     title: 'Unit I Comprehensive Summary: The Golden Rules',
     subtitle: 'Review of Core Principles Across All 7 Sections',
     sectionTag: 'Summary Review',
@@ -2127,14 +2081,14 @@ export const SLIDES_DATA: SlideData[] = [
       '1.4 Calibration: Single-point fixes zero bias; Two-point fixes zero + span slope; Multi-point captures curvature & hysteresis.',
       '1.5 Uncertainty: Gross = Blunder; Systematic = Bias (calibrated away); Random = Noise (reduced by √N averaging).',
       '1.6 Intrusive: Voltmeter resistance must be huge (Rm >> Rs); Ammeter resistance must be tiny (Ra << Rload).',
-      '1.7 Safety: Break ground loops with optical isolation; match meter CAT ratings (CAT I to CAT IV) to the danger level.'
+      '1.7 Safety: Apply LOTO & zero-energy checks across Electrical (optocouplers, CAT I–IV), Hydraulic (bleed accumulators, cardboard leak checks), and Pneumatic (whip-checks, < 2 bar air limit, EQ-first ΔP manifolds).'
     ],
     speakerNotes:
       'Review these 7 golden rules with the class. Every rule directly answers a practical engineering challenge.',
     takeaway: 'Mastering these 7 core principles gives you the foundation for all modern instrumentation engineering.'
   },
   {
-    id: 105,
+    id: 96,
     title: 'Unit I Master Formula Sheet',
     subtitle: 'Clean Open Formulas for Exam Preparation',
     sectionTag: 'Formula Sheet',
@@ -2156,7 +2110,7 @@ export const SLIDES_DATA: SlideData[] = [
     takeaway: 'These 10 standard formulas form the mathematical backbone of Unit I.'
   },
   {
-    id: 106,
+    id: 97,
     title: 'References & Author Information',
     subtitle: 'Recommended Textbooks & Course Materials',
     sectionTag: 'References',
@@ -2165,12 +2119,12 @@ export const SLIDES_DATA: SlideData[] = [
       'Bentley, John P. Principles of Measurement Systems, 4th Edition, Pearson Prentice Hall, 2005.',
       'Doebelin, Ernest O., and Manik, Dhanesh N. Measurement Systems: Application and Design, 6th Edition, McGraw-Hill, 2019.',
       'JCGM 100:2008 / GUM 1995: Evaluation of measurement data — Guide to the expression of uncertainty in measurement (ISO/IEC Guide 98-3).',
-      'IEC 61010-1: Safety requirements for electrical equipment for measurement, control, and laboratory use.',
+      'IEC 61010-1 (Electrical Test Safety), ISO 4413 (Hydraulic Fluid Power Safety), and ISO 4414 (Pneumatic Fluid Power Safety).',
       'Author & Course Instructor: Er. Saroj Chalise · Lecture Slides: https://chalisesaroj.github.io/slide/'
     ],
     speakerNotes:
       'Thank the students for their attention. Encourage them to review the worked examples and run the interactive figures before the next class on Unit II (Digital Signal Processing).',
-    takeaway: 'Review Bentley Chapters 1–3 and the ISO GUM guide for further industrial metrology standards.'
+    takeaway: 'Review Bentley Chapters 1–3, ISO GUM, IEC 61010-1, and ISO 4413/4414 fluid-power safety standards.'
   }
 ];
 
@@ -2180,7 +2134,7 @@ lecture.py - Vector SVG Figure Generator for Unit I: Fundamentals of Measurement
 Author: Er. Saroj Chalise
 Reference Format: https://chalisesaroj.github.io/slide/
 
-Generates all 7 clean classroom vector figures for 16:9 projection without embedded formulas.
+Generates clean classroom vector figures for 16:9 projection in crisp Times New Roman typography.
 """
 
 import os
@@ -2191,8 +2145,8 @@ FIGURES_DIR = "figures"
 os.makedirs(FIGURES_DIR, exist_ok=True)
 
 plt.rcParams.update({
-    "font.family": "sans-serif",
-    "font.sans-serif": ["DejaVu Sans", "Arial", "Helvetica"],
+    "font.family": "serif",
+    "font.serif": ["Times New Roman", "Liberation Serif", "DejaVu Serif"],
     "figure.figsize": (16, 9),
     "figure.dpi": 150,
     "figure.facecolor": "#ffffff",
@@ -2240,11 +2194,11 @@ format:
 
 ::: {.column width="50%"}
 - **1.5** Measurement uncertainties & errors
-  - Gross, Systematic, Random, Mean, Std Dev, ISO GUM
+  - Gross, Systematic, Random, Mean, Std Dev, ISO GUM (Type A/B, RSS)
 - **1.6** Intrusive and non-intrusive techniques
   - Voltmeter loading ($R_m \\gg R_s$), Ultrasonic & Optical
 - **1.7** Safety considerations during instrumentation
-  - Ground loops, Galvanic optical isolation, IEC CAT I–IV
+  - Electrical (Ground loops, Optocouplers, IEC CAT I–IV), Hydraulic (ISO 4413), Pneumatic (ISO 4414)
 :::
 :::
 
